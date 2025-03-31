@@ -67,7 +67,7 @@
 
   (start/leader-keys
     "f" '(:ignore t :wk "Find")
-    "f c" '((lambda () (interactive) (find-file "~/.config/emacs-personal/config.org")) :wk "Edit emacs config")
+    "f c" '((lambda () (interactive) (find-file "~/.config/MainEmacs/config.org")) :wk "Edit emacs config")
     "f r" '(consult-recent-file :wk "Recent files")
     "f f" '(consult-fd :wk "Fd search for files")
     "f g" '(consult-ripgrep :wk "Ripgrep search in files")
@@ -105,7 +105,7 @@
     "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
     "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
     "h r" '((lambda () (interactive)
-              (load-file "~/.config/emacs-personal/init.el"))
+              (load-file "~/.config/MainEmacs/init.el"))
             :wk "Reload Emacs config"))
 
   (start/leader-keys
@@ -171,15 +171,21 @@
 (add-to-list 'default-frame-alist '(alpha-background . 100)) ;; For all new frames henceforth
 
 (set-face-attribute 'default nil
-                    ;; :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
-                    :height 120
-                    :weight 'medium)
-;; This sets the default font on all graphical frames created after restarting Emacs.
-;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-;; are not right unless I also add this method of setting the default font.
+                        ;; :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
+                        :height 120
+                        :weight 'medium)
+    ;; This sets the default font on all graphical frames created after restarting Emacs.
+    ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
+    ;; are not right unless I also add this method of setting the default font.
 
-;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
-(setq-default line-spacing 0.12)
+    ;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
+    ;; Set the default font for the initial frame
+(add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+
+;; Set the default font for new frames
+(add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+
+    (setq-default line-spacing 0.12)
 
 (use-package emacs
   :bind
@@ -205,21 +211,21 @@
   (projectile-project-search-path '("~/projects/" "~/work/" ("~/github" . 1)))) ;; . 1 means only search the first subdirectory level for projects
 ;; Use Bookmarks for smaller, not standard projects
 
-;;(use-package eglot
-;;  :ensure nil ;; Don't install eglot because it's now built-in
-;;  :hook ((c-mode c++-mode ;; Autostart lsp servers for a given mode
-;;                 lua-mode) ;; Lua-mode needs to be installed
-;;         . eglot-ensure)
-;;  :custom
-;;  ;; Good default
-;;  (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
-;;  (eglot-autoshutdown t);; Shutdown unused servers.
-;;  (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
-;;  ;; Manual lsp servers
-;;  :config
-;;  (add-to-list 'eglot-server-programs
-;;               `(lua-mode . ("PATH_TO_THE_LSP_FOLDER/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
-;;  )
+(use-package eglot
+  :ensure nil ;; Don't install eglot because it's now built-in
+  :hook ((c-mode c++-mode ;; Autostart lsp servers for a given mode
+                 lua-mode) ;; Lua-mode needs to be installed
+         . eglot-ensure)
+  :custom
+  ;; Good default
+  (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
+  (eglot-autoshutdown t);; Shutdown unused servers.
+  (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
+  ;; Manual lsp servers
+  :config
+  (add-to-list 'eglot-server-programs)
+               ;;`(lua-mode . ("PATH_TO_THE_LSP_FOLDER/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
+  )
 
 (use-package yasnippet-snippets
   :hook (prog-mode . yas-minor-mode))
@@ -254,11 +260,24 @@
 (use-package eat
   :hook ('eshell-load-hook #'eat-eshell-mode))
 
-;; (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(setq user-emacs-directory "~/.config/MainEmacs/")
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-;; (require 'start-multiFileExample)
+;;(require 'start-multiFileExample)
+(require 'configs)
+(require 'keymaps)
+(require 'packages)
 
 ;; (start/hello)
+
+(defun my/org-auto-tangle ()
+  "Automatically tangle the org file if it contains a tangle header."
+  (when (and (buffer-file-name)
+             (string-suffix-p ".org" (buffer-file-name)))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'after-save-hook #'my/org-auto-tangle)
 
 (use-package nerd-icons
   :if (display-graphic-p))

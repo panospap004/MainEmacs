@@ -1,3 +1,4 @@
+
 #+Title: Emacs Kickstarter
 #+Author: MiniApollo
 #+Description: A starting point for Gnu Emacs with good defaults and packages that most people may want to use.
@@ -29,6 +30,7 @@
   - [[#adding-the-lisp-directory-to-load-path][Adding the lisp directory to load-path]]
   - [[#sourcing-the-files][Sourcing the files]]
   - [[#using-the-file][Using the file]]
+  - [[#auto-save-if-auto-tangle-header-is-on][Auto save if auto tangle header is on]]
 - [[#other-packages][Other Packages]]
   - [[#nerd-icons][Nerd Icons]]
   - [[#git][Git]]
@@ -160,7 +162,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
 
       (start/leader-keys
         "f" '(:ignore t :wk "Find")
-        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+        "f c" '((lambda () (interactive) (find-file "~/.config/MainEmacs/config.org")) :wk "Edit emacs config")
         "f r" '(consult-recent-file :wk "Recent files")
         "f f" '(consult-fd :wk "Fd search for files")
         "f g" '(consult-ripgrep :wk "Ripgrep search in files")
@@ -198,7 +200,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
         "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
         "h r" '((lambda () (interactive)
-                  (load-file "~/.config/emacs/init.el"))
+                  (load-file "~/.config/MainEmacs/init.el"))
                 :wk "Reload Emacs config"))
 
       (start/leader-keys
@@ -231,7 +233,7 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
       ;;(recentf-mode t) ;; Enable recent file mode
 
       ;;(global-visual-line-mode t)           ;; Enable truncated lines
-      ;;(display-line-numbers-type 'relative) ;; Relative line numbers
+      (display-line-numbers-type 'relative) ;; Relative line numbers
       (global-display-line-numbers-mode t)  ;; Display line numbers
 
       (mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
@@ -274,22 +276,28 @@ Use consult-theme to easily try out themes (*Epilepsy* Warning).
 ** Transparency
 With Emacs version 29, true transparency has been added.
 #+begin_src emacs-lisp
-    (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
+    (add-to-list 'default-frame-alist '(alpha-background . 100)) ;; For all new frames henceforth
 #+end_src
 
 ** Fonts
 *** Setting fonts
 #+begin_src emacs-lisp
-    (set-face-attribute 'default nil
-                        ;; :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
-                        :height 120
-                        :weight 'medium)
-    ;; This sets the default font on all graphical frames created after restarting Emacs.
-    ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-    ;; are not right unless I also add this method of setting the default font.
+        (set-face-attribute 'default nil
+                            ;; :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
+                            :height 120
+                            :weight 'medium)
+        ;; This sets the default font on all graphical frames created after restarting Emacs.
+        ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
+        ;; are not right unless I also add this method of setting the default font.
 
-    ;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
-    (setq-default line-spacing 0.12)
+        ;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
+        ;; Set the default font for the initial frame
+    (add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+
+    ;; Set the default font for new frames
+    (add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+
+        (setq-default line-spacing 0.12)
 #+end_src
 
 *** Zooming In/Out
@@ -347,21 +355,21 @@ Or add the lua-language-server executable to your path.
 If you can use a package manager just install the lsp server and add a hook.
 Use visual block to uncomment easily in Org documents (C-v).
 #+begin_src emacs-lisp
-    ;;(use-package eglot
-    ;;  :ensure nil ;; Don't install eglot because it's now built-in
-    ;;  :hook ((c-mode c++-mode ;; Autostart lsp servers for a given mode
-    ;;                 lua-mode) ;; Lua-mode needs to be installed
-    ;;         . eglot-ensure)
-    ;;  :custom
-    ;;  ;; Good default
-    ;;  (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
-    ;;  (eglot-autoshutdown t);; Shutdown unused servers.
-    ;;  (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
-    ;;  ;; Manual lsp servers
-    ;;  :config
-    ;;  (add-to-list 'eglot-server-programs
-    ;;               `(lua-mode . ("PATH_TO_THE_LSP_FOLDER/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
-    ;;  )
+    (use-package eglot
+      :ensure nil ;; Don't install eglot because it's now built-in
+      :hook ((c-mode c++-mode ;; Autostart lsp servers for a given mode
+                     lua-mode) ;; Lua-mode needs to be installed
+             . eglot-ensure)
+      :custom
+      ;; Good default
+      (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
+      (eglot-autoshutdown t);; Shutdown unused servers.
+      (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
+      ;; Manual lsp servers
+      :config
+      (add-to-list 'eglot-server-programs)
+                   ;;`(lua-mode . ("PATH_TO_THE_LSP_FOLDER/bin/lua-language-server" "-lsp"))) ;; Adds our lua lsp server to eglot's server list
+      )
 #+end_src
 
 ** Yasnippet
@@ -381,8 +389,8 @@ Currently it's tedious to use Treesitter, because emacs has not yet fully migrat
 Example, how to setup a language mode (if you don't want it, feel free to delete it).
 Use SPC-tab to uncomment the lines.
 # #+begin_src emacs-lisp
-#     (use-package lua-mode
-#       :mode "\\.lua\\'") ;; Only start in a lua file
+    # (use-package lua-mode
+      # :mode "\\.lua\\'") ;; Only start in a lua file
 # #+end_src
 
 *** Org Mode
@@ -445,18 +453,23 @@ We setup eat with eshell, if you want to use bash, zsh etc., check out their git
 ** Adding the lisp directory to load-path
 Adds the lisp directory to emacs's load path to search for elisp files.
 This is necessary, because emacs does not search the entire user-emacs-directory.
-The directory name can be anything, just add it to the load-path.
+The director name can be anything, just add it to the load-path.
 #+begin_src emacs-lisp
-    ;; (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+   (setq user-emacs-directory "~/.config/MainEmacs/")
+   (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 #+end_src
 
 ** Sourcing the files
+
 To use the elisp files we need to load it.
 Notes:
 - Don't forget the file and the provide name needs to be the same.
 - When naming elisp files, functions, it is recommended to use a group name (e.g init-, start- or any custom name), so it does not get mixed up with other names, functions.
 #+begin_src emacs-lisp
-    ;; (require 'start-multiFileExample)
+    ;;(require 'start-multiFileExample)
+    (require 'configs)
+    (require 'keymaps)
+    (require 'packages)
 #+end_src
 
 ** Using the file
@@ -465,11 +478,25 @@ And now we can use everything from that file.
     ;; (start/hello)
 #+end_src
 
+** Auto save if auto tangle header is on
+if the fily contains this header #+TANGLE: lisp/filename.el it will auto tangle
+#+begin_src emacs-lisp
+    (defun my/org-auto-tangle ()
+  "Automatically tangle the org file if it contains a tangle header."
+  (when (and (buffer-file-name)
+             (string-suffix-p ".org" (buffer-file-name)))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'after-save-hook #'my/org-auto-tangle)
+#+end_src
+
 * Other Packages
 All the package setups that don't need much tweaking.
 ** Nerd Icons
 For icons and more helpful UI.
 This is an icon set that can be used with dired, ibuffer and other Emacs programs.
+
 
 Don't forget to use nerd-icons-install-fonts.
 
