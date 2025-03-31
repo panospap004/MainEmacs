@@ -8,19 +8,11 @@
 * Table Of Contents :toc:
 - [[#introduction][Introduction]]
 - [[#important-to-load-first][Important to load first]]
-- [[#appearance][Appearance]]
-  - [[#set-theme][Set Theme]]
-  - [[#modeline][Modeline]]
-- [[#development][Development]]
 - [[#multi-file-example][Multi File Example]]
   - [[#adding-the-lisp-directory-to-load-path][Adding the lisp directory to load-path]]
   - [[#sourcing-the-files][Sourcing the files]]
-  - [[#load-the-packages-from-packagesel][load the packages from packages.el]]
-  - [[#load-package-configurations][Load package configurations]]
   - [[#using-the-file][Using the file]]
   - [[#auto-save-if-auto-tangle-header-is-on][Auto save if auto tangle header is on]]
-- [[#other-packages][Other Packages]]
-- [[#runtime-performance][Runtime Performance]]
 
 * Introduction
 #+begin_src emacs-lisp
@@ -36,24 +28,8 @@
 * Important to load first
 ;; Load Emacs‑only settings (if you separated those into emacs-settings.el)
 #+begin_src emacs-lisp
-    ;; (load "~/.configs/emacs/lisp/emacs-settings.el")
+    (require 'configs)
 #+end_src
-
-* Appearance
-** Set Theme
-(This section now focuses on non‑package-specific appearance settings.)
-#+begin_src emacs-lisp
-  ;; (Any manual appearance tweaks that are not package‐related can be kept here.)
-#+end_src
-
-** Modeline
-(Non‑package adjustments for the modeline, if any, remain here.)
-#+begin_src emacs-lisp
-  ;; (Place any additional manual modeline tweaks here.)
-#+end_src
-
-* Development
-;; (Non‑package development settings, if any, remain here.)
 
 * Multi File Example
 ** Adding the lisp directory to load-path
@@ -66,22 +42,9 @@
 #+begin_src emacs-lisp
     (require 'example)
     (require 'package_configs)  ;; Now loaded here instead of in config.org
-    (require 'configs)
     (require 'keymaps)
     (require 'packages)
     ;; The previous (require 'packages) has been replaced by loading package_configs.el below.
-#+end_src
-
-** load the packages from packages.el  
-#+begin_src emacs-lisp
-    ;; Load the package installation (packages.el) as before.
-    ;; (load "~/.configs/emacs/lisp/packages.el")
-#+end_src
-
-** Load package configurations
-#+begin_src emacs-lisp
-    ;; Load all package-specific configuration settings.
-    ;; (load "~/.configs/emacs/lisp/package_configs.el")
 #+end_src
 
 ** Using the file
@@ -101,9 +64,3 @@
   (add-hook 'after-save-hook #'my/org-auto-tangle)
 #+end_src
 
-* Other Packages
-;; (All package-specific configurations have been moved to package_configs.el.)
-
-* Runtime Performance
-;; (Non‑package runtime performance tweaks, if any, remain here.
-;; Runtime tweaks from emacs-settings.el already apply.)
