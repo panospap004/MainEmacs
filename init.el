@@ -67,7 +67,7 @@
 
   (start/leader-keys
     "f" '(:ignore t :wk "Find")
-    "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+    "f c" '((lambda () (interactive) (find-file "~/.config/emacs-personal/config.org")) :wk "Edit emacs config")
     "f r" '(consult-recent-file :wk "Recent files")
     "f f" '(consult-fd :wk "Fd search for files")
     "f g" '(consult-ripgrep :wk "Ripgrep search in files")
@@ -105,7 +105,7 @@
     "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
     "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
     "h r" '((lambda () (interactive)
-              (load-file "~/.config/emacs/init.el"))
+              (load-file "~/.config/emacs-personal/init.el"))
             :wk "Reload Emacs config"))
 
   (start/leader-keys
@@ -135,7 +135,7 @@
   ;;(recentf-mode t) ;; Enable recent file mode
 
   ;;(global-visual-line-mode t)           ;; Enable truncated lines
-  ;;(display-line-numbers-type 'relative) ;; Relative line numbers
+  (display-line-numbers-type 'relative) ;; Relative line numbers
   (global-display-line-numbers-mode t)  ;; Display line numbers
 
   (mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
@@ -168,7 +168,7 @@
   :config
   (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
 
-(add-to-list 'default-frame-alist '(alpha-background . 90)) ;; For all new frames henceforth
+(add-to-list 'default-frame-alist '(alpha-background . 100)) ;; For all new frames henceforth
 
 (set-face-attribute 'default nil
                     ;; :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
