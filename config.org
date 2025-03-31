@@ -12,28 +12,14 @@
   - [[#set-theme][Set Theme]]
   - [[#modeline][Modeline]]
 - [[#development][Development]]
-  - [[#projectile][Projectile]]
-  - [[#eglot][Eglot]]
-  - [[#yasnippet][Yasnippet]]
-  - [[#language-modes][Language modes]]
-  - [[#terminal][Terminal]]
 - [[#multi-file-example][Multi File Example]]
   - [[#adding-the-lisp-directory-to-load-path][Adding the lisp directory to load-path]]
   - [[#sourcing-the-files][Sourcing the files]]
   - [[#load-the-packages-from-packagesel][load the packages from packages.el]]
+  - [[#load-package-configurations][Load package configurations]]
   - [[#using-the-file][Using the file]]
   - [[#auto-save-if-auto-tangle-header-is-on][Auto save if auto tangle header is on]]
 - [[#other-packages][Other Packages]]
-  - [[#nerd-icons][Nerd Icons]]
-  - [[#git][Git]]
-  - [[#corfu][Corfu]]
-  - [[#cape][Cape]]
-  - [[#orderless][Orderless]]
-  - [[#vertico-and-marginalia][Vertico and Marginalia]]
-  - [[#consult][Consult]]
-  - [[#diminish][Diminish]]
-  - [[#rainbow-delimiters][Rainbow Delimiters]]
-  - [[#which-key][Which-Key]]
 - [[#runtime-performance][Runtime Performance]]
 
 * Introduction
@@ -41,118 +27,69 @@
   ;; Kickstart.emacs is *not* a distribution.
   ;; It's a template for your own configuration.
   ;;
-  ;; It is *recommeded* to configure it from the *config.org* file.
-  ;; The goal is that you read every line, top-to-bottom, understand
-  ;; what your configuration is doing, and modify it to suit your needs.
+  ;; Configure it from this config.org file.
+  ;; Read every line, understand your configuration, and modify it as needed.
   ;;
-  ;; You can delete this when you're done. It's your config now. :)
+  ;; Delete this once you're comfortable with your setup.
 #+end_src
 
 * Important to load first
-;; Instead of inlining startup and UI defaults here,
-;; load our separate Emacs customizations file:
+;; Load Emacs‑only settings (if you separated those into emacs-settings.el)
 #+begin_src emacs-lisp
     ;; (load "~/.configs/emacs/lisp/emacs-settings.el")
 #+end_src
 
 * Appearance
 ** Set Theme
-Set gruvbox theme; if you want other themes, try doom-themes.
-Use consult-theme to try themes easily.
+(This section now focuses on non‑package-specific appearance settings.)
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme
-    :config
-    (load-theme 'gruvbox-dark-medium t)) ;; Trust the theme by passing t
+  ;; (Any manual appearance tweaks that are not package‐related can be kept here.)
 #+end_src
 
 ** Modeline
-Replace the default modeline with a prettier, more useful one.
+(Non‑package adjustments for the modeline, if any, remain here.)
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-    :init (doom-modeline-mode 1)
-    :custom
-    (doom-modeline-height 25)     ;; Modeline height
-    (doom-modeline-bar-width 5)   ;; Right bar width
-    (doom-modeline-persp-name t)  ;; Show perspective name
-    (doom-modeline-persp-icon t)) ;; Show folder icon next to perspective name
+  ;; (Place any additional manual modeline tweaks here.)
 #+end_src
 
 * Development
-** Projectile
-Project interaction library for Emacs.
-#+begin_src emacs-lisp
-  (use-package projectile
-    :init
-    (projectile-mode)
-    :custom
-    (projectile-run-use-comint-mode t)
-    (projectile-switch-project-action #'projectile-dired)
-    (projectile-project-search-path '("~/projects/" "~/work/" ("~/github" . 1))))
-#+end_src
-
-** Eglot
-Language Server Protocol Support for Emacs (built-in in recent versions).
-#+begin_src emacs-lisp
-  (use-package eglot
-    :ensure nil
-    :hook ((c-mode c++-mode lua-mode) . eglot-ensure)
-    :custom
-    (eglot-events-buffer-size 0)
-    (eglot-autoshutdown t)
-    (eglot-report-progress nil))
-#+end_src
-
-** Yasnippet
-A snippet system for Emacs.
-#+begin_src emacs-lisp
-  (use-package yasnippet-snippets
-    :hook (prog-mode . yas-minor-mode))
-#+end_src
-
-** Language modes
-*** (Additional language-specific configurations can remain here.)
-
-** Terminal
-*** Eat
-Terminal emulator within Emacs.
-#+begin_src emacs-lisp
-  (use-package eat
-    :hook ('eshell-load-hook #'eat-eshell-mode))
-#+end_src
+;; (Non‑package development settings, if any, remain here.)
 
 * Multi File Example
 ** Adding the lisp directory to load-path
-Adds the lisp directory so Emacs can find additional elisp files.
 #+begin_src emacs-lisp
   (setq user-emacs-directory "~/.config/MainEmacs/")
   (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 #+end_src
 
 ** Sourcing the files
-Load additional elisp files.
 #+begin_src emacs-lisp
     (require 'example)
-    (require 'package_configs)
+    (require 'package_configs)  ;; Now loaded here instead of in config.org
     (require 'configs)
     (require 'keymaps)
     (require 'packages)
-    ;; (require 'packages) has been removed in favor of loading packages.el below.
+    ;; The previous (require 'packages) has been replaced by loading package_configs.el below.
 #+end_src
 
 ** load the packages from packages.el  
 #+begin_src emacs-lisp
-    ;; Load the package installation setup from packages.el
+    ;; Load the package installation (packages.el) as before.
     ;; (load "~/.configs/emacs/lisp/packages.el")
 #+end_src
 
+** Load package configurations
+#+begin_src emacs-lisp
+    ;; Load all package-specific configuration settings.
+    ;; (load "~/.configs/emacs/lisp/package_configs.el")
+#+end_src
+
 ** Using the file
-Access functionality from the loaded files.
 #+begin_src emacs-lisp
   ;; (start/hello)
 #+end_src
 
 ** Auto save if auto tangle header is on
-Auto-tangles Org file if it has a tangle header.
 #+begin_src emacs-lisp
   (defun my/org-auto-tangle ()
     "Automatically tangle the org file if it contains a tangle header."
@@ -165,139 +102,8 @@ Auto-tangles Org file if it has a tangle header.
 #+end_src
 
 * Other Packages
-;; (The configuration blocks for Nerd Icons, Git, Diff-hl, Corfu, Cape, Orderless,
-;; Vertico, Marginalia, Consult, Diminish, Rainbow Delimiters, and Which-Key remain.)
-** Nerd Icons
-#+begin_src emacs-lisp
-  (use-package nerd-icons
-    :if (display-graphic-p))
-
-  (use-package nerd-icons-dired
-    :hook (dired-mode . (lambda () (nerd-icons-dired-mode t))))
-
-  (use-package nerd-icons-ibuffer
-    :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
-#+end_src
-
-** Git
-*** Magit
-#+begin_src emacs-lisp
-  (use-package magit
-    :commands magit-status)
-#+end_src
-
-*** Diff-hl
-#+begin_src emacs-lisp
-  (use-package diff-hl
-    :hook ((dired-mode         . diff-hl-dired-mode-unless-remote)
-           (magit-pre-refresh  . diff-hl-magit-pre-refresh)
-           (magit-post-refresh . diff-hl-magit-post-refresh))
-    :init (global-diff-hl-mode))
-#+end_src
-
-** Corfu
-#+begin_src emacs-lisp
-  (use-package corfu
-    :custom
-    (corfu-cycle t)
-    (corfu-auto t)
-    (corfu-auto-prefix 2)
-    (corfu-popupinfo-mode t)
-    (corfu-popupinfo-delay 0.5)
-    (corfu-separator ?\s)
-    (completion-ignore-case t)
-    (tab-always-indent 'complete)
-    (corfu-preview-current nil)
-    :init
-    (global-corfu-mode))
-  
-  (use-package nerd-icons-corfu
-    :after corfu
-    :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-#+end_src
-
-** Cape
-#+begin_src emacs-lisp
-  (use-package cape
-    :after corfu
-    :init
-    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-    (add-to-list 'completion-at-point-functions #'cape-dict)
-    (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-    (add-to-list 'completion-at-point-functions #'cape-keyword))
-#+end_src
-
-** Orderless
-#+begin_src emacs-lisp
-  (use-package orderless
-    :custom
-    (completion-styles '(orderless basic))
-    (completion-category-overrides '((file (styles basic partial-completion)))))
-#+end_src
-
-** Vertico and Marginalia
-#+begin_src emacs-lisp
-  (use-package vertico
-    :init
-    (vertico-mode))
-  
-  (savehist-mode)
-  
-  (use-package marginalia
-    :after vertico
-    :init
-    (marginalia-mode))
-  
-  (use-package nerd-icons-completion
-    :after marginalia
-    :config
-    (nerd-icons-completion-mode)
-    :hook
-    ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
-#+end_src
-
-** Consult
-#+begin_src emacs-lisp
-  (use-package consult
-    :hook (completion-list-mode . consult-preview-at-point-mode)
-    :init
-    (setq register-preview-delay 0.5
-          register-preview-function #'consult-register-format)
-    (advice-add #'register-preview :override #'consult-register-window)
-    (setq xref-show-xrefs-function #'consult-xref
-          xref-show-definitions-function #'consult-xref)
-    (autoload 'projectile-project-root "projectile")
-    (setq consult-project-function (lambda (_) (projectile-project-root))))
-#+end_src
-
-** Diminish
-#+begin_src emacs-lisp
-  (use-package diminish)
-#+end_src
-
-** Rainbow Delimiters
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
-#+end_src
-
-** Which-Key
-#+begin_src emacs-lisp
-  (use-package which-key
-    :init
-    (which-key-mode 1)
-    :diminish
-    :custom
-    (which-key-side-window-location 'bottom)
-    (which-key-sort-order #'which-key-key-order-alpha)
-    (which-key-sort-uppercase-first nil)
-    (which-key-add-column-padding 1)
-    (which-key-min-display-lines 6)
-    (which-key-idle-delay 0.8)
-    (which-key-max-description-length 25)
-    (which-key-allow-imprecise-window-fit nil))
-#+end_src
+;; (All package-specific configurations have been moved to package_configs.el.)
 
 * Runtime Performance
-;; (Runtime tweaks have been moved to emacs-settings.el.)
+;; (Non‑package runtime performance tweaks, if any, remain here.
+;; Runtime tweaks from emacs-settings.el already apply.)
