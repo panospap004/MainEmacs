@@ -8,13 +8,8 @@
 * Table Of Contents :toc:
 - [[#introduction][Introduction]]
 - [[#important-to-load-first][Important to load first]]
-  - [[#startup-performance][Startup Performance]]
-  - [[#auto-tangle-configuration-file][Auto-tangle Configuration file]]
-  - [[#good-defaults][Good Defaults]]
 - [[#appearance][Appearance]]
   - [[#set-theme][Set Theme]]
-  - [[#transparency][Transparency]]
-  - [[#fonts][Fonts]]
   - [[#modeline][Modeline]]
 - [[#development][Development]]
   - [[#projectile][Projectile]]
@@ -54,134 +49,32 @@
 #+end_src
 
 * Important to load first
-** Startup Performance
-Make startup faster by reducing the frequency of garbage collection. This will be set back when startup finishes.
+;; Instead of inlining startup and UI defaults here,
+;; load our separate Emacs customizations file:
 #+begin_src emacs-lisp
-  ;; The default is 800 kilobytes. Measured in bytes.
-  (setq gc-cons-threshold (* 50 1000 1000))
-#+end_src
-
-** Auto-tangle Configuration file
-Auto-Tangle Org configuration file for better startup times.
-If you want to use this don't forget to add this to the top of the org document (#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes)
-
-*Remember*, if this code can't be loaded (errors before this code), the init.el file won't update on change!
-To fix this, you need to find this file (C-x C-f), fix the error and press C-c C-v t to tangle it manually.
-
-This snippet adds a hook to org-mode buffers so that start/org-babel-tangle-config gets executed each time such a buffer gets saved.
-This function checks to see if the file being saved is the Emacs.org file you’re looking at right now, and if so,
-automatically exports the configuration here to the associated output files.
-#+begin_src emacs-lisp
-  (defun start/org-babel-tangle-config ()
-    "Automatically tangle our Emacs.org config file when we save it. Credit to Emacs From Scratch for this one!"
-    (when (string-equal (file-name-directory (buffer-file-name))
-                        (expand-file-name user-emacs-directory))
-      ;; Dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
-  
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'start/org-babel-tangle-config)))
-#+end_src
-
-** Good Defaults
-#+begin_src emacs-lisp
-  (use-package emacs
-    :custom
-    (menu-bar-mode nil)         ;; Disable the menu bar
-    (scroll-bar-mode nil)       ;; Disable the scroll bar
-    (tool-bar-mode nil)         ;; Disable the tool bar
-    ;;(inhibit-startup-screen t)  ;; Disable welcome screen
-
-    (delete-selection-mode t)   ;; Select text and delete it by typing.
-    (electric-indent-mode nil)  ;; Turn off the weird indenting that Emacs does by default.
-    (electric-pair-mode t)      ;; Turns on automatic parens pairing
-
-    (blink-cursor-mode nil)     ;; Don't blink cursor
-    (global-auto-revert-mode t) ;; Automatically reload file if it has changed
-
-    ;;(dired-kill-when-opening-new-dired-buffer t) ;; Dired don't create new buffer
-    ;;(recentf-mode t) ;; Enable recent file mode
-
-    ;;(global-visual-line-mode t)           ;; Enable truncated lines
-    (display-line-numbers-type 'relative) ;; Relative line numbers
-    (global-display-line-numbers-mode t)  ;; Display line numbers
-
-    (mouse-wheel-progressive-speed nil) ;; Disable progressive speed when scrolling
-    (scroll-conservatively 10) ;; Smooth scrolling
-    ;;(scroll-margin 8)
-
-    (tab-width 4)
-
-    (make-backup-files nil) ;; Stop creating ~ backup files
-    (auto-save-default nil) ;; Stop creating # auto save files
-    :hook
-    (prog-mode . (lambda () (hs-minor-mode t))) ;; Enable folding (hide/show) in programming modes
-    :config
-    ;; Move customization variables to a separate file to keep init.el clean.
-    (setq custom-file (locate-user-emacs-file "custom-vars.el"))
-    (load custom-file 'noerror 'nomessage)
-    :bind
-    ([escape] . keyboard-escape-quit)) ;; Makes Escape quit prompts (Minibuffer Escape)
+    ;; (load "~/.configs/emacs/lisp/emacs-settings.el")
 #+end_src
 
 * Appearance
 ** Set Theme
-Set gruvbox theme, if you want some themes try out doom-themes.
-Use consult-theme to easily try out themes (*Epilepsy* Warning).
+Set gruvbox theme; if you want other themes, try doom-themes.
+Use consult-theme to try themes easily.
 #+begin_src emacs-lisp
   (use-package gruvbox-theme
     :config
-    (load-theme 'gruvbox-dark-medium t)) ;; We need to add t to trust this package
-#+end_src
-
-** Transparency
-With Emacs version 29, true transparency has been added.
-#+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(alpha-background . 100)) ;; For all new frames henceforth
-#+end_src
-
-** Fonts
-*** Setting fonts
-#+begin_src emacs-lisp
-  (set-face-attribute 'default nil
-                      ;; :font "JetBrains Mono" ;; Set your favorite type of font or download JetBrains Mono
-                      :height 120
-                      :weight 'medium)
-  ;; This sets the default font on all graphical frames created after restarting Emacs.
-  ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-  ;; are not right unless I also add this method of setting the default font.
-
-  ;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
-  ;; Set the default font for the initial frame
-  (add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
-
-  ;; Set the default font for new frames
-  (add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
-
-  (setq-default line-spacing 0.12)
-#+end_src
-
-*** Zooming In/Out
-You can use the bindings C-+ C-- for zooming in/out. You can also use CTRL plus the mouse wheel for zooming in/out.
-#+begin_src emacs-lisp
-  (use-package emacs
-    :bind
-    ("C-+" . text-scale-increase)
-    ("C--" . text-scale-decrease)
-    ("<C-wheel-up>" . text-scale-increase)
-    ("<C-wheel-down>" . text-scale-decrease))
+    (load-theme 'gruvbox-dark-medium t)) ;; Trust the theme by passing t
 #+end_src
 
 ** Modeline
-Replace the default modeline with a prettier more useful one.
+Replace the default modeline with a prettier, more useful one.
 #+begin_src emacs-lisp
   (use-package doom-modeline
     :init (doom-modeline-mode 1)
     :custom
-    (doom-modeline-height 25)     ;; Sets modeline height
-    (doom-modeline-bar-width 5)   ;; Sets right bar width
-    (doom-modeline-persp-name t)  ;; Adds perspective name to modeline
-    (doom-modeline-persp-icon t)) ;; Adds folder icon next to persp name
+    (doom-modeline-height 25)     ;; Modeline height
+    (doom-modeline-bar-width 5)   ;; Right bar width
+    (doom-modeline-persp-name t)  ;; Show perspective name
+    (doom-modeline-persp-icon t)) ;; Show folder icon next to perspective name
 #+end_src
 
 * Development
@@ -192,27 +85,25 @@ Project interaction library for Emacs.
     :init
     (projectile-mode)
     :custom
-    (projectile-run-use-comint-mode t) ;; Interactive run dialog when running projects inside Emacs (like giving input)
-    (projectile-switch-project-action #'projectile-dired) ;; Open dired when switching to a project
-    (projectile-project-search-path '("~/projects/" "~/work/" ("~/github" . 1)))) ;; . 1 means only search the first subdirectory level for projects
-  ;; Use Bookmarks for smaller, not standard projects
+    (projectile-run-use-comint-mode t)
+    (projectile-switch-project-action #'projectile-dired)
+    (projectile-project-search-path '("~/projects/" "~/work/" ("~/github" . 1))))
 #+end_src
 
 ** Eglot
-Language Server Protocol Support for Emacs. The built-in is now Eglot.
+Language Server Protocol Support for Emacs (built-in in recent versions).
 #+begin_src emacs-lisp
   (use-package eglot
-    :ensure nil ;; Don't install eglot because it's now built-in
+    :ensure nil
     :hook ((c-mode c++-mode lua-mode) . eglot-ensure)
     :custom
-    (eglot-events-buffer-size 0) ;; No event buffers (Lsp server logs)
-    (eglot-autoshutdown t)         ;; Shutdown unused servers.
-    (eglot-report-progress nil))   ;; Disable LSP server logs
+    (eglot-events-buffer-size 0)
+    (eglot-autoshutdown t)
+    (eglot-report-progress nil))
 #+end_src
 
 ** Yasnippet
-A template system for Emacs. And yasnippet-snippets is a snippet collection package.
-To use it, write out the full keyword (or use autocompletion) and press Tab.
+A snippet system for Emacs.
 #+begin_src emacs-lisp
   (use-package yasnippet-snippets
     :hook (prog-mode . yas-minor-mode))
@@ -223,9 +114,7 @@ To use it, write out the full keyword (or use autocompletion) and press Tab.
 
 ** Terminal
 *** Eat
-Eat (Emulate A Terminal) is a terminal emulator within Emacs.
-It is more portable and less resource‑intensive than vterm or eshell.
-We set up Eat with eshell. For bash, zsh etc., check its repository for details.
+Terminal emulator within Emacs.
 #+begin_src emacs-lisp
   (use-package eat
     :hook ('eshell-load-hook #'eat-eshell-mode))
@@ -233,40 +122,37 @@ We set up Eat with eshell. For bash, zsh etc., check its repository for details.
 
 * Multi File Example
 ** Adding the lisp directory to load-path
-Adds the lisp directory to Emacs's load path so that it can find additional elisp files.
+Adds the lisp directory so Emacs can find additional elisp files.
 #+begin_src emacs-lisp
   (setq user-emacs-directory "~/.config/MainEmacs/")
   (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 #+end_src
 
 ** Sourcing the files
-To use the elisp files we need to load them.
-Notes:
-- Ensure the file and its provide name match.
-- Use a group naming convention (e.g. init-, start-) to avoid conflicts.
+Load additional elisp files.
 #+begin_src emacs-lisp
     (require 'example)
     (require 'package_configs)
     (require 'configs)
     (require 'keymaps)
     (require 'packages)
-    ;; Removed (require 'packages) in favor of loading packages.el below.
+    ;; (require 'packages) has been removed in favor of loading packages.el below.
 #+end_src
 
 ** load the packages from packages.el  
 #+begin_src emacs-lisp
     ;; Load the package installation setup from packages.el
-    ;; (load "~/.configs/emacs/lisp/packages")
+    ;; (load "~/.configs/emacs/lisp/packages.el")
 #+end_src
 
 ** Using the file
-And now we can use everything from that file.
+Access functionality from the loaded files.
 #+begin_src emacs-lisp
   ;; (start/hello)
 #+end_src
 
 ** Auto save if auto tangle header is on
-If the file contains a header like "#+TANGLE: lisp/filename.el" it will auto-tangle.
+Auto-tangles Org file if it has a tangle header.
 #+begin_src emacs-lisp
   (defun my/org-auto-tangle ()
     "Automatically tangle the org file if it contains a tangle header."
@@ -279,11 +165,9 @@ If the file contains a header like "#+TANGLE: lisp/filename.el" it will auto-tan
 #+end_src
 
 * Other Packages
-;; The configuration blocks for Nerd Icons, Git, Diff-hl, Corfu, Cape, Orderless,
-;; Vertico and Marginalia, Consult, Diminish, Rainbow Delimiters, and Which-Key remain.
+;; (The configuration blocks for Nerd Icons, Git, Diff-hl, Corfu, Cape, Orderless,
+;; Vertico, Marginalia, Consult, Diminish, Rainbow Delimiters, and Which-Key remain.)
 ** Nerd Icons
-For icons and enhanced UI.
-Remember to install fonts via nerd-icons-install-fonts.
 #+begin_src emacs-lisp
   (use-package nerd-icons
     :if (display-graphic-p))
@@ -297,14 +181,12 @@ Remember to install fonts via nerd-icons-install-fonts.
 
 ** Git
 *** Magit
-Complete text-based interface to Git.
 #+begin_src emacs-lisp
   (use-package magit
     :commands magit-status)
 #+end_src
 
 *** Diff-hl
-Highlights uncommitted changes in the gutter.
 #+begin_src emacs-lisp
   (use-package diff-hl
     :hook ((dired-mode         . diff-hl-dired-mode-unless-remote)
@@ -314,7 +196,6 @@ Highlights uncommitted changes in the gutter.
 #+end_src
 
 ** Corfu
-Provides a polished completion popup.
 #+begin_src emacs-lisp
   (use-package corfu
     :custom
@@ -336,7 +217,6 @@ Provides a polished completion popup.
 #+end_src
 
 ** Cape
-Provides Completion At Point Extensions.
 #+begin_src emacs-lisp
   (use-package cape
     :after corfu
@@ -349,7 +229,6 @@ Provides Completion At Point Extensions.
 #+end_src
 
 ** Orderless
-A completion style that matches components in any order.
 #+begin_src emacs-lisp
   (use-package orderless
     :custom
@@ -358,19 +237,18 @@ A completion style that matches components in any order.
 #+end_src
 
 ** Vertico and Marginalia
-Minimal vertical completion UI and metadata annotations.
 #+begin_src emacs-lisp
   (use-package vertico
     :init
     (vertico-mode))
-
+  
   (savehist-mode)
-
+  
   (use-package marginalia
     :after vertico
     :init
     (marginalia-mode))
-
+  
   (use-package nerd-icons-completion
     :after marginalia
     :config
@@ -380,7 +258,6 @@ Minimal vertical completion UI and metadata annotations.
 #+end_src
 
 ** Consult
-Provides powerful search and navigation commands.
 #+begin_src emacs-lisp
   (use-package consult
     :hook (completion-list-mode . consult-preview-at-point-mode)
@@ -395,20 +272,17 @@ Provides powerful search and navigation commands.
 #+end_src
 
 ** Diminish
-Hide or abbreviate minor mode lighters in the modeline.
 #+begin_src emacs-lisp
   (use-package diminish)
 #+end_src
 
 ** Rainbow Delimiters
-Adds colors to matching brackets.
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** Which-Key
-Helps discover key bindings.
 #+begin_src emacs-lisp
   (use-package which-key
     :init
@@ -426,9 +300,4 @@ Helps discover key bindings.
 #+end_src
 
 * Runtime Performance
-Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
-We also increase read-process-output-max so Emacs can read more data.
-#+begin_src emacs-lisp
-  (setq gc-cons-threshold (* 2 1000 1000))
-  (setq read-process-output-max (* 1024 1024)) ;; 1MB
-#+end_src
+;; (Runtime tweaks have been moved to emacs-settings.el.)
