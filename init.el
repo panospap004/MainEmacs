@@ -263,7 +263,7 @@
 (setq user-emacs-directory "~/.config/MainEmacs/")
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-;;(require 'start-multiFileExample)
+(require 'example)
 (require 'configs)
 (require 'keymaps)
 (require 'packages)
