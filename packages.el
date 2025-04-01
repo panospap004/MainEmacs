@@ -34,6 +34,8 @@
 (use-package magit)
 (use-package diff-hl)
 (use-package doom-modeline)
+(use-package catppuccin-theme)
+(use-package dashboard)
 
 (use-package corfu)
 (use-package nerd-icons-corfu)
