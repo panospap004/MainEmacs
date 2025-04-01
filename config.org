@@ -5,31 +5,31 @@
 #+Startup: showeverything
 #+Options: toc:2
 
-* Table Of Contents :toc:
-- [[#introduction][Introduction]]
-- [[#important-to-load-first][Important to load first]]
-- [[#multi-file-example][Multi File Example]]
-  - [[#adding-the-lisp-directory-to-load-path][Adding the lisp directory to load-path]]
-  - [[#sourcing-the-files][Sourcing the files]]
-  - [[#using-the-file][Using the file]]
-  - [[#auto-save-if-auto-tangle-header-is-on][Auto save if auto tangle header is on]]
-
 * Introduction
 #+begin_src emacs-lisp
   ;; Kickstart.emacs is *not* a distribution.
   ;; It's a template for your own configuration.
   ;;
-  ;; Configure it from this config.org file.
-  ;; Read every line, understand your configuration, and modify it as needed.
+  ;; It is *recommeded* to configure it from the *config.org* file.
   ;;
-  ;; Delete this once you're comfortable with your setup.
+  ;; You can delete this when you're done. It's your config now. :)
 #+end_src
 
 * Important to load first
-;; Load Emacs‑only settings (if you separated those into emacs-settings.el)
 #+begin_src emacs-lisp
-    (require 'configs)
+    ;; (load "~/.configs/emacs/lisp/emacs-settings.el")
 #+end_src
+
+* Appearance
+** Set Theme
+** Modeline
+
+* Development
+** Projectile
+** Eglot
+** Yasnippet
+** Language modes
+** Terminal
 
 * Multi File Example
 ** Adding the lisp directory to load-path
@@ -40,11 +40,16 @@
 
 ** Sourcing the files
 #+begin_src emacs-lisp
-    (require 'example)
-    (require 'package_configs)  ;; Now loaded here instead of in config.org
-    (require 'keymaps)
-    (require 'packages)
-    ;; The previous (require 'packages) has been replaced by loading package_configs.el below.
+  (require 'example)
+  (require 'keymaps)
+  (require 'configs) 
+  (require 'packages) 
+  (require 'package_configs)  ;; Load package configurations 
+#+end_src
+
+** load the packages from packages.el  
+#+begin_src emacs-lisp
+    ;; (load "~/.configs/emacs/lisp/packages.el")
 #+end_src
 
 ** Using the file
@@ -56,11 +61,22 @@
 #+begin_src emacs-lisp
   (defun my/org-auto-tangle ()
     "Automatically tangle the org file if it contains a tangle header."
-    (when (and (buffer-file-name)
-               (string-suffix-p ".org" (buffer-file-name)))
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
-  
+    (when (string-match "#\\+auto_tangle: t" (buffer-string))
+      (org-babel-tangle)))
+
   (add-hook 'after-save-hook #'my/org-auto-tangle)
 #+end_src
 
+* Other Packages
+** Nerd Icons
+** Git
+** Corfu
+** Cape
+** Orderless
+** Vertico and Marginalia
+** Consult
+** Diminish
+** Rainbow Delimiters
+** Which-Key
+
+* Runtime Performance
