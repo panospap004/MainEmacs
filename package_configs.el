@@ -1,6 +1,3 @@
-;;; package_configs.el --- Package configurations
-
-;;; Theme and Modeline
 (use-package gruvbox-theme
   :config
   (load-theme 'gruvbox-dark-medium t))
@@ -13,10 +10,8 @@
   (doom-modeline-persp-name t)
   (doom-modeline-persp-icon t))
 
-;;; Development Packages
 (use-package projectile
-  :init
-  (projectile-mode)
+  :init (projectile-mode)
   :custom
   (projectile-run-use-comint-mode t)
   (projectile-switch-project-action #'projectile-dired)
@@ -36,7 +31,6 @@
 (use-package eat
   :hook ('eshell-load-hook #'eat-eshell-mode))
 
-;;; Other Packages
 (use-package nerd-icons
   :if (display-graphic-p))
 
@@ -66,8 +60,7 @@
   (completion-ignore-case t)
   (tab-always-indent 'complete)
   (corfu-preview-current nil)
-  :init
-  (global-corfu-mode))
+  :init (global-corfu-mode))
 
 (use-package nerd-icons-corfu
   :after corfu
@@ -88,20 +81,16 @@
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package vertico
-  :init
-  (vertico-mode))
+  :init (vertico-mode))
 
 (use-package marginalia
   :after vertico
-  :init
-  (marginalia-mode))
+  :init (marginalia-mode))
 
 (use-package nerd-icons-completion
   :after marginalia
-  :config
-  (nerd-icons-completion-mode)
-  :hook
-  ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
+  :config (nerd-icons-completion-mode)
+  :hook ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
 
 (use-package consult
   :hook (completion-list-mode . consult-preview-at-point-mode)
@@ -120,8 +109,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package which-key
-  :init
-  (which-key-mode 1)
+  :init (which-key-mode 1)
   :diminish
   :custom
   (which-key-side-window-location 'bottom)
@@ -133,15 +121,17 @@
   (which-key-max-description-length 25)
   (which-key-allow-imprecise-window-fit nil))
 
-;;; package_configs.el ends here
-
 (use-package toc-org
   :commands toc-org-enable
   :hook (org-mode . toc-org-mode))
 
 (use-package org-superstar
   :after org
-  :hook (org-mode . org-superstar-mode))
+  :hook (org-mode . org-superstar-mode)
+  :custom
+  (org-hide-leading-stars t)
+  (org-superstar-remove-leading-stars t)
+  (org-superstar-headline-bullets-list '("●" "○" "■" "●" "○" "■")))
 
 (use-package org
   :ensure nil

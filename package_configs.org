@@ -1,172 +1,212 @@
- #+PROPERTY: header-args:emacs-lisp :tangle ./package_configs.el :mkdirp yes
+#+TITLE: Package Configurations
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.config/MainEmacs/package_configs.el :mkdirp yes
 
+* Theme and Modeline
+** Gruvbox Theme
 #+begin_src emacs-lisp
-;;; package_configs.el --- Package configurations
-
-;;; Theme and Modeline
-(use-package gruvbox-theme
-  :config
-  (load-theme 'gruvbox-dark-medium t))
-
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :custom
-  (doom-modeline-height 25)
-  (doom-modeline-bar-width 5)
-  (doom-modeline-persp-name t)
-  (doom-modeline-persp-icon t))
-
-;;; Development Packages
-(use-package projectile
-  :init
-  (projectile-mode)
-  :custom
-  (projectile-run-use-comint-mode t)
-  (projectile-switch-project-action #'projectile-dired)
-  (projectile-project-search-path '("~/projects/" "~/work/" ("~/github" . 1))))
-
-(use-package eglot
-  :ensure nil
-  :hook ((c-mode c++-mode lua-mode) . eglot-ensure)
-  :custom
-  (eglot-events-buffer-size 0)
-  (eglot-autoshutdown t)
-  (eglot-report-progress nil))
-
-(use-package yasnippet-snippets
-  :hook (prog-mode . yas-minor-mode))
-
-(use-package eat
-  :hook ('eshell-load-hook #'eat-eshell-mode))
-
-;;; Other Packages
-(use-package nerd-icons
-  :if (display-graphic-p))
-
-(use-package nerd-icons-dired
-  :hook (dired-mode . (lambda () (nerd-icons-dired-mode t))))
-
-(use-package nerd-icons-ibuffer
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
-
-(use-package magit
-  :commands magit-status)
-
-(use-package diff-hl
-  :hook ((dired-mode         . diff-hl-dired-mode-unless-remote)
-         (magit-pre-refresh  . diff-hl-magit-pre-refresh)
-         (magit-post-refresh . diff-hl-magit-post-refresh))
-  :init (global-diff-hl-mode))
-
-(use-package corfu
-  :custom
-  (corfu-cycle t)
-  (corfu-auto t)
-  (corfu-auto-prefix 2)
-  (corfu-popupinfo-mode t)
-  (corfu-popupinfo-delay 0.5)
-  (corfu-separator ?\s)
-  (completion-ignore-case t)
-  (tab-always-indent 'complete)
-  (corfu-preview-current nil)
-  :init
-  (global-corfu-mode))
-
-(use-package nerd-icons-corfu
-  :after corfu
-  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
-(use-package cape
-  :after corfu
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-dict)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
-
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
-(use-package vertico
-  :init
-  (vertico-mode))
-
-(use-package marginalia
-  :after vertico
-  :init
-  (marginalia-mode))
-
-(use-package nerd-icons-completion
-  :after marginalia
-  :config
-  (nerd-icons-completion-mode)
-  :hook
-  ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
-
-(use-package consult
-  :hook (completion-list-mode . consult-preview-at-point-mode)
-  :init
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
-  (advice-add #'register-preview :override #'consult-register-window)
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-  (autoload 'projectile-project-root "projectile")
-  (setq consult-project-function (lambda (_) (projectile-project-root))))
-
-(use-package diminish)
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package which-key
-  :init
-  (which-key-mode 1)
-  :diminish
-  :custom
-  (which-key-side-window-location 'bottom)
-  (which-key-sort-order #'which-key-key-order-alpha)
-  (which-key-sort-uppercase-first nil)
-  (which-key-add-column-padding 1)
-  (which-key-min-display-lines 6)
-  (which-key-idle-delay 0.8)
-  (which-key-max-description-length 25)
-  (which-key-allow-imprecise-window-fit nil))
-
-;;; package_configs.el ends here
-
+  (use-package gruvbox-theme
+    :config
+    (load-theme 'gruvbox-dark-medium t))
 #+end_src
 
-* Org Mode Configuration
+** Doom Modeline
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :init (doom-modeline-mode 1)
+    :custom
+    (doom-modeline-height 25)
+    (doom-modeline-bar-width 5)
+    (doom-modeline-persp-name t)
+    (doom-modeline-persp-icon t))
+#+end_src
+
+* Development Tools
+** Projectile
+#+begin_src emacs-lisp
+  (use-package projectile
+    :init (projectile-mode)
+    :custom
+    (projectile-run-use-comint-mode t)
+    (projectile-switch-project-action #'projectile-dired)
+    (projectile-project-search-path '("~/projects/" "~/work/" ("~/github" . 1))))
+#+end_src
+
+** Eglot
+#+begin_src emacs-lisp
+  (use-package eglot
+    :ensure nil
+    :hook ((c-mode c++-mode lua-mode) . eglot-ensure)
+    :custom
+    (eglot-events-buffer-size 0)
+    (eglot-autoshutdown t)
+    (eglot-report-progress nil))
+#+end_src
+
+** Yasnippet
+#+begin_src emacs-lisp
+  (use-package yasnippet-snippets
+    :hook (prog-mode . yas-minor-mode))
+#+end_src
+
+** Eat Terminal
+#+begin_src emacs-lisp
+  (use-package eat
+    :hook ('eshell-load-hook #'eat-eshell-mode))
+#+end_src
+
+* UI Enhancements
+** Nerd Icons
+#+begin_src emacs-lisp
+  (use-package nerd-icons
+    :if (display-graphic-p))
+
+  (use-package nerd-icons-dired
+    :hook (dired-mode . (lambda () (nerd-icons-dired-mode t))))
+
+  (use-package nerd-icons-ibuffer
+    :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+#+end_src
+
+** Magit and Diff
+#+begin_src emacs-lisp
+  (use-package magit
+    :commands magit-status)
+
+  (use-package diff-hl
+    :hook ((dired-mode         . diff-hl-dired-mode-unless-remote)
+           (magit-pre-refresh  . diff-hl-magit-pre-refresh)
+           (magit-post-refresh . diff-hl-magit-post-refresh))
+    :init (global-diff-hl-mode))
+#+end_src
+
+* Completion Framework
+** Corfu
+#+begin_src emacs-lisp
+  (use-package corfu
+    :custom
+    (corfu-cycle t)
+    (corfu-auto t)
+    (corfu-auto-prefix 2)
+    (corfu-popupinfo-mode t)
+    (corfu-popupinfo-delay 0.5)
+    (corfu-separator ?\s)
+    (completion-ignore-case t)
+    (tab-always-indent 'complete)
+    (corfu-preview-current nil)
+    :init (global-corfu-mode))
+
+  (use-package nerd-icons-corfu
+    :after corfu
+    :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+#+end_src
+
+** Cape
+#+begin_src emacs-lisp
+  (use-package cape
+    :after corfu
+    :init
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+    (add-to-list 'completion-at-point-functions #'cape-dict)
+    (add-to-list 'completion-at-point-functions #'cape-file)
+    (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+    (add-to-list 'completion-at-point-functions #'cape-keyword))
+#+end_src
+
+** Orderless
+#+begin_src emacs-lisp
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+* Search and Navigation
+** Vertico and Marginalia
+#+begin_src emacs-lisp
+  (use-package vertico
+    :init (vertico-mode))
+
+  (use-package marginalia
+    :after vertico
+    :init (marginalia-mode))
+
+  (use-package nerd-icons-completion
+    :after marginalia
+    :config (nerd-icons-completion-mode)
+    :hook ('marginalia-mode-hook . 'nerd-icons-completion-marginalia-setup))
+#+end_src
+
+** Consult
+#+begin_src emacs-lisp
+  (use-package consult
+    :hook (completion-list-mode . consult-preview-at-point-mode)
+    :init
+    (setq register-preview-delay 0.5
+          register-preview-function #'consult-register-format)
+    (advice-add #'register-preview :override #'consult-register-window)
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref)
+    (autoload 'projectile-project-root "projectile")
+    (setq consult-project-function (lambda (_) (projectile-project-root))))
+#+end_src
+
+* Quality of Life
+** Diminish
+#+begin_src emacs-lisp
+  (use-package diminish)
+#+end_src
+
+** Rainbow Delimiters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+** Which-Key
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init (which-key-mode 1)
+    :diminish
+    :custom
+    (which-key-side-window-location 'bottom)
+    (which-key-sort-order #'which-key-key-order-alpha)
+    (which-key-sort-uppercase-first nil)
+    (which-key-add-column-padding 1)
+    (which-key-min-display-lines 6)
+    (which-key-idle-delay 0.8)
+    (which-key-max-description-length 25)
+    (which-key-allow-imprecise-window-fit nil))
+#+end_src
+
+* Org Mode
 ** Table of Contents
 #+begin_src emacs-lisp
-    (use-package toc-org
-      :commands toc-org-enable
-      :hook (org-mode . toc-org-mode))
+  (use-package toc-org
+    :commands toc-org-enable
+    :hook (org-mode . toc-org-mode))
 #+end_src
 
 ** Org Superstar
-Prettify headings and plain lists in Org mode.
 #+begin_src emacs-lisp
-    (use-package org-superstar
-      :after org
-      :hook (org-mode . org-superstar-mode))
+  (use-package org-superstar
+    :after org
+    :hook (org-mode . org-superstar-mode)
+    :custom
+    (org-hide-leading-stars t)
+    (org-superstar-remove-leading-stars t)
+    (org-superstar-headline-bullets-list '("●" "○" "■" "●" "○" "■")))
 #+end_src
 
-** Source Code Block Tag Expansion
-Org-tempo enables easy expansion of source code blocks in Org mode.
+** Source Code Blocks
 #+begin_src emacs-lisp
-    (use-package org
-      :ensure nil
-      :custom
-      (org-edit-src-content-indentation 4)
-      :hook (org-mode . org-indent-mode))
+  (use-package org
+    :ensure nil
+    :custom
+    (org-edit-src-content-indentation 4)
+    :hook (org-mode . org-indent-mode))
 #+end_src
 
-
+* Finalization
 #+begin_src emacs-lisp
-    (provide 'package_configs)
+  (provide 'package_configs)
 #+end_src

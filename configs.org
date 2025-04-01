@@ -1,80 +1,110 @@
- #+PROPERTY: header-args:emacs-lisp :tangle ./configs.el :mkdirp yes
+#+TITLE: General Emacs Configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.config/MainEmacs/configs.el :mkdirp yes
 
+* Introduction
 #+begin_src emacs-lisp
-;;; configs.el --- Non-package Emacs configuration
+  ;; Non-package core Emacs configuration
+  ;; Contains only general settings unrelated to packages or keybindings
+#+end_src
 
-;; Increase GC threshold during startup for performance.
-(setq gc-cons-threshold (* 50 1000 1000))
+* Startup Optimization
+Optimize startup performance with GC threshold adjustments
+#+begin_src emacs-lisp
+  (setq gc-cons-threshold (* 50 1000 1000))  ; 50MB during startup
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq gc-cons-threshold (* 2 1000 1000))))  ; 2MB after startup
+#+end_src
 
-;; Auto-tangle the Org configuration when saving.
-(defun start/org-babel-tangle-config ()
-  "Automatically tangle our Emacs.org config file when we save it.
-Credit to Emacs From Scratch."
-  (when (string-equal (file-name-directory (buffer-file-name))
+* Core Defaults
+Essential Emacs behavior modifications
+#+begin_src emacs-lisp
+  ;; UI elements
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (blink-cursor-mode -1)
+
+  ;; Editing enhancements
+  (delete-selection-mode 1)
+  (electric-indent-mode -1)
+  (electric-pair-mode 1)
+  (global-auto-revert-mode 1)
+
+  ;; File management
+  (setq make-backup-files nil
+        auto-save-default nil
+        tab-width 4)
+
+  ;; Code folding
+  (add-hook 'prog-mode-hook #'hs-minor-mode)
+
+  ;; Custom variables storage
+  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+  (load custom-file 'noerror 'nomessage)
+#+end_src
+
+* Appearance
+Visual configuration and theming
+** Base Settings
+#+begin_src emacs-lisp
+  ;; Transparency (Emacs 29+)
+  (add-to-list 'default-frame-alist '(alpha-background . 100))
+
+  ;; Font configuration
+  ;; (set-face-attribute 'default nil
+                      ;; :font "JetBrains Mono"
+                      ;; :height 120
+                      ;; :weight 'medium)
+  ;; (setq-default line-spacing 0.12)
+ ;; Set default font and line spacing.
+ (set-face-attribute 'default nil :height 120 :weight 'medium)
+ (add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+ (add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+ (setq-default line-spacing 0.12)
+
+#+end_src
+
+** Modeline
+Doom modeline configuration (theme handled in package_configs.org)
+#+begin_src emacs-lisp
+  (setq doom-modeline-height 25
+        doom-modeline-bar-width 5
+        doom-modeline-persp-name t
+        doom-modeline-persp-icon t)
+#+end_src
+
+* Runtime Enhancements
+Performance and behavior tweaks
+#+begin_src emacs-lisp
+  ;; Process handling
+  (setq read-process-output-max (* 1024 1024))  ; 1MB
+
+  ;; Scrolling behavior
+  (setq mouse-wheel-progressive-speed nil
+        scroll-conservatively 10)
+
+  ;; Line numbers
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode 1)
+#+end_src
+
+* Auto-Tangle
+Self-maintaining configuration
+#+begin_src emacs-lisp
+  (defun start/org-babel-tangle-config ()
+    "Auto-tangle config.org when saved"
+    (when (string-equal (file-name-directory (buffer-file-name))
                         (expand-file-name user-emacs-directory))
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'start/org-babel-tangle-config)))
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
 
-;; === Good Defaults ===
-;; Disable unnecessary UI elements.
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-
-;; Enable delete-selection-mode so typed text replaces selected text.
-(delete-selection-mode 1)
-
-;; Adjust automatic indenting and pairing.
-(electric-indent-mode -1)
-(electric-pair-mode 1)
-
-;; Disable cursor blinking.
-(blink-cursor-mode -1)
-
-;; Auto-reload files when they change on disk.
-(global-auto-revert-mode 1)
-
-;; Use relative line numbers.
-(setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode 1)
-
-;; Smooth scrolling and mouse wheel behavior.
-(setq mouse-wheel-progressive-speed nil)
-(setq scroll-conservatively 10)
-
-;; Set tab width.
-(setq tab-width 4)
-
-;; Disable creation of backup and auto-save files.
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-
-;; Load a separate custom file if it exists.
-(setq custom-file (locate-user-emacs-file "custom-vars.el"))
-(load custom-file 'noerror 'nomessage)
-
-;; === Appearance Adjustments ===
-;; Set transparency for all new frames.
-(add-to-list 'default-frame-alist '(alpha-background . 100))
-
-;; Set default font and line spacing.
-(set-face-attribute 'default nil :height 120 :weight 'medium)
-(add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
-(add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
-(setq-default line-spacing 0.12)
-
-;; === Runtime Performance ===
-;; Once Emacs finishes startup, dial the GC threshold back down and increase process output.
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (* 2 1000 1000))
-            (setq read-process-output-max (* 1024 1024))))  ;; 1MB
-
-;;; configs.el ends here
-
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (add-hook 'after-save-hook #'start/org-babel-tangle-config nil t)))
 #+end_src
 
 #+begin_src emacs-lisp
-    (provide 'configs)
+  (provide 'configs)
 #+end_src
+
