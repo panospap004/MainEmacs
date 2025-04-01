@@ -158,19 +158,33 @@
            (content (with-temp-buffer
                       (insert-file-contents ascii-file)
                       (buffer-string)))
-           ;; Split on lines that contain exactly three dashes
            (banners (split-string content "\n---\n" t)))
       (when banners
         (let* ((banner (nth (random (length banners)) banners))
-               ;; Write banner to a temporary .txt file
                (tmp-banner-file (make-temp-file "dashboard-banner-" nil ".txt")))
           (with-temp-file tmp-banner-file
             (insert banner))
-          ;; Set the dashboard banner to the temporary file
           (setq dashboard-startup-banner tmp-banner-file)))))
+
+  ;; Set banner font and prevent stretching
+  (set-face-attribute 'dashboard-text-banner nil 
+                      :family "Monospace") ; Maintain character proportions [[9]]
+
+  ;; Add margin adjustment and recentering after banner insertion
+  (defun my/adjust-banner-layout ()
+    "Fix centering and margins after banner insertion."
+    (setq-local left-margin-width 8)   ; Adjust based on your art's width [[5]]
+    (setq-local right-margin-width 8)
+    (recenter-top-bottom))             ; Force vertical recentering [[1]][[10]]
+
+  ;; Hook layout adjustment after banner insertion
+  (advice-add 'dashboard-insert-banner :after #'my/adjust-banner-layout)
 
   ;; Advise dashboard-insert-banner to run our randomization each time
   (advice-add 'dashboard-insert-banner :before #'my/dashboard-set-random-banner)
+
+  ;; Set the banner title (separate from banner text)
+  (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
 
   ;; Define dashboard items
   (setq dashboard-items '((recents   . 5)
@@ -178,34 +192,14 @@
                           (projects  . 5)
                           (agenda    . 5)))
 
-  ;; Define custom shortcut keys
-  (setq dashboard-item-shortcuts '((recents   . "r")
-                                   (bookmarks . "m")
-                                   (projects  . "p")
-                                   (agenda    . "a")))
-
-  ;; Function to insert a shortcut key before each section
-  (defun my/dashboard-insert-shortcut (list-size list-display-name list-name)
-    "Insert a shortcut key before each section."
-    (let ((shortcut (cdr (assoc list-name dashboard-item-shortcuts))))
-      (when shortcut
-        (insert (format "[%s] %s\n" shortcut list-display-name)))))
-
-  ;; Add the shortcut insertion function to the dashboard's item generators
-  (setq dashboard-item-generators
-        '((recents   . (lambda (list-size) (my/dashboard-insert-shortcut list-size "Recent Files" 'recents) (dashboard-insert-recents list-size)))
-          (bookmarks . (lambda (list-size) (my/dashboard-insert-shortcut list-size "Bookmarks" 'bookmarks) (dashboard-insert-bookmarks list-size)))
-          (projects  . (lambda (list-size) (my/dashboard-insert-shortcut list-size "Projects" 'projects) (dashboard-insert-projects list-size)))
-          (agenda    . (lambda (list-size) (my/dashboard-insert-shortcut list-size "Agenda" 'agenda) (dashboard-insert-agenda list-size)))))
-
-  ;; Set up dashboard on startup
+  ;; Set up the dashboard
   (dashboard-setup-startup-hook))
 
 ;; Ensure that when Emacs starts (or when using emacsclient without a file),
-;; the dashboard is shown
+;; the dashboard is shown.
 (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 
-;; Function to refresh the dashboard buffer in new frames
+;; Function to refresh the dashboard buffer in new frames.
 (defun my/refresh-dashboard-on-new-frame (frame)
   "Refresh the dashboard buffer in FRAME if it's already open."
   (with-selected-frame frame
@@ -213,10 +207,10 @@
       (with-current-buffer dashboard-buffer-name
         (dashboard-refresh-buffer)))))
 
-;; Hook to refresh the dashboard when a new frame is created
+;; Hook to refresh the dashboard when a new frame is created.
 (add-hook 'after-make-frame-functions #'my/refresh-dashboard-on-new-frame)
 
-;; Function to open the dashboard in new frames if the current buffer is *scratch*
+;; Function to open the dashboard in new frames if the current buffer is *scratch*.
 (defun my/open-dashboard-if-default-buffer (frame)
   "In FRAME, if the current buffer is *scratch* and no file is open, open the dashboard."
   (with-selected-frame frame
@@ -224,7 +218,7 @@
                (not buffer-file-name))
       (dashboard-open))))
 
-;; Hook to open the dashboard in new frames when appropriate
+;; Hook to open the dashboard in new frames when appropriate.
 (add-hook 'after-make-frame-functions #'my/open-dashboard-if-default-buffer)
 
 (provide 'package_configs)

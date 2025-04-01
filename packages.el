@@ -36,6 +36,7 @@
 (use-package doom-modeline)
 (use-package catppuccin-theme)
 (use-package dashboard)
+(use-package all-the-icons :ensure t)
 
 (use-package corfu)
 (use-package nerd-icons-corfu)
