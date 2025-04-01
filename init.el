@@ -8,13 +8,17 @@
 ;; (load "~/.configs/emacs/lisp/emacs-settings.el")
 
 (setq user-emacs-directory "~/.config/MainEmacs/")
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-(require 'example)
-(require 'keymaps)
-(require 'configs) 
-(require 'packages) 
-(require 'package_configs)  ;; Load package configurations
+;;(require 'example)
+;;(require 'keymaps)
+;;(require 'configs) 
+;;(require 'packages) 
+;;(require 'package_configs)  ;; Load package configurations 
+(load (expand-file-name "example.el" user-emacs-directory))
+(load (expand-file-name "keymaps.el" user-emacs-directory))
+(load (expand-file-name "configs.el" user-emacs-directory))
+(load (expand-file-name "packages.el" user-emacs-directory))
+(load (expand-file-name "package_configs.el" user-emacs-directory))
 
 ;; (load "~/.configs/emacs/lisp/packages.el")
 

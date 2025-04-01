@@ -1,6 +1,3 @@
-#+TANGLE: lisp/package_configs.el
-
-#+begin_src emacs-lisp :tangle package_configs.el
 ;;; package_configs.el --- Package configurations
 
 ;;; Theme and Modeline
@@ -138,8 +135,18 @@
 
 ;;; package_configs.el ends here
 
-#+end_src
+(use-package toc-org
+  :commands toc-org-enable
+  :hook (org-mode . toc-org-mode))
 
-#+begin_src emacs-lisp :tangle package_configs.el
-    (provide 'package_configs)
-#+end_src
+(use-package org-superstar
+  :after org
+  :hook (org-mode . org-superstar-mode))
+
+(use-package org
+  :ensure nil
+  :custom
+  (org-edit-src-content-indentation 4)
+  :hook (org-mode . org-indent-mode))
+
+(provide 'package_configs)

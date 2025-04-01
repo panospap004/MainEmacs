@@ -35,16 +35,20 @@
 ** Adding the lisp directory to load-path
 #+begin_src emacs-lisp
   (setq user-emacs-directory "~/.config/MainEmacs/")
-  (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 #+end_src
 
 ** Sourcing the files
 #+begin_src emacs-lisp
-  (require 'example)
-  (require 'keymaps)
-  (require 'configs) 
-  (require 'packages) 
-  (require 'package_configs)  ;; Load package configurations 
+  ;;(require 'example)
+  ;;(require 'keymaps)
+  ;;(require 'configs) 
+  ;;(require 'packages) 
+  ;;(require 'package_configs)  ;; Load package configurations 
+  (load (expand-file-name "example.el" user-emacs-directory))
+  (load (expand-file-name "keymaps.el" user-emacs-directory))
+  (load (expand-file-name "configs.el" user-emacs-directory))
+  (load (expand-file-name "packages.el" user-emacs-directory))
+  (load (expand-file-name "package_configs.el" user-emacs-directory))
 #+end_src
 
 ** load the packages from packages.el  
@@ -63,7 +67,7 @@
     "Automatically tangle the org file if it contains a tangle header."
     (when (string-match "#\\+auto_tangle: t" (buffer-string))
       (org-babel-tangle)))
-
+ 
   (add-hook 'after-save-hook #'my/org-auto-tangle)
 #+end_src
 
