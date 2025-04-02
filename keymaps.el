@@ -43,6 +43,11 @@
   (general-create-definer start/global-keys-no-insert
     :states '(normal visual motion emacs)
     :keymaps 'override)
+  
+  ;; Global keybinds definer (no prefix)
+  (general-create-definer start/global-keys-no-motion
+    :states '(normal visual insert emacs)
+    :keymaps 'override)
 
   ;; Code keybinds definer (no prefix)
   (general-create-definer start/Nvim-Keys
@@ -158,6 +163,7 @@
   (start/global-keys-no-insert
     "<escape>" 'keyboard-escape-quit
     "C-<tab>" 'switch-to-next-buffer
-    "C-S-<iso-lefttab>" 'switch-to-prev-buffer))
+    "C-S-<iso-lefttab>" 'switch-to-prev-buffer
+    "C-SPC p" 'projectile-command-map))
 
 (provide 'keymaps)

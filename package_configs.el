@@ -184,7 +184,30 @@
   :custom
   (org-hide-leading-stars t)
   (org-superstar-remove-leading-stars t)
-  (org-superstar-headline-bullets-list '("●" "○" "■" "●" "○" "■")))
+  (org-superstar-headline-bullets-list '("●" "○" "■" "●" "○" "■"))) ;; replace the * with this symbols
+  (setq org-hide-emphasis-markers t);; hide the * + _ ~ etc when you use them
+  (defun my/org-mode-header-font-setup () ;; the next 15 lines starting in this one make the headers larger
+    "Configure fonts and sizes for Org mode headers."
+(dolist (face-height '((org-level-1 . 1.4)
+                     (org-level-2 . 1.1)
+                     (org-level-3 . 1.05)
+                     (org-level-4 . 1.0)
+                     (org-level-5 . 1.1)
+                     (org-level-6 . 1.1)
+                     (org-level-7 . 1.1)
+                     (org-level-8 . 1.1)))
+            (set-face-attribute (car face-height) nil
+                    :font "MonaspiceRn Nerd Font"
+                    :weight 'bold
+                    :height (cdr face-height))))
+
+  (add-hook 'org-mode-hook #'my/org-mode-header-font-setup)
+
+(use-package olivetti
+  :ensure t
+  :hook (org-mode . olivetti-mode)
+  :custom
+  (olivetti-body-width 120))  ; Adjust 80 to your preferred text width
 
 (use-package org
   :ensure nil
@@ -268,5 +291,21 @@
 
 ;; Hook to open the dashboard in new frames when appropriate.
 (add-hook 'after-make-frame-functions #'my/open-dashboard-if-default-buffer)
+
+;; undo-tree setup
+(use-package undo-tree
+  :ensure t
+  :init
+  (global-undo-tree-mode 1) ;; Enable undo-tree globally
+  :config
+  (setq undo-tree-history-directory-alist '(("." . "~/.config/MainEmacs/undo-history/"))) ;; Set directory for undo history files
+  (setq undo-tree-auto-save-history t)) ;; Auto-save undo history
+
+;; undo-fu setup
+(use-package undo-fu
+  :ensure t
+  :init
+  (define-key evil-normal-state-map "u" 'undo-fu-only-undo) ;; Example: Bind undo to 'u' in Evil mode
+  (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)) ;; Example: Bind redo to 'Ctrl-r' in Evil mode
 
 (provide 'package_configs)

@@ -85,4 +85,15 @@
           (lambda ()
             (add-hook 'after-save-hook #'start/org-babel-tangle-config nil t)))
 
+;; Set Hunspell as the spell-checker
+(setq ispell-program-name "hunspell")
+
+;; Set dictionary to American English
+(setq ispell-dictionary "en_US")
+
+;; Optional: Explicitly set dictionary path (usually not needed on Arch)
+(setenv "DICPATH" "/usr/share/hunspell/")
+
+(setq ispell-program-name "/usr/bin/hunspell")  ; Explicit path
+
 (provide 'configs)
