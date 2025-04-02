@@ -32,14 +32,69 @@
 (use-package general
   :config
   (general-evil-setup)
-  ;; Create a definer for your leader key.
+  ;; Leader key definer
   (general-create-definer start/leader-keys
     :states '(normal insert visual motion emacs)
     :keymaps 'override
-    :prefix "SPC"           ;; Set leader key to SPC
-    :global-prefix "C-SPC") ;; Also available via C-SPC
+    :prefix "SPC"
+    :global-prefix "C-SPC")
 
-  ;; Global keybindings using the leader key:
+  ;; Global keybinds definer (no prefix)
+  (general-create-definer start/global-keys-no-insert
+    :states '(normal visual motion emacs)
+    :keymaps 'override)
+
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys
+    :states '(normal insert visual)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-insert-only
+    :states '(insert)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-visual-only
+    :states '(visual)
+    :keymaps 'override)
+
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-normal-only
+    :states '(normal)
+    :keymaps 'override)
+
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-normal-and-visual
+    :states '(normal visual)
+    :keymaps 'override)
+
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-normal-and-insert
+    :states '(normal insert)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-visual-insert
+    :states '(insert visual)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/emacs-only
+    :states '(emacs)
+    :keymaps 'override)
+
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/motion-only
+    :states '(motion)
+    :keymaps 'override)
+
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/emacs-motion
+    :states '(emacs motion)
+    :keymaps 'override)
+
+  ;; Global keybindings using the leadeir key:
   (start/leader-keys
     "." '(find-file :wk "Find file")
     "TAB" '(comment-line :wk "Comment lines")
@@ -97,11 +152,12 @@
   (start/leader-keys
     "t" '(:ignore t :wk "Toggle")
     "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
-    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")))
-  
-  ;; make escape to use ot exit on command prompts
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (global-set-key (kbd "C-<tab>") 'switch-to-next-buffer)
-  (global-set-key (kbd "C-S-<iso-lefttab>") 'switch-to-prev-buffer)
+    "t l" '(display-line-numbers-mode :wk "Toggle line numbers"))
+
+  ;; Global keybindings (no leader prefix)
+  (start/global-keys-no-insert
+    "<escape>" 'keyboard-escape-quit
+    "C-<tab>" 'switch-to-next-buffer
+    "C-S-<iso-lefttab>" 'switch-to-prev-buffer))
 
 (provide 'keymaps)
