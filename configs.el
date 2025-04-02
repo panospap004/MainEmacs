@@ -10,7 +10,7 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(blink-cursor-mode -1)
+(blink-cursor-mode 1)
 
 ;; Editing enhancements
 (delete-selection-mode 1)
@@ -21,7 +21,7 @@
 ;; File management
 (setq make-backup-files nil
       auto-save-default nil
-      tab-width 4)
+      tab-width 2)
 
 ;; Code folding
 (add-hook 'prog-mode-hook #'hs-minor-mode)
@@ -29,6 +29,12 @@
 ;; Custom variables storage
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
+
+;; Kill scratch buffer for default 
+(kill-buffer "*scratch*")
+
+;; Make emacs not blink
+(setq visible-bell nil)
 
 ;; Transparency (Emacs 29+)
  (add-to-list 'default-frame-alist '(alpha-background . 100))
@@ -40,7 +46,7 @@
                      ;; :weight 'medium)
  ;; (setq-default line-spacing 0.12)
 ;; Set default font and line spacing.
-(set-face-attribute 'default nil :height 120 :weight 'medium)
+(set-face-attribute 'default nil :height 115)
 (add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
 (add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
 (setq-default line-spacing 0.12)
@@ -60,6 +66,13 @@
 ;; Line numbers
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
+;; remove the line numbers for cairtain buffers you can find the hooks with ctrl+h+v
+(dolist (mode '(
+                shell-mode-hook
+                eat-mode-hook
+		dashboard-mode-hook
+                ))
+   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (defun start/org-babel-tangle-config ()
   "Auto-tangle config.org when saved"

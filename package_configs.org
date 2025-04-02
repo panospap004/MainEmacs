@@ -4,25 +4,73 @@
 * Theme and Modeline
 ** Gruvbox Theme
 #+begin_src emacs-lisp
-        ;; (use-package gruvbox-theme
-        ;;   :config
-        ;;   (load-theme 'gruvbox-dark-medium t))
-        (use-package catppuccin-theme 
-        :config
-        (load-theme 'catppuccin t)
-        (setq catppuccin-flavor 'macchiato) ;; or 'latte, 'macchiato, or 'mocha, or 'frappe
-        (catppuccin-reload))
+      (use-package gruvbox-theme)
+      ;;   :config
+      ;;   (load-theme 'gruvbox-dark-medium t))
+      (use-package catppuccin-theme 
+       :config
+       (load-theme 'catppuccin t)
+       (setq catppuccin-flavor 'macchiato) ;; or 'latte, 'macchiato, or 'mocha, or 'frappe
+       (catppuccin-reload))
+      (use-package doom-themes
+        ;; :ensure t
+        ;; :config
+        ;; Global settings (defaults)
+        ;; (load-theme 'doom-moonlight t)
+      )
 #+end_src
 
 ** Doom Modeline
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-    :init (doom-modeline-mode 1)
-    :custom
-    (doom-modeline-height 25)
-    (doom-modeline-bar-width 5)
-    (doom-modeline-persp-name t)
-    (doom-modeline-persp-icon t))
+    ;; (use-package doom-modeline
+    ;;   :init (doom-modeline-mode 1)
+    ;;   :custom
+    ;;   (doom-modeline-height 25)
+    ;;   (doom-modeline-bar-width 5)
+    ;;   (doom-modeline-persp-name t)
+    ;;   (doom-modeline-persp-icon t))
+(use-package doom-modeline
+  :ensure t
+  :init
+  ;; Basic settings
+  (setq doom-modeline-height 25
+        doom-modeline-bar-width 6
+        doom-modeline-github nil  ;; Disable GitHub integration
+        doom-modeline-mu4e nil
+        doom-modeline-gnus nil
+        doom-modeline-irc nil
+        doom-modeline-time t  ;; Enable time display [[3]][[7]]
+        doom-modeline-display-default-persp-name nil)
+
+  ;; Git integration
+  (setq doom-modeline-git t  ;; Show Git branch [[3]][[7]]
+        doom-modeline-buffer-file-name-style 'relative)
+
+  ;; Diagnostics (Flycheck)
+  (setq doom-modeline-checker t)  ;; Show error/warning counts [[3]][[7]]
+
+  ;; Copilot status segment
+  (setq doom-modeline-additional-segments
+        '(("copilot" (:eval (if (bound-and-true-p copilot-mode)
+                                (propertize "  " 'face '(:foreground "#81B29A"))
+                              (propertize "  " 'face '(:foreground "#81B29A")))))))
+
+  :config
+  (doom-modeline-mode 1)
+
+  ;; Fix display issues [[4]][[8]]
+  (setq-default mode-line-format
+                (append mode-line-format
+                        '((:eval (doom-modeline-format--main)))))
+
+  ;; Font configuration (adjust based on your setup) [[5]][[9]]
+  (when (display-graphic-p)
+    (set-face-attribute 'doom-modeline-buffer-path nil :font "JetBrains Mono 10")
+    (set-face-attribute 'doom-modeline-buffer-file nil :font "JetBrains Mono 10"))
+
+  ;; Git diff counts (might need additional setup)
+  (setq doom-modeline-git-show-details t)
+  (setq doom-modeline-git-show-count t))
 #+end_src
 
 * Development Tools

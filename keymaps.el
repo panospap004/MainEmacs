@@ -98,5 +98,10 @@
     "t" '(:ignore t :wk "Toggle")
     "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")))
+  
+  ;; make escape to use ot exit on command prompts
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-set-key (kbd "C-<tab>") 'switch-to-next-buffer)
+  (global-set-key (kbd "C-S-<iso-lefttab>") 'switch-to-prev-buffer)
 
 (provide 'keymaps)

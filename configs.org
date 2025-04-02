@@ -19,29 +19,36 @@ Optimize startup performance with GC threshold adjustments
 * Core Defaults
 Essential Emacs behavior modifications
 #+begin_src emacs-lisp
-  ;; UI elements
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (blink-cursor-mode -1)
+    ;; UI elements
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (blink-cursor-mode 1)
 
-  ;; Editing enhancements
-  (delete-selection-mode 1)
-  (electric-indent-mode -1)
-  (electric-pair-mode 1)
-  (global-auto-revert-mode 1)
+    ;; Editing enhancements
+    (delete-selection-mode 1)
+    (electric-indent-mode -1)
+    (electric-pair-mode 1)
+    (global-auto-revert-mode 1)
 
-  ;; File management
-  (setq make-backup-files nil
-        auto-save-default nil
-        tab-width 4)
+    ;; File management
+    (setq make-backup-files nil
+          auto-save-default nil
+          tab-width 2)
 
-  ;; Code folding
-  (add-hook 'prog-mode-hook #'hs-minor-mode)
+    ;; Code folding
+    (add-hook 'prog-mode-hook #'hs-minor-mode)
 
-  ;; Custom variables storage
-  (setq custom-file (locate-user-emacs-file "custom-vars.el"))
-  (load custom-file 'noerror 'nomessage)
+    ;; Custom variables storage
+    (setq custom-file (locate-user-emacs-file "custom-vars.el"))
+    (load custom-file 'noerror 'nomessage)
+
+    ;; Kill scratch buffer for default 
+    (kill-buffer "*scratch*")
+
+    ;; Make emacs not blink
+    (setq visible-bell nil)
+
 #+end_src
 
 * Appearance
@@ -58,7 +65,7 @@ Visual configuration and theming
                       ;; :weight 'medium)
   ;; (setq-default line-spacing 0.12)
  ;; Set default font and line spacing.
- (set-face-attribute 'default nil :height 120 :weight 'medium)
+ (set-face-attribute 'default nil :height 115)
  (add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
  (add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
  (setq-default line-spacing 0.12)
@@ -77,16 +84,23 @@ Doom modeline configuration (theme handled in package_configs.org)
 * Runtime Enhancements
 Performance and behavior tweaks
 #+begin_src emacs-lisp
-  ;; Process handling
-  (setq read-process-output-max (* 1024 1024))  ; 1MB
+    ;; Process handling
+    (setq read-process-output-max (* 1024 1024))  ; 1MB
 
-  ;; Scrolling behavior
-  (setq mouse-wheel-progressive-speed nil
-        scroll-conservatively 10)
+    ;; Scrolling behavior
+    (setq mouse-wheel-progressive-speed nil
+          scroll-conservatively 10)
 
-  ;; Line numbers
-  (setq display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode 1)
+    ;; Line numbers
+    (setq display-line-numbers-type 'relative)
+    (global-display-line-numbers-mode 1)
+    ;; remove the line numbers for cairtain buffers you can find the hooks with ctrl+h+v
+    (dolist (mode '(
+                    shell-mode-hook
+                    eat-mode-hook
+    		dashboard-mode-hook
+                    ))
+       (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
 
 * Auto-Tangle
