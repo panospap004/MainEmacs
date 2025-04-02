@@ -184,7 +184,7 @@
   (advice-add 'dashboard-insert-banner :before #'my/dashboard-set-random-banner)
 
   ;; Set the banner title (separate from banner text)
-  (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
+  (setq dashboard-banner-logo-title "")
 
   ;; Define dashboard items
   (setq dashboard-items '((recents   . 5)

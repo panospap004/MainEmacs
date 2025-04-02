@@ -212,82 +212,82 @@
 #+end_src
 ** Dashboard
 #+begin_src emacs-lisp
-(use-package dashboard
-  :ensure t
-  :config
-  ;; Center dashboard content
-  (setq dashboard-center-content t
-        dashboard-vertically-center-content t)
+    (use-package dashboard
+      :ensure t
+      :config
+      ;; Center dashboard content
+      (setq dashboard-center-content t
+            dashboard-vertically-center-content t)
 
-  ;; Function to load a random ASCII banner from your ASCII.txt file
-  (defun my/dashboard-set-random-banner ()
-    "Set a random ASCII banner for dashboard from ASCII.txt."
-    (let* ((ascii-file (expand-file-name "~/.config/MainEmacs/ASCII.txt"))
-           (content (with-temp-buffer
-                      (insert-file-contents ascii-file)
-                      (buffer-string)))
-           (banners (split-string content "\n---\n" t)))
-      (when banners
-        (let* ((banner (nth (random (length banners)) banners))
-               (tmp-banner-file (make-temp-file "dashboard-banner-" nil ".txt")))
-          (with-temp-file tmp-banner-file
-            (insert banner))
-          (setq dashboard-startup-banner tmp-banner-file)))))
+      ;; Function to load a random ASCII banner from your ASCII.txt file
+      (defun my/dashboard-set-random-banner ()
+        "Set a random ASCII banner for dashboard from ASCII.txt."
+        (let* ((ascii-file (expand-file-name "~/.config/MainEmacs/ASCII.txt"))
+               (content (with-temp-buffer
+                          (insert-file-contents ascii-file)
+                          (buffer-string)))
+               (banners (split-string content "\n---\n" t)))
+          (when banners
+            (let* ((banner (nth (random (length banners)) banners))
+                   (tmp-banner-file (make-temp-file "dashboard-banner-" nil ".txt")))
+              (with-temp-file tmp-banner-file
+                (insert banner))
+              (setq dashboard-startup-banner tmp-banner-file)))))
 
-  ;; Set banner font and prevent stretching
-  (set-face-attribute 'dashboard-text-banner nil 
-                      :family "Monospace") ; Maintain character proportions [[9]]
+      ;; Set banner font and prevent stretching
+      (set-face-attribute 'dashboard-text-banner nil 
+                          :family "Monospace") ; Maintain character proportions [[9]]
 
-  ;; Add margin adjustment and recentering after banner insertion
-  (defun my/adjust-banner-layout ()
-    "Fix centering and margins after banner insertion."
-    (setq-local left-margin-width 8)   ; Adjust based on your art's width [[5]]
-    (setq-local right-margin-width 8)
-    (recenter-top-bottom))             ; Force vertical recentering [[1]][[10]]
+      ;; Add margin adjustment and recentering after banner insertion
+      (defun my/adjust-banner-layout ()
+        "Fix centering and margins after banner insertion."
+        (setq-local left-margin-width 8)   ; Adjust based on your art's width [[5]]
+        (setq-local right-margin-width 8)
+        (recenter-top-bottom))             ; Force vertical recentering [[1]][[10]]
 
-  ;; Hook layout adjustment after banner insertion
-  (advice-add 'dashboard-insert-banner :after #'my/adjust-banner-layout)
+      ;; Hook layout adjustment after banner insertion
+      (advice-add 'dashboard-insert-banner :after #'my/adjust-banner-layout)
 
-  ;; Advise dashboard-insert-banner to run our randomization each time
-  (advice-add 'dashboard-insert-banner :before #'my/dashboard-set-random-banner)
+      ;; Advise dashboard-insert-banner to run our randomization each time
+      (advice-add 'dashboard-insert-banner :before #'my/dashboard-set-random-banner)
 
-  ;; Set the banner title (separate from banner text)
-  (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
+      ;; Set the banner title (separate from banner text)
+      (setq dashboard-banner-logo-title "")
 
-  ;; Define dashboard items
-  (setq dashboard-items '((recents   . 5)
-                          (bookmarks . 5)
-                          (projects  . 5)
-                          (agenda    . 5)))
+      ;; Define dashboard items
+      (setq dashboard-items '((recents   . 5)
+                              (bookmarks . 5)
+                              (projects  . 5)
+                              (agenda    . 5)))
 
-  ;; Set up the dashboard
-  (dashboard-setup-startup-hook))
+      ;; Set up the dashboard
+      (dashboard-setup-startup-hook))
 
-;; Ensure that when Emacs starts (or when using emacsclient without a file),
-;; the dashboard is shown.
-(setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+    ;; Ensure that when Emacs starts (or when using emacsclient without a file),
+    ;; the dashboard is shown.
+    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 
-;; Function to refresh the dashboard buffer in new frames.
-(defun my/refresh-dashboard-on-new-frame (frame)
-  "Refresh the dashboard buffer in FRAME if it's already open."
-  (with-selected-frame frame
-    (when (get-buffer dashboard-buffer-name)
-      (with-current-buffer dashboard-buffer-name
-        (dashboard-refresh-buffer)))))
+    ;; Function to refresh the dashboard buffer in new frames.
+    (defun my/refresh-dashboard-on-new-frame (frame)
+      "Refresh the dashboard buffer in FRAME if it's already open."
+      (with-selected-frame frame
+        (when (get-buffer dashboard-buffer-name)
+          (with-current-buffer dashboard-buffer-name
+            (dashboard-refresh-buffer)))))
 
-;; Hook to refresh the dashboard when a new frame is created.
-(add-hook 'after-make-frame-functions #'my/refresh-dashboard-on-new-frame)
+    ;; Hook to refresh the dashboard when a new frame is created.
+    (add-hook 'after-make-frame-functions #'my/refresh-dashboard-on-new-frame)
 
-;; Function to open the dashboard in new frames if the current buffer is *scratch*.
-(defun my/open-dashboard-if-default-buffer (frame)
-  "In FRAME, if the current buffer is *scratch* and no file is open, open the dashboard."
-  (with-selected-frame frame
-    (when (and (string= (buffer-name) "*scratch*")
-               (not buffer-file-name))
-      (dashboard-open))))
+    ;; Function to open the dashboard in new frames if the current buffer is *scratch*.
+    (defun my/open-dashboard-if-default-buffer (frame)
+      "In FRAME, if the current buffer is *scratch* and no file is open, open the dashboard."
+      (with-selected-frame frame
+        (when (and (string= (buffer-name) "*scratch*")
+                   (not buffer-file-name))
+          (dashboard-open))))
 
-;; Hook to open the dashboard in new frames when appropriate.
-(add-hook 'after-make-frame-functions #'my/open-dashboard-if-default-buffer)
+    ;; Hook to open the dashboard in new frames when appropriate.
+    (add-hook 'after-make-frame-functions #'my/open-dashboard-if-default-buffer)
 #+end_src
 * Finalization
 #+begin_src emacs-lisp
