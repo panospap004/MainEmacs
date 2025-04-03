@@ -188,7 +188,7 @@
   (setq org-hide-emphasis-markers t);; hide the * + _ ~ etc when you use them
   (defun my/org-mode-header-font-setup () ;; the next 15 lines starting in this one make the headers larger
     "Configure fonts and sizes for Org mode headers."
-(dolist (face-height '((org-level-1 . 1.4)
+(dolist (face-height '((org-level-1 . 1.2)
                      (org-level-2 . 1.1)
                      (org-level-3 . 1.05)
                      (org-level-4 . 1.0)

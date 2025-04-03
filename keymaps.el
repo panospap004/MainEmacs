@@ -164,6 +164,10 @@
     "<escape>" 'keyboard-escape-quit
     "C-<tab>" 'switch-to-next-buffer
     "C-S-<iso-lefttab>" 'switch-to-prev-buffer
-    "C-SPC p" 'projectile-command-map))
+    "C-SPC p" 'projectile-command-map))      
+      
+  (start/emacs-motion			
+    "M-'" 'eval-expression				
+   )
 
 (provide 'keymaps)
