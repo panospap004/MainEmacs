@@ -150,33 +150,13 @@
 
 ;; Keybindings matching Neovim behavior
 (start/Nvim-Keys-visual-only
-  "S-<up>"   'my/evil-move-lines-up
-  "S-<down>" 'my/evil-move-lines-down)
-
-;; Keybindings matching Neovim behavior
-(start/Nvim-Keys-visual-only
-  "S-<up>"   'my/evil-move-lines-up
-  "S-<down>" 'my/evil-move-lines-down)
-
-;; Keybindings matching Neovim behavior
-(start/Nvim-Keys-visual-only
-  "S-<up>"   'my/evil-move-lines-up
-  "S-<down>" 'my/evil-move-lines-down)
-
-;; Keybindings matching Neovim behavior
-(start/Nvim-Keys-visual-only
-  "S-<up>"   'my/evil-move-lines-up
-  "S-<down>" 'my/evil-move-lines-down)
-
-;; Keybindings matching Neovim behavior
-(start/Nvim-Keys-visual-only
-  "S-<up>"   'my/evil-move-lines-up
-  "S-<down>" 'my/evil-move-lines-down)
-
-;; Bind keys in Normal and Visual modes
-(start/Nvim-Keys-normal-only
-  "S-<up>" 'my/evil-move-line-up
+  "S-<up>"   'my/evil-move-line-up
   "S-<down>" 'my/evil-move-line-down)
+
+;; Keybindings matching Neovim behavior
+(start/Nvim-Keys-visual-only
+  "S-<up>"   'my/evil-move-lines-up
+  "S-<down>" 'my/evil-move-lines-down)
 
           ;; Define functions for shifting left and right without restoring cursor position
           (defun my/evil-shift-right-and-restore ()
@@ -301,6 +281,21 @@
           ;;   "TAB" 'tab-to-tab-stop
           ;;   "S-TAB" 'corfu-next
           )
- )
+
+          (start/global
+            "C-<down>" 'evil-window-down   ;; Move to the window below
+            "C-<up>" 'evil-window-up       ;; Move to the window above
+            "C-<left>" 'evil-window-left   ;; Move to the window on the left
+            "C-<right>" 'evil-window-right ;; Move to the window on the right
+          )
+
+          (start/emacs-normal
+            "SPC q" 'kill-buffer-and-window
+          )
+
+          (start/Nvim-Keys-normal-only
+            "C-s" nil
+            "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
+          )
 
 (provide 'keymaps)
