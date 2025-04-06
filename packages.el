@@ -22,6 +22,10 @@
 (use-package eglot)
 (use-package yasnippet-snippets)
 (use-package eat)
+(use-package move-text
+  :ensure t
+  :config
+  (move-text-default-bindings))
 
 (use-package org)
 (use-package toc-org)

@@ -123,6 +123,100 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
           (general-create-definer start/emacs-motion
             :states '(emacs motion)
             :keymaps 'override)
+        
+          ;; Code keybinds definer (no prefix)
+          (general-create-definer start/emacs-normal
+            :states '(emacs normal)
+            :keymaps 'override)
+
+          ;; Defuns 
+;; Normal mode: Move current line up/down
+(defun my/evil-move-line-up ()
+  "Move current line up without needing Enter."
+  (interactive)
+  (evil-execute-macro 1 "ddkP") ;; Directly execute "ddkP" (delete line, move up, paste) [[2]]
+  (evil-normal-state)) ;; Ensure return to normal state
+
+(defun my/evil-move-line-down ()
+  "Move current line down without needing Enter."
+  (interactive)
+  (evil-execute-macro 1 "ddp") ;; Directly execute "ddp" (delete line, move down, paste) [[2]]
+  (evil-normal-state))
+
+(defun my/evil-move-lines-up ()
+  "Move selected lines up like Neovim's :move '<-2gv, automatically accepting the move command."
+  (interactive)
+  (if (evil-visual-state-p)
+      (progn
+        (evil-ex "'<,'>move '<-2")
+        (run-at-time "0.001 sec" nil
+                     (lambda ()
+                       (evil-normal-state)
+                       (evil-visual-restore))))
+    (message "Not in visual state.")))
+
+(defun my/evil-move-lines-down ()
+  "Move selected lines down like Neovim's :move '>+1gv, automatically accepting the move command."
+  (interactive)
+  (if (evil-visual-state-p)
+      (progn
+        (evil-ex "'<,'>move '>+1")
+        (run-at-time "0.001 sec" nil
+                     (lambda ()
+                       (evil-normal-state)
+                       (evil-visual-restore))))
+    (message "Not in visual state.")))
+
+;; Keybindings matching Neovim behavior
+(start/Nvim-Keys-visual-only
+  "S-<up>"   'my/evil-move-lines-up
+  "S-<down>" 'my/evil-move-lines-down)
+
+;; Keybindings matching Neovim behavior
+(start/Nvim-Keys-visual-only
+  "S-<up>"   'my/evil-move-lines-up
+  "S-<down>" 'my/evil-move-lines-down)
+
+;; Keybindings matching Neovim behavior
+(start/Nvim-Keys-visual-only
+  "S-<up>"   'my/evil-move-lines-up
+  "S-<down>" 'my/evil-move-lines-down)
+
+;; Keybindings matching Neovim behavior
+(start/Nvim-Keys-visual-only
+  "S-<up>"   'my/evil-move-lines-up
+  "S-<down>" 'my/evil-move-lines-down)
+
+;; Keybindings matching Neovim behavior
+(start/Nvim-Keys-visual-only
+  "S-<up>"   'my/evil-move-lines-up
+  "S-<down>" 'my/evil-move-lines-down)
+
+;; Bind keys in Normal and Visual modes
+(start/Nvim-Keys-normal-only
+  "S-<up>" 'my/evil-move-line-up
+  "S-<down>" 'my/evil-move-line-down)
+
+          ;; Define functions for shifting left and right without restoring cursor position
+          (defun my/evil-shift-right-and-restore ()
+            "Shift region right by 2 spaces, keep the cursor position, and stay in Visual mode."
+            (interactive)
+            (let ((start (region-beginning))
+                  (end (region-end))
+                  (cursor-pos (point))) ;; Save the current cursor position
+              (evil-shift-right start end)
+              (goto-char cursor-pos) ;; Restore the cursor position
+              (evil-visual-restore))) ;; Re-enter Visual mode
+
+          (defun my/evil-shift-left-and-restore ()
+            "Shift region left by 2 spaces, keep the cursor position, and stay in Visual mode."
+            (interactive)
+            (let ((start (region-beginning))
+                  (end (region-end))
+                  (cursor-pos (point))) ;; Save the current cursor position
+              (evil-shift-left start end)
+              (goto-char cursor-pos) ;; Restore the cursor position
+              (evil-visual-restore))) ;; Re-enter Visual mode
 
           ;; Global keybindings using the leadeir key:
           (start/leader-keys
@@ -204,31 +298,15 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
             "<" nil
             ">" nil)
 
-          ;; Define functions for shifting left and right without restoring cursor position
-          (defun my/evil-shift-right-and-restore ()
-            "Shift region right by 2 spaces, keep the cursor position, and stay in Visual mode."
-            (interactive)
-            (let ((start (region-beginning))
-                  (end (region-end))
-                  (cursor-pos (point))) ;; Save the current cursor position
-              (evil-shift-right start end)
-              (goto-char cursor-pos) ;; Restore the cursor position
-              (evil-visual-restore))) ;; Re-enter Visual mode
-
-          (defun my/evil-shift-left-and-restore ()
-            "Shift region left by 2 spaces, keep the cursor position, and stay in Visual mode."
-            (interactive)
-            (let ((start (region-beginning))
-                  (end (region-end))
-                  (cursor-pos (point))) ;; Save the current cursor position
-              (evil-shift-left start end)
-              (goto-char cursor-pos) ;; Restore the cursor position
-              (evil-visual-restore))) ;; Re-enter Visual mode
-
           ;; Remap < and > to the custom functions
           (start/Nvim-Keys-visual-only
             "<" 'my/evil-shift-left-and-restore
-            ">" 'my/evil-shift-right-and-restore)
+            ">" 'my/evil-shift-right-and-restore
+            "S-<down>" nil
+            "S-<up>" nil
+            "<S-up>" 'my/evil-move-lines-up
+            "<S-down>" 'my/evil-move-lines-down
+          )
 
           (start/Nvim-Keys
              "C-z" 'evil-undo
@@ -239,18 +317,10 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
           (start/Nvim-Keys-insert-only
           	 "TAB" nil
              "S-TAB" nil
-             "TAB" 'tab-to-tab-stop
-             "S-TAB" 'corfu-next
+          ;;   "TAB" 'tab-to-tab-stop
+          ;;   "S-TAB" 'corfu-next
           )
-
-          (start/global
-            "C-<down>" 'evil-window-down   ;; Move to the window below
-            "C-<up>" 'evil-window-up       ;; Move to the window above
-            "C-<left>" 'evil-window-left   ;; Move to the window on the left
-            "C-<right>" 'evil-window-right ;; Move to the window on the right
-          )
-
-    (start/Nvim-Keys-normal-only )
+ )
 
 #+end_src
 

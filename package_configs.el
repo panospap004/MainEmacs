@@ -186,6 +186,9 @@
   (org-superstar-remove-leading-stars t)
   (org-superstar-headline-bullets-list '("●" "○" "■" "●" "○" "■"))) ;; replace the * with this symbols
   (setq org-hide-emphasis-markers t);; hide the * + _ ~ etc when you use them
+  (setq org-agenda-files '(
+    "~/.config/MainEmacs/Files-org/TODO.org"
+  ))
   (defun my/org-mode-header-font-setup () ;; the next 15 lines starting in this one make the headers larger
     "Configure fonts and sizes for Org mode headers."
 (dolist (face-height '((org-level-1 . 1.2)
@@ -214,6 +217,24 @@
   :custom
   (org-edit-src-content-indentation 4)
   :hook (org-mode . org-indent-mode))
+
+(with-eval-after-load 'org
+  ;; No need for (require 'org-tempo) in Org 9.2+
+  (add-to-list 'org-structure-template-alist '("ct" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("ce" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("cp" . "src cpp")))
+
+(with-eval-after-load 'org
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t) ;; C adds support for c cpp and d if you have its compiler
+    )
+  )
+  (push '("conf-unix" . conf-unix) org-src-lang-modes) ;; this is to highlighte .conf unix files
+)
+
+
 
 (use-package dashboard
   :ensure t
