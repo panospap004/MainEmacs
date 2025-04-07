@@ -84,6 +84,12 @@
 (use-package eat
   :hook ('eshell-load-hook #'eat-eshell-mode))
 
+(use-package evil-commentary
+  :ensure t
+  :after evil
+  :config
+  (evil-commentary-mode 1))  ; Enable commentary functionality globally
+
 (use-package nerd-icons
   :if (display-graphic-p))
 
@@ -262,8 +268,9 @@
 
 (use-package lsp-treemacs 
   :commands lsp-treemacs-errors-list
+	:init
     (setq treemacs-position 'right)
-  :config 
+  ;; :config 
 )
 ;; icons for treemacs
 (use-package treemacs-nerd-icons

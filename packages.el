@@ -23,6 +23,7 @@
 (use-package yasnippet-snippets)
 (use-package eat)
 (use-package drag-stuff)
+(use-package evil-commentary)
 
 (use-package org)
 (use-package toc-org)

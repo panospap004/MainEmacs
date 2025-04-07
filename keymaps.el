@@ -165,7 +165,7 @@
     "d j" '(dired-jump :wk "Dired jump to current"))
 
   (start/leader-keys
-    "e" '(:ignore t :wk "Eglot Evaluate")
+    "S-e" '(:ignore t :wk "Eglot Evaluate")
     "e e" '(eglot-reconnect :wk "Eglot Reconnect")
     "e f" '(eglot-format :wk "Eglot Format")
     "e l" '(consult-flymake :wk "Consult Flymake")
@@ -242,6 +242,8 @@
   (start/emacs-normal
 		"SPC u p" 'package-upgrade-all
     "SPC q" 'kill-buffer-and-window
+		"SPC e" nil
+    "SPC e" 'treemacs
   )
 
   (start/Nvim-Keys-normal-only
