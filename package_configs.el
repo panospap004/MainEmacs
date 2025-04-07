@@ -235,14 +235,17 @@
 )
 
 (use-package lsp-mode
+  :commands (lsp lsp-deferred) 
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "SPC l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (C++-mode . lsp)
+  (setq lsp-keymap-prefix "C-SPC l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode
+         (c++-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  :config 
+  (lsp-enable-which-key-integration t)
+)
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
