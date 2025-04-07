@@ -106,7 +106,7 @@
   :custom
   (corfu-cycle t)
   (corfu-auto t)
-  (corfu-auto-prefix 2)
+  (corfu-auto-prefix 1)
   (corfu-popupinfo-mode t)
   (corfu-popupinfo-delay 0.5)
   (corfu-separator ?\s)
@@ -253,16 +253,23 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :config 
   (lsp-enable-which-key-integration t)
-
 )
 
-;; optionally
-(use-package lsp-ui :commands lsp-ui-mode)
-;; if you are helm user
-;;(use-package helm-lsp :commands helm-lsp-workspace-symbol)
-;; if you are ivy user
-;;(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+(use-package lsp-ui
+	:commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode)
+)
+
+(use-package lsp-treemacs 
+  :commands lsp-treemacs-errors-list
+    (setq treemacs-position 'right)
+  :config 
+)
+;; icons for treemacs
+(use-package treemacs-nerd-icons
+  :after treemacs
+  :config
+    (treemacs-load-theme "nerd-icons"))
 
 ;; optionally if you want to use debugger
 (use-package dap-mode)

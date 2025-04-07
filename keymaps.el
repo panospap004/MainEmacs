@@ -24,278 +24,235 @@
               ("TAB" . nil)))
 
 (use-package evil-collection
-          :after evil
-          :config
-          (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult))
-          (evil-collection-init))
+  :after evil
+  :config
+  (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult))
+  (evil-collection-init))
 
-        ;; General (for leader key and custom keybindings)
-        (use-package general
-          :config
-          (general-evil-setup)
-          ;; Leader key definer
-          (general-create-definer start/leader-keys
-            :states '(normal insert visual motion emacs)
-            :keymaps 'override
-            :prefix "SPC"
-            :global-prefix "C-SPC")
+;; General (for leader key and custom keybindings)
+(use-package general
+  :config
+  (general-evil-setup)
+  ;; Leader key definer
+  (general-create-definer start/leader-keys
+    :states '(normal insert visual motion emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "C-SPC")
 
-          ;; Global keybinds definer (no prefix)
-          (general-create-definer start/global-keys-no-insert
-            :states '(normal visual motion emacs)
-            :keymaps 'override)
-          
-          ;; Global keybinds definer (no prefix)
-          (general-create-definer start/global-keys-no-motion
-            :states '(normal visual insert emacs)
-            :keymaps 'override)
-    			
-          ;; Global keybinds definer (no prefix)
-          (general-create-definer start/global
-            :states '(normal insert visual motion emacs)
-            :keymaps 'override)
+  ;; Global keybinds definer (no prefix)
+  (general-create-definer start/global-keys-no-insert
+    :states '(normal visual motion emacs)
+    :keymaps 'override)
+  
+  ;; Global keybinds definer (no prefix)
+  (general-create-definer start/global-keys-no-motion
+    :states '(normal visual insert emacs)
+    :keymaps 'override)
+	
+  ;; Global keybinds definer (no prefix)
+  (general-create-definer start/global
+    :states '(normal insert visual motion emacs)
+    :keymaps 'override)
 
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/Nvim-Keys
-            :states '(normal insert visual)
-            :keymaps 'override)
-          
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/Nvim-Keys-insert-only
-            :states '(insert)
-            :keymaps 'override)
-          
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/Nvim-Keys-visual-only
-            :states '(visual)
-            :keymaps 'override)
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys
+    :states '(normal insert visual)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-insert-only
+    :states '(insert)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-visual-only
+    :states '(visual)
+    :keymaps 'override)
 
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/Nvim-Keys-normal-only
-            :states '(normal)
-            :keymaps 'override)
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-normal-only
+    :states '(normal)
+    :keymaps 'override)
 
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/Nvim-Keys-normal-and-visual
-            :states '(normal visual)
-            :keymaps 'override)
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-normal-and-visual
+    :states '(normal visual)
+    :keymaps 'override)
 
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/Nvim-Keys-normal-and-insert
-            :states '(normal insert)
-            :keymaps 'override)
-          
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/Nvim-Keys-visual-insert
-            :states '(insert visual)
-            :keymaps 'override)
-          
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/emacs-only
-            :states '(emacs)
-            :keymaps 'override)
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-normal-and-insert
+    :states '(normal insert)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/Nvim-Keys-visual-insert
+    :states '(insert visual)
+    :keymaps 'override)
+  
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/emacs-only
+    :states '(emacs)
+    :keymaps 'override)
 
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/motion-only
-            :states '(motion)
-            :keymaps 'override)
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/motion-only
+    :states '(motion)
+    :keymaps 'override)
 
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/emacs-motion
-            :states '(emacs motion)
-            :keymaps 'override)
-        
-          ;; Code keybinds definer (no prefix)
-          (general-create-definer start/emacs-normal
-            :states '(emacs normal)
-            :keymaps 'override)
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/emacs-motion
+    :states '(emacs motion)
+    :keymaps 'override)
 
-          ;; Defuns 
-;; Normal mode: Move current line up/down
-(defun my/evil-move-line-up ()
-  "Move current line up without needing Enter."
-  (interactive)
-  (evil-execute-macro 1 "ddkP") ;; Directly execute "ddkP" (delete line, move up, paste) [[2]]
-  (evil-normal-state)) ;; Ensure return to normal state
+  ;; Code keybinds definer (no prefix)
+  (general-create-definer start/emacs-normal
+    :states '(emacs normal)
+    :keymaps 'override)
 
-(defun my/evil-move-line-down ()
-  "Move current line down without needing Enter."
-  (interactive)
-  (evil-execute-macro 1 "ddp") ;; Directly execute "ddp" (delete line, move down, paste) [[2]]
-  (evil-normal-state))
+  ;; Defuns 
+  ;; Define functions for shifting left and right without restoring cursor position
+  (defun my/evil-shift-right-and-restore ()
+    "Shift region right by 2 spaces, keep the cursor position, and stay in Visual mode."
+    (interactive)
+    (let ((start (region-beginning))
+          (end (region-end))
+          (cursor-pos (point))) ;; Save the current cursor position
+      (evil-shift-right start end)
+      (goto-char cursor-pos) ;; Restore the cursor position
+      (evil-visual-restore))) ;; Re-enter Visual mode
 
-(defun my/evil-move-lines-up ()
-  "Move selected lines up like Neovim's :move '<-2gv, automatically accepting the move command."
-  (interactive)
-  (if (evil-visual-state-p)
-      (progn
-        (evil-ex "'<,'>move '<-2")
-        (run-at-time "0.001 sec" nil
-                     (lambda ()
-                       (evil-normal-state)
-                       (evil-visual-restore))))
-    (message "Not in visual state.")))
+  (defun my/evil-shift-left-and-restore ()
+    "Shift region left by 2 spaces, keep the cursor position, and stay in Visual mode."
+    (interactive)
+    (let ((start (region-beginning))
+          (end (region-end))
+          (cursor-pos (point))) ;; Save the current cursor position
+      (evil-shift-left start end)
+      (goto-char cursor-pos) ;; Restore the cursor position
+      (evil-visual-restore))) ;; Re-enter Visual mode
 
-(defun my/evil-move-lines-down ()
-  "Move selected lines down like Neovim's :move '>+1gv, automatically accepting the move command."
-  (interactive)
-  (if (evil-visual-state-p)
-      (progn
-        (evil-ex "'<,'>move '>+1")
-        (run-at-time "0.001 sec" nil
-                     (lambda ()
-                       (evil-normal-state)
-                       (evil-visual-restore))))
-    (message "Not in visual state.")))
+  ;; Global keybindings using the leadeir key:
+  (start/leader-keys
+    "." '(find-file :wk "Find file")
+    "TAB" '(comment-line :wk "Comment lines")
+    "p" '(projectile-command-map :wk "Projectile command map"))
 
-;; Keybindings matching Neovim behavior
-(start/Nvim-Keys-visual-only
-  "S-<up>"   'my/evil-move-line-up
-  "S-<down>" 'my/evil-move-line-down)
+  (start/leader-keys
+    "f" '(:ignore t :wk "Find")
+    "f c" '((lambda () (interactive)
+              (find-file "~/.config/MainEmacs/config.org"))
+            :wk "Edit Emacs config")
+    "f r" '(consult-recent-file :wk "Recent files")
+    "f f" '(consult-fd :wk "Fd search for files")
+    "f g" '(consult-ripgrep :wk "Ripgrep search in files")
+    "f l" '(consult-line :wk "Find line")
+    "f i" '(consult-imenu :wk "Imenu buffer locations"))
 
-;; Keybindings matching Neovim behavior
-(start/Nvim-Keys-visual-only
-  "S-<up>"   'my/evil-move-lines-up
-  "S-<down>" 'my/evil-move-lines-down)
+  (start/leader-keys
+    "b" '(:ignore t :wk "Buffer Bookmarks")
+    "b b" '(consult-buffer :wk "Switch buffer")
+    "b k" '(kill-this-buffer :wk "Kill this buffer")
+    "b i" '(ibuffer :wk "Ibuffer")
+    "b n" '(next-buffer :wk "Next buffer")
+    "b p" '(previous-buffer :wk "Previous buffer")
+    "b r" '(revert-buffer :wk "Reload buffer")
+    "b j" '(consult-bookmark :wk "Bookmark jump"))
 
-          ;; Define functions for shifting left and right without restoring cursor position
-          (defun my/evil-shift-right-and-restore ()
-            "Shift region right by 2 spaces, keep the cursor position, and stay in Visual mode."
-            (interactive)
-            (let ((start (region-beginning))
-                  (end (region-end))
-                  (cursor-pos (point))) ;; Save the current cursor position
-              (evil-shift-right start end)
-              (goto-char cursor-pos) ;; Restore the cursor position
-              (evil-visual-restore))) ;; Re-enter Visual mode
+  (start/leader-keys
+    "d" '(:ignore t :wk "Dired")
+    "d v" '(dired :wk "Open dired")
+    "d j" '(dired-jump :wk "Dired jump to current"))
 
-          (defun my/evil-shift-left-and-restore ()
-            "Shift region left by 2 spaces, keep the cursor position, and stay in Visual mode."
-            (interactive)
-            (let ((start (region-beginning))
-                  (end (region-end))
-                  (cursor-pos (point))) ;; Save the current cursor position
-              (evil-shift-left start end)
-              (goto-char cursor-pos) ;; Restore the cursor position
-              (evil-visual-restore))) ;; Re-enter Visual mode
+  (start/leader-keys
+    "e" '(:ignore t :wk "Eglot Evaluate")
+    "e e" '(eglot-reconnect :wk "Eglot Reconnect")
+    "e f" '(eglot-format :wk "Eglot Format")
+    "e l" '(consult-flymake :wk "Consult Flymake")
+    "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+    "e r" '(eval-region :wk "Evaluate elisp in region"))
 
-          ;; Global keybindings using the leadeir key:
-          (start/leader-keys
-            "." '(find-file :wk "Find file")
-            "TAB" '(comment-line :wk "Comment lines")
-            "p" '(projectile-command-map :wk "Projectile command map"))
+  (start/leader-keys
+    "g" '(:ignore t :wk "Git")
+    "g g" '(magit-status :wk "Magit status"))
 
-          (start/leader-keys
-            "f" '(:ignore t :wk "Find")
-            "f c" '((lambda () (interactive)
-                      (find-file "~/.config/MainEmacs/config.org"))
-                    :wk "Edit Emacs config")
-            "f r" '(consult-recent-file :wk "Recent files")
-            "f f" '(consult-fd :wk "Fd search for files")
-            "f g" '(consult-ripgrep :wk "Ripgrep search in files")
-            "f l" '(consult-line :wk "Find line")
-            "f i" '(consult-imenu :wk "Imenu buffer locations"))
+  (start/leader-keys
+    "h" '(:ignore t :wk "Help")
+    "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
+    "h r" '((lambda () (interactive)
+              (load-file "~/.config/MainEmacs/init.el"))
+            :wk "Reload Emacs config"))
 
-          (start/leader-keys
-            "b" '(:ignore t :wk "Buffer Bookmarks")
-            "b b" '(consult-buffer :wk "Switch buffer")
-            "b k" '(kill-this-buffer :wk "Kill this buffer")
-            "b i" '(ibuffer :wk "Ibuffer")
-            "b n" '(next-buffer :wk "Next buffer")
-            "b p" '(previous-buffer :wk "Previous buffer")
-            "b r" '(revert-buffer :wk "Reload buffer")
-            "b j" '(consult-bookmark :wk "Bookmark jump"))
+  (start/leader-keys
+    "s" '(:ignore t :wk "Show")
+    "s e" '(eat :wk "Eat terminal"))
 
-          (start/leader-keys
-            "d" '(:ignore t :wk "Dired")
-            "d v" '(dired :wk "Open dired")
-            "d j" '(dired-jump :wk "Dired jump to current"))
+  (start/leader-keys
+    "t" '(:ignore t :wk "Toggle")
+    "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
+    "t l" '(display-line-numbers-mode :wk "Toggle line numbers"))
 
-          (start/leader-keys
-            "e" '(:ignore t :wk "Eglot Evaluate")
-            "e e" '(eglot-reconnect :wk "Eglot Reconnect")
-            "e f" '(eglot-format :wk "Eglot Format")
-            "e l" '(consult-flymake :wk "Consult Flymake")
-            "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-            "e r" '(eval-region :wk "Evaluate elisp in region"))
+  ;; Global keybindings (no leader prefix)
+  (start/global-keys-no-insert
+    "<escape>" 'keyboard-escape-quit
+    "C-<tab>" 'switch-to-next-buffer
+    "C-S-<iso-lefttab>" 'switch-to-prev-buffer
+    "C-SPC p" 'projectile-command-map))      
+      
+  (start/emacs-motion			
+    "M-'" 'eval-expression				
+   )
 
-          (start/leader-keys
-            "g" '(:ignore t :wk "Git")
-            "g g" '(magit-status :wk "Magit status"))
+  ;; Set the shift width to 2 instead of the default 4
+  (setq evil-shift-width 2)
+  (setq-default tab-width 2)
 
-          (start/leader-keys
-            "h" '(:ignore t :wk "Help")
-            "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
-            "h r" '((lambda () (interactive)
-                      (load-file "~/.config/MainEmacs/init.el"))
-                    :wk "Reload Emacs config"))
+  ;; Remap < and > to the custom functions
+  (start/Nvim-Keys-visual-only
+    "<" nil
+    ">" nil
+    "<" 'my/evil-shift-left-and-restore
+    ">" 'my/evil-shift-right-and-restore
+    "S-<down>" nil
+    "S-<up>" nil
+    "<S-up>" 'my/evil-move-lines-up
+    "<S-down>" 'my/evil-move-lines-down
+  )
 
-          (start/leader-keys
-            "s" '(:ignore t :wk "Show")
-            "s e" '(eat :wk "Eat terminal"))
+  (start/Nvim-Keys
+     "C-z" 'evil-undo
+     "C-r" 'evil-redo
+     "M-a" (lambda () (interactive) (evil-goto-first-line) (evil-visual-line) (evil-goto-line) (move-end-of-line nil))
+  )
 
-          (start/leader-keys
-            "t" '(:ignore t :wk "Toggle")
-            "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
-            "t l" '(display-line-numbers-mode :wk "Toggle line numbers"))
+  (start/Nvim-Keys-insert-only
+  	 "TAB" nil
+     "S-TAB" nil
+  ;;   "TAB" 'tab-to-tab-stop
+  ;;   "S-TAB" 'corfu-next
+  )
 
-          ;; Global keybindings (no leader prefix)
-          (start/global-keys-no-insert
-            "<escape>" 'keyboard-escape-quit
-            "C-<tab>" 'switch-to-next-buffer
-            "C-S-<iso-lefttab>" 'switch-to-prev-buffer
-            "C-SPC p" 'projectile-command-map))      
-              
-          (start/emacs-motion			
-            "M-'" 'eval-expression				
-           )
+  (start/global
+    "C-<down>" 'evil-window-down   ;; Move to the window below
+    "C-<up>" 'evil-window-up       ;; Move to the window above
+    "C-<left>" 'evil-window-left   ;; Move to the window on the left
+    "C-<right>" 'evil-window-right ;; Move to the window on the right
+  )
 
-          ;; Set the shift width to 2 instead of the default 4
-          (setq evil-shift-width 2)
-          (setq-default tab-width 2)
+  (start/emacs-normal
+		"SPC u p" 'package-upgrade-all
+    "SPC q" 'kill-buffer-and-window
+  )
 
-          ;; Unmap existing bindings for < and > in visual state
-          (start/Nvim-Keys-visual-only
-            "<" nil
-            ">" nil)
+  (start/Nvim-Keys-normal-only
+    "C-s" nil
+    "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
+  )
 
-          ;; Remap < and > to the custom functions
-          (start/Nvim-Keys-visual-only
-            "<" 'my/evil-shift-left-and-restore
-            ">" 'my/evil-shift-right-and-restore
-            "S-<down>" nil
-            "S-<up>" nil
-            "<S-up>" 'my/evil-move-lines-up
-            "<S-down>" 'my/evil-move-lines-down
-          )
-
-          (start/Nvim-Keys
-             "C-z" 'evil-undo
-             "C-r" 'evil-redo
-             "M-a" (lambda () (interactive) (evil-goto-first-line) (evil-visual-line) (evil-goto-line) (move-end-of-line nil))
-          )
-
-          (start/Nvim-Keys-insert-only
-          	 "TAB" nil
-             "S-TAB" nil
-          ;;   "TAB" 'tab-to-tab-stop
-          ;;   "S-TAB" 'corfu-next
-          )
-
-          (start/global
-            "C-<down>" 'evil-window-down   ;; Move to the window below
-            "C-<up>" 'evil-window-up       ;; Move to the window above
-            "C-<left>" 'evil-window-left   ;; Move to the window on the left
-            "C-<right>" 'evil-window-right ;; Move to the window on the right
-          )
-
-          (start/emacs-normal
-            "SPC q" 'kill-buffer-and-window
-          )
-
-          (start/Nvim-Keys-normal-only
-            "C-s" nil
-            "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
-          )
+  ;; Keybindings matching Neovim behavior
+  (start/Nvim-Keys-normal-and-visual
+    "S-<up>"   'drag-stuff-up
+		"S-<down>" 'drag-stuff-down
+  )
 
 (provide 'keymaps)
