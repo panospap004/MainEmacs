@@ -102,7 +102,7 @@
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :init (global-diff-hl-mode))
 
-(use-package corfu
+(use-package corfu ;; package that takes the place of ivy / helm
   :custom
   (corfu-cycle t)
   (corfu-auto t)
@@ -253,6 +253,7 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :config 
   (lsp-enable-which-key-integration t)
+
 )
 
 ;; optionally

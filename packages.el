@@ -42,7 +42,7 @@
 (use-package dashboard)
 (use-package all-the-icons :ensure t)
 
-(use-package corfu)
+(use-package corfu) ;; package that takes the role of ivy / helm
 (use-package nerd-icons-corfu)
 (use-package cape)
 (use-package orderless)
