@@ -104,7 +104,16 @@
          ("M-]" . popper-cycle))
   :init
   (setq popper-reference-buffers
-        '("\\*vterm\\*" "\\*ansi-term\\*"))
+        '("\\*vterm\\*" "\\*ansi-term\\*" "\\*eat\\*" "\\*term\\*"))
+  (defun my-popper-window-height (win)
+    "Set the popup window WIN to one-third of the screen height."
+    (fit-window-to-buffer
+      win
+      (floor (frame-height) 3)
+      (floor (frame-height) 3)))
+
+  (setq popper-window-height #'my-popper-window-height)
+
   (popper-mode 1))
 
 (use-package evil-commentary
