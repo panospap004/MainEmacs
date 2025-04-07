@@ -68,11 +68,13 @@
 (global-display-line-numbers-mode 1)
 ;; remove the line numbers for cairtain buffers you can find the hooks with ctrl+h+v
 (dolist (mode '(
-                shell-mode-hook
-                eat-mode-hook
-		dashboard-mode-hook
-                ))
-   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+            shell-mode-hook
+            eat-mode-hook
+						dashboard-mode-hook
+            vterm-mode-hook
+						term-mode-hook
+            ))
+         (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (defun start/org-babel-tangle-config ()
   "Auto-tangle config.org when saved"

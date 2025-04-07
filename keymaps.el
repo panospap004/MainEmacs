@@ -244,6 +244,7 @@
     "SPC q" 'kill-buffer-and-window
 		"SPC e" nil
     "SPC e" 'treemacs
+		"t t" 'vterm
   )
 
   (start/Nvim-Keys-normal-only
