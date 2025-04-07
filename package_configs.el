@@ -186,6 +186,14 @@
   (org-superstar-remove-leading-stars t)
   (org-superstar-headline-bullets-list '("●" "○" "■" "●" "○" "■"))) ;; replace the * with this symbols
   (setq org-hide-emphasis-markers t);; hide the * + _ ~ etc when you use them
+  ;; Disable org-indent-mode by default (stops outline-style indentation)
+  (setq org-startup-indented nil)
+  ;; Disable electric indentation in Org mode
+  (add-hook 'org-mode-hook
+      (lambda ()
+        (electric-indent-local-mode -1)))
+  ;; Prevent Org from adapting indentation to outline structure
+  (setq org-adapt-indentation nil)
   (setq org-agenda-files '(
     "~/.config/MainEmacs/Files-org/TODO.org"
   ))
