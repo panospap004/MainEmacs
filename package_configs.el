@@ -84,6 +84,29 @@
 (use-package eat
   :hook ('eshell-load-hook #'eat-eshell-mode))
 
+(use-package vterm
+  :ensure t
+  :commands vterm
+  :config
+  (setq vterm-shell "/usr/bin/fish")  ;; Use Fish shell
+  (setq vterm-max-scrollback 10000))  ;; Increase scrollback buffer
+
+(use-package term
+  :ensure nil
+  :commands ansi-term
+  :config
+  (setq explicit-shell-file-name "/usr/bin/fish"))  ;; Use Fish shell
+
+;; Use Popper for transient terminals
+(use-package popper
+  :ensure t
+  :bind (("C-=" . popper-toggle-latest)
+         ("M-]" . popper-cycle))
+  :init
+  (setq popper-reference-buffers
+        '("\\*vterm\\*" "\\*ansi-term\\*"))
+  (popper-mode 1))
+
 (use-package evil-commentary
   :ensure t
   :after evil
