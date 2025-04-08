@@ -1,5 +1,45 @@
  #+PROPERTY: header-args:emacs-lisp :tangle ./keymaps.el :mkdirp yes
 
+* Table Of Contents :TOC_6:
+- [[#evil-mode][Evil Mode]]
+- [[#general-keybindings][General Keybindings]]
+  - [[#empty-definers][Empty definers]]
+    - [[#package-specific-definers][Package specific definers]]
+  - [[#defuns-for-keymaps][Defuns for keymaps]]
+  - [[#setq-for-keymaps][Setq for keymaps]]
+  - [[#keymaps][Keymaps]]
+    - [[#semiglobal-keymaps][Semi/Global keymaps]]
+      - [[#global-keymaps][Global keymaps]]
+      - [[#semi-global-keymaps][Semi global keymaps]]
+    - [[#nvim-mode-spesific-keymaps][Nvim Mode spesific keymaps]]
+      - [[#all-modes][All modes]]
+      - [[#normal-and-visual-mode][Normal and Visual mode]]
+      - [[#normal-and-insert-mode][Normal and Insert mode]]
+      - [[#insert-and-visual-mode][Insert and Visual mode]]
+      - [[#normal-only][Normal Only]]
+      - [[#visual-only][Visual Only]]
+      - [[#insert-only][Insert Only]]
+    - [[#emacs-mode-specific-keymaps][Emacs mode specific keymaps]]
+      - [[#emacs-and-motion][Emacs and Motion]]
+      - [[#emacs-only][Emacs Only]]
+      - [[#motion-only][Motion Only]]
+    - [[#nvim-emacs-hybrid-keymaps][Nvim Emacs hybrid keymaps]]
+      - [[#emacs-and-all-nvim-modes][Emacs and All nvim modes]]
+      - [[#emacs-and-normal-and-visual][Emacs and Normal and Visual]]
+      - [[#emacs-and-normal-and-insert][Emacs and Normal and Insert]]
+      - [[#emacs-and-insert-and-visual][Emacs and Insert and Visual]]
+      - [[#emacs-and-normal-mode][Emacs and Normal mode]]
+      - [[#emacs-and-visual-mode][Emacs and Visual mode]]
+      - [[#emacs-and-insert-mode][Emacs and Insert mode]]
+      - [[#motion-and-all-nvim-modes][Motion and All nvim modes]]
+      - [[#motion-and-normal-and-visual][Motion and Normal and Visual]]
+      - [[#motion-and-normal-and-insert][Motion and Normal and Insert]]
+      - [[#motion-and-insert-and-visual][Motion and Insert and Visual]]
+      - [[#motion-and-normal-mode][Motion and Normal mode]]
+      - [[#motion-and-visual-mode][Motion and Visual mode]]
+      - [[#motion-and-insert-mode][Motion and Insert Mode]]
+- [[#needed-for-file-to-connect-to-the-main-init][needed for file to connect to the main init]]
+
 * Evil Mode
 An extensible vi/vim layer for Emacs. Because…let’s face it. The Vim keybindings are just plain better.
 Notes:
@@ -47,7 +87,10 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
       :config
       (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult))
       (evil-collection-init))
+#+end_src
 
+** Empty definers
+#+begin_src emacs-lisp
     ;; General (for leader key and custom keybindings)
     (use-package general
       :config
@@ -60,6 +103,11 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         :global-prefix "C-SPC")
 
       ;; Global keybinds definer (no prefix)
+      (general-create-definer start/global
+        :states '(normal insert visual motion emacs)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
       (general-create-definer start/global-keys-no-insert
         :states '(normal visual motion emacs)
         :keymaps 'override)
@@ -68,30 +116,10 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
       (general-create-definer start/global-keys-no-motion
         :states '(normal visual insert emacs)
         :keymaps 'override)
-    	
-      ;; Global keybinds definer (no prefix)
-      (general-create-definer start/global
-        :states '(normal insert visual motion emacs)
-        :keymaps 'override)
 
       ;; Code keybinds definer (no prefix)
       (general-create-definer start/Nvim-Keys
         :states '(normal insert visual)
-        :keymaps 'override)
-      
-      ;; Code keybinds definer (no prefix)
-      (general-create-definer start/Nvim-Keys-insert-only
-        :states '(insert)
-        :keymaps 'override)
-      
-      ;; Code keybinds definer (no prefix)
-      (general-create-definer start/Nvim-Keys-visual-only
-        :states '(visual)
-        :keymaps 'override)
-
-      ;; Code keybinds definer (no prefix)
-      (general-create-definer start/Nvim-Keys-normal-only
-        :states '(normal)
         :keymaps 'override)
 
       ;; Code keybinds definer (no prefix)
@@ -105,10 +133,30 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         :keymaps 'override)
       
       ;; Code keybinds definer (no prefix)
-      (general-create-definer start/Nvim-Keys-visual-insert
+      (general-create-definer start/Nvim-Keys-insert-visual
         :states '(insert visual)
         :keymaps 'override)
+
+      ;; Code keybinds definer (no prefix)
+      (general-create-definer start/Nvim-Keys-normal-only
+        :states '(normal)
+        :keymaps 'override)
       
+      ;; Code keybinds definer (no prefix)
+      (general-create-definer start/Nvim-Keys-visual-only
+        :states '(visual)
+        :keymaps 'override)
+      
+      ;; Code keybinds definer (no prefix)
+      (general-create-definer start/Nvim-Keys-insert-only
+        :states '(insert)
+        :keymaps 'override)
+      
+      ;; Code keybinds definer (no prefix)
+      (general-create-definer start/emacs-motion
+        :states '(emacs motion)
+        :keymaps 'override)
+
       ;; Code keybinds definer (no prefix)
       (general-create-definer start/emacs-only
         :states '(emacs)
@@ -119,16 +167,93 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         :states '(motion)
         :keymaps 'override)
 
-      ;; Code keybinds definer (no prefix)
-      (general-create-definer start/emacs-motion
-        :states '(emacs motion)
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/emacs-all-nvim
+        :states '(normal insert visual emacs)
         :keymaps 'override)
 
-      ;; Code keybinds definer (no prefix)
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/emacs-normal-visual
+        :states '(normal visual emacs)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/emacs-normal-isert
+        :states '(normal insert emacs)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/emacs-insert-visual
+        :states '(insert visual emacs)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
       (general-create-definer start/emacs-normal
-        :states '(emacs normal)
+        :states '(normal emacs)
         :keymaps 'override)
 
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/emacs-visual
+        :states '(visual emacs)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/emacs-insert
+        :states '(insert emacs)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/motion-all-nvim
+        :states '(normal insert visual motion)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/motion-normal-visual
+        :states '(normal visual motion)
+        :keymaps 'override)
+    	
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/motion-normal-insert
+        :states '(normal insert motion)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/motion-insert-visual
+        :states '(insert visual motion)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/motion-normal
+        :states '(normal motion)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/motion-visual
+        :states '(visual motion)
+        :keymaps 'override)
+
+      ;; Global keybinds definer (no prefix)
+      (general-create-definer start/motion-insert
+        :states '(normal insert visual motion emacs)
+        :keymaps 'override)
+    )
+#+end_src
+
+*** Package specific definers 
+#+begin_src emacs-lisp
+      (general-define-key
+        :states '(normal motion emacs)
+        :keymaps 'dired-mode-map
+          "h" 'my/dired-up-directory
+          "l" 'my/dired-open-item
+          "<left>" 'my/dired-up-directory
+          "<right>" 'my/dired-open-item
+          "C-h" 'dired-hide-dotfiles-mode
+          "C-r" 'dired-rsync)
+#+end_src
+
+** Defuns for keymaps
+#+begin_src emacs-lisp
       ;; Defuns 
       ;; Define functions for shifting left and right without restoring cursor position
       (defun my/evil-shift-right-and-restore ()
@@ -150,82 +275,142 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
           (evil-shift-left start end)
           (goto-char cursor-pos) ;; Restore the cursor position
           (evil-visual-restore))) ;; Re-enter Visual mode
+#+end_src
 
-      ;; Global keybindings using the leadeir key:
-      (start/leader-keys
-        "." '(find-file :wk "Find file")
-        "TAB" '(comment-line :wk "Comment lines")
-        "p" '(projectile-command-map :wk "Projectile command map"))
 
-      (start/leader-keys
-        "f" '(:ignore t :wk "Find")
-        "f c" '((lambda () (interactive)
-                  (find-file "~/.config/MainEmacs/config.org"))
-                :wk "Edit Emacs config")
-        "f r" '(consult-recent-file :wk "Recent files")
-        "f f" '(consult-fd :wk "Fd search for files")
-        "f g" '(consult-ripgrep :wk "Ripgrep search in files")
-        "f l" '(consult-line :wk "Find line")
-        "f i" '(consult-imenu :wk "Imenu buffer locations"))
+** Setq for keymaps
+#+begin_src emacs-lisp
+      ;; Set the shift width to 2 instead of the default 4
+      (setq evil-shift-width 2)
+      (setq-default tab-width 2)
+#+end_src
 
-      (start/leader-keys
-        "b" '(:ignore t :wk "Buffer Bookmarks")
-        "b b" '(consult-buffer :wk "Switch buffer")
-        "b k" '(kill-this-buffer :wk "Kill this buffer")
-        "b i" '(ibuffer :wk "Ibuffer")
-        "b n" '(next-buffer :wk "Next buffer")
-        "b p" '(previous-buffer :wk "Previous buffer")
-        "b r" '(revert-buffer :wk "Reload buffer")
-        "b j" '(consult-bookmark :wk "Bookmark jump"))
+** Keymaps 
 
-      (start/leader-keys
-        "d" '(:ignore t :wk "Dired")
-        "d v" '(dired :wk "Open dired")
-        "d j" '(dired-jump :wk "Dired jump to current"))
+*** Semi/Global keymaps
 
-      (start/leader-keys
-        "S-e" '(:ignore t :wk "Eglot Evaluate")
-        "e e" '(eglot-reconnect :wk "Eglot Reconnect")
-        "e f" '(eglot-format :wk "Eglot Format")
-        "e l" '(consult-flymake :wk "Consult Flymake")
-        "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-        "e r" '(eval-region :wk "Evaluate elisp in region"))
+**** Global keymaps 
+#+begin_src emacs-lisp
+  (use-package general
+      :config
+    ;; Global keybindings using the leadeir key:
+    (start/leader-keys
+      "." '(find-file :wk "Find file")
+      "TAB" '(comment-line :wk "Comment lines")
+      "p" '(projectile-command-map :wk "Projectile command map"))
 
-      (start/leader-keys
-        "g" '(:ignore t :wk "Git")
-        "g g" '(magit-status :wk "Magit status"))
+    (start/leader-keys
+      "f" '(:ignore t :wk "Find")
+      "f c" '((lambda () (interactive)
+                (find-file "~/.config/MainEmacs/config.org"))
+              :wk "Edit Emacs config")
+      "f r" '(consult-recent-file :wk "Recent files")
+      "f f" '(consult-fd :wk "Fd search for files")
+      "f g" '(consult-ripgrep :wk "Ripgrep search in files")
+      "f l" '(consult-line :wk "Find line")
+      "f i" '(consult-imenu :wk "Imenu buffer locations"))
 
-      (start/leader-keys
-        "h" '(:ignore t :wk "Help")
-        "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
-        "h r" '((lambda () (interactive)
-                  (load-file "~/.config/MainEmacs/init.el"))
-                :wk "Reload Emacs config"))
+    (start/leader-keys
+      "b" '(:ignore t :wk "Buffer Bookmarks")
+      "b b" '(consult-buffer :wk "Switch buffer")
+      "b k" '(kill-this-buffer :wk "Kill this buffer")
+      "b i" '(ibuffer :wk "Ibuffer")
+      "b n" '(next-buffer :wk "Next buffer")
+      "b p" '(previous-buffer :wk "Previous buffer")
+      "b r" '(revert-buffer :wk "Reload buffer")
+      "b j" '(consult-bookmark :wk "Bookmark jump"))
 
-      (start/leader-keys
-        "s" '(:ignore t :wk "Show")
-        "s e" '(eat :wk "Eat terminal"))
+    (start/leader-keys
+      "d" '(:ignore t :wk "Dired")
+      "d v" '(dired :wk "Open dired")
+      "d j" '(dired-jump :wk "Dired jump to current"))
 
-      (start/leader-keys
-        "t" '(:ignore t :wk "Toggle")
-        "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
-        "t l" '(display-line-numbers-mode :wk "Toggle line numbers"))
+    (start/leader-keys
+      "S-e" '(:ignore t :wk "Eglot Evaluate")
+      "e e" '(eglot-reconnect :wk "Eglot Reconnect")
+      "e f" '(eglot-format :wk "Eglot Format")
+      "e l" '(consult-flymake :wk "Consult Flymake")
+      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+      "e r" '(eval-region :wk "Evaluate elisp in region"))
 
-      ;; Global keybindings (no leader prefix)
+    (start/leader-keys
+      "g" '(:ignore t :wk "Git")
+      "g g" '(magit-status :wk "Magit status"))
+
+    (start/leader-keys
+      "h" '(:ignore t :wk "Help")
+      "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
+      "h r" '((lambda () (interactive)
+                (load-file "~/.config/MainEmacs/init.el"))
+              :wk "Reload Emacs config"))
+
+    (start/leader-keys
+      "s" '(:ignore t :wk "Show")
+      "s e" '(eat :wk "Eat terminal"))
+
+    (start/leader-keys
+      "t" '(:ignore t :wk "Toggle")
+      "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
+      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+)
+
+    (start/global
+      "C-<down>" 'evil-window-down   ;; Move to the window below
+      "C-<up>" 'evil-window-up       ;; Move to the window above
+      "C-<left>" 'evil-window-left   ;; Move to the window on the left
+      "C-<right>" 'evil-window-right ;; Move to the window on the right
+    )
+#+end_src
+
+**** Semi global keymaps
+#+begin_src emacs-lisp
       (start/global-keys-no-insert
         "<escape>" 'keyboard-escape-quit
         "C-<tab>" 'switch-to-next-buffer
         "C-S-<iso-lefttab>" 'switch-to-prev-buffer
         "C-SPC p" 'projectile-command-map))      
-          
-      (start/emacs-motion			
-        "M-'" 'eval-expression				
-       )
+#+end_src
 
-      ;; Set the shift width to 2 instead of the default 4
-      (setq evil-shift-width 2)
-      (setq-default tab-width 2)
+*** Nvim Mode spesific keymaps 
 
+**** All modes
+#+begin_src emacs-lisp
+      (start/Nvim-Keys
+         "C-z" 'evil-undo
+         "C-r" 'evil-redo
+         "M-a" (lambda () (interactive) (evil-goto-first-line) (evil-visual-line) (evil-goto-line) (move-end-of-line nil))
+      )
+#+end_src
+
+**** Normal and Visual mode 
+#+begin_src emacs-lisp
+      ;; Keybindings matching Neovim behavior
+      (start/Nvim-Keys-normal-and-visual
+        "S-<up>"   'drag-stuff-up
+    		"S-<down>" 'drag-stuff-down
+      )
+#+end_src
+
+**** Normal and Insert mode
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Insert and Visual mode  
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Normal Only
+#+begin_src emacs-lisp
+      (start/Nvim-Keys-normal-only
+        "C-s" nil
+        "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
+      )
+#+end_src
+
+**** Visual Only   
+#+begin_src emacs-lisp
       ;; Remap < and > to the custom functions
       (start/Nvim-Keys-visual-only
         "<" nil
@@ -237,27 +422,61 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
         "<S-up>" 'my/evil-move-lines-up
         "<S-down>" 'my/evil-move-lines-down
       )
+#+end_src
 
-      (start/Nvim-Keys
-         "C-z" 'evil-undo
-         "C-r" 'evil-redo
-         "M-a" (lambda () (interactive) (evil-goto-first-line) (evil-visual-line) (evil-goto-line) (move-end-of-line nil))
-      )
-
+**** Insert Only 
+#+begin_src emacs-lisp
       (start/Nvim-Keys-insert-only
-      	 "TAB" nil
+         "TAB" nil
          "S-TAB" nil
       ;;   "TAB" 'tab-to-tab-stop
       ;;   "S-TAB" 'corfu-next
       )
+#+end_src
 
-      (start/global
-        "C-<down>" 'evil-window-down   ;; Move to the window below
-        "C-<up>" 'evil-window-up       ;; Move to the window above
-        "C-<left>" 'evil-window-left   ;; Move to the window on the left
-        "C-<right>" 'evil-window-right ;; Move to the window on the right
-      )
+*** Emacs mode specific keymaps 
 
+**** Emacs and Motion
+#+begin_src emacs-lisp
+      (start/emacs-motion			
+        "M-'" 'eval-expression				
+       )
+#+end_src
+
+**** Emacs Only 
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion Only 
+#+begin_src emacs-lisp
+
+#+end_src
+
+*** Nvim Emacs hybrid keymaps
+
+**** Emacs and All nvim modes  
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Emacs and Normal and Visual
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Emacs and Normal and Insert
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Emacs and Insert and Visual
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Emacs and Normal mode 
+#+begin_src emacs-lisp
       (start/emacs-normal
     		"SPC u p" 'package-upgrade-all
         "SPC q" 'kill-buffer-and-window
@@ -266,27 +485,50 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
     		"t t" 'eat
     		;; "t t" 'vterm
       )
+#+end_src
 
-      (start/Nvim-Keys-normal-only
-        "C-s" nil
-        "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
-      )
+**** Emacs and Visual mode
+#+begin_src emacs-lisp
 
-      ;; Keybindings matching Neovim behavior
-      (start/Nvim-Keys-normal-and-visual
-        "S-<up>"   'drag-stuff-up
-    		"S-<down>" 'drag-stuff-down
-      )
+#+end_src
 
-      (general-define-key
-        :states '(normal motion emacs)
-        :keymaps 'dired-mode-map
-          "h" 'my/dired-up-directory
-          "l" 'my/dired-open-item
-          "<left>" 'my/dired-up-directory
-          "<right>" 'my/dired-open-item
-          "C-h" 'dired-hide-dotfiles-mode
-          "C-r" 'dired-rsync)
+**** Emacs and Insert mode  
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion and All nvim modes 
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion and Normal and Visual 
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion and Normal and Insert  
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion and Insert and Visual 
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion and Normal mode 
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion and Visual mode 
+#+begin_src emacs-lisp
+
+#+end_src
+
+**** Motion and Insert Mode
+#+begin_src emacs-lisp
 
 #+end_src
 
