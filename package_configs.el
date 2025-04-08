@@ -122,6 +122,17 @@
   :config
   (evil-commentary-mode 1))  ; Enable commentary functionality globally
 
+(use-package colorful-mode
+  ;; :diminish
+  ;; :ensure t ; Optional
+  :custom
+  (colorful-use-prefix t)
+  (colorful-only-strings 'only-prog)
+  (css-fontify-colors nil)
+  :config
+  (global-colorful-mode t)
+  (add-to-list 'global-colorful-modes 'helpful-mode))
+
 (use-package dired
     	:ensure nil
       :commands (dired dired-jump)
@@ -455,21 +466,5 @@
 
 ;; Hook to open the dashboard in new frames when appropriate.
 (add-hook 'after-make-frame-functions #'my/open-dashboard-if-default-buffer)
-
-;; undo-tree setup
-(use-package undo-tree
-  :ensure t
-  :init
-  (global-undo-tree-mode 1) ;; Enable undo-tree globally
-  :config
-  (setq undo-tree-history-directory-alist '(("." . "~/.config/MainEmacs/undo-history/"))) ;; Set directory for undo history files
-  (setq undo-tree-auto-save-history t)) ;; Auto-save undo history
-
-;; undo-fu setup
-(use-package undo-fu
-  :ensure t
-  :init
-  (define-key evil-normal-state-map "u" 'undo-fu-only-undo) ;; Example: Bind undo to 'u' in Evil mode
-  (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)) ;; Example: Bind redo to 'Ctrl-r' in Evil mode
 
 (provide 'package_configs)
