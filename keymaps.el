@@ -259,4 +259,14 @@
 		"S-<down>" 'drag-stuff-down
   )
 
+  (general-define-key
+    :states '(normal motion emacs)
+    :keymaps 'dired-mode-map
+      "h" 'my/dired-up-directory
+      "l" 'my/dired-open-item
+      "<left>" 'my/dired-up-directory
+      "<right>" 'my/dired-open-item
+      "C-h" 'dired-hide-dotfiles-mode
+      "C-r" 'dired-rsync)
+
 (provide 'keymaps)

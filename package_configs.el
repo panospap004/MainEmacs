@@ -122,6 +122,66 @@
   :config
   (evil-commentary-mode 1))  ; Enable commentary functionality globally
 
+(use-package dired
+    	:ensure nil
+      :commands (dired dired-jump)
+      :bind (("C-x C-j" . dired-jump))
+      :custom
+      (dired-listing-switches "-agholv --group-directories-first --time-style=long-iso")
+      (dired-auto-revert-buffer t)
+      (dired-dwim-target t)
+      (dired-kill-when-opening-new-dired-buffer t)
+      (delete-by-moving-to-trash t)
+      :config
+      ;; Enable modern buffer reuse behavior
+      (put 'dired-find-alternate-file 'disabled nil)
+      
+      ;; Enhanced navigation functions
+      (defun my/dired-up-directory ()
+        "Smart parent directory navigation with buffer reuse"
+        (interactive)
+        (if (file-symlink-p dired-directory)
+            (dired (file-name-directory (file-chase-links dired-directory)))
+          (dired-up-directory))
+        (dired-kill-subdir))
+
+      (defun my/dired-open-item ()
+        "Smart open with buffer reuse and file handling"
+        (interactive)
+        (let ((file (dired-get-file-for-visit)))
+          (if (file-directory-p file)
+              (dired-find-alternate-file)
+            (dired-find-file))))
+)
+
+(use-package diredfl
+  :hook (dired-mode . diredfl-mode))
+
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+)
+
+(use-package dired-subtree
+  :after dired
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "TAB" 'dired-subtree-cycle))
+
+(use-package dired-narrow
+  :after dired
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "/" 'dired-narrow))
+
+(use-package dired-rsync
+  :after dired
+  :config
+)
+
+(use-package fd-dired
+  :config (setq fd-dired-use-fdwalk-executable t))
+
 (use-package nerd-icons
   :if (display-graphic-p))
 
