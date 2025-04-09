@@ -150,26 +150,50 @@
 
 ** Evil-comentry
 #+begin_src emacs-lisp
-(use-package evil-commentary
-  :ensure t
-  :after evil
-  :config
-  (evil-commentary-mode 1))  ; Enable commentary functionality globally
+    (use-package evil-commentary
+      :ensure t
+      :after evil
+      :config
+      (evil-commentary-mode 1))  ; Enable commentary functionality globally
 #+end_src
 
+** Colorful-mode
+add suport for hex and every other option 
 #+begin_src emacs-lisp
-(use-package colorful-mode
-  ;; :diminish
-  ;; :ensure t ; Optional
-  :custom
-  (colorful-use-prefix t)
-  (colorful-only-strings 'only-prog)
-  (css-fontify-colors nil)
-  :config
-  (global-colorful-mode t)
-  (add-to-list 'global-colorful-modes 'helpful-mode))
+    (use-package colorful-mode
+      :ensure t
+      :hook (prog-mode . colorful-mode)
+      :custom
+      ;; Allow using mouse to change colors
+      (colorful-allow-mouse-clicks t)
+      ;; Highlight the actual color instead of using a prefix indicator
+      (colorful-use-prefix nil)
+      ;; Use short hex format when possible (#RGB instead of #RRGGBB when applicable)
+      (colorful-short-hex-conversions t)
+      ;; Highlight colors everywhere, not just in strings
+      (colorful-only-strings nil)
+      :config
+      ;; Configure color highlighting for different major modes
+      (setq colorful-extra-color-keyword-functions
+            '(colorful-add-hex-colors
+              ((css-mode html-mode web-mode js-mode js2-mode) . 
+               (colorful-add-css-variables-colors
+                colorful-add-rgb-colors
+                colorful-add-hsl-colors
+                colorful-add-oklab-oklch-colors
+                colorful-add-color-names))
+              (emacs-lisp-mode . (colorful-add-color-names 
+                                  colorful-add-rgb-colors
+                                  colorful-add-hex-colors))
+              (latex-mode . colorful-add-latex-colors)))
+    	(set-face-attribute 'colorful-base nil :box nil)
+    )
 #+end_src
 
+** Rainbow-mode
+#+begin_src emacs-lisp
+    (use-package rainbow-mode)
+#+end_src
 
 * Modern Dired Configuration (Integrated Solution)
 ** Core Navigation & Buffer Management
