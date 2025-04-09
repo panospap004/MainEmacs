@@ -11,12 +11,19 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (blink-cursor-mode 1)
+(global-hl-line-mode t)
 
 ;; Editing enhancements
 (delete-selection-mode 1)
 (electric-indent-mode -1)
 (electric-pair-mode 1)
 (global-auto-revert-mode 1)
+
+;; History 
+(setq history-length 25) ;; size of history to lessen the load time 
+(savehist-mode 1) ;; remeber my M-x and other prompts 
+
+(save-place-mode 1) ;; remeber my cursor position on a file
 
 ;; File management
 (setq make-backup-files nil

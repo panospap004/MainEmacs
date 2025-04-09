@@ -280,6 +280,8 @@
       "C-<up>" 'evil-window-up       ;; Move to the window above
       "C-<left>" 'evil-window-left   ;; Move to the window on the left
       "C-<right>" 'evil-window-right ;; Move to the window on the right
+      "C-s" nil
+      "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
     )
 
 (start/global-keys-no-insert
@@ -345,12 +347,38 @@
 
 
 (start/emacs-normal
+	"SPC g l" 'tetris
+	"SPC g s" 'snake
+	"SPC g 5" '5x5
+	"SPC g B" 'blackbox
+	"SPC g b" 'bubbles
+	"SPC g d" 'dunnet
+	"SPC g g" 'gomoku
+	"SPC g h" 'hanoi
+	"SPC g l" 'life
+	"SPC g m" 'mpuz
+	"SPC g p" 'pong
+	"SPC g S" 'solitaire
+	"SPC g z" 'zone
+	"SPC g d" 'doctor
 	"SPC u p" 'package-upgrade-all
   "SPC q" 'kill-buffer-and-window
 	"SPC e" nil
   "SPC e" 'treemacs
 	"t t" 'eat
 	;; "t t" 'vterm
+	"h s" 'split-window-horizontally
+	"v s" 'split-window-vertically
+	"q s" 'delete-window
+	"e s" 'balance-windows
+  "C-S-<up>" nil
+  "C-S-<down>" nil
+  "C-S-<left>" nil
+  "C-S-<right>" nil
+  "C-S-<up>" 'enlarge-window
+  "C-S-<down>" 'shrink-window
+  "C-S-<left>" 'enlarge-window-horizontally
+  "C-S-<right>" 'shrink-window-horizontally
 )
 
 

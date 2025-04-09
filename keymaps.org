@@ -28,7 +28,7 @@
       - [[#emacs-and-normal-and-visual][Emacs and Normal and Visual]]
       - [[#emacs-and-normal-and-insert][Emacs and Normal and Insert]]
       - [[#emacs-and-insert-and-visual][Emacs and Insert and Visual]]
-      - [[#emacs-and-normal-mode][Emacs and Normal mode]]
+      -  [[#emacs-and-normal-mode][Emacs and Normal mode]]
       - [[#emacs-and-visual-mode][Emacs and Visual mode]]
       - [[#emacs-and-insert-mode][Emacs and Insert mode]]
       - [[#motion-and-all-nvim-modes][Motion and All nvim modes]]
@@ -291,75 +291,77 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
 
 **** Global keymaps 
 #+begin_src emacs-lisp
-  (use-package general
-      :config
-    ;; Global keybindings using the leadeir key:
-    (start/leader-keys
-      "." '(find-file :wk "Find file")
-      "TAB" '(comment-line :wk "Comment lines")
-      "p" '(projectile-command-map :wk "Projectile command map"))
+      (use-package general
+          :config
+        ;; Global keybindings using the leadeir key:
+        (start/leader-keys
+          "." '(find-file :wk "Find file")
+          "TAB" '(comment-line :wk "Comment lines")
+          "p" '(projectile-command-map :wk "Projectile command map"))
 
-    (start/leader-keys
-      "f" '(:ignore t :wk "Find")
-      "f c" '((lambda () (interactive)
-                (find-file "~/.config/MainEmacs/config.org"))
-              :wk "Edit Emacs config")
-      "f r" '(consult-recent-file :wk "Recent files")
-      "f f" '(consult-fd :wk "Fd search for files")
-      "f g" '(consult-ripgrep :wk "Ripgrep search in files")
-      "f l" '(consult-line :wk "Find line")
-      "f i" '(consult-imenu :wk "Imenu buffer locations"))
+        (start/leader-keys
+          "f" '(:ignore t :wk "Find")
+          "f c" '((lambda () (interactive)
+                    (find-file "~/.config/MainEmacs/config.org"))
+                  :wk "Edit Emacs config")
+          "f r" '(consult-recent-file :wk "Recent files")
+          "f f" '(consult-fd :wk "Fd search for files")
+          "f g" '(consult-ripgrep :wk "Ripgrep search in files")
+          "f l" '(consult-line :wk "Find line")
+          "f i" '(consult-imenu :wk "Imenu buffer locations"))
 
-    (start/leader-keys
-      "b" '(:ignore t :wk "Buffer Bookmarks")
-      "b b" '(consult-buffer :wk "Switch buffer")
-      "b k" '(kill-this-buffer :wk "Kill this buffer")
-      "b i" '(ibuffer :wk "Ibuffer")
-      "b n" '(next-buffer :wk "Next buffer")
-      "b p" '(previous-buffer :wk "Previous buffer")
-      "b r" '(revert-buffer :wk "Reload buffer")
-      "b j" '(consult-bookmark :wk "Bookmark jump"))
+        (start/leader-keys
+          "b" '(:ignore t :wk "Buffer Bookmarks")
+          "b b" '(consult-buffer :wk "Switch buffer")
+          "b k" '(kill-this-buffer :wk "Kill this buffer")
+          "b i" '(ibuffer :wk "Ibuffer")
+          "b n" '(next-buffer :wk "Next buffer")
+          "b p" '(previous-buffer :wk "Previous buffer")
+          "b r" '(revert-buffer :wk "Reload buffer")
+          "b j" '(consult-bookmark :wk "Bookmark jump"))
 
-    (start/leader-keys
-      "d" '(:ignore t :wk "Dired")
-      "d v" '(dired :wk "Open dired")
-      "d j" '(dired-jump :wk "Dired jump to current"))
+        (start/leader-keys
+          "d" '(:ignore t :wk "Dired")
+          "d v" '(dired :wk "Open dired")
+          "d j" '(dired-jump :wk "Dired jump to current"))
 
-    (start/leader-keys
-      "S-e" '(:ignore t :wk "Eglot Evaluate")
-      "e e" '(eglot-reconnect :wk "Eglot Reconnect")
-      "e f" '(eglot-format :wk "Eglot Format")
-      "e l" '(consult-flymake :wk "Consult Flymake")
-      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-      "e r" '(eval-region :wk "Evaluate elisp in region"))
+        (start/leader-keys
+          "S-e" '(:ignore t :wk "Eglot Evaluate")
+          "e e" '(eglot-reconnect :wk "Eglot Reconnect")
+          "e f" '(eglot-format :wk "Eglot Format")
+          "e l" '(consult-flymake :wk "Consult Flymake")
+          "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+          "e r" '(eval-region :wk "Evaluate elisp in region"))
 
-    (start/leader-keys
-      "g" '(:ignore t :wk "Git")
-      "g g" '(magit-status :wk "Magit status"))
+        (start/leader-keys
+          "g" '(:ignore t :wk "Git")
+          "g g" '(magit-status :wk "Magit status"))
 
-    (start/leader-keys
-      "h" '(:ignore t :wk "Help")
-      "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
-      "h r" '((lambda () (interactive)
-                (load-file "~/.config/MainEmacs/init.el"))
-              :wk "Reload Emacs config"))
+        (start/leader-keys
+          "h" '(:ignore t :wk "Help")
+          "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
+          "h r" '((lambda () (interactive)
+                    (load-file "~/.config/MainEmacs/init.el"))
+                  :wk "Reload Emacs config"))
 
-    (start/leader-keys
-      "s" '(:ignore t :wk "Show")
-      "s e" '(eat :wk "Eat terminal"))
+        (start/leader-keys
+          "s" '(:ignore t :wk "Show")
+          "s e" '(eat :wk "Eat terminal"))
 
-    (start/leader-keys
-      "t" '(:ignore t :wk "Toggle")
-      "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
-      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-)
-
-    (start/global
-      "C-<down>" 'evil-window-down   ;; Move to the window below
-      "C-<up>" 'evil-window-up       ;; Move to the window above
-      "C-<left>" 'evil-window-left   ;; Move to the window on the left
-      "C-<right>" 'evil-window-right ;; Move to the window on the right
+        (start/leader-keys
+          "t" '(:ignore t :wk "Toggle")
+          "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
+          "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
     )
+
+        (start/global
+          "C-<down>" 'evil-window-down   ;; Move to the window below
+          "C-<up>" 'evil-window-up       ;; Move to the window above
+          "C-<left>" 'evil-window-left   ;; Move to the window on the left
+          "C-<right>" 'evil-window-right ;; Move to the window on the right
+          "C-s" nil
+          "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
+        )
 #+end_src
 
 **** Semi global keymaps
@@ -475,16 +477,42 @@ To search and replace, use query-replace-regexp to replace one by one C-M-% (SPC
 
 #+end_src
 
-**** Emacs and Normal mode 
+****  Emacs and Normal mode
 #+begin_src emacs-lisp
-      (start/emacs-normal
-    		"SPC u p" 'package-upgrade-all
-        "SPC q" 'kill-buffer-and-window
-    		"SPC e" nil
-        "SPC e" 'treemacs
-    		"t t" 'eat
-    		;; "t t" 'vterm
-      )
+    (start/emacs-normal
+    	"SPC g l" 'tetris
+    	"SPC g s" 'snake
+    	"SPC g 5" '5x5
+    	"SPC g B" 'blackbox
+    	"SPC g b" 'bubbles
+    	"SPC g d" 'dunnet
+    	"SPC g g" 'gomoku
+    	"SPC g h" 'hanoi
+    	"SPC g l" 'life
+    	"SPC g m" 'mpuz
+    	"SPC g p" 'pong
+    	"SPC g S" 'solitaire
+    	"SPC g z" 'zone
+    	"SPC g d" 'doctor
+    	"SPC u p" 'package-upgrade-all
+      "SPC q" 'kill-buffer-and-window
+    	"SPC e" nil
+      "SPC e" 'treemacs
+    	"t t" 'eat
+    	;; "t t" 'vterm
+    	"h s" 'split-window-horizontally
+    	"v s" 'split-window-vertically
+    	"q s" 'delete-window
+    	"e s" 'balance-windows
+      "C-S-<up>" nil
+      "C-S-<down>" nil
+      "C-S-<left>" nil
+      "C-S-<right>" nil
+      "C-S-<up>" 'enlarge-window
+      "C-S-<down>" 'shrink-window
+      "C-S-<left>" 'enlarge-window-horizontally
+      "C-S-<right>" 'shrink-window-horizontally
+    )
 #+end_src
 
 **** Emacs and Visual mode
