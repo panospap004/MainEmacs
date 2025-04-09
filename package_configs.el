@@ -151,8 +151,6 @@
 	(set-face-attribute 'colorful-base nil :box nil)
 )
 
-(use-package rainbow-mode)
-
 (use-package dired
     	:ensure nil
       :commands (dired dired-jump)
