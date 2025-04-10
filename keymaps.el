@@ -347,7 +347,7 @@
 
 
 (start/emacs-normal
-	"SPC g l" 'tetris
+	"SPC g t" 'tetris
 	"SPC g s" 'snake
 	"SPC g 5" '5x5
 	"SPC g B" 'blackbox
@@ -365,10 +365,13 @@
   "SPC q" 'kill-buffer-and-window
 	"SPC e" nil
   "SPC e" 'treemacs
-	"t t" 'eat
+	"SPC t t" 'eat
 	;; "t t" 'vterm
-	"h s" 'split-window-horizontally
-	"v s" 'split-window-vertically
+  "SPC l t" ((lambda () (interactive)
+                       (let ((width (read-number "Tab width: " 2)))
+                                    (add-file-local-variable 'tab-width width)))
+	"SPC h s" 'split-window-horizontally
+	"SPC v s" 'split-window-vertically
 	"q s" 'delete-window
 	"e s" 'balance-windows
   "C-S-<up>" nil
