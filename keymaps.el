@@ -367,9 +367,10 @@
   "SPC e" 'treemacs
 	"SPC t t" 'eat
 	;; "t t" 'vterm
-  "SPC l t" ((lambda () (interactive)
-                       (let ((width (read-number "Tab width: " 2)))
-                                    (add-file-local-variable 'tab-width width)))
+  "SPC l t" '(lambda ()
+         (interactive)
+         (let ((width (read-number "Tab width: " 2)))
+           (add-file-local-variable 'tab-width width)))
 	"SPC h s" 'split-window-horizontally
 	"SPC v s" 'split-window-vertically
 	"q s" 'delete-window

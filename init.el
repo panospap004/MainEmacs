@@ -8,10 +8,10 @@
 (setq user-emacs-directory "~/.config/MainEmacs/")
 
 (load (expand-file-name "example.el" user-emacs-directory))
-(load (expand-file-name "keymaps.el" user-emacs-directory))
-(load (expand-file-name "configs.el" user-emacs-directory))
 (load (expand-file-name "packages.el" user-emacs-directory))
 (load (expand-file-name "package_configs.el" user-emacs-directory))
+(load (expand-file-name "configs.el" user-emacs-directory))
+(load (expand-file-name "keymaps.el" user-emacs-directory))
 
 (defun my/org-auto-tangle ()
   "Automatically tangle the org file if it contains a tangle header."

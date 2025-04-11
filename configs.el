@@ -54,8 +54,8 @@
  ;; (setq-default line-spacing 0.12)
 ;; Set default font and line spacing.
 (set-face-attribute 'default nil :height 115)
-(add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
-(add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+(add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-10.5"))
+(add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-10.5"))
 (setq-default line-spacing 0.12)
 
 (setq doom-modeline-height 25
