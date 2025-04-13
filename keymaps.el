@@ -185,6 +185,17 @@
     "<right>" 'my/dired-open-item
     "C-h" 'dired-hide-dotfiles-mode
     "C-r" 'dired-rsync)
+      
+ ;; put in pacakge_configs dint work out of it 
+ ;; (general-define-key
+ ;;   :states '(insert)
+ ;;   :keymaps 'copilot-completion-map
+ ;;          "C-<tab>" 'copilot-accept-completion
+ ;;          "C-TAB" 'copilot-accept-completion
+ ;;          "C-e" 'copilot-decline-completion
+ ;;          "M-n" 'copilot-next-completion
+ ;;          "M-p" 'copilot-previous-completion
+ ;;          "M-c" 'copilot-clear-overlay)
 
 ;; Defuns 
 ;; Define functions for shifting left and right without restoring cursor position
@@ -247,16 +258,16 @@
       "d j" '(dired-jump :wk "Dired jump to current"))
 
     (start/leader-keys
-      "S-e" '(:ignore t :wk "Eglot Evaluate")
-      "e e" '(eglot-reconnect :wk "Eglot Reconnect")
-      "e f" '(eglot-format :wk "Eglot Format")
-      "e l" '(consult-flymake :wk "Consult Flymake")
-      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-      "e r" '(eval-region :wk "Evaluate elisp in region"))
+      "l" '(:ignore t :wk "Eglot Evaluate")
+      "l e" '(eglot-reconnect :wk "Eglot Reconnect")
+      "l f" '(eglot-format :wk "Eglot Format")
+      "l l" '(consult-flymake :wk "Consult Flymake")
+      "l b" '(eval-buffer :wk "Evaluate elisp in buffer")
+      "l r" '(eval-region :wk "Evaluate elisp in region"))
 
     (start/leader-keys
       "g" '(:ignore t :wk "Git")
-      "g g" '(magit-status :wk "Magit status"))
+      "g G" '(magit-status :wk "Magit status"))
 
     (start/leader-keys
       "h" '(:ignore t :wk "Help")
@@ -282,6 +293,18 @@
       "C-<right>" 'evil-window-right ;; Move to the window on the right
       "C-s" nil
       "C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
+      "C-h f" nil
+      "C-h v" nil
+      "C-h k" nil
+      "C-h x" nil
+      "C-h c" nil
+      "C-h F" nil
+      "C-h f" 'helpful-callable
+      "C-h v" 'helpful-variable
+      "C-h k" 'helpful-key
+      "C-h x" 'helpful-command
+      "C-h c" 'helpful-at-point
+      "C-h F" 'helpful-function
     )
 
 (start/global-keys-no-insert
@@ -326,6 +349,7 @@
 (start/Nvim-Keys-insert-only
    "TAB" nil
    "S-TAB" nil
+	 "M-TAB" 'codeium-overlay-accept-suggested-completion
 ;;   "TAB" 'tab-to-tab-stop
 ;;   "S-TAB" 'corfu-next
 )
@@ -366,6 +390,8 @@
 	"SPC e" nil
   "SPC e" 'treemacs
 	"SPC t t" 'eat
+	"SPC t e" 'dired-jump-other-window
+	"SPC t E" 'dired-other-window
 	;; "t t" 'vterm
   "SPC l t" '(lambda ()
          (interactive)

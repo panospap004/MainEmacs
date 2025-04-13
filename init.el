@@ -7,7 +7,10 @@
 
 (setq user-emacs-directory "~/.config/MainEmacs/")
 
-(load (expand-file-name "example.el" user-emacs-directory))
+(add-to-list 'load-path "~/.emacs.d/copilot")
+;; (require 'copilot)
+(add-to-list 'load-path "~/.emacs.d/codeium.el")
+(add-to-list 'load-path "~/.emacs.d/codeium-overlay.el")
 (load (expand-file-name "packages.el" user-emacs-directory))
 (load (expand-file-name "package_configs.el" user-emacs-directory))
 (load (expand-file-name "configs.el" user-emacs-directory))

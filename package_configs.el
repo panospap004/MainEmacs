@@ -20,45 +20,48 @@
     ;;   (doom-modeline-bar-width 5)
     ;;   (doom-modeline-persp-name t)
     ;;   (doom-modeline-persp-icon t))
+;; Update your doom-modeline configuration:
 (use-package doom-modeline
   :ensure t
   :init
   ;; Basic settings
   (setq doom-modeline-height 25
         doom-modeline-bar-width 6
-        doom-modeline-github nil  ;; Disable GitHub integration
+        doom-modeline-github nil
         doom-modeline-mu4e nil
         doom-modeline-gnus nil
         doom-modeline-irc nil
-        doom-modeline-time t  ;; Enable time display [[3]][[7]]
+        doom-modeline-time t
         doom-modeline-display-default-persp-name nil)
-
+  
   ;; Git integration
-  (setq doom-modeline-git t  ;; Show Git branch [[3]][[7]]
+  (setq doom-modeline-git t
         doom-modeline-buffer-file-name-style 'relative)
-
+  
   ;; Diagnostics (Flycheck)
-  (setq doom-modeline-checker t)  ;; Show error/warning counts [[3]][[7]]
-
-  ;; Copilot status segment
+  (setq doom-modeline-checker t)
+  
+  ;; Add Copilot and Codeium status segments
   (setq doom-modeline-additional-segments
         '(("copilot" (:eval (if (bound-and-true-p copilot-mode)
-                                (propertize "  " 'face '(:foreground "#81B29A"))
-                              (propertize "  " 'face '(:foreground "#81B29A")))))))
-
+                                (propertize " " 'face '(:foreground "#7cffcf"))
+                                (propertize " " 'face '(:foreground "#fc9b9b")))))
+          ("codeium" (:eval (if (bound-and-true-p codeium-mode)
+                                (propertize " " 'face '(:foreground "#81B29A"))
+                                (propertize " " 'face '(:foreground "#81B29A")))))))
   :config
   (doom-modeline-mode 1)
-
-  ;; Fix display issues [[4]][[8]]
+  
+  ;; Fix display issues
   (setq-default mode-line-format
                 (append mode-line-format
                         '((:eval (doom-modeline-format--main)))))
-
-  ;; Font configuration (adjust based on your setup) [[5]][[9]]
+  
+  ;; Font configuration (adjust based on your setup)
   (when (display-graphic-p)
     (set-face-attribute 'doom-modeline-buffer-path nil :font "JetBrains Mono 10")
     (set-face-attribute 'doom-modeline-buffer-file nil :font "JetBrains Mono 10"))
-
+  
   ;; Git diff counts (might need additional setup)
   (setq doom-modeline-git-show-details t)
   (setq doom-modeline-git-show-count t))
@@ -151,6 +154,55 @@
 	(set-face-attribute 'colorful-base nil :box nil)
 )
 
+(use-package copilot
+      :ensure nil ;; Since we are loading it manually, no need for package installation
+      :hook (prog-mode . copilot-mode) ;; Enable Copilot in programming modes
+      :bind (:map copilot-completion-map
+              ("C-<tab>" . copilot-accept-completion)
+              ("C-TAB" . copilot-accept-completion)
+              ("C-S-<iso-lefttab>" . copilot-accept-completion-by-word)
+              ("C-e" . copilot-decline-completion)
+              ("M-n" . copilot-next-completion)
+              ("M-p" . copilot-previous-completion)
+              ("M-c" . copilot-clear-overlay))
+  :config
+  ;; Optional: Set Node.js path if needed
+  ;; (setq copilot-node-executable "/path/to/node")
+)
+    ;; enable copilot globaly 
+    (defun my-enable-copilot-mode ()
+      (when (and buffer-file-name (not (minibufferp)))
+        (copilot-mode 1)))
+
+    (add-hook 'find-file-hook #'my-enable-copilot-mode)
+
+    ;; (defun my-copilot-fallback-indent-offset (orig-fun &rest args)
+    ;;   "Return a default indentation offset of 2 spaces if none is detected."
+    ;;   (or (apply orig-fun args) 2))
+
+    ;; (advice-add 'copilot--infer-indentation-offset :around #'my-copilot-fallback-indent-offset)
+
+    (setq copilot-indent-offset-warning-disable t)
+
+;; need to do the following 2 for it to work 
+;; git clone --depth 1 https://github.com/tjohnman/codeium-overlay.el.git ~/.emacs.d/codeium-overlay.el
+;; git clone --depth 1 https://github.com/Exafunction/codeium.el ~/.emacs.d/codeium.el
+(use-package codeium
+  :init
+    (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
+  :config
+  (setq use-dialog-box nil)
+  (setq codeium/metadata/api_key "6ce583f3-2c12-4f9e-8962-e6b3d8d3de2e")
+  (setq codeium-mode-line-enable
+        (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
+    (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
+(setq codeium-api-enabled
+    (lambda (api)
+        (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))		
+)
+;; fix keybinds under codeium-overlay
+(use-package codeium-overlay)
+
 (use-package dired
     	:ensure nil
       :commands (dired dired-jump)
@@ -229,10 +281,125 @@
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :init (global-diff-hl-mode))
 
+(use-package tab-bar-buffers)
+    (tab-bar-buffers-mode t)
+
+(unless (version< emacs-version "27")
+  (use-package tab-line
+    :ensure nil
+    :hook (after-init . tab-line-mode)
+    :config
+    (defun tab-line-close-tab (&optional e)
+      "Close the selected tab.
+
+If tab is presented in another window, close the tab by using
+`bury-buffer` function.  If tab is unique to all existing
+windows, kill the buffer with `kill-buffer` function.  Lastly, if
+no tabs left in the window, it is deleted with `delete-window`
+function."
+      (interactive "e")
+      (let* ((posnp (event-start e))
+             (window (posn-window posnp))
+             (buffer (get-pos-property 1 'tab (car (posn-string posnp)))))
+        (with-selected-window window
+          (let ((tab-list (tab-line-tabs-window-buffers))
+                (buffer-list (flatten-list
+                              (seq-reduce (lambda (list window)
+                                            (select-window window t)
+                                            (cons (tab-line-tabs-window-buffers) list))
+                                          (window-list) nil))))
+            (select-window window)
+            (if (> (seq-count (lambda (b) (eq b buffer)) buffer-list) 1)
+                (progn
+                  (if (eq buffer (current-buffer))
+                      (bury-buffer)
+                    (set-window-prev-buffers window (assq-delete-all buffer (window-prev-buffers)))
+                    (set-window-next-buffers window (delq buffer (window-next-buffers))))
+                  (unless (cdr tab-list)
+                    (ignore-errors (delete-window window))))
+              (and (kill-buffer buffer)
+                   (unless (cdr tab-list)
+                     (ignore-errors (delete-window window)))))))))
+
+    (defcustom tab-line-tab-min-width 10
+      "Minimum width of a tab in characters."
+      :type 'integer
+      :group 'tab-line)
+
+    (defcustom tab-line-tab-max-width 20
+      "Maximum width of a tab in characters."
+      :type 'integer
+      :group 'tab-line)
+
+    (defun aorst/tab-line-name-buffer (buffer &rest _buffers)
+      "Create name for tab with padding and truncation.
+
+If buffer name is shorter than `tab-line-tab-max-width' it gets
+centered with spaces, otherwise it is truncated, to preserve
+equal width for all tabs.  This function also tries to fit as
+many tabs in window as possible, so if there are no room for tabs
+with maximum width, it calculates new width for each tab and
+truncates text if needed.  Minimal width can be set with
+`tab-line-tab-min-width' variable."
+      (with-current-buffer buffer
+        (let* ((window-width (window-width (get-buffer-window)))
+               (tab-amount (length (tab-line-tabs-window-buffers)))
+               (window-max-tab-width (if (>= (* (+ tab-line-tab-max-width 3) tab-amount) window-width)
+                                         (/ window-width tab-amount)
+                                       tab-line-tab-max-width))
+               (tab-width (- (cond ((> window-max-tab-width tab-line-tab-max-width)
+                                    tab-line-tab-max-width)
+                                   ((< window-max-tab-width tab-line-tab-min-width)
+                                    tab-line-tab-min-width)
+                                   (t window-max-tab-width))
+                             3)) ;; compensation for ' x ' button
+               (buffer-name (string-trim (buffer-name)))
+               (name-width (length buffer-name)))
+          (if (>= name-width tab-width)
+              (concat  " " (truncate-string-to-width buffer-name (- tab-width 2)) "…")
+            (let* ((padding (make-string (+ (/ (- tab-width name-width) 2) 1) ?\s))
+                   (buffer-name (concat padding buffer-name)))
+              (concat buffer-name (make-string (- tab-width (length buffer-name)) ?\s)))))))
+
+    (setq tab-line-close-button-show t
+          tab-line-new-button-show nil
+          tab-line-separator ""
+          tab-line-tab-name-function #'aorst/tab-line-name-buffer
+          tab-line-right-button (propertize (if (char-displayable-p ?▶) " ▶ " " > ")
+                                            'keymap tab-line-right-map
+                                            'mouse-face 'tab-line-highlight
+                                            'help-echo "Click to scroll right")
+          tab-line-left-button (propertize (if (char-displayable-p ?◀) " ◀ " " < ")
+                                           'keymap tab-line-left-map
+                                           'mouse-face 'tab-line-highlight
+                                           'help-echo "Click to scroll left")
+          tab-line-close-button (propertize (if (char-displayable-p ?×) " × " " x ")
+                                            'keymap tab-line-tab-close-map
+                                            'mouse-face 'tab-line-close-highlight
+                                            'help-echo "Click to close tab"))
+
+    (let ((bg (if (facep 'solaire-default-face)
+                  (face-attribute 'solaire-default-face :background)
+                (face-attribute 'default :background)))
+          (fg (face-attribute 'default :foreground))
+          (base (face-attribute 'mode-line :background))
+          (box-width (/ (line-pixel-height) 4)))
+      (set-face-attribute 'tab-line nil :background base :foreground fg :height 1.0 :inherit nil :box (list :line-width -1 :color base))
+      (set-face-attribute 'tab-line-tab nil :foreground fg :background bg :weight 'normal :inherit nil :box (list :line-width box-width :color bg))
+      (set-face-attribute 'tab-line-tab-inactive nil :foreground fg :background base :weight 'normal :inherit nil :box (list :line-width box-width :color base))
+      (set-face-attribute 'tab-line-tab-current nil :foreground fg :background bg :weight 'normal :inherit nil :box (list :line-width box-width :color bg)))
+
+    (dolist (mode '(ediff-mode
+                    process-menu-mode
+                    term-mode
+                    vterm-mode))
+      (add-to-list 'tab-line-exclude-modes mode))))
+
 (use-package corfu ;; package that takes the place of ivy / helm
   :custom
   (corfu-cycle t)
   (corfu-auto t)
+  ;; (corfu-auto nil)
   (corfu-auto-prefix 1)
   (corfu-popupinfo-mode t)
   (corfu-popupinfo-delay 0.5)
@@ -240,6 +407,7 @@
   (completion-ignore-case t)
   (tab-always-indent 'complete)
   (corfu-preview-current nil)
+  (corfu-quit-no-match 'separator)
   :init (global-corfu-mode))
 
 (use-package nerd-icons-corfu
@@ -247,13 +415,18 @@
   :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package cape
-  :after corfu
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-dict)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
+      :after corfu
+      :init
+      (add-to-list 'completion-at-point-functions #'copilot-completion-at-point 'append)
+      (add-to-list 'completion-at-point-functions #'codeium-completion-at-point 'append)
+      (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+      (add-to-list 'completion-at-point-functions #'cape-dict)
+      (add-to-list 'completion-at-point-functions #'cape-file)
+      (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+      (add-to-list 'completion-at-point-functions #'cape-keyword)
+      (setq completion-at-point-functions
+        (list (cape-capf-super #'codeium-completion-at-point #'cape-dabbrev)))
+)
 
 (use-package orderless
   :custom
@@ -370,43 +543,498 @@
 )
 
 (use-package lsp-mode
-  :commands (lsp lsp-deferred) 
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-SPC l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode
-         (c++-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :config 
-  (lsp-enable-which-key-integration t)
-)
+      :commands (lsp lsp-deferred) 
+      :init
+      ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+      (setq lsp-keymap-prefix "C-SPC l")
+      :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode
+             (c++-mode . lsp)
+             ;; if you want which-key integration
+             (lsp-mode . lsp-enable-which-key-integration))
+      :config 
+      (lsp-enable-which-key-integration t)
+    )
+
+
+;; (use-package lsp-mode
+;;   :commands (lsp lsp-deferred)
+;;   :init
+;;   (setq lsp-keymap-prefix "C-SPC l")
+;;   :custom
+;;   ;; Performance optimizations
+;;   (lsp-idle-delay 0.500)
+;;   (lsp-log-io nil)
+;;   (lsp-completion-provider :capf)
+;;   (lsp-prefer-flymake nil)
+;;   (lsp-enable-file-watchers t)
+;;   (lsp-file-watch-threshold 5000)
+;;   ;; Configure headerline breadcrumb
+;;   (lsp-headerline-breadcrumb-enable t)
+;;   (lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   ;; Enable which-key integration
+;;   (lsp-enable-which-key-integration t)
+;;   ;; Optimize for large files
+;;   (lsp-enable-on-type-formatting nil)
+;;   (lsp-enable-folding nil)
+;;   :hook
+;;   ;; Web development
+;;   (typescript-mode . lsp-deferred)
+;;   (typescript-tsx-mode . lsp-deferred)
+;;   (js-mode . lsp-deferred)
+;;   (js2-mode . lsp-deferred)
+;;   (rjsx-mode . lsp-deferred)
+;;   (web-mode . lsp-deferred)
+;;   (css-mode . lsp-deferred)
+;;   (scss-mode . lsp-deferred)
+;;   (sass-mode . lsp-deferred)
+;;   (less-css-mode . lsp-deferred)
+;;   (html-mode . lsp-deferred)
+;;   (json-mode . lsp-deferred)
+;;   ;; General programming
+;;   (python-mode . lsp-deferred)
+;;   (go-mode . lsp-deferred)
+;;   (rust-mode . lsp-deferred)
+;;   (rustic-mode . lsp-deferred)
+;;   (c-mode . lsp-deferred)
+;;   (c++-mode . lsp-deferred)
+;;   (lua-mode . lsp-deferred)
+;;   (ruby-mode . lsp-deferred)
+;;   (csharp-mode . lsp-deferred)
+;;   (java-mode . lsp-deferred)
+;;   (zig-mode . lsp-deferred)
+;;   ;; Other specialized modes
+;;   (sql-mode . lsp-deferred)
+;;   (tex-mode . lsp-deferred)
+;;   (latex-mode . lsp-deferred)
+;;   (cmake-mode . lsp-deferred)
+;;   (gdscript-mode . lsp-deferred)
+;;   (prisma-mode . lsp-deferred)
+;;   (markdown-mode . lsp-deferred)
+;;   (conf-mode . lsp-deferred)
+;;   ;; Activate LSP when lsp-mode is loaded
+;;   (lsp-mode . (lambda ()
+;;                 (lsp-enable-which-key-integration)
+;;                 (add-hook 'before-save-hook #'lsp-format-buffer nil t)
+;;                 (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
+;;   :config
+;;   ;; Configure LSP servers with default settings
+;;   (lsp-register-custom-settings
+;;    '(("gopls.completeUnimported" t t)
+;;      ("gopls.staticcheck" t t)
+;;      ("rust-analyzer.checkOnSave.command" "clippy" t)
+;;      ("python.linting.enabled" t t))))
 
 (use-package lsp-ui
-	:commands lsp-ui-mode
-  :hook (lsp-mode . lsp-ui-mode)
-)
+  	:commands lsp-ui-mode
+    :hook (lsp-mode . lsp-ui-mode)
+  )
 
-(use-package lsp-treemacs 
-  :commands lsp-treemacs-errors-list
-	:init
-    (setq treemacs-position 'right)
-  ;; :config 
-)
-;; icons for treemacs
-(use-package treemacs-nerd-icons
-  :after treemacs
-  :config
-    (treemacs-load-theme "nerd-icons"))
-
-;; optionally if you want to use debugger
-(use-package dap-mode)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
-
-;; optional if you want which-key integration
-(use-package which-key
+  (use-package lsp-treemacs 
+    :commands lsp-treemacs-errors-list
+  	:init
+      (setq treemacs-position 'right)
+			(setq treemacs-follow-mode t)
+    ;; :config 
+  )
+  ;; icons for treemacs
+  (use-package treemacs-nerd-icons
+    :after treemacs
     :config
-    (which-key-mode))
+      (treemacs-load-theme "nerd-icons"))
+
+ (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :ensure t)    
+
+ (use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
+    :after (treemacs)
+    :ensure t
+    :config (treemacs-set-scope-type 'Tabs))
+
+  ;; optionally if you want to use debugger
+  (use-package dap-mode)
+  ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+  ;; optional if you want which-key integration
+  (use-package which-key
+      :config
+      (which-key-mode))
+
+;;   (use-package lsp-ui
+;; :commands lsp-ui-mode
+;; :after lsp-mode
+;; :custom
+;; ;; Sideline configuration
+;; (lsp-ui-sideline-enable t)
+;; (lsp-ui-sideline-show-hover nil)
+;; (lsp-ui-sideline-show-code-actions t)
+;; (lsp-ui-sideline-update-mode 'point)
+;; (lsp-ui-sideline-delay 0.2)
+;; ;; Doc configuration
+;; (lsp-ui-doc-enable t)
+;; (lsp-ui-doc-position 'at-point)
+;; (lsp-ui-doc-delay 0.2)
+;; (lsp-ui-doc-show-with-cursor t)
+;; ;; Peek configuration
+;; (lsp-ui-peek-enable t)
+;; (lsp-ui-peek-show-directory t)
+;; :hook
+;; (lsp-mode . lsp-ui-mode))
+
+;; Enhanced Web Development Setup
+;; (use-package web-mode
+;;   :ensure t
+;;   :mode (("\\.tsx\\'" . web-mode)
+;;          ("\\.jsx\\'" . web-mode)
+;;          ("\\.html\\'" . web-mode)
+;;          ("\\.css\\'" . web-mode))
+;;   :custom
+;;   (web-mode-markup-indent-offset 2)
+;;   (web-mode-css-indent-offset 2)
+;;   (web-mode-code-indent-offset 2)
+;;   (web-mode-enable-auto-pairing t)
+;;   (web-mode-enable-css-colorization t)
+;;   (web-mode-enable-current-element-highlight t)
+;;   (web-mode-content-types-alist '(("jsx" . "\\.tsx\\'"))))
+
+;; ;; TypeScript/React Specific Configuration
+;; (use-package typescript-mode
+;;   :ensure t
+;;   :mode ("\\.ts\\'" . typescript-mode)
+;;   :hook (typescript-mode . lsp-deferred)
+;;   :config
+;;   (setq typescript-indent-level 2)
+;;   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-tsx-mode)))
+
+;; (use-package react-snippets
+;;   :ensure t
+;;   :after yasnippet)
+
+;; ;; Next.js Support
+;; (use-package nextjs-mode
+;;   :ensure t
+;;   :hook ((nextjs-mode . lsp-deferred)
+;;          (nextjs-mode . (lambda ()
+;;                           (setq-local lsp-enable-folding nil)
+;;                           (setq-local lsp-enable-on-type-formatting nil))))
+;;   :config
+;;   (add-to-list 'auto-mode-alist '("\\.page\\.tsx?\\'" . nextjs-mode))
+;;   (add-to-list 'auto-mode-alist '("/app/.*\\.tsx?\\'" . nextjs-mode)))
+
+;; ;; Multi-LSP Configuration for TSX files
+;; (defun setup-tsx-lsp ()
+;;   "Configure multiple LSP servers for TSX files."
+;;   (when (derived-mode-p 'web-mode 'typescript-tsx-mode)
+;;     (lsp-deferred)
+;;     (require 'lsp-tailwindcss)
+;;     (lsp-tailwindcss-setup)
+;;     (lsp)))
+
+;; (add-hook 'typescript-tsx-mode-hook #'setup-tsx-lsp)
+;; (add-hook 'web-mode-hook #'setup-tsx-lsp)
+
+;; ;; TailwindCSS Deep Integration
+;; (use-package lsp-tailwindcss
+;;   :ensure t
+;;   :after lsp-mode
+;;   :config
+;;   (setq lsp-tailwindcss-add-on-mode t
+;;         lsp-tailwindcss-major-modes '(web-mode typescript-tsx-mode css-mode)
+;;         lsp-tailwindcss-include-languages '("html" "javascript" "typescript" "javascriptreact" "typescriptreact")))
+
+;; ;; TypeScript Server Configuration
+;; (with-eval-after-load 'lsp-mode
+;;   (lsp-register-client
+;;    (make-lsp-client :new-connection (lsp-stdio-connection '("typescript-language-server" "--stdio"))
+;;                     :major-modes '(typescript-mode typescript-tsx-mode)
+;;                     :server-id 'ts-ls
+;;                     :priority 1
+;;                     :initialization-options
+;;                     lsp-typescript-tsdk "/path/to/your/project/node_modules/typescript/lib/")))
+
+;; ;; React/JSX Specific LSP Settings
+;; (setq lsp-typescript-tsdk "/path/to/your/project/node_modules/typescript/lib/"
+;;       lsp-typescript-preferences '(:includeCompletionsForModuleExports t
+;;                                    :includeCompletionsWithInsertText t
+;;                                    :importModuleSpecifierPreference "relative"
+;;                                    :jsxAttributeCompletionStyle "auto")
+;;       lsp-typescript-inlay-hints-enumMemberValues t
+;;       lsp-typescript-inlay-hints-parameterNames t
+;;       lsp-typescript-inlay-hints-propertyDeclarationTypes t
+;;       lsp-typescript-inlay-hints-functionParameterTypes t
+;;       lsp-typescript-inlay-hints-variableTypes t)
+
+;; ;; Setup JS/TS Language Server
+;; (use-package lsp-javascript
+;;   :ensure nil
+;;   :after lsp-mode
+;;   :config
+;;   (setq lsp-javascript-format-enable t
+;;         lsp-javascript-preferences-quote-style "single"
+;;         lsp-javascript-format-insert-space-after-opening-and-before-closing-nonempty-brackets nil
+;;         lsp-javascript-update-imports-on-file-move-enable "always"
+;;         lsp-javascript-suggest-complete-function-calls t))
+
+
+;; ;; Prisma mode
+;; (use-package prisma-mode
+;;   :ensure t
+;;   :mode ("\\.prisma\\'" . prisma-mode)
+;;   :hook (prisma-mode . lsp-deferred))
+
+
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :after lsp-mode
+;;   :hook (python-mode . (lambda ()
+;;                          (require 'lsp-pyright)
+;;                          (lsp-deferred)))
+;;   :custom
+;;   (lsp-pyright-disable-language-service nil)
+;;   (lsp-pyright-disable-organize-imports nil)
+;;   (lsp-pyright-auto-import-completions t)
+;;   (lsp-pyright-use-library-code-for-types t)
+;;   (lsp-pyright-venv-path "~/.virtualenvs"))
+
+
+;; (use-package ccls
+;;   :ensure t
+;;   :after lsp-mode
+;;   :config
+;;   (setq ccls-executable "ccls"
+;;         ccls-args '("--log-file=/tmp/ccls.log")
+;;         ccls-initialization-options
+;;         '(:index (:comments 2)
+;;                  :completion (:detailedLabel t)
+;;                  :diagnostics (:onOpen t :onChange t))))
+
+;; ;; Alternative C/C++ setup with clangd
+;; (use-package lsp-clangd
+;;   :ensure nil
+;;   :after lsp-mode
+;;   :custom
+;;   (lsp-clangd-binary-path "/usr/bin/clangd")
+;;   (lsp-clients-clangd-args
+;;    '("--header-insertion=never"
+;;      "--background-index"
+;;      "--clang-tidy"
+;;      "--completion-style=detailed"
+;;      "--suggest-missing-includes"
+;;      "--cross-file-rename"))
+;;   :config
+;;   (add-to-list 'lsp-language-id-configuration '(c++-mode . "cpp")))
+
+
+;; (use-package rustic
+;;   :ensure t
+;;   :mode ("\\.rs\\'" . rustic-mode)
+;;   :custom
+;;   (rustic-format-on-save t)
+;;   (rustic-analyzer-command '("rust-analyzer"))
+;;   :config
+;;   (setq lsp-rust-analyzer-server-display-inlay-hints t
+;;         lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial"
+;;         lsp-rust-analyzer-display-chaining-hints t
+;;         lsp-rust-analyzer-display-closure-return-type-hints t))
+
+
+;; (use-package go-mode
+;;   :ensure t
+;;   :mode ("\\.go\\'" . go-mode)
+;;   :hook
+;;   (go-mode . (lambda ()
+;;                (add-hook 'before-save-hook #'lsp-format-buffer nil t)
+;;                (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
+;;   :config
+;;   (setq lsp-gopls-staticcheck t
+;;         lsp-gopls-complete-unimported t))
+
+
+;; (use-package csharp-mode
+;;   :ensure t
+;;   :mode ("\\.cs\\'" . csharp-mode)
+;;   :config
+;;   (setq lsp-csharp-server-path "/usr/bin/omnisharp"))
+
+
+;; (use-package lsp-java
+;;   :ensure t
+;;   :after lsp-mode
+;;   :config
+;;   (setq lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+;;   (setq lsp-java-format-settings-profile "GoogleStyle")
+;;   :hook (java-mode . lsp-deferred))
+
+
+;; ;; Lua
+;; (use-package lua-mode
+;;   :ensure t
+;;   :mode ("\\.lua\\'" . lua-mode)
+;;   :hook (lua-mode . lsp-deferred))
+
+;; ;; Ruby
+;; (use-package ruby-mode
+;;   :ensure t
+;;   :mode "\\.rb\\'"
+;;   :hook (ruby-mode . lsp-deferred))
+
+;; ;; Zig
+;; (use-package zig-mode
+;;   :ensure t
+;;   :mode "\\.zig\\'"
+;;   :hook (zig-mode . lsp-deferred))
+
+;; ;; LaTeX
+;; (use-package tex
+;;   :ensure auctex
+;;   :hook (tex-mode . lsp-deferred))
+
+;; ;; Markdown
+;; (use-package markdown-mode
+;;   :ensure t
+;;   :mode (("README\\.md\\'" . gfm-mode)
+;;          ("\\.md\\'" . markdown-mode)
+;;          ("\\.markdown\\'" . markdown-mode))
+;;   :hook (markdown-mode . lsp-deferred))
+
+;; ;; GDScript (Godot)
+;; (use-package gdscript-mode
+;;   :ensure t
+;;   :hook (gdscript-mode . lsp-deferred))
+
+;; ;; JSON mode
+;; (use-package json-mode
+;;   :ensure t
+;;   :mode "\\.json\\'"
+;;   :hook (json-mode . lsp-deferred))
+
+;; ;; CMake
+;; (use-package cmake-mode
+;;   :ensure t
+;;   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'")
+;;   :hook (cmake-mode . lsp-deferred))
+
+;; ;; SQL
+;; (use-package sql-mode
+;;   :ensure nil  ; Built into Emacs
+;;   :hook (sql-mode . lsp-deferred)
+;;   :config
+;;   (setq lsp-sqls-workspace-config-path nil))
+
+;; ;; Set up Svelte support
+;; (use-package svelte-mode
+;;   :ensure t
+;;   :mode "\\.svelte\\'"
+;;   :hook (svelte-mode . lsp-deferred))
+
+;; ;; Vue.js support
+;; (use-package vue-mode
+;;   :ensure t
+;;   :mode "\\.vue\\'"
+;;   :hook (vue-mode . lsp-deferred)
+;;   :config
+;;   (setq mmm-submode-decoration-level 0))
+
+;; ;; GraphQL support
+;; (use-package graphql-mode
+;;   :ensure t
+;;   :mode ("\\.graphql\\'" "\\.gql\\'")
+;;   :hook (graphql-mode . lsp-deferred))
+
+;; ;; Formatter integration
+;; (use-package apheleia
+;;   :ensure t
+;;   :config
+;;   (apheleia-global-mode +1)
+  
+;;   ;; Configure formatters for different languages
+;;   (setq apheleia-formatters
+;;         '((prettier . ("npx" "prettier" "--stdin-filepath" filepath))
+;;           (prettier-typescript . ("npx" "prettier" "--stdin-filepath" filepath "--parser" "typescript"))
+;;           (prettier-javascript . ("npx" "prettier" "--stdin-filepath" filepath "--parser" "babel"))
+;;           (prettier-jsx . ("npx" "prettier" "--stdin-filepath" filepath "--parser" "babel"))
+;;           (prettier-html . ("npx" "prettier" "--stdin-filepath" filepath "--parser" "html"))
+;;           (prettier-css . ("npx" "prettier" "--stdin-filepath" filepath "--parser" "css"))
+;;           (prettier-json . ("npx" "prettier" "--stdin-filepath" filepath "--parser" "json"))
+;;           (black . ("black" "--quiet" "-"))
+;;           (rustfmt . ("rustfmt" "--edition" "2021"))
+;;           (gofmt . ("gofmt"))
+;;           (clang-format . ("clang-format" "-style=file"))
+;;           (csharpier . ("dotnet" "csharpier" filepath))
+;;           (zigfmt . ("zig" "fmt" filepath))
+;;           (shfmt . ("shfmt" "-i" "2" "-ci"))
+;;           (stylua . ("stylua" "-"))))
+  
+;;   ;; Map formatters to modes
+;;   (setq apheleia-mode-alist
+;;         '((typescript-mode . prettier-typescript)
+;;           (typescript-tsx-mode . prettier-typescript)
+;;           (js-mode . prettier-javascript)
+;;           (js2-mode . prettier-javascript)
+;;           (web-mode . prettier-html)
+;;           (css-mode . prettier-css)
+;;           (json-mode . prettier-json)
+;;           (python-mode . black)
+;;           (rustic-mode . rustfmt)
+;;           (rust-mode . rustfmt)
+;;           (go-mode . gofmt)
+;;           (c-mode . clang-format)
+;;           (c++-mode . clang-format)
+;;           (csharp-mode . csharpier)
+;;           (zig-mode . zigfmt)
+;;           (sh-mode . shfmt)
+;;           (lua-mode . stylua))))
+
+;; (use-package dap-mode
+;;   :after lsp-mode
+;;   :config
+;;   (dap-auto-configure-mode)
+  
+;;   ;; Set up Node debugging
+;;   (require 'dap-node)
+;;   (dap-node-setup)
+  
+;;   ;; Set up Python debugging
+;;   (require 'dap-python)
+;;   (setq dap-python-executable "python")
+;;   (setq dap-python-debugger 'debugpy)
+  
+;;   ;; Set up Go debugging
+;;   (require 'dap-go)
+;;   (dap-go-setup)
+  
+;;   ;; Set up for Java
+;;   (require 'dap-java)
+  
+;;   ;; Set up for C/C++/Rust
+;;   (require 'dap-lldb)
+;;   (require 'dap-gdb-lldb)
+;;   (dap-gdb-lldb-setup)
+  
+;;   ;; Set up for Chrome/Firefox (JavaScript/TypeScript)
+;;   (require 'dap-chrome)
+;;   (require 'dap-firefox)
+  
+;;   ;; Set up UI with icons
+;;   (dap-ui-mode 1)
+;;   (dap-tooltip-mode 1)
+  
+;;   ;; Key bindings for debugging
+;;   (general-define-key
+;;    :prefix "C-SPC c"
+;;    :states '(normal visual)
+;;    :keymaps 'override
+;;    "d" '(dap-debug :which-key "Start debugging")
+;;    "l" '(dap-debug-last :which-key "Debug last")
+;;    "r" '(dap-debug-restart :which-key "Restart debugging")
+;;    "e" '(dap-disconnect :which-key "End debugging")
+;;    "b" '(dap-breakpoint-toggle :which-key "Toggle breakpoint")
+;;    "B" '(dap-breakpoint-condition :which-key "Conditional breakpoint")
+;;    "n" '(dap-next :which-key "Next")
+;;    "s" '(dap-step-in :which-key "Step in")
+;;    "o" '(dap-step-out :which-key "Step out")
+;;    "c" '(dap-continue :which-key "Continue")
+;;    "h" '(dap-hydra :which-key "DAP Hydra")))
 
 (use-package dashboard
   :ensure t

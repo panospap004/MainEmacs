@@ -52,5 +52,6 @@
 (use-package diminish)
 (use-package rainbow-delimiters)
 (use-package which-key)
+(use-package helpful)
 
 (provide 'packages)
