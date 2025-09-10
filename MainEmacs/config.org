@@ -1,0 +1,32 @@
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+#+Startup: showeverything
+#+Options: toc:2
+
+* Multi File Example
+** Adding the lisp directory to load-path
+#+begin_src emacs-lisp
+(setq user-emacs-directory "~/.config/MainEmacs/")
+#+end_src
+
+** Sourcing the files
+#+begin_src emacs-lisp
+;; (add-to-list 'load-path "~/.emacs.d/copilot")
+;; ;; (require 'copilot)
+;; (add-to-list 'load-path "~/.emacs.d/codeium.el")
+;; (add-to-list 'load-path "~/.emacs.d/codeium-overlay.el")
+(load (expand-file-name "packages.el" user-emacs-directory))
+(load (expand-file-name "package_configs.el" user-emacs-directory))
+(load (expand-file-name "configs.el" user-emacs-directory))
+(load (expand-file-name "keymaps.el" user-emacs-directory))
+
+#+end_src
+
+** Auto save if auto tangle header is on
+#+begin_src emacs-lisp
+(defun my/org-auto-tangle ()
+  "Automatically tangle the org file if it contains a tangle header."
+  (when (string-match "#\\+auto_tangle: t" (buffer-string))
+    (org-babel-tangle)))
+
+(add-hook 'after-save-hook #'my/org-auto-tangle)
+#+end_src

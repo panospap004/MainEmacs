@@ -1,0 +1,273 @@
+;;; monet-theme.el --- A soft, impressionistic theme inspired by Claude Monet's palette -*- lexical-binding: t -*-
+
+;; Copyright (C) 2025
+
+;; Author: User
+;; Version: 1.0.0
+;; Keywords: faces, themes
+;; Package-Requires: ((emacs "24.1"))
+
+;;; Commentary:
+
+;; A beautiful theme inspired by Claude Monet's impressionistic color palette.
+;; Features soft blues, warm peaches, sage greens, and gentle lavenders
+;; that create a calming and artistic coding environment.
+
+;;; Code:
+
+(deftheme monet
+  "A soft, impressionistic theme inspired by Claude Monet's palette.")
+
+;; Color palette inspired by Monet's paintings
+(let ((monet-bg           "#202636")   ; Deep twilight blue
+      (monet-bg-alt       "#323746")   ; Slightly lighter background
+      (monet-bg-light     "#444956")   ; Light background elements
+      (monet-fg           "#c9d3e4")   ; Soft blue-white
+      (monet-fg-alt       "#b7c0d0")   ; Muted foreground
+      (monet-fg-dim       "#a6aebc")   ; Dimmed text
+      (monet-fg-bright    "#DAE5F8")   ; Bright foreground
+      
+      ;; Accent colors from Monet's palette
+      (monet-blue         "#63b1ff")   ; Sky blue
+      (monet-blue-light   "#a0d2fa")   ; Light sky blue
+      (monet-blue-dark    "#456aa8")   ; Deep water blue
+      (monet-cyan         "#16B4B6")   ; Water reflection
+      (monet-cyan-dark    "#0e8a8c")   ; Deep water
+      (monet-green        "#a4dc99")   ; Soft sage green
+      (monet-yellow       "#DBC074")   ; Sunlight yellow
+      (monet-orange       "#E6A37C")   ; Warm peach
+      (monet-red          "#ED8695")   ; Soft rose
+      (monet-magenta      "#E6A37C")   ; Sunset peach
+      (monet-violet       "#93aff5")   ; Lavender
+      
+      ;; Semantic colors
+      (monet-selection    "#393E52")   ; Selection background
+      (monet-comment      "#61677f")   ; Comment color
+      (monet-string       "#a4dc99")   ; String color (sage green)
+      (monet-keyword      "#16B4B6")   ; Keyword color (cyan)
+      (monet-function     "#a0d2fa")   ; Function color (light blue)
+      (monet-variable     "#93aff5")   ; Variable color (violet)
+      (monet-type         "#63b1ff")   ; Type color (blue)
+      (monet-constant     "#E6A37C")   ; Constant color (orange)
+      (monet-builtin      "#63b1ff")   ; Builtin color (blue)
+      (monet-error        "#ED8695")   ; Error color (red)
+      (monet-warning      "#DBC074")   ; Warning color (yellow)
+      (monet-success      "#a4dc99"))  ; Success color (green)
+
+  (custom-theme-set-faces
+   'monet
+
+   ;; Basic faces
+   `(default ((t (:background ,monet-bg :foreground ,monet-fg))))
+   `(cursor ((t (:background ,monet-blue))))
+   `(region ((t (:background ,monet-selection :extend t))))
+   `(highlight ((t (:background ,monet-blue :foreground ,monet-bg))))
+   `(secondary-selection ((t (:background ,monet-bg-light :extend t))))
+   `(trailing-whitespace ((t (:background ,monet-error))))
+   `(escape-glyph ((t (:foreground ,monet-cyan))))
+   `(homoglyph ((t (:foreground ,monet-yellow))))
+   `(nobreak-space ((t (:foreground ,monet-cyan :underline t))))
+
+   ;; Font lock faces
+   `(font-lock-builtin-face ((t (:foreground ,monet-builtin))))
+   `(font-lock-comment-delimiter-face ((t (:foreground ,monet-comment))))
+   `(font-lock-comment-face ((t (:foreground ,monet-comment :slant italic))))
+   `(font-lock-constant-face ((t (:foreground ,monet-constant))))
+   `(font-lock-doc-face ((t (:foreground ,monet-comment :slant italic))))
+   `(font-lock-function-name-face ((t (:foreground ,monet-function :weight bold))))
+   `(font-lock-keyword-face ((t (:foreground ,monet-keyword :weight bold))))
+   `(font-lock-negation-char-face ((t (:foreground ,monet-red :weight bold))))
+   `(font-lock-preprocessor-face ((t (:foreground ,monet-violet))))
+   `(font-lock-regexp-grouping-backslash ((t (:foreground ,monet-yellow))))
+   `(font-lock-regexp-grouping-construct ((t (:foreground ,monet-yellow))))
+   `(font-lock-string-face ((t (:foreground ,monet-string))))
+   `(font-lock-type-face ((t (:foreground ,monet-type))))
+   `(font-lock-variable-name-face ((t (:foreground ,monet-variable))))
+   `(font-lock-warning-face ((t (:foreground ,monet-warning :weight bold))))
+
+   ;; Mode line
+   `(mode-line ((t (:background ,monet-bg-alt :foreground ,monet-fg 
+                    :box (:line-width 1 :color ,monet-bg-light)))))
+   `(mode-line-inactive ((t (:background ,monet-bg :foreground ,monet-fg-dim
+                             :box (:line-width 1 :color ,monet-bg-light)))))
+   `(mode-line-emphasis ((t (:foreground ,monet-blue :weight bold))))
+   `(mode-line-highlight ((t (:foreground ,monet-yellow))))
+   `(mode-line-buffer-id ((t (:foreground ,monet-fg-bright :weight bold))))
+
+   ;; Line numbers
+   `(line-number ((t (:foreground ,monet-fg-dim :background ,monet-bg))))
+   `(line-number-current-line ((t (:foreground ,monet-fg :background ,monet-bg-alt :weight bold))))
+
+   ;; Fringe and borders
+   `(fringe ((t (:background ,monet-bg :foreground ,monet-bg-light))))
+   `(vertical-border ((t (:foreground ,monet-bg-light))))
+
+   ;; Minibuffer
+   `(minibuffer-prompt ((t (:foreground ,monet-blue :weight bold))))
+
+   ;; Search
+   `(isearch ((t (:background ,monet-blue :foreground ,monet-bg :weight bold))))
+   `(lazy-highlight ((t (:background ,monet-blue-dark :foreground ,monet-fg-bright))))
+   `(match ((t (:background ,monet-green :foreground ,monet-bg :weight bold))))
+
+   ;; Links
+   `(link ((t (:foreground ,monet-cyan :underline t))))
+   `(link-visited ((t (:foreground ,monet-violet :underline t))))
+
+   ;; Buttons
+   `(button ((t (:foreground ,monet-cyan :underline t))))
+
+   ;; Error/Warning/Success
+   `(error ((t (:foreground ,monet-error :weight bold))))
+   `(warning ((t (:foreground ,monet-warning :weight bold))))
+   `(success ((t (:foreground ,monet-success :weight bold))))
+
+   ;; Dired
+   `(dired-directory ((t (:foreground ,monet-blue :weight bold))))
+   `(dired-header ((t (:foreground ,monet-yellow :weight bold))))
+   `(dired-mark ((t (:foreground ,monet-red :weight bold))))
+   `(dired-marked ((t (:foreground ,monet-magenta :weight bold))))
+   `(dired-symlink ((t (:foreground ,monet-cyan :weight bold))))
+
+   ;; Org mode
+   `(org-level-1 ((t (:foreground ,monet-blue :height 1.3 :weight bold))))
+   `(org-level-2 ((t (:foreground ,monet-violet :height 1.2 :weight bold))))
+   `(org-level-3 ((t (:foreground ,monet-cyan :height 1.1 :weight bold))))
+   `(org-level-4 ((t (:foreground ,monet-green :weight bold))))
+   `(org-level-5 ((t (:foreground ,monet-yellow :weight bold))))
+   `(org-level-6 ((t (:foreground ,monet-orange :weight bold))))
+   `(org-level-7 ((t (:foreground ,monet-magenta :weight bold))))
+   `(org-level-8 ((t (:foreground ,monet-fg :weight bold))))
+   `(org-document-title ((t (:foreground ,monet-fg-bright :height 1.5 :weight bold))))
+   `(org-meta-line ((t (:foreground ,monet-comment :slant italic))))
+   `(org-block ((t (:background ,monet-bg-light :extend t))))
+   `(org-block-begin-line ((t (:foreground ,monet-comment :background ,monet-bg-light))))
+   `(org-block-end-line ((t (:foreground ,monet-comment :background ,monet-bg-light))))
+   `(org-code ((t (:foreground ,monet-orange :background ,monet-bg-light))))
+   `(org-verbatim ((t (:foreground ,monet-green :background ,monet-bg-light))))
+   `(org-table ((t (:foreground ,monet-violet))))
+   `(org-link ((t (:foreground ,monet-cyan :underline t))))
+   `(org-todo ((t (:foreground ,monet-red :weight bold))))
+   `(org-done ((t (:foreground ,monet-green :weight bold))))
+   `(org-date ((t (:foreground ,monet-yellow))))
+
+   ;; Markdown
+   `(markdown-header-face-1 ((t (:foreground ,monet-blue :height 1.3 :weight bold))))
+   `(markdown-header-face-2 ((t (:foreground ,monet-violet :height 1.2 :weight bold))))
+   `(markdown-header-face-3 ((t (:foreground ,monet-cyan :height 1.1 :weight bold))))
+   `(markdown-header-face-4 ((t (:foreground ,monet-green :weight bold))))
+   `(markdown-header-face-5 ((t (:foreground ,monet-yellow :weight bold))))
+   `(markdown-header-face-6 ((t (:foreground ,monet-orange :weight bold))))
+   `(markdown-code-face ((t (:foreground ,monet-orange :background ,monet-bg-light))))
+   `(markdown-inline-code-face ((t (:foreground ,monet-orange :background ,monet-bg-light))))
+   `(markdown-pre-face ((t (:foreground ,monet-green))))
+   `(markdown-link-face ((t (:foreground ,monet-cyan :underline t))))
+   `(markdown-url-face ((t (:foreground ,monet-cyan))))
+
+   ;; Company (if using company-mode)
+   `(company-tooltip ((t (:background ,monet-bg-alt :foreground ,monet-fg))))
+   `(company-tooltip-selection ((t (:background ,monet-selection :foreground ,monet-fg))))
+   `(company-tooltip-common ((t (:foreground ,monet-blue :weight bold))))
+   `(company-scrollbar-bg ((t (:background ,monet-bg-light))))
+   `(company-scrollbar-fg ((t (:background ,monet-blue))))
+
+   ;; Magit (if using magit)
+   `(magit-branch-local ((t (:foreground ,monet-cyan))))
+   `(magit-branch-remote ((t (:foreground ,monet-green))))
+   `(magit-hash ((t (:foreground ,monet-comment))))
+   `(magit-section-heading ((t (:foreground ,monet-yellow :weight bold))))
+   `(magit-diff-added ((t (:background "#1a2e1a" :foreground ,monet-green))))
+   `(magit-diff-removed ((t (:background "#2e1a1a" :foreground ,monet-red))))
+   `(magit-diff-context ((t (:foreground ,monet-fg-dim))))
+
+   ;; Which-key (if using which-key)
+   `(which-key-key-face ((t (:foreground ,monet-green))))
+   `(which-key-group-description-face ((t (:foreground ,monet-violet))))
+   `(which-key-command-description-face ((t (:foreground ,monet-blue))))
+
+   ;; Ivy/Counsel (if using ivy)
+   `(ivy-current-match ((t (:background ,monet-selection :foreground ,monet-fg))))
+   `(ivy-minibuffer-match-face-1 ((t (:foreground ,monet-fg-dim))))
+   `(ivy-minibuffer-match-face-2 ((t (:foreground ,monet-yellow :weight bold))))
+   `(ivy-minibuffer-match-face-3 ((t (:foreground ,monet-blue :weight bold))))
+   `(ivy-minibuffer-match-face-4 ((t (:foreground ,monet-green :weight bold))))
+
+   ;; Helm (if using helm)
+   `(helm-selection ((t (:background ,monet-selection :foreground ,monet-fg))))
+   `(helm-match ((t (:foreground ,monet-blue :weight bold))))
+   `(helm-source-header ((t (:foreground ,monet-yellow :weight bold :height 1.1))))
+
+   ;; Treemacs (if using treemacs)
+   `(treemacs-directory-face ((t (:foreground ,monet-blue))))
+   `(treemacs-file-face ((t (:foreground ,monet-fg))))
+   `(treemacs-root-face ((t (:foreground ,monet-yellow :weight bold :height 1.2))))
+
+   ;; Web mode
+   `(web-mode-html-tag-face ((t (:foreground ,monet-blue))))
+   `(web-mode-html-attr-name-face ((t (:foreground ,monet-violet))))
+   `(web-mode-html-attr-value-face ((t (:foreground ,monet-string))))
+   `(web-mode-css-property-name-face ((t (:foreground ,monet-cyan))))
+   `(web-mode-css-selector-face ((t (:foreground ,monet-yellow))))
+
+   ;; JavaScript/TypeScript
+   `(js2-function-name ((t (:foreground ,monet-function))))
+   `(js2-function-param ((t (:foreground ,monet-variable))))
+   `(js2-external-variable ((t (:foreground ,monet-red))))
+
+   ;; Python
+   `(python-mode-string-face ((t (:foreground ,monet-string))))
+
+   ;; Show paren
+   `(show-paren-match ((t (:background ,monet-blue :foreground ,monet-bg :weight bold))))
+   `(show-paren-mismatch ((t (:background ,monet-red :foreground ,monet-bg :weight bold))))
+
+   ;; Rainbow delimiters (if using rainbow-delimiters)
+   `(rainbow-delimiters-depth-1-face ((t (:foreground ,monet-blue))))
+   `(rainbow-delimiters-depth-2-face ((t (:foreground ,monet-violet))))
+   `(rainbow-delimiters-depth-3-face ((t (:foreground ,monet-cyan))))
+   `(rainbow-delimiters-depth-4-face ((t (:foreground ,monet-green))))
+   `(rainbow-delimiters-depth-5-face ((t (:foreground ,monet-yellow))))
+   `(rainbow-delimiters-depth-6-face ((t (:foreground ,monet-orange))))
+   `(rainbow-delimiters-depth-7-face ((t (:foreground ,monet-magenta))))
+   `(rainbow-delimiters-depth-8-face ((t (:foreground ,monet-blue-light))))
+   `(rainbow-delimiters-depth-9-face ((t (:foreground ,monet-violet))))
+
+   ;; Flycheck/Flymake
+   `(flycheck-error ((t (:underline (:style wave :color ,monet-error)))))
+   `(flycheck-warning ((t (:underline (:style wave :color ,monet-warning)))))
+   `(flycheck-info ((t (:underline (:style wave :color ,monet-success)))))
+   `(flymake-error ((t (:underline (:style wave :color ,monet-error)))))
+   `(flymake-warning ((t (:underline (:style wave :color ,monet-warning)))))
+   `(flymake-note ((t (:underline (:style wave :color ,monet-success)))))
+
+   ;; Diff
+   `(diff-added ((t (:foreground ,monet-green :background "#1a2e1a"))))
+   `(diff-removed ((t (:foreground ,monet-red :background "#2e1a1a"))))
+   `(diff-changed ((t (:foreground ,monet-yellow))))
+   `(diff-header ((t (:foreground ,monet-cyan))))
+   `(diff-file-header ((t (:foreground ,monet-blue :weight bold))))
+
+   ;; Eshell
+   `(eshell-prompt ((t (:foreground ,monet-blue :weight bold))))
+   `(eshell-ls-directory ((t (:foreground ,monet-blue))))
+   `(eshell-ls-executable ((t (:foreground ,monet-green))))
+   `(eshell-ls-symlink ((t (:foreground ,monet-cyan))))
+
+   ;; Term
+   `(term-color-black ((t (:foreground ,monet-bg :background ,monet-bg))))
+   `(term-color-red ((t (:foreground ,monet-red :background ,monet-red))))
+   `(term-color-green ((t (:foreground ,monet-green :background ,monet-green))))
+   `(term-color-yellow ((t (:foreground ,monet-yellow :background ,monet-yellow))))
+   `(term-color-blue ((t (:foreground ,monet-blue :background ,monet-blue))))
+   `(term-color-magenta ((t (:foreground ,monet-magenta :background ,monet-magenta))))
+   `(term-color-cyan ((t (:foreground ,monet-cyan :background ,monet-cyan))))
+   `(term-color-white ((t (:foreground ,monet-fg :background ,monet-fg))))))
+
+;;;###autoload
+(when load-file-name
+  (add-to-list 'custom-theme-load-path
+               (file-name-as-directory (file-name-directory load-file-name))))
+
+(provide-theme 'monet)
+
+;;; monet-theme.el ends here

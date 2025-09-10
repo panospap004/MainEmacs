@@ -1,0 +1,222 @@
+#+TITLE: General Emacs Configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.config/MainEmacs/configs.el :mkdirp yes
+
+* Introduction
+#+begin_src emacs-lisp
+;; Non-package core Emacs configuration
+;; Contains only general settings unrelated to packages or keybindings
+#+end_src
+
+* Startup Optimization
+Optimize startup performance with GC threshold adjustments
+#+begin_src emacs-lisp
+(setq gc-cons-threshold (* 50 1000 1000))  ; 50MB during startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 2 1000 1000))))  ; 2MB after startup
+#+end_src
+
+* Core Defaults
+Essential Emacs behavior modifications
+#+begin_src emacs-lisp
+;; UI elements
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(blink-cursor-mode 1)
+(global-hl-line-mode t)
+
+;; change autosave and backup directory to linux trash folder
+(setq backup-directory-alist
+      `((".*" . "~/.local/share/Trash/")))
+
+;; Editing enhancements
+(delete-selection-mode 1)
+(electric-indent-mode -1)
+(setq org-edit-src-content-indentation 0)
+(electric-pair-mode 1)
+;; The following prevents <> from auto-pairing when electric-pair-mode is on.
+;; Otherwise, org-tempo is broken when you try to <s TAB...
+(add-hook 'org-mode-hook (lambda ()
+          (setq-local electric-pair-inhibit-predicate
+                  `(lambda (c)
+                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+(global-auto-revert-mode 1)
+
+;; History 
+(setq history-length 25) ;; size of history to lessen the load time 
+(savehist-mode 1) ;; remeber my M-x and other prompts 
+
+(save-place-mode 1) ;; remeber my cursor position on a file
+
+;; File management
+(setq make-backup-files nil
+      auto-save-default nil
+      tab-width 2)
+
+;; Code folding
+(add-hook 'prog-mode-hook #'hs-minor-mode)
+
+;; Custom variables storage
+(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+(load custom-file 'noerror 'nomessage)
+
+;; Kill scratch buffer for default 
+(kill-buffer "*scratch*")
+
+;; Make emacs not blink
+(setq visible-bell nil)
+
+;; Uses system trash rather than deleting forever
+(setq trash-directory "~/.local/share/Trash")
+(setq delete-by-moving-to-trash t)
+
+;; Have 5 lines of margin when scrolling
+(setq scroll-margin 5)
+#+end_src
+
+* Appearance
+Visual configuration and theming
+** Base Settings
+#+begin_src emacs-lisp
+;; Transparency (Emacs 29+)
+(add-to-list 'default-frame-alist '(alpha-background . 100))
+
+;; Line at 80 characters
+(setq-default fill-column 80)
+;; disable the line in org mode
+(add-hook 'org-mode-hook (lambda () (display-fill-column-indicator-mode 0)))
+(add-hook 'org-mode-hook (lambda () (global-display-fill-column-indicator-mode 0)))
+
+;; Font configuration
+;; (set-face-attribute 'default nil
+                     ;; :font "JetBrains Mono"
+                     ;; :height 120
+;; :weight 'medium)
+;; (setq-default line-spacing 0.12)
+;; Set default font and line spacing.
+(set-face-attribute 'default nil :height 115)
+(add-to-list 'initial-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+(add-to-list 'default-frame-alist '(font . "MonaspiceRn Nerd Font-16.5"))
+(setq-default line-spacing 0.12)
+
+;; gcal 
+(setq plstore-cache-passphrase-for-symmetric-encryption t)
+
+#+end_src
+
+** tree-sitter
+#+begin_src emacs-lisp
+;; ------------------------------
+;; Tree-sitter grammar sources
+;; you can find more here https://github.com/tree-sitter/tree-sitter/wiki/List-of-parsers
+;; ------------------------------
+(setq treesit-language-source-alist
+      '((javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (c "https://github.com/tree-sitter/tree-sitter-c")
+        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        (lua "https://github.com/tree-sitter/tree-sitter-lua")
+        (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
+        (java "https://github.com/tree-sitter/tree-sitter-java")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+				(latex "https://"github.com/latex-lsp/tree-sitter-latex)
+				(janet "https://"github.com/GrayJack/tree-sitter-janet)
+        (bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (Dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
+        (sql "https://github.com/tjdevries/tree-sitter-sql")
+        (sqlite "https://github.com/dhcmrlchtdj/tree-sitter-sqlite")
+        (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown")
+        (prisma "https://github.com/victorhqc/tree-sitter-prisma")
+        (gdscript "https://github.com/PrestonKnopp/tree-sitter-gdscript")
+        (zig "https://github.com/tree-sitter-grammars/tree-sitter-zig")
+        (fish "https://github.com/ram02z/tree-sitter-fish")
+        (hyprlang "https://github.com/tree-sitter-grammars/tree-sitter-hyprlang"))
+			)
+
+#+end_src
+
+** Modeline
+Doom modeline configuration (theme handled in package_configs.org)
+#+begin_src emacs-lisp
+(setq doom-modeline-height 25
+      doom-modeline-bar-width 5
+      doom-modeline-persp-name t
+      doom-modeline-persp-icon t)
+#+end_src
+
+* Runtime Enhancements
+Performance and behavior tweaks
+#+begin_src emacs-lisp
+;; Process handling
+(setq read-process-output-max (* 1024 1024))  ; 1MB
+
+;; Scrolling behavior
+(setq mouse-wheel-progressive-speed nil
+      scroll-conservatively 10)
+
+;; Line numbers
+(defun my/display-line-numbers--turn-on ()
+  "Enable `display-line-numbers-mode` except in `pdf-view-mode` buffers."
+  (unless (or (minibufferp)
+              (eq major-mode 'pdf-view-mode))
+    (display-line-numbers-mode)))
+
+(advice-add 'display-line-numbers--turn-on :override #'my/display-line-numbers--turn-on)
+
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode 1)
+;; remove the line numbers for cairtain buffers you can find the hooks with ctrl+h+v
+(dolist (mode '(
+								shell-mode-hook
+								eat-mode-hook
+								dashboard-mode-hook
+								vterm-mode-hook
+								term-mode-hook
+								pdf-view-mode
+								))
+  (add-hook mode (lambda () (display-line-numbers-mode 0)))
+	)
+#+end_src
+
+* Auto-Tangle
+Self-maintaining configuration
+#+begin_src emacs-lisp
+(defun start/org-babel-tangle-config ()
+  "Auto-tangle config.org when saved"
+  (when (string-equal (file-name-directory (buffer-file-name))
+                      (expand-file-name user-emacs-directory))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (add-hook 'after-save-hook #'start/org-babel-tangle-config nil t)))
+#+end_src
+
+
+* Add the default dectionary
+#+begin_src emacs-lisp
+;; Set Hunspell as the spell-checker
+(setq ispell-program-name "hunspell")
+
+;; Set dictionary to American English
+(setq ispell-dictionary "en_US")
+
+;; Optional: Explicitly set dictionary path (usually not needed on Arch)
+(setenv "DICPATH" "/usr/share/hunspell/")
+
+(setq ispell-program-name "/usr/bin/hunspell")  ; Explicit path
+#+end_src
+
+* Finalize
+#+begin_src emacs-lisp
+(provide 'configs)
+#+end_src
+
