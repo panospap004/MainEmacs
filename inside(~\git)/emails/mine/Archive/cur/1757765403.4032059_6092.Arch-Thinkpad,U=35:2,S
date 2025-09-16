@@ -1,0 +1,718 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:6358:5d93:b0:9b:3325:7c6b with SMTP id s19csp331469rwm;
+        Sun, 17 Apr 2022 06:34:01 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwx/wb0vOyy4bqotsn1ArKaTRr4Ugk5FdP2SVk7eSMcLyfFkv/P1GnXJ2UUE2yeCxXJdXGf
+X-Received: by 2002:a25:8382:0:b0:63d:6201:fa73 with SMTP id t2-20020a258382000000b0063d6201fa73mr6025910ybk.55.1650202440864;
+        Sun, 17 Apr 2022 06:34:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1650202440; cv=none;
+        d=google.com; s=arc-20160816;
+        b=l7GiceTQYqFrgvPNxwJrML7LyeIIg6KOzysy/kM82IHa4w+adFTbrK44+5eYiImFz5
+         LAtZoL8l9u/+p8L16h+s0/SWc1JuaL9WCWmIMjG+yR13d3My/dU9A7Olp3tE4jZ1ZHrn
+         wwb4yGu8oY5eLuA+E1Zq8+fXq/tFH6hJeG/3PPuEDY0+xOXuTbYC8Ut2oWOvzdkzAdTX
+         e7iElEy5F75Uqq3AEbMYHBcoRckh8mRmMrWZ4Z9K4nNi6NXjAZhyEXgkpz7TdgnwAcVN
+         +DvwX5SdB3BjNXsRFYG8YwDdD4R21CdtMNc12dqrkRV7l6ZhItKAWPaOEwT6YkKE/4zY
+         30Wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:subject:message-id:mime-version:from:date:dkim-signature
+         :dkim-signature;
+        bh=G5a3+qlvOLTnwm7oF+909eonfAY2KOg44EaztjqTVnU=;
+        b=AK8cON8k11XuUXH7xIgRL9n9/EabwCxHNQKp40D2Yt32XAK69RB5h5EGaonVGneNZq
+         WknQcORS+5xp38jxcPszSrZEKqrj4SZWz6vb2mFxnFE50Ncw2bXFRRX3SC2MsXxNcqOY
+         U+cLuzsrk9276M30pHYukUc0i97PKsCWg1T6yGPrlWVQiRuxBT1wVitbn6IzfIisIiqt
+         3uKMYW7V1ZxxmQ6Yo1mSHx1XHP+keQjWz6c9WM57SyHRU8w1P8FRqyEFIxSn8vBSb40+
+         YJHhUz4V0bwkpTrTlpecHhEnx/j/2evsD0Qs5/lE/8AGnOAYl8tkUa3Bix5E8dfJIZcd
+         9QeQ==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@codecombat.com header.s=s1 header.b=L1UN3myH;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=FcsrJkVd;
+       spf=pass (google.com: domain of bounces+7603847-b9fb-lets.mine004=gmail.com@em8778.codecombat.com designates 168.245.64.220 as permitted sender) smtp.mailfrom="bounces+7603847-b9fb-lets.mine004=gmail.com@em8778.codecombat.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=codecombat.com
+Return-Path: <bounces+7603847-b9fb-lets.mine004=gmail.com@em8778.codecombat.com>
+Received: from xvfrqhdc.outbound-mail.sendgrid.net (xvfrqhdc.outbound-mail.sendgrid.net. [168.245.64.220])
+        by mx.google.com with ESMTPS id u126-20020a816084000000b002eb5fe205d9si5570454ywb.360.2022.04.17.06.33.59
+        for <lets.mine004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 17 Apr 2022 06:34:00 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces+7603847-b9fb-lets.mine004=gmail.com@em8778.codecombat.com designates 168.245.64.220 as permitted sender) client-ip=168.245.64.220;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@codecombat.com header.s=s1 header.b=L1UN3myH;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=FcsrJkVd;
+       spf=pass (google.com: domain of bounces+7603847-b9fb-lets.mine004=gmail.com@em8778.codecombat.com designates 168.245.64.220 as permitted sender) smtp.mailfrom="bounces+7603847-b9fb-lets.mine004=gmail.com@em8778.codecombat.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=codecombat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codecombat.com;
+	h=content-type:from:mime-version:subject:x-feedback-id:to;
+	s=s1; bh=G5a3+qlvOLTnwm7oF+909eonfAY2KOg44EaztjqTVnU=;
+	b=L1UN3myHARImkRcXnQxgmyQY8qPrkZrC58XjNfp0U6twPU5ailFRxrUUD7sDCrYSNg8Q
+	QOwUMgZRo9XDAUsQXBPcQizenmQ3W5TuPkTA8zJ8e+wsv49UdshdkLLitSF99vOsjbX4bj
+	0KM+c+s5jjSP+Ah+LEwF0aYcFswssF1i93kYhTDcnYpXgFboMVQbkhfE0ijybEmqzVgSIP
+	FHU1fBYImEZ6MZ5RfaS9xIFC+FU6XWnHz+UKGGIqPRfCIvWUaP5ZXzol4MHR9CVxDxycVv
+	jAaIAlbihxndkq5XFetup+gKBIMEnDO49I9HuRD8/smEvacvpfpdQrdK82A/y+TQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:x-feedback-id:to;
+	s=smtpapi; bh=G5a3+qlvOLTnwm7oF+909eonfAY2KOg44EaztjqTVnU=;
+	b=FcsrJkVdZ2ZdRXlq0halgREX0QiPibVWe6gGiWkZrw48G0j7lFqj6zoVh1GddwNy3d/Y
+	r+iOFlwu9oco0dCV2fqLo9OsZSdw9+WDbRXz+Rs8Unv266IAuMnyBtlnhSluZnku4UzFOp
+	qIWcXNesAfhdxfw1HhhdwbeaLBY+bp8GE=
+Received: by filterdrecv-6bb84d9bbf-7rldf with SMTP id filterdrecv-6bb84d9bbf-7rldf-1-625C1746-69
+        2022-04-17 13:33:58.75343268 +0000 UTC m=+920856.989981593
+Received: from NzYwMzg0Nw (unknown)
+	by geopod-ismtpd-5-0 (SG) with HTTP
+	id 9RlqfPhPRzSq67VIgIXNxg
+	Sun, 17 Apr 2022 13:33:58.705 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=aa5df0f94d46385c199f24b9ec285a314b711cad4e4fb88f31bb095ef5a3
+Date: Sun, 17 Apr 2022 13:33:58 +0000 (UTC)
+From: CodeCombat <team@codecombat.com>
+Mime-Version: 1.0
+Message-ID: <9RlqfPhPRzSq67VIgIXNxg@geopod-ismtpd-5-0>
+Subject: lolakias, welcome to CodeCombat!
+X-Feedback-ID: 7603847:SG
+X-SG-EID: 
+ =?us-ascii?Q?dTFW6kTJlx6ZjBiY4Ic0ddf6fdT310PitgckuRtyHGJCOIYnxcyKRGY8dZ8KAv?=
+ =?us-ascii?Q?4WpTLYsdfM2SQaoLQb+9enuozkZDxxB3sYR0lph?=
+ =?us-ascii?Q?2aLfnzqFqVnob=2FLl8VCUi6UoU4E41HusNVk0ntU?=
+ =?us-ascii?Q?9=2FHL1D7DfqwUFVdcte=2FZC4y0SrMBXyVXT5Emmht?=
+ =?us-ascii?Q?x88Z2smsmM0TkNWt2VxeUXDKY2lkZbYiOGySe=2FM?=
+ =?us-ascii?Q?Uc4fEjJaneqMNG71Oeco+f9vq9Z6SFusRssbc8?=
+To: lolakias <lets.mine004@gmail.com>
+X-Entity-ID: Pejr7NWWcVtd0J6E6kAF7g==
+X-TUID: LEuQ0VovIzP9
+
+--aa5df0f94d46385c199f24b9ec285a314b711cad4e4fb88f31bb095ef5a3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Mime-Version: 1.0
+
+Don't forget to verify your email address.
+
+Hi, lolakias!
+
+Thanks for signing up for CodeCombat! You're about to embark on an exciting=
+ journey to learn programming the most engaging way: through a game!
+
+Verify your email address=A0so you can reset your password if you ever forg=
+et it.
+
+Verify Email https://codecombat.com:443/user/625c170cf149e3002503c261/verif=
+y/1650202438677:fa73d960631df795967a840bf25362bfb8da0e03968e55e25d2a8aa82d1=
+42613
+
+Can't see the button? Copy and paste the following URL into your web browse=
+r to verify your email:=A0https://codecombat.com:443/user/625c170cf149e3002=
+503c261/verify/1650202438677:fa73d960631df795967a840bf25362bfb8da0e03968e55=
+e25d2a8aa82d142613 https://codecombat.com:443/user/625c170cf149e3002503c261=
+/verify/1650202438677:fa73d960631df795967a840bf25362bfb8da0e03968e55e25d2a8=
+aa82d142613
+
+CONNECT
+
+Facebook https://www.facebook.com/codecombat=A0Twitter https://twitter.com/=
+CodeCombat=A0GitHub https://github.com/codecombat/codecombat=A0Google+ http=
+s://plus.google.com/115285980638641924488/posts
+
+CodeCombat
+
+301 Howard St. Suite 830
+
+San Francisco, CA 94105
+
+email preferences https://codecombat.com/account/settings=A0|=A0unsubscribe=
+ https://codecombat.com/account/unsubscribe?token=3D7f0b629cbb9d&email=3Dle=
+ts.mine004@gmail.com=A0|=A0privacy policy https://codecombat.com/privacy=A0=
+|=A0contact us mailto:team@codecombat.com=A0|=A0forum https://discourse.cod=
+ecombat.com/
+--aa5df0f94d46385c199f24b9ec285a314b711cad4e4fb88f31bb095ef5a3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=us-ascii
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html data-editor-version=3D"2" class=3D"sg-campaigns" xmlns=3D"http://www.=
+w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+" />
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1, minimum-scale=3D1, maximum-scale=3D1" /><!--[if !mso]><!-->
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge" /><!--<![end=
+if]-->
+    <!--[if (gte mso 9)|(IE)]>
+    <xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG/>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <!--[if (gte mso 9)|(IE)]>
+    <style type=3D"text/css">
+      body {width: 600px;margin: 0 auto;}
+      table {border-collapse: collapse;}
+      table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+      img {-ms-interpolation-mode: bicubic;}
+    </style>
+    <![endif]-->
+
+    <style type=3D"text/css">
+      body, p, div {
+        font-family: arial;
+        font-size: 14px;
+      }
+      body {
+        color: #000000;
+      }
+      body a {
+        color: #1188E6;
+        text-decoration: none;
+      }
+      p { margin: 0; padding: 0; }
+      table.wrapper {
+        width:100% !important;
+        table-layout: fixed;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      img.max-width {
+        max-width: 100% !important;
+      }
+      .column.of-2 {
+        width: 50%;
+      }
+      .column.of-3 {
+        width: 33.333%;
+      }
+      .column.of-4 {
+        width: 25%;
+      }
+      @media screen and (max-width:480px) {
+        .preheader .rightColumnContent,
+        .footer .rightColumnContent {
+            text-align: left !important;
+        }
+        .preheader .rightColumnContent div,
+        .preheader .rightColumnContent span,
+        .footer .rightColumnContent div,
+        .footer .rightColumnContent span {
+          text-align: left !important;
+        }
+        .preheader .rightColumnContent,
+        .preheader .leftColumnContent {
+          font-size: 80% !important;
+          padding: 5px 0;
+        }
+        table.wrapper-mobile {
+          width: 100% !important;
+          table-layout: fixed;
+        }
+        img.max-width {
+          height: auto !important;
+          max-width: 480px !important;
+        }
+        a.bulletproof-button {
+          display: block !important;
+          width: auto !important;
+          font-size: 80%;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+        .columns {
+          width: 100% !important;
+        }
+        .column {
+          display: block !important;
+          width: 100% !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+      }
+    </style>
+    <!--user entered Head Start-->
+   =20
+     <!--End Head user entered-->
+  </head>
+  <body>
+    <center class=3D"wrapper" data-link-color=3D"#1188E6" data-body-style=
+=3D"font-size: 14px; font-family: arial; color: #000000; background-color: =
+#ffffff;">
+      <div class=3D"webkit">
+        <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"10=
+0%" class=3D"wrapper" bgcolor=3D"#ffffff">
+          <tr>
+            <td valign=3D"top" bgcolor=3D"#ffffff" width=3D"100%">
+              <table width=3D"100%" role=3D"content-container" class=3D"out=
+er" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                <tr>
+                  <td width=3D"100%">
+                    <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0">
+                      <tr>
+                        <td>
+                          <!--[if mso]>
+                          <center>
+                          <table><tr><td width=3D"600">
+                          <![endif]-->
+                          <table width=3D"100%" cellpadding=3D"0" cellspaci=
+ng=3D"0" border=3D"0" style=3D"width: 100%; max-width:600px;" align=3D"cent=
+er">
+                            <tr>
+                              <td role=3D"modules-container" style=3D"paddi=
+ng: 0px 0px 0px 0px; color: #000000; text-align: left;" bgcolor=3D"#ffffff"=
+ width=3D"100%" align=3D"left">
+                               =20
+    <table class=3D"module preheader preheader-hide" role=3D"module" data-t=
+ype=3D"preheader" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%"
+           style=3D"display: none !important; mso-hide: all; visibility: hi=
+dden; opacity: 0; color: transparent; height: 0; width: 0;">
+      <tr>
+        <td role=3D"module-content">
+          <p>Don't forget to verify your email address.</p>
+        </td>
+      </tr>
+    </table>
+ =20
+    <table class=3D"wrapper" role=3D"module" data-type=3D"image" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout=
+: fixed;">
+      <tr>
+        <td style=3D"font-size:6px;line-height:10px;padding:0px 0px 0px 0px=
+;" valign=3D"top" align=3D"center">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block;colo=
+r:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;fon=
+t-size:16px;max-width:100% !important;width:100%;height:auto !important;" s=
+rc=3D"https://marketing-image-production.s3.amazonaws.com/uploads/80948a843=
+c2d88fdf139f4dd63cb395e31adda3a08c61e9b485eea41eb63d9ff3763c691e92a72c1abcb=
+db9921e8f09aa3173b69299c8567702c12fbb3c74827.png" alt=3D"" width=3D"600">
+        </td>
+      </tr>
+    </table>
+ =20
+    <table  border=3D"0"
+            cellpadding=3D"0"
+            cellspacing=3D"0"
+            align=3D"center"
+            width=3D"100%"
+            role=3D"module"
+            data-type=3D"columns"
+            data-version=3D"2"
+            style=3D"padding:0px 0px 0px 0px;box-sizing:border-box;"
+            bgcolor=3D"">
+      <tr role=3D'module-content'>
+        <td height=3D"100%" valign=3D"top">
+            <!--[if (gte mso 9)|(IE)]>
+              <center>
+                <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" wid=
+th=3D"100%" style=3D"border-spacing:0;border-collapse:collapse;table-layout=
+: fixed;" >
+                  <tr>
+            <![endif]-->
+         =20
+    <!--[if (gte mso 9)|(IE)]>
+      <td width=3D"300.000px" valign=3D"top" style=3D"padding: 0px 0px 0px =
+0px;border-collapse: collapse;" >
+    <![endif]-->
+
+    <table  width=3D"300.000"
+            style=3D"width:300.000px;border-spacing:0;border-collapse:colla=
+pse;margin:0px 0px 0px 0px;"
+            cellpadding=3D"0"
+            cellspacing=3D"0"
+            align=3D"left"
+            border=3D"0"
+            bgcolor=3D""
+            class=3D"column column-0 of-2
+                  empty"
+      >
+      <tr>
+        <td style=3D"padding:0px;margin:0px;border-spacing:0;">
+           =20
+    <table class=3D"module" role=3D"module" data-type=3D"text" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: =
+fixed;">
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:=
+inherit;"
+            height=3D"100%"
+            valign=3D"top"
+            bgcolor=3D"">
+            <p data-aln=3D"185" style=3D"margin-bottom: 10px; font-family: =
+&quot;Helvetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-w=
+eight: normal; font-size: 14px; line-height: 1.6; color: rgb(0, 0, 0); font=
+-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"=
+>Hi, lolakias!</p>
+
+<p data-aln=3D"193" style=3D"margin-bottom: 10px; font-family: &quot;Helvet=
+ica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: norma=
+l; font-size: 14px; line-height: 1.6; color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-ligatures: normal; font-variant-caps: normal;">Thanks for =
+signing up for CodeCombat! You're about to embark on an exciting journey to=
+ learn programming the most engaging way: through a game!</p>
+
+<p data-aln=3D"193" style=3D"margin-bottom: 10px; font-family: &quot;Helvet=
+ica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: norma=
+l; font-size: 14px; line-height: 1.6; color: rgb(0, 0, 0); font-style: norm=
+al; font-variant-ligatures: normal; font-variant-caps: normal;"><b data-aln=
+=3D"197" style=3D"font-family: &quot;Helvetica Neue&quot;, Helvetica, Helve=
+tica, Arial, sans-serif;">Verify your email address</b>&nbsp;so you can res=
+et your password if you ever forget it.</p>
+        </td>
+      </tr>
+    </table>
+  <table border=3D"0" cellPadding=3D"0" cellSpacing=3D"0" class=3D"module" =
+data-role=3D"module-button" data-type=3D"button" role=3D"module" style=3D"t=
+able-layout:fixed" width=3D"100%"><tbody><tr><td align=3D"center" class=3D"=
+outer-td" style=3D"padding:0px 0px 0px 0px"><table border=3D"0" cellPadding=
+=3D"0" cellSpacing=3D"0" class=3D"button-css__deep-table___2OZyb wrapper-mo=
+bile" style=3D"text-align:center"><tbody><tr><td align=3D"center" bgcolor=
+=3D"#0F3B4D" class=3D"inner-td" style=3D"border-radius:6px;font-size:16px;t=
+ext-align:center;background-color:inherit"><a style=3D"background-color:#0F=
+3B4D;border:1px solid #333333;border-color:#2BA6CB;border-radius:6px;border=
+-width:1px;color:#ffffff;display:inline-block;font-family:arial,helvetica,s=
+ans-serif;font-size:16px;font-weight:normal;letter-spacing:0px;line-height:=
+16px;padding:12px 18px 12px 18px;text-align:center;text-decoration:none" hr=
+ef=3D"http://url7280.codecombat.com/ls/click?upn=3DjaHbsfZl-2BB4e6lFLBQXIAi=
+zqT1W1my1Pargu8he8kb-2BsC2ElwtA4jITfEeK4T5-2F8Vr5biPpocU9jdS9iR1SswV7JWYgao=
+MJyGgn2RA-2FG8I7zuh9td62YxqM9NleRlnDIM3OqiiyN2aG49XI4lzhGxOkjJz66dH4V7zof1W=
+yDJ291w9Y33PekGe4jWQWlJjlW0mgO-2BIq2Tqu3R1QgQB-2BUsQ-3D-3DJqDi_EKYgQnG8xSg2=
+Gkq3guLqb2O5-2FHgH-2B8H-2FMKrU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuUtMCHpfLbQ49S0nFE=
+sE3oNuxP9pCH-2FNd0NOu7JOh5McfgUa6Z3UoTQkNZ6TJhg68TMJywSI1ag8981keCoraP4kVcV=
+proxtt4ipHy3vGpEwImv7TCyRlfHB4zMfHgkDL-2FYtZpaL0MgEQqKLfljehEetA-3D-3D" tar=
+get=3D"_blank">Verify Email</a></td></tr></tbody></table></td></tr></tbody>=
+</table>
+        </td>
+      </tr>
+    </table>
+
+    <!--[if (gte mso 9)|(IE)]>
+      </td>
+    <![endif]-->
+    <!--[if (gte mso 9)|(IE)]>
+      <td width=3D"300.000px" valign=3D"top" style=3D"padding: 0px 0px 0px =
+0px;border-collapse: collapse;" >
+    <![endif]-->
+
+    <table  width=3D"300.000"
+            style=3D"width:300.000px;border-spacing:0;border-collapse:colla=
+pse;margin:0px 0px 0px 0px;"
+            cellpadding=3D"0"
+            cellspacing=3D"0"
+            align=3D"left"
+            border=3D"0"
+            bgcolor=3D""
+            class=3D"column column-1 of-2
+                  empty"
+      >
+      <tr>
+        <td style=3D"padding:0px;margin:0px;border-spacing:0;">
+           =20
+    <table class=3D"wrapper" role=3D"module" data-type=3D"image" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout=
+: fixed;">
+      <tr>
+        <td style=3D"font-size:6px;line-height:10px;padding:0px 0px 0px 0px=
+;" valign=3D"top" align=3D"center">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block;colo=
+r:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;fon=
+t-size:16px;max-width:100% !important;width:100%;height:auto !important;" s=
+rc=3D"https://marketing-image-production.s3.amazonaws.com/uploads/74e303b01=
+5c6af584c0f843fb69e9cf9d296a223c8fc0c10f9bbc289881b30e1968e99b9f3daf981e516=
+159d06bbe84e960523239dbd9a30863ef42cbd842e4a.png" alt=3D"" width=3D"300">
+        </td>
+      </tr>
+    </table>
+ =20
+        </td>
+      </tr>
+    </table>
+
+    <!--[if (gte mso 9)|(IE)]>
+      </td>
+    <![endif]-->
+            <!--[if (gte mso 9)|(IE)]>
+                  <tr>
+                </table>
+              </center>
+            <![endif]-->
+        </td>
+      </tr>
+    </table>
+ =20
+    <table class=3D"module" role=3D"module" data-type=3D"text" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: =
+fixed;">
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:=
+inherit;"
+            height=3D"100%"
+            valign=3D"top"
+            bgcolor=3D"">
+            <div>&nbsp;<small style=3D"font-family: &quot;Helvetica Neue&qu=
+ot;, Helvetica, Helvetica, Arial, sans-serif; font-size: 12px;">Can't see t=
+he button? Copy and paste the following URL into your web browser to verify=
+ your email:&nbsp;<a data-aln=3D"206" data-click-track-id=3D"3781" href=3D"=
+http://url7280.codecombat.com/ls/click?upn=3DjaHbsfZl-2BB4e6lFLBQXIAizqT1W1=
+my1Pargu8he8kb-2BsC2ElwtA4jITfEeK4T5-2F8Vr5biPpocU9jdS9iR1SswV7JWYgaoMJyGgn=
+2RA-2FG8I7zuh9td62YxqM9NleRlnDIM3OqiiyN2aG49XI4lzhGxOkjJz66dH4V7zof1WyDJ291=
+w9Y33PekGe4jWQWlJjlW0mgO-2BIq2Tqu3R1QgQB-2BUsQ-3D-3D3q1a_EKYgQnG8xSg2Gkq3gu=
+Lqb2O5-2FHgH-2B8H-2FMKrU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuUtCR8EuvBaBeqVb9xrBo4wI=
+IWjYRYeinUGSRa32qqadGJ-2BTSwa3LgJkQLLeXol1Xp-2BG99hXuTZwLod3zofDlxVVqtRtHX-=
+2BilzsKDufMCjl-2FyecXifyMHrERSdBqrxTi-2FgaTLcuDcWf8SzKHw-2FjWLnqxA-3D-3D" s=
+tyle=3D"font-family: &quot;Helvetica Neue&quot;, Helvetica, Helvetica, Aria=
+l, sans-serif; color: rgb(43, 166, 203);">https://codecombat.com:443/user/6=
+25c170cf149e3002503c261/verify/1650202438677:fa73d960631df795967a840bf25362=
+bfb8da0e03968e55e25d2a8aa82d142613</a></small></div>
+        </td>
+      </tr>
+    </table>
+ =20
+    <table  border=3D"0"
+            cellpadding=3D"0"
+            cellspacing=3D"0"
+            align=3D"center"
+            width=3D"100%"
+            role=3D"module"
+            data-type=3D"columns"
+            data-version=3D"2"
+            style=3D"padding:0px 0px 0px 0px;box-sizing:border-box;"
+            bgcolor=3D"">
+      <tr role=3D'module-content'>
+        <td height=3D"100%" valign=3D"top">
+            <!--[if (gte mso 9)|(IE)]>
+              <center>
+                <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" wid=
+th=3D"100%" style=3D"border-spacing:0;border-collapse:collapse;table-layout=
+: fixed;" >
+                  <tr>
+            <![endif]-->
+         =20
+    <!--[if (gte mso 9)|(IE)]>
+      <td width=3D"300.000px" valign=3D"top" style=3D"padding: 0px 0px 0px =
+0px;border-collapse: collapse;" >
+    <![endif]-->
+
+    <table  width=3D"300.000"
+            style=3D"width:300.000px;border-spacing:0;border-collapse:colla=
+pse;margin:0px 0px 0px 0px;"
+            cellpadding=3D"0"
+            cellspacing=3D"0"
+            align=3D"left"
+            border=3D"0"
+            bgcolor=3D""
+            class=3D"column column-0 of-2
+                  empty"
+      >
+      <tr>
+        <td style=3D"padding:0px;margin:0px;border-spacing:0;">
+        </td>
+      </tr>
+    </table>
+
+    <!--[if (gte mso 9)|(IE)]>
+      </td>
+    <![endif]-->
+    <!--[if (gte mso 9)|(IE)]>
+      <td width=3D"300.000px" valign=3D"top" style=3D"padding: 0px 0px 0px =
+0px;border-collapse: collapse;" >
+    <![endif]-->
+
+
+    <!--[if (gte mso 9)|(IE)]>
+      </td>
+    <![endif]-->
+            <!--[if (gte mso 9)|(IE)]>
+                  <tr>
+                </table>
+              </center>
+            <![endif]-->
+        </td>
+      </tr>
+    </table>
+ =20
+    <table class=3D"module"
+           role=3D"module"
+           data-type=3D"divider"
+           border=3D"0"
+           cellpadding=3D"0"
+           cellspacing=3D"0"
+           width=3D"100%"
+           style=3D"table-layout: fixed;">
+      <tr>
+        <td style=3D"padding:0px 0px 0px 0px;"
+            role=3D"module-content"
+            height=3D"100%"
+            valign=3D"top"
+            bgcolor=3D"">
+          <table border=3D"0"
+                 cellpadding=3D"0"
+                 cellspacing=3D"0"
+                 align=3D"center"
+                 width=3D"100%"
+                 height=3D"1px"
+                 style=3D"line-height:1px; font-size:1px;">
+            <tr>
+              <td
+                style=3D"padding: 0px 0px 1px 0px;"
+                bgcolor=3D"#000000"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+ =20
+    <table class=3D"module" role=3D"module" data-type=3D"text" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: =
+fixed;">
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:=
+inherit;"
+            height=3D"100%"
+            valign=3D"top"
+            bgcolor=3D"">
+            <div style=3D"text-align: center;">
+<p data-aln=3D"214" style=3D"margin-bottom: 0px; font-family: &quot;Helveti=
+ca Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: normal=
+; font-size: 14px; line-height: 1.6; color: rgb(0, 0, 0); font-style: norma=
+l; font-variant-ligatures: normal; font-variant-caps: normal; text-align: c=
+enter;"><b data-aln=3D"215" style=3D"font-family: &quot;Helvetica Neue&quot=
+;, Helvetica, Helvetica, Arial, sans-serif; text-transform: uppercase;">CON=
+NECT</b></p>
+
+<p data-aln=3D"217" style=3D"margin-bottom: 0px; font-family: &quot;Helveti=
+ca Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: normal=
+; font-size: 14px; line-height: 1.6; color: rgb(0, 0, 0); font-style: norma=
+l; font-variant-ligatures: normal; font-variant-caps: normal; text-align: c=
+enter;"><a data-aln=3D"218" data-click-track-id=3D"2319" href=3D"http://url=
+7280.codecombat.com/ls/click?upn=3DjaHbsfZl-2BB4e6lFLBQXIAvtHq301Vn-2B6Xhlq=
+foiSCKhGF-2FZqyIR9Pv48bSVv8L5bG4_q_EKYgQnG8xSg2Gkq3guLqb2O5-2FHgH-2B8H-2FMK=
+rU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuUtNFgXFpmFkevRZ0cCYsGiEGLOWplJL4o4KDYE287zvRi=
+c7YVUgANwWgRZ4lKRxumH8-2BkJneRsTf9sUyFgOutaiTfR41CB7rw3nWD2-2B6K3tlEOOxC4W8=
+XK3VwWbhjLnO-2BP3JDcCKRTDd1z-2FtVRbqPqBA-3D-3D" style=3D"font-family: &quot=
+;Helvetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; color: rgb(=
+43, 166, 203);">Facebook</a>&nbsp;<a data-aln=3D"219" data-click-track-id=
+=3D"8923" href=3D"http://url7280.codecombat.com/ls/click?upn=3DjaHbsfZl-2BB=
+4e6lFLBQXIAuguv1ChQXsvOkPlGOrGFWgiF2RfKnUFfa5-2BjhIathuTe8j5_EKYgQnG8xSg2Gk=
+q3guLqb2O5-2FHgH-2B8H-2FMKrU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuUtWm8YyWFcFLYKGqUi2=
+Y9PlrtIEtmNWHWMjIN-2FtyAvEUhJ1tolTaJSbPQGOhduvPnCjl0g6SjyFv-2FXhFOCP6nrM1v9=
+rRBDGj0joO74QyGK5h1FkgT9DDUdrKKfRabzk0ARcfSLoUCqbV69S-2FQIjY5Sjw-3D-3D" sty=
+le=3D"font-family: &quot;Helvetica Neue&quot;, Helvetica, Helvetica, Arial,=
+ sans-serif; color: rgb(43, 166, 203);">Twitter</a>&nbsp;<a data-aln=3D"220=
+" data-click-track-id=3D"9013" href=3D"http://url7280.codecombat.com/ls/cli=
+ck?upn=3DjaHbsfZl-2BB4e6lFLBQXIAsZroPRti-2BdrtWCgTaLfAYOMYjmYeGe2kW91Wv16Dg=
+Koqk8nHRBWjsX4tQSyBph7tA-3D-3DKcsW_EKYgQnG8xSg2Gkq3guLqb2O5-2FHgH-2B8H-2FMK=
+rU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuUtf3ZaXFlz-2FtIcBKImA1k7dOAF9H52v3dkb7G6hn-2B=
+fVXvytIwBuTEqapdmT1kcV9igALN8PQa9kLdQvf4esqbMaMQgcgn1L1YwTAxdeErbNh6dsD877m=
+EiJu2ruMWDLrl5vjkMlvE8F8tyLZiITIAc9g-3D-3D" style=3D"font-family: &quot;Hel=
+vetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; color: rgb(43, =
+166, 203);">GitHub</a>&nbsp;<a data-aln=3D"221" data-click-track-id=3D"6393=
+" href=3D"http://url7280.codecombat.com/ls/click?upn=3DjaHbsfZl-2BB4e6lFLBQ=
+XIAhSaYPfP4GSALK0MWy8oPuc4QxuzM3zmpouHukrsQh8bUfAMxU2F5gqa6MND2X0bpQ-3D-3Da=
+RCA_EKYgQnG8xSg2Gkq3guLqb2O5-2FHgH-2B8H-2FMKrU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuU=
+tnAVGfj18Uy6-2Fo2ABN-2FrqQkQvhqgRlkaUxQyTEA3wCwVHMQ8ZttmUkm73VPn5R4GOu-2FgQ=
+0Ec-2BXK5-2FWXPrVLoyi1rTxS6aLsX2mUzAOoP1HCJwTzxDyrOmTZGcsjLiG5hR1K35v9sMLdU=
+O8dKLxrUSsQ-3D-3D" style=3D"font-family: &quot;Helvetica Neue&quot;, Helvet=
+ica, Helvetica, Arial, sans-serif; color: rgb(43, 166, 203);">Google+</a></=
+p>
+
+<div class=3D"address" data-aln=3D"224" style=3D"margin-top: 10px; margin-b=
+ottom: 10px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Helvetica,=
+ Arial, sans-serif; color: rgb(0, 0, 0); font-size: medium; font-style: nor=
+mal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight=
+: 400; text-align: center;">
+<p data-aln=3D"225" style=3D"margin-bottom: 0px; font-family: &quot;Helveti=
+ca Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: normal=
+; font-size: 14px; line-height: 1.6;"><small style=3D"font-family: &quot;He=
+lvetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-size: 12p=
+x;">CodeCombat</small></p>
+
+<p data-aln=3D"226" style=3D"margin-bottom: 0px; font-family: &quot;Helveti=
+ca Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: normal=
+; font-size: 14px; line-height: 1.6;"><small style=3D"font-family: &quot;He=
+lvetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-size: 12p=
+x;">301 Howard St. Suite 830</small></p>
+
+<p data-aln=3D"227" style=3D"margin-bottom: 0px; font-family: &quot;Helveti=
+ca Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: normal=
+; font-size: 14px; line-height: 1.6;"><small style=3D"font-family: &quot;He=
+lvetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-size: 12p=
+x;">San Francisco, CA 94105</small></p>
+</div>
+
+<p data-aln=3D"230" style=3D"margin-bottom: 0px; font-family: &quot;Helveti=
+ca Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; font-weight: normal=
+; font-size: 14px; line-height: 1.6; color: rgb(0, 0, 0); font-style: norma=
+l; font-variant-ligatures: normal; font-variant-caps: normal; text-align: c=
+enter;"><small style=3D"font-family: &quot;Helvetica Neue&quot;, Helvetica,=
+ Helvetica, Arial, sans-serif; font-size: 12px;"><a data-aln=3D"232" data-c=
+lick-track-id=3D"6730" href=3D"http://url7280.codecombat.com/ls/click?upn=
+=3DjaHbsfZl-2BB4e6lFLBQXIAuVztITxtPciA1bDFfUcEAZv3qCq4x1G89p-2BDXsGRxe0Lb1S=
+_EKYgQnG8xSg2Gkq3guLqb2O5-2FHgH-2B8H-2FMKrU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuUtfX=
+shT-2Fkwh5ESCj82WRa2nTZs3RTH6y63jaJ-2Bjg58RSPfJSCmmO6ES5fcqjbNjX1wmfOlrEhwq=
+PrtecAviHCyJHZC0mo3DYFn8gaYnkXjzwB07dUNl-2FrMjK1xhQM-2FInNvCUClnvQUXlv9ywkE=
+cpDVUw-3D-3D" style=3D"font-family: &quot;Helvetica Neue&quot;, Helvetica, =
+Helvetica, Arial, sans-serif; color: rgb(43, 166, 203);">email preferences<=
+/a>&nbsp;|&nbsp;<a data-aln=3D"233" href=3D"http://url7280.codecombat.com/l=
+s/click?upn=3DjaHbsfZl-2BB4e6lFLBQXIAuVztITxtPciA1bDFfUcEAawj84Kyp23ZCax8XG=
+ZsnfmOC8q9sBucDpJy1-2B49gbJlmxYIO6-2FHj266PJGZGTAsm64bHNcdrjQslYh3bHftUox5I=
+Q84EP3MQf9e8PKrKj5Vw-3D-3Dq2vR_EKYgQnG8xSg2Gkq3guLqb2O5-2FHgH-2B8H-2FMKrU-2=
+BLwA1cI1LQlu4x8Tz5NuMjjGhuUtzu90GyzSSDQSq33hWd-2FA2tBJkzfbNGe-2BgwdLxfJjlBL=
+iDDoyXYCB3fkAsRv7ZpTVrrcXDOVaeDfwkf-2FBeDAqgkdybA2ufNnOlUVdjL6b2lC29Zb6waGT=
+DVzrtfFQKJ9NRsU5GtMNq-2BI9TRAyccQqmQ-3D-3D" style=3D"font-family: &quot;Hel=
+vetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; color: rgb(43, =
+166, 203);"><unsubscribe style=3D"margin: 0px; padding: 0px;">unsubscribe</=
+unsubscribe></a>&nbsp;|&nbsp;<a data-aln=3D"234" data-click-track-id=3D"862=
+5" href=3D"http://url7280.codecombat.com/ls/click?upn=3DjaHbsfZl-2BB4e6lFLB=
+QXIAipoVyQF4uXQUm1OXr-2Bk6GS9lmgzzREEqs-2BEQTQGE5C04Dyt_EKYgQnG8xSg2Gkq3guL=
+qb2O5-2FHgH-2B8H-2FMKrU-2BLwA1cI1LQlu4x8Tz5NuMjjGhuUtMjBnlIXtn6WZJsxBDgMSFz=
+eCoubhJD9xLzrmUzFymk2aQPb3QiDWWjanx1wcBPs340ImS-2FSHqyVRZWx5-2FXP3OD0pjv3RM=
+OvC-2BwT3Qecc-2BUvlsUkgy0eXinUvqP0imBMZUfO2gDNdBKwAEaxg-2FK0-2BZg-3D-3D" st=
+yle=3D"font-family: &quot;Helvetica Neue&quot;, Helvetica, Helvetica, Arial=
+, sans-serif; color: rgb(43, 166, 203);">privacy policy</a>&nbsp;|&nbsp;<a =
+data-aln=3D"235" data-click-track-id=3D"9568" href=3D"mailto:team@codecomba=
+t.com" style=3D"font-family: &quot;Helvetica Neue&quot;, Helvetica, Helveti=
+ca, Arial, sans-serif; color: rgb(43, 166, 203);">contact us</a>&nbsp;|&nbs=
+p;<a data-aln=3D"236" data-click-track-id=3D"1130" href=3D"http://url7280.c=
+odecombat.com/ls/click?upn=3DjaHbsfZl-2BB4e6lFLBQXIAolJEiWp7SY62kWMS65sD8nB=
+4nsRKTyYAgjs5bAJPz-2FSJW3D_EKYgQnG8xSg2Gkq3guLqb2O5-2FHgH-2B8H-2FMKrU-2BLwA=
+1cI1LQlu4x8Tz5NuMjjGhuUtyKWs-2BhY4QO5yRtW8c3yqJSidLbwg7HneecG0xUy-2BvEj4Dki=
+V4qmlmIH-2FaZLuh0kUFnqV8ot-2BnaJMrcXsIM0jMs55PwiW22qX-2BEGS-2F3F6Bpbo5ZivlI=
+R0jevCN1sm5hRY2dfzAlMnWOZAE5HL3wIbVQ-3D-3D" style=3D"font-family: &quot;Hel=
+vetica Neue&quot;, Helvetica, Helvetica, Arial, sans-serif; color: rgb(43, =
+166, 203);">forum</a></small></p>
+</div>
+        </td>
+      </tr>
+    </table>
+ =20
+                              </td>
+                            </tr>
+                          </table>
+                          <!--[if mso]>
+                          </td></tr></table>
+                          </center>
+                          <![endif]-->
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </center>
+  <img src=3D"http://url7280.codecombat.com/wf/open?upn=3DR9V8r2GAJh-2Fpjbq=
+B0SfkV1gr7XntDPLAEHtKK9HQZC-2BRV-2FGeZrNYrojazr1VkwsKTD6Yp3H7UON-2FHK0u78y6=
+7ACmYWk5GzoYtsKcSEZOK0ugRRRpM3kLTcjE-2Bzzz7aemu6jzH13sr4zfIu0leFLq059nGohw-=
+2FAP-2Fn65wtdk-2BmoU3WJG1BaPYHPonTfi-2Ft-2FwS-2BnUCP-2FBeJDAQj3Wiy06Q-2Biww=
+vLIKjHlGZ7WA4GgQjEI-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" styl=
+e=3D"height:1px !important;width:1px !important;border-width:0 !important;m=
+argin-top:0 !important;margin-bottom:0 !important;margin-right:0 !important=
+;margin-left:0 !important;padding-top:0 !important;padding-bottom:0 !import=
+ant;padding-right:0 !important;padding-left:0 !important;"/></body>
+</html>
+--aa5df0f94d46385c199f24b9ec285a314b711cad4e4fb88f31bb095ef5a3--

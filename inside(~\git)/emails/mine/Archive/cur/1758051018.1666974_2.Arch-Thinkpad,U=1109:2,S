@@ -1,0 +1,225 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:7301:615:b0:216:5ae6:6075 with SMTP id mj21csp617016dyc;
+        Tue, 16 Sep 2025 12:29:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFx1EpEakyc7VvlcQmwgFhsvFNKvLAEH9hbRKU9YRF8cp4gOgf4QGDVtQeoB2FkC4m9gHtw
+X-Received: by 2002:a05:6214:d63:b0:780:dff3:27ae with SMTP id 6a1803df08f44-780dff32ca6mr116978256d6.7.1758050978384;
+        Tue, 16 Sep 2025 12:29:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1758050978; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lEPXr9Ax2gzX/0gQSvO59RQCdWlvIJaKaHiWRNWsXudW8pfnfdYodtTUDGSUU4cLU/
+         F5IJ+Xaw2bBg4is6GXMj4WRmGq9QZiZdK7Umixgxj0TIV4Lcmeo2XE/VEmuOyltRpYLS
+         GQtYppSWHdc7MaQx3TzGBp7D0mAfCJlZhfNILq6VyosSQf5rdBgLyHe3JzRO4ETnTsk2
+         PkRc02CJsNjcMePoheFgHd/4LFw2WXYAQAwKGHffetBH7U9FGrhfid9wj0MOZEBd56Hr
+         CnCm8B1j2CulWTei60Ue18NUZah+I9bEuCzZfE1NgT10oNOfMLR69QaZ2Y7iD6c59bYJ
+         UenQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:reply-to:subject:message-id:mime-version:from:date
+         :content-transfer-encoding:dkim-signature:dkim-signature;
+        bh=7yUWC9E5aqrHMVTdNTLtFQF745N2KxUD/usKlQv1rwU=;
+        fh=iZtWGcn9pNoQ4VStUxSOe7qMOFLYWLh6K9lsyBW/c+Q=;
+        b=D7dm4oBh5Zkxg7gYeEQpWZ80hOaLU4X31UusZQi59dDx4AqYa/i47QFaloaosnnpod
+         KnSKWbeT3ieNuBgvrnAhEEb1ifv9aFy+AM6o/Z1SMhREFM7QZ0K01x8zhg1Im6egYfdj
+         +SQvIT64B/JgDBTjl99BaN0WxDU+r9Q1H1cQO8Enykq1mRYVzfVb4G/v/nybNSvFv4pl
+         +7Ovq8NIWahDEAVKr3s8ePsgbAU486cXkgllzP6i+N/9De2AT2OPqP0otCx8dT4r1cpG
+         7OzEy6Aa9ysX2H1rflA6nb+iS0G/KoAokKdgHjVagVXow0J+JP4oN5LF5jvUOS087VyI
+         rT9g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=FzlaGJdv;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=JfWy5oBc;
+       spf=pass (google.com: domain of bounces+31859940-4ba7-lets.mine004=gmail.com@em9672.mail.anthropic.com designates 168.245.100.91 as permitted sender) smtp.mailfrom="bounces+31859940-4ba7-lets.mine004=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mail.anthropic.com
+Return-Path: <bounces+31859940-4ba7-lets.mine004=gmail.com@em9672.mail.anthropic.com>
+Received: from o6.ptr4169.mail.anthropic.com (o6.ptr4169.mail.anthropic.com. [168.245.100.91])
+        by mx.google.com with ESMTPS id 6a1803df08f44-786ff722365si22542266d6.30.2025.09.16.12.29.37
+        for <lets.mine004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Sep 2025 12:29:38 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces+31859940-4ba7-lets.mine004=gmail.com@em9672.mail.anthropic.com designates 168.245.100.91 as permitted sender) client-ip=168.245.100.91;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=FzlaGJdv;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=JfWy5oBc;
+       spf=pass (google.com: domain of bounces+31859940-4ba7-lets.mine004=gmail.com@em9672.mail.anthropic.com designates 168.245.100.91 as permitted sender) smtp.mailfrom="bounces+31859940-4ba7-lets.mine004=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mail.anthropic.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.anthropic.com;
+	h=content-transfer-encoding:content-type:date:from:mime-version:subject:
+	reply-to:to:cc:content-type:date:feedback-id:from:subject:to;
+	s=s1; bh=7yUWC9E5aqrHMVTdNTLtFQF745N2KxUD/usKlQv1rwU=;
+	b=FzlaGJdvl8Pj1ztVKcM/LiJz7DVg0ftFMoFKobTgWipkRlrJLr2dHDaSVO3r5Csv+UkW
+	6guPL8Wol4Bz5Mf8OYXyPCvS3ZOWdgIpFn0BXsNqDo9I+1y3eSbjKh+2OAV7unLpl1/DzU
+	bkfCgQ65IiT7TXqKAYk3rbbJX/JAmG/lvrJbqP/hWJ8Yyjsce1eRE+gTfNFNRBcyUpm+9h
+	66N2yAR21MaYDay6vlsffrqOsFeNfmQJSLsQ9caQpZDwCMeck7ItyH+W1XOYBuPQS2jvYq
+	AKYgl2Yw7AQii+8dY7Oe6BQwgotD+HGaY/U1mGkVBUUdBQETjJRBHcX6YGDldC3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-transfer-encoding:content-type:date:from:mime-version:subject:
+	reply-to:to:cc:content-type:date:feedback-id:from:subject:to;
+	s=smtpapi; bh=7yUWC9E5aqrHMVTdNTLtFQF745N2KxUD/usKlQv1rwU=;
+	b=JfWy5oBcN92WRiUWe8YDOYZUVGIaKRL4d9Uu+knYiuRJgIkgF9V/hdJjHNnl5M+gawlB
+	HquYXBtury/CJQPY0Wq5cw+iQONLZgHoB4xIa2o2WLtzW7n2aU4c/BDhu2HF6dgcCn1SVj
+	FVjJI3FzLmoT6rOMwnNVXr9448eK7gapg=
+Received: by recvd-6588c9b469-hdzcg with SMTP id recvd-6588c9b469-hdzcg-1-68C9BAA0-68
+	2025-09-16 19:29:36.651435046 +0000 UTC m=+1196536.812273335
+Received: from MzE4NTk5NDA (unknown)
+	by geopod-ismtpd-21 (SG) with HTTP
+	id Fr3zv4MmSKWmnT7L5o7dkA
+	Tue, 16 Sep 2025 19:29:36.636 +0000 (UTC)
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2025 19:29:36 +0000 (UTC)
+From: Anthropic <no-reply-ULn3oKLFE5e3tLoRQXeKJA@mail.anthropic.com>
+Mime-Version: 1.0
+Message-ID: <Fr3zv4MmSKWmnT7L5o7dkA@geopod-ismtpd-21>
+Subject: Secure link to log in to Claude.ai |  2025-09-16 22:29:36
+Reply-To: Anthropic <no-reply-ULn3oKLFE5e3tLoRQXeKJA@mail.anthropic.com>
+X-SG-EID: 
+ =?us-ascii?Q?u001=2ER8FFSRQkMo5zcpY7gjGOtyufzMaiVzuQnPAa6i0Sb2aeYr2NQGwFPRxiJ?=
+ =?us-ascii?Q?6w7H57hX9odHz7ACxi8=2Ft+MuTBZkmiLFCo=2FPiZ=2F?=
+ =?us-ascii?Q?U0HDb1erLY9cQXpyH8BliMIIQjEcbf3U5iw2H1o?=
+ =?us-ascii?Q?9h+RGOKlnkcHzPtAqYCuPOi4a9e9Nf12xDSwaLj?=
+ =?us-ascii?Q?6JgduoedmYie5pWYzVrZD1=2FUBEJ6PVXHOsbIL7x?=
+ =?us-ascii?Q?kOoyyRlntKguKALjIoq72sDWcQoO90d=2Fkc17Ub+?=
+ =?us-ascii?Q?ftfwgzHIKtrGUIZFD6xWPVY1asYCKxohMcawjNE?=
+ =?us-ascii?Q?OFDAPTAQ=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BqAFEhjr7L5hwr+=2FdKejwhJSIGom3KureJpcr?=
+ =?us-ascii?Q?Ve2sYRmIHbXxutIKPf1hjsjxSK2Ho0vJUKGbf70?=
+ =?us-ascii?Q?aY7oGvpiZqGjVkh2gmv0i61gveZvZ9Uc?=
+To: lets.mine004@gmail.com
+X-Entity-ID: u001.+hTscy7rO4MXV2fUis5gmA==
+X-TUID: MwsWNTb29nYv
+
+
+
+<!doctype html><html lang=3D"und" dir=3D"auto" xmlns=3D"http://www.w3.org/1=
+999/xhtml" xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas=
+-microsoft-com:office:office"><head><title></title><!--[if !mso]><!--><meta=
+ http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"><!--<![endif]--><meta=
+ http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8"><meta n=
+ame=3D"viewport" content=3D"width=3Ddevice-width,initial-scale=3D1"><style =
+type=3D"text/css">#outlook a { padding:0; }
+      body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size=
+-adjust:100%; }
+      table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-r=
+space:0pt; }
+      img { border:0;height:auto;line-height:100%; outline:none;text-decora=
+tion:none;-ms-interpolation-mode:bicubic; }
+      p { display:block;margin:13px 0; }</style><!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]--><!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]--><style type=3D"text/css">@media only screen and (min-width:=
+480px) {
+        .mj-column-per-100 { width:100% !important; max-width: 100%; }
+      }</style><style media=3D"screen and (min-width:480px)">.moz-text-html=
+ .mj-column-per-100 { width:100% !important; max-width: 100%; }</style><sty=
+le type=3D"text/css">@media only screen and (max-width:479px) {
+      table.mj-full-width-mobile { width: 100% !important; }
+      td.mj-full-width-mobile { width: auto !important; }
+    }</style></head><body style=3D"word-spacing:normal;background-color:#EF=
+EDE6;"><div style=3D"background-color:#EFEDE6;" lang=3D"und" dir=3D"auto"><=
+!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;" widt=
+h=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-r=
+ule:exactly;"><![endif]--><div style=3D"margin:0px auto;max-width:600px;"><=
+table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"width:100%;"><tbody><tr><td style=3D"direction:=
+ltr;font-size:0px;padding:0px 4px;text-align:center;"><!--[if mso | IE]><ta=
+ble role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">=
+<tr><td class=3D"" width=3D"600px" ><table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D=
+"width:592px;" width=3D"592" ><tr><td style=3D"line-height:0px;font-size:0p=
+x;mso-line-height-rule:exactly;"><![endif]--><div style=3D"margin:0px auto;=
+max-width:592px;"><table align=3D"center" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" role=3D"presentation" style=3D"width:100%;"><tbody><tr><td =
+style=3D"direction:ltr;font-size:0px;padding:20px 0;text-align:center;"><!-=
+-[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0"><tr></tr></table><![endif]--></td></tr></tbody></table></=
+div><!--[if mso | IE]></td></tr></table></td></tr><tr><td class=3D"inner-wr=
+apper-outlook" width=3D"600px" ><table align=3D"center" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" class=3D"inner-wrapper-outlook" role=3D"prese=
+ntation" style=3D"width:592px;" width=3D"592" bgcolor=3D"#FFFFFF" ><tr><td =
+style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![en=
+dif]--><div class=3D"inner-wrapper" style=3D"background:#FFFFFF;background-=
+color:#FFFFFF;margin:0px auto;border-radius:20px;max-width:592px;"><table a=
+lign=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" style=3D"background:#FFFFFF;background-color:#FFFFFF;width:100%=
+;border-radius:20px;"><tbody><tr><td style=3D"direction:ltr;font-size:0px;p=
+adding:20px 32px 32px 32px;text-align:center;"><!--[if mso | IE]><table rol=
+e=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td=
+ class=3D"" style=3D"vertical-align:top;width:528px;" ><![endif]--><div cla=
+ss=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-size: 0px; dire=
+ction: ltr; display: inline-block; vertical-align: top; width: 100%; text-a=
+lign: center;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"vertical-align:top;" width=3D"100%"><tbody><tr><=
+td align=3D"center" style=3D"font-size:0px;padding:10px 25px;padding-top:36=
+px;word-break:break-word;"><table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;border-spac=
+ing:0px;"><tbody><tr><td style=3D"width:128px;"><img alt=3D"Anthropic" src=
+=3D"https://claude.ai/images/claude_logo_full.png" style=3D"border:0;displa=
+y:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:=
+13px;" width=3D"128" height=3D"auto"></td></tr></tbody></table></td></tr><t=
+r><td align=3D"left" style=3D"font-size:0px;padding:10px 25px;padding-top:4=
+6px;word-break:break-word;"><div style=3D"font-family: Helvetica, sans-seri=
+f; font-size: 32px; font-weight: bold; line-height: 38px; color: #0F0F0D; t=
+ext-align: center;">Let=E2=80=99s get you signed in</div></td></tr><tr><td =
+align=3D"left" style=3D"font-size:0px;padding:10px 25px;padding-top:36px;wo=
+rd-break:break-word;"><div style=3D"font-family: Helvetica, sans-serif; fon=
+t-size: 18px; line-height: 28px; color: #3D3929; text-align: center;">Sign =
+in with the secure link below</div></td></tr><tr><td align=3D"center" class=
+=3D"btn-link" style=3D"font-size:0px;padding:10px 25px;padding-top:36px;wor=
+d-break:break-word;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" role=3D"presentation" style=3D"border-collapse:separate;width:320px;line-=
+height:100%;"><tbody><tr><td align=3D"center" bgcolor=3D"#BA5B38" role=3D"p=
+resentation" style=3D"border:none;border-radius:12px;cursor:auto;mso-paddin=
+g-alt:10px 30px;background:#BA5B38;" valign=3D"middle"><p style=3D"display:=
+inline-block;width:260px;background:#BA5B38;color:#ffffff;font-family:Helve=
+tica, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:=
+0;text-decoration:none;text-transform:none;padding:10px 30px;mso-padding-al=
+t:0px;border-radius:12px;"><a clicktracking=3D"off" href=3D"https://claude.=
+ai/magic-link#04ba4a0351351eddb7e9aff9ad682dfd:bGV0cy5taW5lMDA0QGdtYWlsLmNv=
+bQ=3D=3D" style=3D"text-decoration: none; line-height: 20px; color: white; =
+font-size: 18px; display: block; padding: 12px;">Sign in to Claude.ai</a></=
+p></td></tr></tbody></table></td></tr><tr><td align=3D"left" style=3D"font-=
+size:0px;padding:0px 32px;word-break:break-word;"><div style=3D"font-family=
+: Arial; font-size: 14px; line-height: 22px; color: #737163; text-align: ce=
+nter;">If you didn=E2=80=99t request this email, you can safely ignore it.<=
+br>If you=E2=80=99re experiencing issues, please contact <a href=3D"https:/=
+/url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYfyNeOr=
+CHBv8SqoHx5txZdDyL5WPy78R0SHjBTPzR4DqsePX_Y-2BgB5pO8ElzFDk6-2BLaRTLmEWxyxxs=
+rLP487t-2FAWoo7tHtm9OEUnHl-2F3p3Wh2JdIidszbg59UZ9rCEzm7FHy85xcxESEV4fYws0kH=
+1uql-2BWKe2v6CE261Et3-2FeBZ9ZXSsaEX6W3b98ubN-2BjgewAAZnD3kG-2BTDznVfBCqs7hQ=
+icImbwiHYWJYMJF4wrWAstpbrg-2Bo4cpbJp4-2Fl-2B9nkOgUH3fKg7n9FtMtyogoO8ZofNxpG=
+lOO0RoIK6MB-2FTmJV7qVmy-2BsMDmwqR4siQtewGRKJAcvN9mkiXhtaJBVZEfFa1XQ-3D" sty=
+le=3D"color: inherit;">Anthropic Support</a>.</div></td></tr></tbody></tabl=
+e></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody><=
+/table></div><!--[if mso | IE]></td></tr></table></td></tr><tr><td class=3D=
+"" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:592px;" w=
+idth=3D"592" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-heigh=
+t-rule:exactly;"><![endif]--><div style=3D"margin:0px auto;max-width:592px;=
+"><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+role=3D"presentation" style=3D"width:100%;"><tbody><tr><td style=3D"directi=
+on:ltr;font-size:0px;padding:20px 0;text-align:center;"><!--[if mso | IE]><=
+table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+"><tr></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso =
+| IE]></td></tr></table></td></tr></table><![endif]--></td></tr></tbody></t=
+able></div><!--[if mso | IE]></td></tr></table><![endif]--></div><img src=
+=3D"https://url8792.mail.anthropic.com/wf/open?upn=3Du001.QrgE6ZWJLNM03J0JF=
+ScVUDTaNj7N-2BowzssfLbCOuxu7fX11a7XHApEOZ5FXHN-2BpcWP1Okm9cdMj952REMJziFpvl=
+O9101yxhYYQedNTy6FHyfppxxm-2Bt6qK6kwM6qdqRKcXXwxiauJ93yq4n0QAcgC1-2B2QloCdL=
+RMV9aHk5yM1OzG3DlT-2FyM4JKuKoMNd3Y2kDmSbGRUZKSgXK5j3MZTqQ0JmEgwcDdUEPEgDMCj=
+YjPpltM6SwimRB5cFz9-2BSwpmwf5CJj37hfnkRj-2B3h1y-2FPQwCiX-2B37CKrdCNG1PrtpJo=
+-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !im=
+portant;width:1px !important;border-width:0 !important;margin-top:0 !import=
+ant;margin-bottom:0 !important;margin-right:0 !important;margin-left:0 !imp=
+ortant;padding-top:0 !important;padding-bottom:0 !important;padding-right:0=
+ !important;padding-left:0 !important;"/></body></html>

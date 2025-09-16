@@ -1,0 +1,923 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:6359:296:b0:f1:c1b2:69b3 with SMTP id ek22csp1532117rwb;
+        Tue, 31 Jan 2023 03:50:05 -0800 (PST)
+X-Google-Smtp-Source: AK7set87AAdJSM6YhkcRXB6frTyt8GYsGMEwh1hXxiQnbsoYtnDy7EvqDqkVMtu5QGUIudEqvUxc
+X-Received: by 2002:a81:b4a:0:b0:50a:9277:5d90 with SMTP id 71-20020a810b4a000000b0050a92775d90mr13301037ywl.4.1675165805547;
+        Tue, 31 Jan 2023 03:50:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1675165805; cv=none;
+        d=google.com; s=arc-20160816;
+        b=dTUvZVYxXJ2b1kXmfYEEzElkb4WL3HZVDfNf5NPXGM3ghCP1VEjPu3pgWeQhQXIGDy
+         Wimjdjo3YyVF69/BOEGe+2QYrn4ysGU2psoXIC0idAntOBE+lWGzde0gOCYYHrmYkCRN
+         VT+PpIF8v6f8sq8qN0oiAdQlV7bQzvPXdRqyGwMG6QllRdpaoeqMXfHvtA9H5JKUTVIn
+         iU4DCehwUqX12VIs7xHPeE6IRSpmaQt1D9H9D3Gn3mqCq+OItbWDOdghz6GoEDVK2Ltp
+         haVO28bLFeR0vkfKcezhiTTyq9XxOTNXogCZ3cmmZsu/sCg3AjJPHrMok1xr512UOMDm
+         hLeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:date:message-id:feedback-id:to:subject:from
+         :dkim-signature:dkim-signature;
+        bh=R4wVNzj249MLrlQG453ZcHPdotLEsKV1MpZnPoMYFi8=;
+        b=hw8QJMDCVFdkI1Kz9tG3rETzNFwfAF6gJ5N/tYV5yiSE0dz9YMywSW1Ll2jDNJAh8F
+         Xch0ubhaz33NOPf7B0RevqpuNKHT8nrnmrBjJV/TG2Ngd3BN/UJ/TMTAg4nA4cJqdoD9
+         3hSngJ2NmTckJNBBqssz2nBDTxwYolPA9LJXOczwwf+S0XYJI0aMUf212UjDmsN1f5vC
+         +TQ+MuG9GEP/5ZxsZlbwvUkB9V9bDnP4tyGERsSqP9svKkh1ef3AVdE8kwqLXCy0B9c/
+         ED1WL+wJn9ldpcBAW5F13DLWPGI0P6I7Ag7kZi2tf4PZJeNDtEZ8Ex4N3F3/prrZiI2N
+         rHHA==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@goodnotes.com header.s=mandrill header.b=DymwfJiB;
+       dkim=pass header.i=@mandrillapp.com header.s=mandrill header.b=XS1b7lqJ;
+       spf=pass (google.com: domain of bounce-md_31360905.63d9006d.v1-7ae3bcebb57046c7b2fb7ad4e3287526@mandrillapp.com designates 198.2.135.9 as permitted sender) smtp.mailfrom=bounce-md_31360905.63d9006d.v1-7ae3bcebb57046c7b2fb7ad4e3287526@mandrillapp.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=goodnotes.com
+Return-Path: <bounce-md_31360905.63d9006d.v1-7ae3bcebb57046c7b2fb7ad4e3287526@mandrillapp.com>
+Received: from mail135-9.atl141.mandrillapp.com (mail135-9.atl141.mandrillapp.com. [198.2.135.9])
+        by mx.google.com with ESMTPS id y142-20020a0dd694000000b0050865a55e41si19357260ywd.248.2023.01.31.03.50.05
+        for <lets.mine004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 03:50:05 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce-md_31360905.63d9006d.v1-7ae3bcebb57046c7b2fb7ad4e3287526@mandrillapp.com designates 198.2.135.9 as permitted sender) client-ip=198.2.135.9;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@goodnotes.com header.s=mandrill header.b=DymwfJiB;
+       dkim=pass header.i=@mandrillapp.com header.s=mandrill header.b=XS1b7lqJ;
+       spf=pass (google.com: domain of bounce-md_31360905.63d9006d.v1-7ae3bcebb57046c7b2fb7ad4e3287526@mandrillapp.com designates 198.2.135.9 as permitted sender) smtp.mailfrom=bounce-md_31360905.63d9006d.v1-7ae3bcebb57046c7b2fb7ad4e3287526@mandrillapp.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=goodnotes.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodnotes.com;
+	s=mandrill; t=1675165805; x=1675223405; i=no-reply@goodnotes.com;
+	bh=R4wVNzj249MLrlQG453ZcHPdotLEsKV1MpZnPoMYFi8=;
+	h=From:Subject:To:Feedback-ID:Message-Id:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=DymwfJiBqtWM4LSS68sKVu5TnXEfH8DhKGLhyiO6O2tX7pSQ/Hm707WgvRdySpCNr
+	 L/ZeWraWB0QBSHzXbQwJhpBxW6ilo0nR0DHJhnth96zQHW4eLmRjF/veylPejrI2X7
+	 LIEbJPApXyb+94EcedXuaerd5e8jMMHUXFdb3tvM=
+Received: from pmta14.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
+	by mail135-9.atl141.mandrillapp.com (Mailchimp) with ESMTP id 4P5jz121VzzK5vnLv
+	for <lets.mine004@gmail.com>; Tue, 31 Jan 2023 11:50:05 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
+ i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1675165805; h=From : 
+ Subject : To : Message-Id : Date : MIME-Version : Content-Type : From : 
+ Subject : Date : X-Mandrill-User : List-Unsubscribe; 
+ bh=R4wVNzj249MLrlQG453ZcHPdotLEsKV1MpZnPoMYFi8=; 
+ b=XS1b7lqJszN0NnPVkVvZcIuzLYGmh1PXVpsVTCSGbKUTn5HBkvHAjSvQ9MNYCT5S519sJ7
+ 6iaCa+ApQYSKujoge0DmHkJDIrrpvA8wSwPqnmwEoIf8B1a6EvhcmZHQlchDScGYVLYnekXU
+ Mt9RwYqJ/Q+a9ITJ5dQwgKni9KGps=
+From: no-reply@goodnotes.com
+Subject: Welcome to GoodNotes for Windows!
+Received: from [83.59.155.128] by mandrillapp.com id 7ae3bcebb57046c7b2fb7ad4e3287526; Tue, 31 Jan 2023 11:50:05 +0000
+To: lets.mine004@gmail.com
+X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
+X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31360905.7ae3bcebb57046c7b2fb7ad4e3287526
+X-Mandrill-User: md_31360905
+Feedback-ID: 31360905:31360905.20230131:md
+Message-Id: <31360905.20230131115005.63d9006d382132.99847052@mail135-9.atl141.mandrillapp.com>
+Date: Tue, 31 Jan 2023 11:50:05 +0000
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_av-b7_r7v7-pK-JXzDUqgT6mA"
+X-TUID: OAH3Zf1J/g+k
+
+--_av-b7_r7v7-pK-JXzDUqgT6mA
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+        Welcome to GoodNotes for Windows!                                  
+      Hi there,
+ 
+ The wait is over!
+ 
+ We=E2=80=99re happy to invite you to test GoodNotes for Windows on beta.
+ 
+ Click the button below to download GoodNotes on your Windows device and
+get started. If clicking =E2=80=9CGet=E2=80=9D doesn=E2=80=99t work, try re=
+starting the
+Windows store.
+
+                 Download the Windows Beta
+<https://web.goodnotes.com/open-ms-store>                 (Or copy this
+link into your browser ms-windows-store://pdp/?ProductId=3D9N92MC09DB30)
+ 
+ *What to expect when testing GoodNotes for Windows on beta*
+
+   - You can create up to 20 notebooks. Each notebooks can have an
+unlimited number of pages
+  - It=E2=80=99s an online-first app, so you=E2=80=99ll need an internet co=
+nnection for
+the best experience
+  - Get ready to share your thoughts! You may get some follow up emails or
+in-app surveys to get feedback on your experience so far
+ 
+ For more information, check out the FAQs page here.
+ 
+ Happy testing! Your feedback will help keep us on the right track as we
+continue to expand the features and tools available.
+  
+
+ Stay tuned, 
+
+ The GoodNotes Team
+
+--_av-b7_r7v7-pK-JXzDUqgT6mA
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office">
+    <head>
+        <!-- NAME: 1 COLUMN -->
+        <!--[if gte mso 15]>
+        <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
+        <meta charset=3D"UTF-8">
+        <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+        <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-sc=
+ale=3D1">
+        <title>Welcome to GoodNotes for Windows!</title>
+        
+    <style type=3D"text/css">
+=09=09p{
+=09=09=09margin:10px 0;
+=09=09=09padding:0;
+=09=09}
+=09=09table{
+=09=09=09border-collapse:collapse;
+=09=09}
+=09=09h1,h2,h3,h4,h5,h6{
+=09=09=09display:block;
+=09=09=09margin:0;
+=09=09=09padding:0;
+=09=09}
+=09=09img,a img{
+=09=09=09border:0;
+=09=09=09height:auto;
+=09=09=09outline:none;
+=09=09=09text-decoration:none;
+=09=09}
+=09=09body,#bodyTable,#bodyCell{
+=09=09=09height:100%;
+=09=09=09margin:0;
+=09=09=09padding:0;
+=09=09=09width:100%;
+=09=09}
+=09=09.mcnPreviewText{
+=09=09=09display:none !important;
+=09=09}
+=09=09#outlook a{
+=09=09=09padding:0;
+=09=09}
+=09=09img{
+=09=09=09-ms-interpolation-mode:bicubic;
+=09=09}
+=09=09table{
+=09=09=09mso-table-lspace:0pt;
+=09=09=09mso-table-rspace:0pt;
+=09=09}
+=09=09.ReadMsgBody{
+=09=09=09width:100%;
+=09=09}
+=09=09.ExternalClass{
+=09=09=09width:100%;
+=09=09}
+=09=09p,a,li,td,blockquote{
+=09=09=09mso-line-height-rule:exactly;
+=09=09}
+=09=09a[href^=3Dtel],a[href^=3Dsms]{
+=09=09=09color:inherit;
+=09=09=09cursor:default;
+=09=09=09text-decoration:none;
+=09=09}
+=09=09p,a,li,td,body,table,blockquote{
+=09=09=09-ms-text-size-adjust:100%;
+=09=09=09-webkit-text-size-adjust:100%;
+=09=09}
+=09=09.ExternalClass,.ExternalClass p,.ExternalClass td,.ExternalClass div,=
+.ExternalClass span,.ExternalClass font{
+=09=09=09line-height:100%;
+=09=09}
+=09=09a[x-apple-data-detectors]{
+=09=09=09color:inherit !important;
+=09=09=09text-decoration:none !important;
+=09=09=09font-size:inherit !important;
+=09=09=09font-family:inherit !important;
+=09=09=09font-weight:inherit !important;
+=09=09=09line-height:inherit !important;
+=09=09}
+=09=09#bodyCell{
+=09=09=09padding:10px;
+=09=09}
+=09=09.templateContainer{
+=09=09=09max-width:600px !important;
+=09=09}
+=09=09a.mcnButton{
+=09=09=09display:block;
+=09=09}
+=09=09.mcnImage,.mcnRetinaImage{
+=09=09=09vertical-align:bottom;
+=09=09}
+=09=09.mcnTextContent{
+=09=09=09word-break:break-word;
+=09=09}
+=09=09.mcnTextContent img{
+=09=09=09height:auto !important;
+=09=09}
+=09=09.mcnDividerBlock{
+=09=09=09table-layout:fixed !important;
+=09=09}
+=09/*
+=09@tab Page
+=09@section Background Style
+=09@tip Set the background color and top border for your email. You may wan=
+t to choose colors that match your company's branding.
+=09*/
+=09=09body,#bodyTable{
+=09=09=09/*@editable*/background-color:#FAFAFA;
+=09=09}
+=09/*
+=09@tab Page
+=09@section Background Style
+=09@tip Set the background color and top border for your email. You may wan=
+t to choose colors that match your company's branding.
+=09*/
+=09=09#bodyCell{
+=09=09=09/*@editable*/border-top:0;
+=09=09}
+=09/*
+=09@tab Page
+=09@section Email Border
+=09@tip Set the border for your email.
+=09*/
+=09=09.templateContainer{
+=09=09=09/*@editable*/border:0;
+=09=09}
+=09/*
+=09@tab Page
+=09@section Heading 1
+=09@tip Set the styling for all first-level headings in your emails. These =
+should be the largest of your headings.
+=09@style heading 1
+=09*/
+=09=09h1{
+=09=09=09/*@editable*/color:#202020;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:26px;
+=09=09=09/*@editable*/font-style:normal;
+=09=09=09/*@editable*/font-weight:bold;
+=09=09=09/*@editable*/line-height:125%;
+=09=09=09/*@editable*/letter-spacing:normal;
+=09=09=09/*@editable*/text-align:left;
+=09=09}
+=09/*
+=09@tab Page
+=09@section Heading 2
+=09@tip Set the styling for all second-level headings in your emails.
+=09@style heading 2
+=09*/
+=09=09h2{
+=09=09=09/*@editable*/color:#202020;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:22px;
+=09=09=09/*@editable*/font-style:normal;
+=09=09=09/*@editable*/font-weight:bold;
+=09=09=09/*@editable*/line-height:125%;
+=09=09=09/*@editable*/letter-spacing:normal;
+=09=09=09/*@editable*/text-align:left;
+=09=09}
+=09/*
+=09@tab Page
+=09@section Heading 3
+=09@tip Set the styling for all third-level headings in your emails.
+=09@style heading 3
+=09*/
+=09=09h3{
+=09=09=09/*@editable*/color:#202020;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:20px;
+=09=09=09/*@editable*/font-style:normal;
+=09=09=09/*@editable*/font-weight:bold;
+=09=09=09/*@editable*/line-height:125%;
+=09=09=09/*@editable*/letter-spacing:normal;
+=09=09=09/*@editable*/text-align:left;
+=09=09}
+=09/*
+=09@tab Page
+=09@section Heading 4
+=09@tip Set the styling for all fourth-level headings in your emails. These=
+ should be the smallest of your headings.
+=09@style heading 4
+=09*/
+=09=09h4{
+=09=09=09/*@editable*/color:#202020;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:18px;
+=09=09=09/*@editable*/font-style:normal;
+=09=09=09/*@editable*/font-weight:bold;
+=09=09=09/*@editable*/line-height:125%;
+=09=09=09/*@editable*/letter-spacing:normal;
+=09=09=09/*@editable*/text-align:left;
+=09=09}
+=09/*
+=09@tab Preheader
+=09@section Preheader Style
+=09@tip Set the background color and borders for your email's preheader are=
+a.
+=09*/
+=09=09#templatePreheader{
+=09=09=09/*@editable*/background-color:#FAFAFA;
+=09=09=09/*@editable*/background-image:none;
+=09=09=09/*@editable*/background-repeat:no-repeat;
+=09=09=09/*@editable*/background-position:center;
+=09=09=09/*@editable*/background-size:cover;
+=09=09=09/*@editable*/border-top:0;
+=09=09=09/*@editable*/border-bottom:0;
+=09=09=09/*@editable*/padding-top:9px;
+=09=09=09/*@editable*/padding-bottom:9px;
+=09=09}
+=09/*
+=09@tab Preheader
+=09@section Preheader Text
+=09@tip Set the styling for your email's preheader text. Choose a size and =
+color that is easy to read.
+=09*/
+=09=09#templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent=
+ p{
+=09=09=09/*@editable*/color:#656565;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:12px;
+=09=09=09/*@editable*/line-height:150%;
+=09=09=09/*@editable*/text-align:left;
+=09=09}
+=09/*
+=09@tab Preheader
+=09@section Preheader Link
+=09@tip Set the styling for your email's preheader links. Choose a color th=
+at helps them stand out from your text.
+=09*/
+=09=09#templatePreheader .mcnTextContent a,#templatePreheader .mcnTextConte=
+nt p a{
+=09=09=09/*@editable*/color:#656565;
+=09=09=09/*@editable*/font-weight:normal;
+=09=09=09/*@editable*/text-decoration:underline;
+=09=09}
+=09/*
+=09@tab Header
+=09@section Header Style
+=09@tip Set the background color and borders for your email's header area.
+=09*/
+=09=09#templateHeader{
+=09=09=09/*@editable*/background-color:#FFFFFF;
+=09=09=09/*@editable*/background-image:none;
+=09=09=09/*@editable*/background-repeat:no-repeat;
+=09=09=09/*@editable*/background-position:center;
+=09=09=09/*@editable*/background-size:cover;
+=09=09=09/*@editable*/border-top:0;
+=09=09=09/*@editable*/border-bottom:0;
+=09=09=09/*@editable*/padding-top:9px;
+=09=09=09/*@editable*/padding-bottom:0;
+=09=09}
+=09/*
+=09@tab Header
+=09@section Header Text
+=09@tip Set the styling for your email's header text. Choose a size and col=
+or that is easy to read.
+=09*/
+=09=09#templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+=09=09=09/*@editable*/color:#202020;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:16px;
+=09=09=09/*@editable*/line-height:150%;
+=09=09=09/*@editable*/text-align:left;
+=09=09}
+=09/*
+=09@tab Header
+=09@section Header Link
+=09@tip Set the styling for your email's header links. Choose a color that =
+helps them stand out from your text.
+=09*/
+=09=09#templateHeader .mcnTextContent a,#templateHeader .mcnTextContent p a=
+{
+=09=09=09/*@editable*/color:#007C89;
+=09=09=09/*@editable*/font-weight:normal;
+=09=09=09/*@editable*/text-decoration:underline;
+=09=09}
+=09/*
+=09@tab Body
+=09@section Body Style
+=09@tip Set the background color and borders for your email's body area.
+=09*/
+=09=09#templateBody{
+=09=09=09/*@editable*/background-color:#FFFFFF;
+=09=09=09/*@editable*/background-image:none;
+=09=09=09/*@editable*/background-repeat:no-repeat;
+=09=09=09/*@editable*/background-position:center;
+=09=09=09/*@editable*/background-size:cover;
+=09=09=09/*@editable*/border-top:0;
+=09=09=09/*@editable*/border-bottom:2px solid #EAEAEA;
+=09=09=09/*@editable*/padding-top:0;
+=09=09=09/*@editable*/padding-bottom:9px;
+=09=09}
+=09/*
+=09@tab Body
+=09@section Body Text
+=09@tip Set the styling for your email's body text. Choose a size and color=
+ that is easy to read.
+=09*/
+=09=09#templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+=09=09=09/*@editable*/color:#202020;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:16px;
+=09=09=09/*@editable*/line-height:150%;
+=09=09=09/*@editable*/text-align:left;
+=09=09}
+=09/*
+=09@tab Body
+=09@section Body Link
+=09@tip Set the styling for your email's body links. Choose a color that he=
+lps them stand out from your text.
+=09*/
+=09=09#templateBody .mcnTextContent a,#templateBody .mcnTextContent p a{
+=09=09=09/*@editable*/color:#007C89;
+=09=09=09/*@editable*/font-weight:normal;
+=09=09=09/*@editable*/text-decoration:underline;
+=09=09}
+=09/*
+=09@tab Footer
+=09@section Footer Style
+=09@tip Set the background color and borders for your email's footer area.
+=09*/
+=09=09#templateFooter{
+=09=09=09/*@editable*/background-color:#FAFAFA;
+=09=09=09/*@editable*/background-image:none;
+=09=09=09/*@editable*/background-repeat:no-repeat;
+=09=09=09/*@editable*/background-position:center;
+=09=09=09/*@editable*/background-size:cover;
+=09=09=09/*@editable*/border-top:0;
+=09=09=09/*@editable*/border-bottom:0;
+=09=09=09/*@editable*/padding-top:9px;
+=09=09=09/*@editable*/padding-bottom:9px;
+=09=09}
+=09/*
+=09@tab Footer
+=09@section Footer Text
+=09@tip Set the styling for your email's footer text. Choose a size and col=
+or that is easy to read.
+=09*/
+=09=09#templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+=09=09=09/*@editable*/color:#656565;
+=09=09=09/*@editable*/font-family:Helvetica;
+=09=09=09/*@editable*/font-size:12px;
+=09=09=09/*@editable*/line-height:150%;
+=09=09=09/*@editable*/text-align:center;
+=09=09}
+=09/*
+=09@tab Footer
+=09@section Footer Link
+=09@tip Set the styling for your email's footer links. Choose a color that =
+helps them stand out from your text.
+=09*/
+=09=09#templateFooter .mcnTextContent a,#templateFooter .mcnTextContent p a=
+{
+=09=09=09/*@editable*/color:#656565;
+=09=09=09/*@editable*/font-weight:normal;
+=09=09=09/*@editable*/text-decoration:underline;
+=09=09}
+=09@media only screen and (min-width:768px){
+=09=09.templateContainer{
+=09=09=09width:600px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09body,table,td,p,a,li,blockquote{
+=09=09=09-webkit-text-size-adjust:none !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09body{
+=09=09=09width:100% !important;
+=09=09=09min-width:100% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnRetinaImage{
+=09=09=09max-width:100% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnImage{
+=09=09=09width:100% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnCartContainer,.mcnCaptionTopContent,.mcnRecContentContainer,.mcnC=
+aptionBottomContent,.mcnTextContentContainer,.mcnBoxedTextContentContainer,=
+.mcnImageGroupContentContainer,.mcnCaptionLeftTextContentContainer,.mcnCapt=
+ionRightTextContentContainer,.mcnCaptionLeftImageContentContainer,.mcnCapti=
+onRightImageContentContainer,.mcnImageCardLeftTextContentContainer,.mcnImag=
+eCardRightTextContentContainer,.mcnImageCardLeftImageContentContainer,.mcnI=
+mageCardRightImageContentContainer{
+=09=09=09max-width:100% !important;
+=09=09=09width:100% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnBoxedTextContentContainer{
+=09=09=09min-width:100% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnImageGroupContent{
+=09=09=09padding:9px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnCaptionLeftContentOuter .mcnTextContent,.mcnCaptionRightContentOu=
+ter .mcnTextContent{
+=09=09=09padding-top:9px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnImageCardTopImageContent,.mcnCaptionBottomContent:last-child .mcn=
+CaptionBottomImageContent,.mcnCaptionBlockInner .mcnCaptionTopContent:last-=
+child .mcnTextContent{
+=09=09=09padding-top:18px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnImageCardBottomImageContent{
+=09=09=09padding-bottom:9px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnImageGroupBlockInner{
+=09=09=09padding-top:0 !important;
+=09=09=09padding-bottom:0 !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnImageGroupBlockOuter{
+=09=09=09padding-top:9px !important;
+=09=09=09padding-bottom:9px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnTextContent,.mcnBoxedTextContentColumn{
+=09=09=09padding-right:18px !important;
+=09=09=09padding-left:18px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcnImageCardLeftImageContent,.mcnImageCardRightImageContent{
+=09=09=09padding-right:18px !important;
+=09=09=09padding-bottom:0 !important;
+=09=09=09padding-left:18px !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09=09.mcpreview-image-uploader{
+=09=09=09display:none !important;
+=09=09=09width:100% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Heading 1
+=09@tip Make the first-level headings larger in size for better readability=
+ on small screens.
+=09*/
+=09=09h1{
+=09=09=09/*@editable*/font-size:22px !important;
+=09=09=09/*@editable*/line-height:125% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Heading 2
+=09@tip Make the second-level headings larger in size for better readabilit=
+y on small screens.
+=09*/
+=09=09h2{
+=09=09=09/*@editable*/font-size:20px !important;
+=09=09=09/*@editable*/line-height:125% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Heading 3
+=09@tip Make the third-level headings larger in size for better readability=
+ on small screens.
+=09*/
+=09=09h3{
+=09=09=09/*@editable*/font-size:18px !important;
+=09=09=09/*@editable*/line-height:125% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Heading 4
+=09@tip Make the fourth-level headings larger in size for better readabilit=
+y on small screens.
+=09*/
+=09=09h4{
+=09=09=09/*@editable*/font-size:16px !important;
+=09=09=09/*@editable*/line-height:150% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Boxed Text
+=09@tip Make the boxed text larger in size for better readability on small =
+screens. We recommend a font size of at least 16px.
+=09*/
+=09=09.mcnBoxedTextContentContainer .mcnTextContent,.mcnBoxedTextContentCon=
+tainer .mcnTextContent p{
+=09=09=09/*@editable*/font-size:14px !important;
+=09=09=09/*@editable*/line-height:150% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Preheader Visibility
+=09@tip Set the visibility of the email's preheader on small screens. You c=
+an hide it to save space.
+=09*/
+=09=09#templatePreheader{
+=09=09=09/*@editable*/display:block !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Preheader Text
+=09@tip Make the preheader text larger in size for better readability on sm=
+all screens.
+=09*/
+=09=09#templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent=
+ p{
+=09=09=09/*@editable*/font-size:14px !important;
+=09=09=09/*@editable*/line-height:150% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Header Text
+=09@tip Make the header text larger in size for better readability on small=
+ screens.
+=09*/
+=09=09#templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+=09=09=09/*@editable*/font-size:16px !important;
+=09=09=09/*@editable*/line-height:150% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Body Text
+=09@tip Make the body text larger in size for better readability on small s=
+creens. We recommend a font size of at least 16px.
+=09*/
+=09=09#templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+=09=09=09/*@editable*/font-size:16px !important;
+=09=09=09/*@editable*/line-height:150% !important;
+=09=09}
+
+}=09@media only screen and (max-width: 480px){
+=09/*
+=09@tab Mobile Styles
+=09@section Footer Text
+=09@tip Make the footer content text larger in size for better readability =
+on small screens.
+=09*/
+=09=09#templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+=09=09=09/*@editable*/font-size:14px !important;
+=09=09=09/*@editable*/line-height:150% !important;
+=09=09}
+
+}</style></head>
+    <body>
+        <!---->
+        <center>
+            <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" height=3D"100%" width=3D"100%" id=3D"bodyTable">
+                <tr>
+                    <td align=3D"center" valign=3D"top" id=3D"bodyCell">
+                        <!-- BEGIN TEMPLATE // -->
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table align=3D"center" border=3D"0" cellspacing=3D=
+"0" cellpadding=3D"0" width=3D"600" style=3D"width:600px;">
+                        <tr>
+                        <td align=3D"center" valign=3D"top" width=3D"600" s=
+tyle=3D"width:600px;">
+                        <![endif]-->
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%" class=3D"templateContainer">
+                            <tr>
+                                <td valign=3D"top" id=3D"templatePreheader"=
+></td>
+                            </tr>
+                            <tr>
+                                <td valign=3D"top" id=3D"templateHeader"><t=
+able border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=
+=3D"mcnImageBlock" style=3D"min-width:100%;">
+    <tbody class=3D"mcnImageBlockOuter">
+            <tr>
+                <td valign=3D"top" style=3D"padding:9px" class=3D"mcnImageB=
+lockInner">
+                    <table align=3D"left" width=3D"100%" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" class=3D"mcnImageContentContainer" style=3D"=
+min-width:100%;">
+                        <tbody><tr>
+                            <td class=3D"mcnImageContent" valign=3D"top" st=
+yle=3D"padding-right: 9px; padding-left: 9px; padding-top: 0; padding-botto=
+m: 0;">
+                                
+                                    
+                                        <img align=3D"left" alt=3D"" src=3D=
+"https://mcusercontent.com/ae43b53ed60a1d7cdda8f81ab/images/95cb1709-2cfc-4=
+e6f-82ae-f2417ffaf6d3.png" width=3D"203.04" style=3D"max-width:615px; paddi=
+ng-bottom: 0; display: inline !important; vertical-align: bottom;" class=3D=
+"mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                            <tr>
+                                <td valign=3D"top" id=3D"templateBody"><tab=
+le border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D=
+"mcnTextBlock" style=3D"min-width:100%;">
+    <tbody class=3D"mcnTextBlockOuter">
+        <tr>
+            <td valign=3D"top" class=3D"mcnTextBlockInner" style=3D"padding=
+-top:9px;">
+              =09<!--[if mso]>
+=09=09=09=09<table align=3D"left" border=3D"0" cellspacing=3D"0" cellpaddin=
+g=3D"0" width=3D"100%" style=3D"width:100%;">
+=09=09=09=09<tr>
+=09=09=09=09<![endif]-->
+=09=09=09    
+=09=09=09=09<!--[if mso]>
+=09=09=09=09<td valign=3D"top" width=3D"600" style=3D"width:600px;">
+=09=09=09=09<![endif]-->
+                <table align=3D"left" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" style=3D"max-width:100%; min-width:100%;" width=3D"100%" class=
+=3D"mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign=3D"top" class=3D"mcnTextContent" style=
+=3D"padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18p=
+x;">
+                        
+                            <p>Hi there,<br>
+<br>
+The wait is over!<br>
+<br>
+We=E2=80=99re happy to invite you to test GoodNotes for Windows on beta.<br=
+>
+<br>
+Click the button below to download GoodNotes on your Windows device and get=
+ started. If clicking =E2=80=9CGet=E2=80=9D doesn=E2=80=99t work, try resta=
+rting the Windows store.</p>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+=09=09=09=09<!--[if mso]>
+=09=09=09=09</td>
+=09=09=09=09<![endif]-->
+                
+=09=09=09=09<!--[if mso]>
+=09=09=09=09</tr>
+=09=09=09=09</table>
+=09=09=09=09<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table class=3D"mcnButtonBlock" style=3D"min-width:100%;" width=3D"=
+100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+    <tbody class=3D"mcnButtonBlockOuter">
+        <tr>
+            <td style=3D"padding-top:0; padding-right:18px; padding-bottom:=
+18px; padding-left:18px;" class=3D"mcnButtonBlockInner" valign=3D"top" alig=
+n=3D"left">
+                <table class=3D"mcnButtonContentContainer" style=3D"border-=
+collapse: separate !important;border-radius: 4px;background-color: #2BAADF;=
+" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+                    <tbody>
+                        <tr>
+                            <td class=3D"mcnButtonContent" style=3D"font-fa=
+mily: Arial; font-size: 16px; padding: 18px;" valign=3D"middle" align=3D"ce=
+nter">
+                                <a class=3D"mcnButton " title=3D"Download t=
+he Windows Beta" href=3D"https://mandrillapp.com/track/click/31360905/web.g=
+oodnotes.com?p=3DeyJzIjoiR1ZtSHc1LXFvZHIxdDhMMHVBcmpScGpqLXlnIiwidiI6MSwicC=
+I6IntcInVcIjozMTM2MDkwNSxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL3dlYi5nb=
+29kbm90ZXMuY29tXFxcL29wZW4tbXMtc3RvcmVcIixcImlkXCI6XCI3YWUzYmNlYmI1NzA0NmM3=
+YjJmYjdhZDRlMzI4NzUyNlwiLFwidXJsX2lkc1wiOltcImFjZTJjODE1YmVlYWU5Y2U0MGJjNGI=
+2OGM1MjdiYmRmMmZlODZlNDFcIl19In0" target=3D"_blank" style=3D"font-weight: b=
+old;letter-spacing: normal;line-height: 100%;text-align: center;text-decora=
+tion: none;color: #FFFFFF;">Download the Windows Beta</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table><table class=3D"mcnTextBlock" style=3D"min-width:100%;" width=3D"10=
+0%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+    <tbody class=3D"mcnTextBlockOuter">
+        <tr>
+            <td class=3D"mcnTextBlockInner" style=3D"padding-top:9px;" vali=
+gn=3D"top">
+              =09<!--[if mso]>
+=09=09=09=09<table align=3D"left" border=3D"0" cellspacing=3D"0" cellpaddin=
+g=3D"0" width=3D"100%" style=3D"width:100%;">
+=09=09=09=09<tr>
+=09=09=09=09<![endif]-->
+=09=09=09    
+=09=09=09=09<!--[if mso]>
+=09=09=09=09<td valign=3D"top" width=3D"600" style=3D"width:600px;">
+=09=09=09=09<![endif]-->
+                <table style=3D"max-width:100%; min-width:100%;" class=3D"m=
+cnTextContentContainer" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" =
+border=3D"0" align=3D"left">
+                    <tbody><tr>
+                        
+                        <td class=3D"mcnTextContent" style=3D"padding-top:0=
+; padding-right:18px; padding-bottom:9px; padding-left:18px;" valign=3D"top=
+">
+                        
+                            <p>(Or copy this link into your browser ms-wind=
+ows-store://pdp/?ProductId=3D9N92MC09DB30)<br>
+<br>
+<strong>What to expect when testing GoodNotes for Windows on beta</strong><=
+/p>
+
+<ul>
+=09<li>You can create up to 20 notebooks. Each notebooks can have an unlimi=
+ted number of pages</li>
+=09<li>It=E2=80=99s an online-first app, so you=E2=80=99ll need an internet=
+ connection for the best experience</li>
+=09<li>Get ready to share your thoughts! You may get some follow up emails =
+or in-app surveys to get feedback on your experience so far</li>
+</ul>
+
+<p>For more information, check out the FAQs page here.<br>
+<br>
+Happy testing! Your feedback will help keep us on the right track as we con=
+tinue to expand the features and tools available.<br>
+&nbsp;</p>
+
+<p>Stay tuned,&nbsp;</p>
+
+<p>The GoodNotes Team</p>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+=09=09=09=09<!--[if mso]>
+=09=09=09=09</td>
+=09=09=09=09<![endif]-->
+                
+=09=09=09=09<!--[if mso]>
+=09=09=09=09</tr>
+=09=09=09=09</table>
+=09=09=09=09<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                            <tr>
+                                <td valign=3D"top" id=3D"templateFooter"></=
+td>
+                            </tr>
+                        </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    <img src=3D"https://mandrillapp.com/track/open.php?u=3D31360905&id=3D7a=
+e3bcebb57046c7b2fb7ad4e3287526" height=3D"1" width=3D"1" alt=3D""></body>
+</html>
+
+--_av-b7_r7v7-pK-JXzDUqgT6mA--
+

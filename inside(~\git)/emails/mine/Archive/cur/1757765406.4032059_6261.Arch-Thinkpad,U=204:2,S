@@ -1,0 +1,541 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:6358:7054:b0:dd:3243:1980 with SMTP id 20csp1817185rwp;
+        Sun, 20 Nov 2022 15:45:31 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf7ZsI1hedXpBSHhufhz8aPVZVTwIpCCwKbfPZ5+h8T+U50jinhPWuxYJzE/73/NHrXVAyL7
+X-Received: by 2002:a37:3c5:0:b0:6fa:dc37:1745 with SMTP id 188-20020a3703c5000000b006fadc371745mr3557903qkd.685.1668987931363;
+        Sun, 20 Nov 2022 15:45:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1668987931; cv=none;
+        d=google.com; s=arc-20160816;
+        b=kTtsKnMV35sNh+qCPhnm/GotZuqEF5z2FDcaTUAcLYJTPdY0GxljM9zGHfAUPxSg+u
+         SUtU3OpbR3q09fQZ0syvDI2Ayoby9LeA4icozXE70l3Q/XE71GnPL4vsic8xrFLsgUQ5
+         ICLrx7Jm8TjCjilOmXVNkDRYUHkdlat4ZDDA/xyDsBNiI0vpCkawsveaOhuFBuSDtdn8
+         c0RO/TIN368yXo5gMjwlXwyPBBJ2jnpiACHTxTG1+nXywTtA7T0znINH3a4MLDsHEML9
+         Zp9vXEfAtkVmLNWCO8Z0qjmsrNQoAUakBX9DSllODhxIekyRB1tJ5KSwYfhoKOivEGAX
+         lAVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:content-transfer-encoding:mime-version
+         :subject:to:from:dkim-signature:dkim-signature;
+        bh=cNxG4MKIiTrtFCFvlMk0DGuvcdP040TkGctoeLbx5aw=;
+        b=e2+AIe7tJR+RSDnUjo5EDPKjLFKpSoS0PjEH/umdcvdcvxMsALxCr3/ZxR9gNEbaVQ
+         JOB5aPbsi/pDU4Nafujr8sHj55a32vJHBZy8B0EWbE3asaRCNcvekPV56OVCwtv6rW6f
+         EngrYyfJyM3LG9FcIR9AG1EM9o5QSNQPI1wUKESpPaO503aB5pJoqkpOUV/WrXUkquv6
+         HpfoyEVReJRlvGQMxRK7ZTKl8VfOmj5zCgMwI4a6eZxdX5QVJYNJ1ndIoVAkohySyZKF
+         x3RnAimMkLE4aYY0St9lgVTpVxovkK4SMompC+u3bJD4kNYUHIITpos5t7NcD2jwDZey
+         wgmw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@redditmail.com header.s=fmgv7iqmaqo3inwiwb5porvnnhayytow header.b=hMAB+Pol;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=VaqRG9IC;
+       spf=pass (google.com: domain of 01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000@amazonses.com designates 54.240.72.74 as permitted sender) smtp.mailfrom=01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000@amazonses.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=redditmail.com
+Return-Path: <01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000@amazonses.com>
+Received: from a72-74.smtp-out.amazonses.com (a72-74.smtp-out.amazonses.com. [54.240.72.74])
+        by mx.google.com with ESMTPS id i6-20020ac87646000000b003a52d022e2asi5189394qtr.516.2022.11.20.15.45.31
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 Nov 2022 15:45:31 -0800 (PST)
+Received-SPF: pass (google.com: domain of 01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000@amazonses.com designates 54.240.72.74 as permitted sender) client-ip=54.240.72.74;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@redditmail.com header.s=fmgv7iqmaqo3inwiwb5porvnnhayytow header.b=hMAB+Pol;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=VaqRG9IC;
+       spf=pass (google.com: domain of 01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000@amazonses.com designates 54.240.72.74 as permitted sender) smtp.mailfrom=01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000@amazonses.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=redditmail.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=fmgv7iqmaqo3inwiwb5porvnnhayytow; d=redditmail.com; t=1668987930;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date;
+	bh=cNxG4MKIiTrtFCFvlMk0DGuvcdP040TkGctoeLbx5aw=;
+	b=hMAB+PoltmyNvVmpzUFeTzVS4eK8SIx1jP4SSxoZr1cxF242mhIp4DgWHzm7yOaJ
+	m4/FHakl3IJZw+HAZjqQf3ujS4rzR4W1QNHRstX/Pp025MtHR1pOJVBlCs6Q74o2zg7
+	p6MLWgv6dFDw3xZLnO7Ph74JbG+e4efG12g0CWeE=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1668987930;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:Feedback-ID;
+	bh=cNxG4MKIiTrtFCFvlMk0DGuvcdP040TkGctoeLbx5aw=;
+	b=VaqRG9IC/prwpDl5c/tRc+7vUTNFa8mlQmuaAAGnPM6TSVtm3iVxbpv8OdmWgMDJ
+	LpmdJkak2KK6xzCrwYX72SBR5hcYsvFowQigiU8BkQohSSGzXnRm5GVUZGx9DZJzRwp
+	rTtxiYI9ekJJ9f50EL/de8QgBRoRkcKHRwE17yf0=
+From: Reddit <noreply@redditmail.com>
+To: lets.mine004@gmail.com
+Subject: =?UTF-8?Q?Updates_to_Reddit=E2=80=99s_Privacy_Policy?=
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Message-ID: <01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000@email.amazonses.com>
+Date: Sun, 20 Nov 2022 23:45:30 +0000
+Feedback-ID: 1.us-east-1.UqlFplRllIQtiw+Kq2b87y7uRSu9p66fMici2AQNsMU=:AmazonSES
+X-SES-Outgoing: 2022.11.20-54.240.72.74
+X-TUID: Ml7Yff8gZ6zz
+
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml=
+1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml"
+xmlns:o=3D"urn:schemas-microsoft-com:office:office">
+<head>
+<!-- MonitorCampaignID: admin_announcement_email -->
+
+<!--[if gte mso 9]>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+<meta http-equiv=3D"Content-type" content=3D"text/html; charset=3Dutf-8" />
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1,=
+ maximum-scale=3D1" />
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge" />
+<meta name=3D"format-detection" content=3D"date=3Dno" />
+<meta name=3D"format-detection" content=3D"address=3Dno" />
+<meta name=3D"format-detection" content=3D"telephone=3Dno" />
+<meta name=3D"x-apple-disable-message-reformatting" />
+<!--[if !mso]><!-->
+<!--<![endif]-->
+<title>Email Template</title>
+<!--[if gte mso 9]>
+<style type=3D"text/css" media=3D"all">
+sup { font-size: 100% !important; }
+</style>
+<![endif]-->
+<style type=3D"text/css" media=3D"screen">
+body {
+padding: 0 !important;
+margin: 0 auto !important;
+display: block !important;
+min-width: 100% !important;
+width: 100% !important;
+background: #ffffff;
+-webkit-text-size-adjust: none
+}
+a {
+color: #313e42;
+text-decoration: none
+}
+p {
+padding: 0 !important;
+margin: 0 !important
+}
+img {
+margin: 0 !important;
+-ms-interpolation-mode: bicubic;
+/* Allow smoother rendering of resized image in Internet Explorer */
+}
+a[x-apple-data-detectors] {
+color: inherit !important;
+text-decoration: inherit !important;
+font-size: inherit !important;
+font-family: inherit !important;
+font-weight: inherit !important;
+line-height: inherit !important;
+}
+.btn-12 a {
+display: block;
+padding: 4px;
+text-decoration: none;
+}
+.btn-14 a {
+display: block;
+padding: 8px;
+text-decoration: none;
+}
+.btn-14-4 a {
+display: block;
+padding: 8px;
+text-decoration: none;
+}
+.l-red a {
+color: #ff0000;
+}
+/* Mobile styles */
+@media only screen and (max-device-width: 480px),
+only screen and (max-width: 480px) {
+.mpx-16 {
+padding-left: 16px !important;
+padding-right: 16px !important;
+}
+.mpb-48 {
+padding-bottom: 48px !important;
+}
+.mfz-16 {
+font-size: 16px !important;
+}
+.mlh-18 {
+line-height: 18px !important;
+}
+.mpb-28 {
+padding-bottom: 28px !important;
+}
+.mfz-14 {
+font-size: 14px !important;
+}
+.mlh-16 {
+line-height: 16px !important;
+}
+.mpb-12 {
+padding-bottom: 12px !important;
+}
+.mpt-8 {
+padding-top: 8px !important;
+}
+.mpb-44 {
+padding-bottom: 44px !important;
+}
+.mpb-27 {
+padding-bottom: 27px !important;
+}
+.mpt-21 {
+padding-top: 21px !important;
+}
+.mpb-34 {
+padding-bottom: 34px !important;
+}
+.mpb-17 {
+padding-bottom: 17px !important;
+}
+.mpb-20 {
+padding-bottom: 20px !important;
+}
+.mpt-16 {
+padding-top: 16px !important;
+}
+.mpt-34 {
+padding-top: 34px !important;
+}
+.mpb-24 {
+padding-bottom: 24px !important;
+}
+.mpx-12 {
+padding-left: 12px !important;
+padding-right: 12px !important;
+}
+.mfz-12 {
+font-size: 12px !important;
+}
+u+.body .gwfw {
+width: 100% !important;
+width: 100vw !important;
+}
+.td,
+.m-shell {
+width: 100% !important;
+min-width: 100% !important;
+}
+.mt-left {
+text-align: left !important;
+}
+.mt-center {
+text-align: center !important;
+}
+.mt-right {
+text-align: right !important;
+}
+.me-left {
+margin-right: auto !important;
+}
+.me-center {
+margin: 0 auto !important;
+}
+.me-right {
+margin-left: auto !important;
+}
+.h-auto {
+height: auto !important;
+}
+.w-auto {
+width: auto !important;
+}
+.fluid-img img {
+width: 100% !important;
+max-width: 100% !important;
+height: auto !important;
+}
+.column,
+.column-top,
+.column-dir,
+.column-dir-top {
+float: left !important;
+width: 100% !important;
+display: block !important;
+}
+.m-hide {
+display: none !important;
+width: 0 !important;
+height: 0 !important;
+font-size: 0 !important;
+line-height: 0 !important;
+min-height: 0 !important;
+}
+.m-block {
+display: block !important;
+}
+/*Width*/
+.w-15 {
+width: 15px !important;
+}
+.w-8 {
+width: 8px !important;
+height: auto !important;
+}
+.w-12 {
+width: 12px !important;
+height: auto !important;
+}
+.w-60 {
+width: 60px !important;
+height: auto !important;
+}
+.w-54 {
+width: 54px !important;
+height: auto !important;
+}
+.w-54 img {
+width: 54px !important;
+height: auto !important;
+}
+.w-104 {
+width: 104px !important;
+height: auto !important;
+}
+.w-104 img {
+width: 104px !important;
+height: auto !important;
+}
+.w-114 {
+width: 114px !important;
+height: auto !important;
+}
+.w-114 img {
+width: 114px !important;
+height: auto !important;
+}
+.btn-14-4 {
+font-size: 12px !important;
+line-height: 16px !important;
+}
+.btn-14-4 a {
+padding: 4px !important;
+}
+.w-2p {
+width: 2% !important;
+}
+.w-32p {
+width: 32% !important;
+}
+.w-49p {
+width: 49% !important;
+}
+.w-50p {
+width: 50% !important;
+}
+.w-100p {
+width: 100% !important;
+}
+/*Text*/
+}
+</style>
+</head>
+<body class=3D"body"
+style=3D"padding:0 !important; margin:0 auto !important; display:block !imp=
+ortant; min-width:100% !important; width:100% !important; background:#fffff=
+f; -webkit-text-size-adjust:none;">
+<center>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"margin: 0; padding: 0; width: 100%;"
+bgcolor=3D"#ffffff" class=3D"gwfw">
+<tr>
+<td style=3D"margin: 0; padding: 0; width: 100%;" align=3D"center">
+<table width=3D"600" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" class=
+=3D"m-shell">
+<tr>
+<td class=3D"td"
+style=3D"width:600px; min-width:600px; font-size:0pt; line-height:0pt; padd=
+ing:0; margin:0; font-weight:normal;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<!-- Admin Message -->
+<tr>
+<td class=3D"img" style=3D"font-size:0pt; line-height:0pt; text-align:left;=
+">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"px-32 mpx-16" style=3D"padding-left: 32px; padding-right: 32px=
+;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"pt-25 pt-16" style=3D"border-bottom: 1px solid #ebeef0; paddin=
+g-top: 16px;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"pb-34 mpb-28" style=3D"padding-bottom: 34px;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"img w-104" width=3D"112"
+style=3D"font-size:0pt; line-height:0pt; text-align:left;"><a
+href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2F/1/01=
+000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000/WZE8MrRrErHRKfkB=
+Y41c5psiX4Vdgt0LLTQgrfGBSfA=3D275" target=3D"_blank"><img
+src=3D"https://www.redditstatic.com/emaildigest/logo@2x.png" width=3D"112" =
+height=3D"39" border=3D"0" alt=3D"" /></a>
+</td>
+<td class=3D"img" width=3D"20"
+style=3D"font-size:0pt; line-height:0pt; text-align:left;"></td>
+<td class=3D"img" style=3D"font-size:0pt; line-height:0pt; text-align:left;=
+">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td align=3D"right">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"img" width=3D"16" valign=3D"top"
+style=3D"font-size:0pt; line-height:0pt; text-align:left;"><img
+src=3D"https://styles.redditmedia.com/t5_5cmah9/styles/profileIcon_snoofbda=
+8b8d-8523-46d0-a577-4114c61a205f-headshot.png?crop=3D256:256,smart&amp;heig=
+ht=3D256&amp;width=3D256&amp;s=3Db5dacbd46c934666baf6017e70cb23451f82a3ee" =
+width=3D"16" height=3D"16" border=3D"0"
+alt=3D"" /></td>
+<td class=3D"img" width=3D"4"
+style=3D"font-size:0pt; line-height:0pt; text-align:left;"></td>
+<td class=3D"text-12 c-grey-4"
+style=3D"font-size:12px; line-height:14px; font-family:Helvetica, Arial, sa=
+ns-serif; text-align:left; min-width:auto !important; color:#7a9299;">
+<a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fus=
+er%2Flolakias004%2F%3Fcorrelation_id=3D5f46c6eb-8dfb-44b8-98e2-154e19fc5035=
+%26ref=3Dadmin_announcement_email%26ref_campaign=3Dadmin_announcement_email=
+%26ref_source=3Demail/1/01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9=
+ca-000000/xXaL8If4qdpeNhkcP8dy7_PlghH22i32WlGGLhtIAK4=3D275" target=3D"_bla=
+nk" class=3D"link c-grey-4"
+style=3D"text-decoration:none; color:#7a9299;"><span
+class=3D"link c-grey-4"
+style=3D"text-decoration:none; color:#7a9299;">u/lolakias004</span></a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class=3D"text-16 mfz-14 mlh-16 pb-28 mpb-20" style=3D"font-size:16px; l=
+ine-height:18px; color:#000000; font-family:Helvetica, Arial, sans-serif; t=
+ext-align:left; min-width:auto !important; padding-bottom: 28px;">
+We=E2=80=99re writing to let you know that we=E2=80=99ve updated Reddit=E2=
+=80=99s <a href=3D'https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.=
+com%2Fpolicies%2Fprivacy-policy%3F$web_only=3Dtrue%26$deep_link=3Dtrue/1/01=
+000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000/f_0NWrmlPK8aKAEL=
+O3VOCqoAN8BRTPAniEJ1e5qzWMw=3D275'>Privacy Policy</a>. These updated terms =
+will take effect December 15, 2022. While these changes better reflect our =
+current products, there have been no material changes in how we process you=
+r data.<br/><br/>We encourage you to review the updated privacy policy in f=
+ull. Here are some of the highlights:<br/><ul><li>We added language describ=
+ing Reddit=E2=80=99s approach to privacy - we believe privacy is a right.</=
+li><li>We made small updates throughout our policy to make them clearer and=
+ more specific.</li><li>We clarified what data users may choose to provide =
+to Reddit.</li><li>We updated language to better reflect our current produc=
+ts, like Reddit Vault.</li><li>We modified language to better align with pr=
+ivacy regulations in the United States and globally.</li></ul>If you have q=
+uestions, please visit <a href=3D'https://click.redditmail.com/CL0/https:%2=
+F%2Fwww.reddithelp.com%2Fhc%2Fen-us%3F$web_only=3Dtrue%26$deep_link=3Dtrue/=
+1/01000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000/sDwutvE19G4r=
+HbqIdtP6BkiMMJtcKXnwjMP9f4KA5EA=3D275'>Reddit Help</a>.<br/><br/>- Reddit
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<!-- END Admin Message -->
+<!-- Footer - 2 -->
+<tr>
+<td class=3D"pb-28 mpb-20" bgcolor=3D"#f1f5f6" style=3D"padding-bottom: 28p=
+x;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"fluid-img pb-48 mpb-28"
+style=3D"font-size:0pt; line-height:0pt; text-align:left; padding-bottom: 4=
+8px;"><a
+href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2F/2/01=
+000184976ec83a-d3f17da7-ea98-4785-ab08-15447d81f9ca-000000/Wc1XH_R-UTv0dt54=
+Vhth0qql-BT7sLVFCPTscRcDlWE=3D275" target=3D"_blank"><img src=3D"https://ww=
+w.redditstatic.com/emaildigest/footer_logo.png"
+width=3D"600" height=3D"128" border=3D"0" alt=3D"" /></a></td>
+</tr>
+<tr>
+<td class=3D"pb-40 mpb-28" align=3D"center" style=3D"padding-bottom: 40px;"=
+>
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"img w-114" valign=3D"top"
+style=3D"font-size:0pt; line-height:0pt; text-align:left;"><a
+href=3D"https://click.redditmail.com/CL0/https:%2F%2Freddit.app.link%2F%3Fa=
+ction=3Dclick%26publisher_id=3D293679%26site_id=3D122129%26site_id_ios=3D12=
+1809%26utm_content=3Dinstall_app/1/01000184976ec83a-d3f17da7-ea98-4785-ab08=
+-15447d81f9ca-000000/Ve0pEd3h-oYBK7UD2ZHC_VZ-nh7UaE7V-Eh9e6VojUs=3D275" tar=
+get=3D"_blank"><img
+src=3D"https://www.redditstatic.com/emaildigest/button_applestore.png" widt=
+h=3D"163" height=3D"49" border=3D"0" alt=3D"" /></a></td>
+<td class=3D"img w-8" width=3D"10" style=3D"font-size:0pt; line-height:0pt;=
+ text-align:left;">
+</td>
+<td class=3D"img w-114" valign=3D"top"
+style=3D"font-size:0pt; line-height:0pt; text-align:left;"><a
+href=3D"https://click.redditmail.com/CL0/https:%2F%2Freddit.app.link%2F%3Fa=
+ction=3Dclick%26publisher_id=3D293679%26site_id=3D122129%26site_id_ios=3D12=
+1809%26utm_content=3Dinstall_app/2/01000184976ec83a-d3f17da7-ea98-4785-ab08=
+-15447d81f9ca-000000/5-kvM2HYHIpJYKY0al4yFyqkkGodtg8ejBiZ7U1qADA=3D275" tar=
+get=3D"_blank"><img
+src=3D"https://www.redditstatic.com/emaildigest/button_googleplay.png" widt=
+h=3D"163" height=3D"49" border=3D"0" alt=3D"" /></a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class=3D"pb-40 px-24 mpx-12 mpb-20"
+style=3D"padding-bottom: 40px; padding-left: 24px; padding-right: 24px;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tr>
+<td class=3D"title-20 mfz-12 mlh-18 a-center c-blue-4"
+style=3D"font-size:16px; line-height:23px; font-family:Helvetica, Arial, sa=
+ns-serif; font-weight:normal; min-width:auto !important; text-align:center;=
+ color:#687981;">
+You are receiving this email because a Reddit account, lolakias004, is regi=
+stered to this email address.
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class=3D"text-16-8 mfz-12 mlh-18 c-dark-8-8 a-center px-24 mpx-12" styl=
+e=3D"font-size:16px; line-height:18px; font-family:Helvetica, Arial, sans-s=
+erif; min-width:auto !important; color:#222222; text-align:center; padding-=
+left: 24px; padding-right: 24px;">548 Market St., #16093, San Francisco, CA=
+ 94104=E2=80=935401</td>
+</tr>
+</table>
+</td>
+</tr>
+<!-- END Footer - 2 -->
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</center>
+<img alt=3D"" src=3D"http://click.redditmail.com/CI0/01000184976ec83a-d3f17=
+da7-ea98-4785-ab08-15447d81f9ca-000000/mUVXRR6aYLKeD1hMi2b7kuoK-SAXKFEbouFr=
+5-le1O0=3D275" style=3D"display: none; width: 1px; height: 1px;">
+</body>
+</html>

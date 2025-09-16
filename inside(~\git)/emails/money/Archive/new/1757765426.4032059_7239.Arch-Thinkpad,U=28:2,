@@ -1,0 +1,899 @@
+Delivered-To: euro.money004@gmail.com
+Received: by 2002:a05:6840:3111:b0:178d:c47f:31cb with SMTP id j17csp722285nle;
+        Sun, 25 Feb 2024 03:00:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHa27QX4PsCOAz1of5TO1FTtoQ7T6h7cECryKFij4V8I4snOOlSNoCSNbEJa1DQJIYyBs1D
+X-Received: by 2002:a1f:c902:0:b0:4c0:2d32:612f with SMTP id z2-20020a1fc902000000b004c02d32612fmr1638514vkf.15.1708858845106;
+        Sun, 25 Feb 2024 03:00:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1708858845; cv=none;
+        d=google.com; s=arc-20160816;
+        b=e1jGxNU4gshvTcbWZDmu+3RfJGde1zVGgeNTF001mmIsQJZ4lU1aFbDXumdK/zshqt
+         pgcy63LHPz6m7vRdV5btimwwCcplmED3HGUv7pQOKuvEWg5/Hc2UAttmirXFAhmqb5G0
+         w2yWVGhlt04hYOs1wzouWEWl8x++R+bJY2EkNFGOIUMHqOC7D7b6+/Ez7GOH3YvN92Y7
+         PPfysfNn/qw4lVlb2219N01MFiDUpmYiivFujLzIjVuG2TPRm+2Iucw61rWfk/Oc1Jre
+         sKHEaCJQL9RCWH9WhCuxcBJ9UsAktds56Strt9wk9fqaFROVzI27RWedD2lGfn10rhl+
+         E2KQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:precedence:list-unsubscribe:feedback-id:subject:message-id
+         :mime-version:from:date:dkim-signature:dkim-signature;
+        bh=6owPeeTScC9QsZHej0l/R14pghpFCQpC1dxnAoYIFIo=;
+        fh=3PcMscEIqNLivxUMhot+47818qMF7ljpeX3o4b9c80k=;
+        b=VgdbpYiVpUDP5Xwkas40AN1sNeV3b2XfprYnnccQo21R3Nm7nJ3V8376z4KfQjCBuk
+         fjIIHSZn3WhJkKhVxW2D+1ILLEFr9LJIcYFiV7x/iz1EYVThcV6xzdw8DP/2Ega8ehAH
+         cfCRxDL4uCQyHVarfN7FwcHb3v0T+VMRTmFRRlq5ho75iAhpDOnPzNlaoM8qiIfpHGPy
+         ge0k8xrCIi9ngA5QQPiWdA/9gQtfQl5VM01nT6uiR+T2Wh2xkM3OpiwYPKdbrCbz6K6j
+         BMxePqQ3oIzXFhL85D26afcEKB1jieIsi3ssdY+ECLeZ757Saxx8jMuppJreDZQPeGmZ
+         GNIw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=temperror (no key for signature) header.i=@johnmavrick.com header.s=cka header.b=gZujMwxR;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=GMp9FxHZ;
+       spf=neutral (google.com: 149.72.61.159 is neither permitted nor denied by best guess record for domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com) smtp.mailfrom="bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com";
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=johnmavrick.com
+Return-Path: <bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com>
+Received: from o46.ck.n.convertkit.com (o46.ck.n.convertkit.com. [149.72.61.159])
+        by mx.google.com with ESMTPS id h24-20020ac5c298000000b004ba567a9ec4si250578vkk.41.2024.02.25.03.00.44
+        for <euro.money004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Feb 2024 03:00:45 -0800 (PST)
+Received-SPF: neutral (google.com: 149.72.61.159 is neither permitted nor denied by best guess record for domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com) client-ip=149.72.61.159;
+Authentication-Results: mx.google.com;
+       dkim=temperror (no key for signature) header.i=@johnmavrick.com header.s=cka header.b=gZujMwxR;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=GMp9FxHZ;
+       spf=neutral (google.com: 149.72.61.159 is neither permitted nor denied by best guess record for domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com) smtp.mailfrom="bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com";
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=johnmavrick.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=johnmavrick.com;
+	h=content-type:from:mime-version:subject:list-unsubscribe:x-feedback-id:
+	to:cc:content-type:from:subject:to;
+	s=cka; bh=6owPeeTScC9QsZHej0l/R14pghpFCQpC1dxnAoYIFIo=;
+	b=gZujMwxR+T0qEl6YfhT5gsGOcR82Ei/tg6VP+F3xypR3yPrJqBGYX6gZk564UUA9cuLC
+	fo8MTpdz/Tpd0+yFrFqq2eAf2VGSsyXb9A4PXLeYNS7ZLWQlgxMUPmvjprIY5AsmMuqydf
+	74N36vGKDRvP7cozNv7Xb/TvtfFYe+m54=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:list-unsubscribe:x-feedback-id:
+	to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=6owPeeTScC9QsZHej0l/R14pghpFCQpC1dxnAoYIFIo=;
+	b=GMp9FxHZTS6SZX+IOP0PE4DRzaL1BE13EBUcADcaC8Oj4RXkAXmcv0WXIbDGpxQmUdyt
+	kiV/H841aOrJlFNZgGRbkBeVs9DcZYWf6dJkcuZQk9a3HaI6VCn8MXWq9S2lZZ97YDOUjS
+	XcZsf4NHDXqnYbrWPNhKP5C+PDVPpT5Tw=
+Received: by filterdrecv-655bd866f5-cqqlx with SMTP id filterdrecv-655bd866f5-cqqlx-1-65DB1DBC-83
+        2024-02-25 11:00:12.798215309 +0000 UTC m=+1435413.660379875
+Received: from MzEyMDUzMDg (unknown)
+	by geopod-ismtpd-10 (SG) with HTTP
+	id 3SuKGF3uQ-24BTczNm1kdQ
+	Sun, 25 Feb 2024 11:00:12.677 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=54e42d6f0ec0d8de4ac412c40cf1bfa5590c801af87175d11b77ba45ef8b
+Date: Sun, 25 Feb 2024 11:00:13 +0000 (UTC)
+From: John Mavrick <john@johnmavrick.com>
+Mime-Version: 1.0
+Message-ID: <8kuor7l3qvaoh0dv0mgtkhzpzg399@convertkit-mail2.com>
+Subject: How I almost lost 542 notes =?UTF-8?B?8J+YsQ==?=
+Feedback-ID: 13175311:1200076:broadcast:CK
+List-Unsubscribe: 
+ <https://unsubscribe.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399>
+X-Report-Spam: <abuse@convertkit.com>
+X-Report-Abuse: <abuse@convertkit.com>
+Precedence: bulk
+X-Feedback-ID: 31205308:SG
+X-SG-EID: 
+ =?us-ascii?Q?h+LZo4tR473eP3wdj1M8wYZqxN=2Fj73fVQSKFOo9xM=2FhElbLkMj9pU9W95vFzFq?=
+ =?us-ascii?Q?c3Vyeci2hQwVDWF5JhEr3MDOiFYofF5RZ8BTpEq?=
+ =?us-ascii?Q?uvjh62jzvQk0qidwBXZAKtgAF0MGe6=2FIO9lgDFY?=
+ =?us-ascii?Q?I5c1EqX90S+xdrtQnHHrVKNTblM80J7tx4oJXq5?=
+ =?us-ascii?Q?Ut=2FCUxsW6cg2jqCkgWezJvNiQnwBfwfmszcH4DM?=
+ =?us-ascii?Q?j3mv9GRinDzNbfL46s9a0Ny3p2LfoJB=2FqdnkTZ?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsb8raWjw0ZPf1VmjsCkspi=2FJHjDFAea1uZocvZojyqe?=
+ =?us-ascii?Q?AD6cC34TPOqQ+Jo3zUwPI5XgAH5g81uR17Sm9y7?=
+ =?us-ascii?Q?ShvNhmypCE8En=2FnQO0ayJWceu8GfAWGgO2Ii1KT?=
+ =?us-ascii?Q?b2fAcyq96ZXNLtJquq=2FhdHstMaVaI7+zoPDW5Jy?=
+ =?us-ascii?Q?6wwBvxJ1DrhyxGa9grvKdzVUf4scfGGqxi+5rqj?=
+ =?us-ascii?Q?bTh=2Fr9a9DIPns0JIUWfTgEstlvOQ16v9+ED8+ZD?=
+ =?us-ascii?Q?f=2FEeJjueyLO5epGEjsxettYeVMHGZ+VBL2RWaDi?=
+ =?us-ascii?Q?wdZzm+W4HZ=2FszgyMWEOCY1YUHEJy9cqPWmR8rYR?=
+ =?us-ascii?Q?iSKWnRA5SpeZkD3hDxQiP3HtXxjXybotlP=2FiREn?=
+ =?us-ascii?Q?vng9Zmqh2i?=
+To: lolakias <euro.money004@gmail.com>
+X-Entity-ID: zOLh1/CFQOmB3by5edXXOg==
+X-TUID: cCnxZK0cX5yp
+
+--54e42d6f0ec0d8de4ac412c40cf1bfa5590c801af87175d11b77ba45ef8b
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+I open my MacBook to continue working on my Obsidian note, The
+Deep Life Stack V2 (
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/x0hph6hw9m=
+zwe0c5/aHR0cHM6Ly9ub3Rlcy5qb2hubWF2cmljay5jb20vVGhlK0RlZXArTGlmZStTdGFjaytW=
+Mg=3D=3D
+).
+
+But when I revisit the note, I=E2=80=99m perplexed to see the following
+missing quote:
+
+=E2=80=8B
+I freeze in disbelief.
+
+Did it not save my changes from my last note-making session?
+
+For the past few weeks, I=E2=80=99ve spent hours collecting ideas from
+various books, articles, and podcasts to learn about discipline,
+the first level of the deep life stack. Surely it should all
+still be in my Obsidian vault?
+
+I open up the quick-switcher to search for the note, but after
+typing the entire title, no results were found.
+
+Did this note not sync properly?
+
+Panic sets in.
+
+I check out the other discipline-related inputs I consumed
+throughout the past week=E2=80=94they all also vanish from the search
+results.
+
+Is there something wrong with Obsidian Sync?
+
+As a last resort, I check the folder containing my input notes.
+
+Everything is deleted.
+
+My notes on articles, books, podcasts, and even anime =F0=9F=98=B1
+
+I am horrified by the sudden chasm in my second brain.
+
+I=E2=80=99ve restarted my vault before (
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/58hvh7hmkw=
+0mgrb6/aHR0cHM6Ly95b3V0dS5iZS9QWVV4bG9hYjE0VT9zaT0yT2FJZ1NkZHNvcWQ4RXRu
+), but those notes are still in my computer so I can still
+revisit them if needed.
+
+But now, all that effort reading and processing my highlights
+disappeared.
+
+My notes are littered with the same missing quotes, rendering
+them useless without the foundation.
+
+But not all hope is lost.
+
+I realize my main computer should still have the old version with
+the missing notes, so I switch from my computer and carefully
+open Obsidian.
+
+After opening the quick switcher and searching for the same note,
+they were there!
+
+But after a few seconds, the note disappears.
+
+It treated my MacBook=E2=80=99s vault version with the deleted notes to
+be the most updated version, so the same thing happens to my
+computer.
+
+Checking the folder again, I see them disappearing one by one.
+
+I sit there in shock, in denial of what had just happened.
+
+But I have one last chance=E2=80=94I have my work laptop left.
+
+As soon as I turn it on, I turn off the wifi and make a copy on
+my desktop.
+
+With a sigh of relief, I finally secure a copy of the vault with
+the missing files.
+
+So I re-enable sync and let the notes delete before I re-import
+them with the copied version=E2=80=A6
+
+Only for them to disappear again.
+
+For some reason, Obsidian Sync still views the version of my
+vault with the deleted notes as the most up-to-date version.
+
+Long story short, I was able to do some more trial and error and
+finally was able to get my notes synced again, but that sense of
+relief was overshadowed by a greater feeling of vulnerability.
+
+At that moment, the fragility of my notes became painfully clear.
+I took my notes for granted, assuming they would always be
+available upon launching Obsidian.
+
+But in reality, I was one backup away from losing all the time
+and effort poured into capturing insights and ideas.
+
+To make our second brain last a lifetime, we need to preserve it.
+
+Just as we maintain our primary brain through learning, diet, and
+sleep, we shouldn=E2=80=99t overlook the importance of maintaining our
+notes.
+
+A second brain is our tool to manage the emerging digital
+landscape. Taking care of it safeguards our primary brain from
+information overload by storing excessive data until future use,
+freeing our primary brain to focus on higher-level cognitive
+functions like critical thinking, creativity, and
+problem-solving.
+
+And from this experience, I learned the first step to doing so is
+backing up your notes.
+
+Obsidian Sync does already give you 1-year restoration timeframe
+for deleted files, but it seemed also the reason why my notes
+were deleted so I feel it=E2=80=99s smart to seek further security.
+
+A common backup strategy is to do the 3-2-1 backup method:
+
+* Have 3 copies (including the original)
+* Store them in 2 different places (two devices/drives)
+* Keep 1 offsite (ex. in the cloud or in another physical
+location)
+
+Following this advice, I have a vault backup practice during my
+weekly reviews.
+
+First, I check my Obsidian Sync changes to make sure nothing
+important got deleted.
+
+I set the =E2=80=9CFile recovery=E2=80=9D history length option to 8 days o=
+f
+backup so if something were to hypothetically be modified right
+after I did the weekly review I would still be able to retrieve
+it during the next one.
+
+=E2=80=8B
+But sometimes, a note=E2=80=99s content can randomly get replaced with
+the default note template. I think it might be related to syncing
+with a mobile device but I=E2=80=99m not entirely sure.
+
+To be cautious of this, I use a global search and replace app
+like VSCode to check whether any of my notes unexpectedly have
+characteristics that are part of the default note template.
+
+In mine, I have the Templater variable that lets you jump the
+cursor, which gets removed once I start typing in the note, so I
+can search for this to look for notes that were replaced with the
+template.
+
+=E2=80=8B
+Then in VSCode, I exclude the folders that don=E2=80=99t matter like the
+.obsidian folder and My Templates folder.
+
+Now I can search for it and see the results like so:
+
+=E2=80=8B
+As for backing up the vault, my three copies are stored in:
+
+* Obsidian Sync which controls the version on my three devices
+(device one)
+* An external hard drive (device two)
+* Google Drive cloud storage (offsite)
+
+Now I rest easy knowing that for future mass deletions or crucial
+notes disappearing, I=E2=80=99ve preserved my second brain.
+
+Got questions? Hit "reply"! I read (and try to respond to) every
+email ! =F0=9F=98=8A
+
+Until next time,
+
+John Mavrick =F0=9F=8C=8C
+=F0=9F=91=8B Say hi on YouTube (
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/g3hnh5h362=
+n3m2tr/aHR0cHM6Ly93d3cueW91dHViZS5jb20vQGl0c2pvaG5tYXZyaWNr
+) or Twitter (
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/wnh2hghwxd=
+4wx4a7/aHR0cHM6Ly90d2l0dGVyLmNvbS9qb2hubWF2cmlja195dA=3D=3D
+)=E2=80=8B
+
+Want a life operating system for high performance? Start building
+your own second brain (
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/l2hehmh36p=
+4363c6/aHR0cHM6Ly9zaG9wLmpvaG5tYXZyaWNrLmNvbS91c3Y=3D
+) =F0=9F=A7=A0
+
+=F0=9F=8C=8C Explore my universe (socials and resources) (
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/owhkhqhrge=
+nrgxuv/aHR0cHM6Ly9iZWFjb25zLmFpL2pvaG5tYXZyaWNr
+)
+
+P.S. Is your mailbox trying to keep my content away from you? =F0=9F=92=94
+
+What can you do about it? =F0=9F=98=B1
+
+Mark this email as =E2=80=98not spam=E2=80=99...
+
+or move it from your promotions to the primary folder =F0=9F=91=89=F0=9F=8F=
+=BB It=E2=80=99s
+very easy (
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/x0hph6hw9m=
+zw90s5/aHR0cHM6Ly9zdWJzdGFjay5jb20vcmVkaXJlY3QvMDJkM2E5MGYtMWMxNy00NzM2LThl=
+YTctM2I3YjkyY2I5YzY3P3I9MWp1Z3A5
+)!
+
+=E2=80=8BUpdate your email preferences (
+https://preferences.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399
+) | Unsubscribe from all emails (
+https://unsubscribe.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399
+)
+
+(
+https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/kkhmh6hl6p=
+el60fl/aHR0cHM6Ly9jb252ZXJ0a2l0LmNvbS9mZWF0dXJlcy9lbWFpbC1tYXJrZXRpbmc_dXRt=
+X2NhbXBhaWduPXBvd2VyZWRieSZ1dG1fY29udGVudD1lbWFpbCZ1dG1fbWVkaXVtPXJlZmVycmF=
+sJnV0bV9zb3VyY2U9ZHluYW1pYw=3D=3D
+)
+--54e42d6f0ec0d8de4ac412c40cf1bfa5590c801af87175d11b77ba45ef8b
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }
+@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }</style>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+</head>
+<body style=3D"margin:0;padding:0;-webkit-font-smoothing:antialiased;-ms-te=
+xt-size-adjust:100%;-webkit-text-size-adjust:100%">
+<div id=3D"preview-text">
+          <span style=3D"display: none; max-height: 0; overflow: hidden;">
+            Preserve your second brain
+          </span>
+
+          <span style=3D"display: none; max-height: 0; overflow: hidden;">
+            =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C
+          </span>
+        </div>
+<div class=3D"email" style=3D"margin-left:18px;margin-right:18px">
+<table cellpadding=3D"0" cellspacing=3D"0" style=3D"border-collapse:separat=
+e;mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;margin:0 auto"><tbod=
+y><tr><td style=3D"vertical-align:top">
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I open my MacBook to co=
+ntinue working on my Obsidian note, <a href=3D"https://click.convertkit-mai=
+l2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/x0hph6hw9mzwe0c5/aHR0cHM6Ly9ub3Rlcy5qb=
+2hubWF2cmljay5jb20vVGhlK0RlZXArTGlmZStTdGFjaytWMg=3D=3D" target=3D"_blank" =
+rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=3D"1615795432">T=
+he Deep Life Stack V2</a>.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">But when I revisit the =
+note, I=E2=80=99m perplexed to see the following missing quote: </p>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:12px;margin-bottom:12px;margin-left:0;margin-right:0;ma=
+x-width:100%;width:100%"><div style=3D"display:block"><img src=3D"https://i=
+.imgur.com/7Qha59B.png" alt=3D"" width=3D"100%" height=3D"auto" style=3D"bo=
+rder:0 none;display:block;height:auto;line-height:100%;outline:none;-webkit=
+-text-decoration:none;text-decoration:none;max-width:100%;border-radius:4px=
+ 4px 4px 4px;width:100%;height:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:none">=E2=80=8B</figcaption></figure></td></tr></tbody></table>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I freeze in disbelief.<=
+/p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>Did it not save my =
+changes from my last note-making session?</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">For the past few weeks,=
+ I=E2=80=99ve spent hours collecting ideas from various books, articles, an=
+d podcasts to learn about discipline, the first level of the deep life stac=
+k. Surely it should all still be in my Obsidian vault?</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I open up the quick-swi=
+tcher to search for the note, but after typing the entire title, no results=
+ were found.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>Did this note not s=
+ync properly?</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Panic sets in.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I check out the other d=
+iscipline-related inputs I consumed throughout the past week=E2=80=94they a=
+ll also vanish from the search results.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>Is there something =
+wrong with Obsidian Sync?</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">As a last resort, I che=
+ck the folder containing my input notes.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Everything is deleted.<=
+/p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">My notes on articles, b=
+ooks, podcasts, and even anime =F0=9F=98=B1</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I am horrified by the s=
+udden chasm in my second brain.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I=E2=80=99ve <a href=3D=
+"https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/58hvh7hmk=
+w0mgrb6/aHR0cHM6Ly95b3V0dS5iZS9QWVV4bG9hYjE0VT9zaT0yT2FJZ1NkZHNvcWQ4RXRu" t=
+arget=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=
+=3D"1615795435">restarted my vault before</a>, but those notes are still in=
+ my computer so I can still revisit them if needed.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">But now, all that effor=
+t reading and processing my highlights disappeared.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">My notes are littered w=
+ith the same missing quotes, rendering them useless without the foundation.=
+</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">But not all hope is los=
+t.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I realize my main compu=
+ter should still have the old version with the missing notes, so I switch f=
+rom my computer and carefully open Obsidian.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">After opening the quick=
+ switcher and searching for the same note, they were there!</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">But after a few seconds=
+, the note disappears.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">It treated my MacBook=
+=E2=80=99s vault version with the deleted notes to be the most updated vers=
+ion, so the same thing happens to my computer.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Checking the folder aga=
+in, I see them disappearing one by one.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I sit there in shock, i=
+n denial of what had just happened.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">But I have one last cha=
+nce=E2=80=94I have my work laptop left.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">As soon as I turn it on=
+, I turn off the wifi and make a copy on my desktop.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">With a sigh of relief, =
+I finally secure a copy of the vault with the missing files.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">So I re-enable sync and=
+ let the notes delete before I re-import them with the copied version=E2=80=
+=A6</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Only for them to disapp=
+ear again.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">For some reason, Obsidi=
+an Sync still views the version of my vault with the deleted notes as the m=
+ost up-to-date version.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Long story short, I was=
+ able to do some more trial and error and finally was able to get my notes =
+synced again, but that sense of relief was overshadowed by a greater feelin=
+g of vulnerability.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">At that moment, the fra=
+gility of my notes became painfully clear. I took my notes for granted, ass=
+uming they would always be available upon launching Obsidian.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">But in reality, I was o=
+ne backup away from losing all the time and effort poured into capturing in=
+sights and ideas.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><strong>To make our sec=
+ond brain last a lifetime, we need to preserve it.</strong></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Just as we maintain our=
+ primary brain through learning, diet, and sleep, we shouldn=E2=80=99t over=
+look the importance of maintaining our notes.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">A second brain is our t=
+ool to manage the emerging digital landscape. Taking care of it safeguards =
+our primary brain from information overload by storing excessive data until=
+ future use, freeing our primary brain to focus on higher-level cognitive f=
+unctions like critical thinking, creativity, and problem-solving.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">And from this experienc=
+e, I learned the first step to doing so is backing up your notes.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Obsidian Sync does alre=
+ady give you 1-year restoration timeframe for deleted files, but it seemed =
+also the reason why my notes were deleted so I feel it=E2=80=99s smart to s=
+eek further security.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">A common backup strateg=
+y is to do the 3-2-1 backup method:</p>
+<ul class=3D"unordered_list" style=3D"margin:1em 0;margin-left:1em;padding:=
+0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-San=
+s,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color:#2d2d2f;font-size:16px=
+;line-height:1.5;list-style-position:outside !important;list-style-position=
+:inside">
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Have 3 copies (including the original)</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Store them in 2 different places (two devices/drives)</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Keep 1 offsite (ex. in the cloud or in another physical location)</=
+span></li>
+</ul>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Following this advice, =
+I have a vault backup practice during my weekly reviews.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">First, I check my Obsid=
+ian Sync changes to make sure nothing important got deleted.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I set the =E2=80=9CFile=
+ recovery=E2=80=9D history length option to 8 days of backup so if somethin=
+g were to hypothetically be modified right after I did the weekly review I =
+would still be able to retrieve it during the next one.</p>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:12px;margin-bottom:12px;margin-left:0;margin-right:0;ma=
+x-width:100%;width:100%"><div style=3D"display:block"><img src=3D"https://i=
+.imgur.com/wihSlUe.png" alt=3D"" width=3D"100%" height=3D"auto" style=3D"bo=
+rder:0 none;display:block;height:auto;line-height:100%;outline:none;-webkit=
+-text-decoration:none;text-decoration:none;max-width:100%;border-radius:4px=
+ 4px 4px 4px;width:100%;height:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:none">=E2=80=8B</figcaption></figure></td></tr></tbody></table>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">But sometimes, a note=
+=E2=80=99s content can randomly get replaced with the default note template=
+. I think it might be related to syncing with a mobile device but I=E2=80=
+=99m not entirely sure.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">To be cautious of this,=
+ I use a global search and replace app like VSCode to check whether any of =
+my notes unexpectedly have characteristics that are part of the default not=
+e template.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">In mine, I have the Tem=
+plater variable that lets you jump the cursor, which gets removed once I st=
+art typing in the note, so I can search for this to look for notes that wer=
+e replaced with the template. </p>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:12px;margin-bottom:12px;margin-left:0;margin-right:0;ma=
+x-width:100%;width:100%"><div style=3D"display:block"><img src=3D"https://i=
+.imgur.com/OhbOTkY.png" alt=3D"" width=3D"100%" height=3D"auto" style=3D"bo=
+rder:0 none;display:block;height:auto;line-height:100%;outline:none;-webkit=
+-text-decoration:none;text-decoration:none;max-width:100%;border-radius:4px=
+ 4px 4px 4px;width:100%;height:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:none">=E2=80=8B</figcaption></figure></td></tr></tbody></table>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Then in VSCode, I exclu=
+de the folders that don=E2=80=99t matter like the <code>.obsidian</code> fo=
+lder and <code>My Templates</code> folder.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Now I can search for it=
+ and see the results like so: </p>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:12px;margin-bottom:12px;margin-left:0;margin-right:0;ma=
+x-width:100%;width:100%"><div style=3D"display:block"><img src=3D"https://i=
+.imgur.com/tx9QT43.png" alt=3D"" width=3D"100%" height=3D"auto" style=3D"bo=
+rder:0 none;display:block;height:auto;line-height:100%;outline:none;-webkit=
+-text-decoration:none;text-decoration:none;max-width:100%;border-radius:4px=
+ 4px 4px 4px;width:100%;height:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:none">=E2=80=8B</figcaption></figure></td></tr></tbody></table>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">As for backing up the v=
+ault, my three copies are stored in:</p>
+<ul class=3D"unordered_list" style=3D"margin:1em 0;margin-left:1em;padding:=
+0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-San=
+s,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color:#2d2d2f;font-size:16px=
+;line-height:1.5;list-style-position:outside !important;list-style-position=
+:inside">
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Obsidian Sync which controls the version on my three devices (devic=
+e one)</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>An external hard drive (device two)</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Google Drive cloud storage (offsite)</span></li>
+</ul>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Now I rest easy knowing=
+ that for future mass deletions or crucial notes disappearing, I=E2=80=99ve=
+ preserved my second brain.</p>
+</td></tr></tbody></table>
+<div class=3D"email-footer"><div>
+<hr>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Got questions? Hit "rep=
+ly"! I read (and try to respond to) every email ! =F0=9F=98=8A</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><span style=3D"font-siz=
+e:18px">Until next time,</span></p>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:10px;margin-bottom:10px;margin-left:0;margin-right:0;di=
+splay:inline-block;max-width:136px;width:100%"><div style=3D"display:block"=
+><img src=3D"https://embed.filekitcdn.com/e/8pq4GcvkQ3tJi3tDL2wki8/6A74vxzf=
+U1CMMiYNKhpHHs" width=3D"136" height=3D"auto" style=3D"border:0 none;displa=
+y:block;height:auto;line-height:100%;outline:none;-webkit-text-decoration:n=
+one;text-decoration:none;max-width:100%;border-top-left-radius:9999px;borde=
+r-top-right-radius:9999px;border-bottom-left-radius:9999px;border-bottom-ri=
+ght-radius:9999px;width:136px;height:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:block"><strong><span style=3D"font-size:18px">John Mavrick =F0=9F=8C=
+=8C</span></strong></figcaption></figure></td></tr></tbody></table>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><stro=
+ng><span style=3D"font-size:18px">=F0=9F=91=8B Say hi on </span></strong><a=
+ href=3D"https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/g=
+3hnh5h362n3m2tr/aHR0cHM6Ly93d3cueW91dHViZS5jb20vQGl0c2pvaG5tYXZyaWNr" targe=
+t=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=3D"=
+1615795438"><strong><span style=3D"font-size:18px">YouTube</span></strong><=
+/a><strong><span style=3D"font-size:18px"> or </span></strong><a href=3D"ht=
+tps://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/wnh2hghwxd4w=
+x4a7/aHR0cHM6Ly90d2l0dGVyLmNvbS9qb2hubWF2cmlja195dA=3D=3D" target=3D"_blank=
+" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=3D"1615795443"=
+><strong><span style=3D"font-size:18px">Twitter</span></strong></a>=E2=80=
+=8B</p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><span=
+ style=3D"font-size:18px">Want a life operating system for high performance=
+? Start building your own </span><a href=3D"https://click.convertkit-mail2.=
+com/8kuor7l3qvaoh0dv0mgtkhzpzg399/l2hehmh36p4363c6/aHR0cHM6Ly9zaG9wLmpvaG5t=
+YXZyaWNrLmNvbS91c3Y=3D" target=3D"_blank" rel=3D"noopener noreferrer" style=
+=3D"color:#0875c1" url-id=3D"1615795448"><span style=3D"font-size:18px">sec=
+ond brain</span></a><span style=3D"font-size:18px"> =F0=9F=A7=A0</span></p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><span=
+ style=3D"font-size:18px">=F0=9F=8C=8C </span><a href=3D"https://click.conv=
+ertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/owhkhqhrgenrgxuv/aHR0cHM6Ly9=
+iZWFjb25zLmFpL2pvaG5tYXZyaWNr" target=3D"_blank" rel=3D"noopener noreferrer=
+" style=3D"color:#0875c1" url-id=3D"1615795453"><span style=3D"font-size:18=
+px">Explore my universe (socials and resources)</span></a> </p>
+<hr style=3D"margin-top:48px;margin-bottom:48px">
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>P.S. Is your mailbo=
+x trying to keep my content away from you? =F0=9F=92=94</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>What can you do abo=
+ut it? =F0=9F=98=B1</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>Mark this email as =
+=E2=80=98not spam=E2=80=99...</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>or move it from you=
+r promotions to the primary folder =F0=9F=91=89=F0=9F=8F=BB </em><a href=3D=
+"https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399/x0hph6hw9=
+mzw90s5/aHR0cHM6Ly9zdWJzdGFjay5jb20vcmVkaXJlY3QvMDJkM2E5MGYtMWMxNy00NzM2LTh=
+lYTctM2I3YjkyY2I5YzY3P3I9MWp1Z3A5" target=3D"_blank" rel=3D"noopener norefe=
+rrer" style=3D"color:#0875c1" url-id=3D"1615795456"><em>It=E2=80=99s very e=
+asy</em></a><em>!</em></p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:left" class=3D"">=E2=80=
+=8B<a href=3D"https://preferences.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgt=
+khzpzg399" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#08=
+75c1"><span style=3D"font-size:12">Update your email preferences</span></a>=
+<span style=3D"font-size:12"> </span>| <a href=3D"https://unsubscribe.conve=
+rtkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399" target=3D"_blank" rel=3D"noo=
+pener noreferrer" style=3D"color:#0875c1"><span style=3D"font-size:12">Unsu=
+bscribe from all emails</span></a><span style=3D"font-size:12"> </span></p>
+</div></div>
+<div class=3D"built-with" style=3D"display:block;text-align:left;margin-top=
+:30px"><a href=3D"https://click.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkh=
+zpzg399/kkhmh6hl6pel60fl/aHR0cHM6Ly9jb252ZXJ0a2l0LmNvbS9mZWF0dXJlcy9lbWFpbC=
+1tYXJrZXRpbmc_dXRtX2NhbXBhaWduPXBvd2VyZWRieSZ1dG1fY29udGVudD1lbWFpbCZ1dG1fb=
+WVkaXVtPXJlZmVycmFsJnV0bV9zb3VyY2U9ZHluYW1pYw=3D=3D" target=3D"_blank" rel=
+=3D"noopener" style=3D"color:#0875c1;display:inline-block;text-decoration:n=
+one" url-id=3D"1615795458"><img src=3D"https://cdn.convertkit.com/assets/li=
+ght-built-with-badge.png" alt=3D"Built with ConvertKit" style=3D"display:bl=
+ock;height:auto;line-height:100%;outline:none;-webkit-text-decoration:none;=
+text-decoration:none;max-width:100%;border:0 none;width:190px;height:36px" =
+width=3D"190" height=3D"36"></a></div>
+</div>
+<!-- -->
+<img src=3D"https://open.convertkit-mail2.com/8kuor7l3qvaoh0dv0mgtkhzpzg399=
+" alt=3D"" style=3D"border:0 none;display:block;height:auto;line-height:100=
+%;outline:none;-webkit-text-decoration:none;text-decoration:none;max-width:=
+100%">
+</body>
+</html>
+
+--54e42d6f0ec0d8de4ac412c40cf1bfa5590c801af87175d11b77ba45ef8b--

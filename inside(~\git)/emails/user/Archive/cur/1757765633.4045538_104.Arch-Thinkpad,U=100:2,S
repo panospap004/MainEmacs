@@ -1,0 +1,489 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6359:6d97:b0:1aa:c12c:8b2a with SMTP id tg23csp1664169rwb;
+        Sun, 21 Jul 2024 11:04:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOSYYHPjbLvVuJxQAq2r19jyrIQcKK0Y1XDL6bvJkwlTSoZuq5HeOt9x2MTp5K/BFtUytC
+X-Received: by 2002:a17:902:ce87:b0:1fb:46a7:dbda with SMTP id d9443c01a7336-1fd745ef1e2mr29543345ad.47.1721585064001;
+        Sun, 21 Jul 2024 11:04:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1721585063; cv=none;
+        d=google.com; s=arc-20160816;
+        b=pfuwTkcJNj4E5wFsgquJ0faYMaVMHgfRSDNR9gGVY83V/viPMs8jY98NjMLXP0Cvgk
+         jOXK0d6QLyfGBTukNxL1f/aw7uuq3L7lP51MS6vefm15oM0H2r88dShpsHYplhZwc/PZ
+         Q8tnYXACZNoItlh6QB21CXB3fjhIon4GFGyNMeCQBdLQLPYWYwqB9mM4l93Qj8RCD2aD
+         Rpl/m18O5IRQv5e/wZeAT/EEk7PWmScBBVlBen3mwB0bBGDdH9ZspchTVmWIPJsfjxxi
+         k2SiQOztndy8L6MwIv7tzIJnaHS5bnC8xy9Z1WJm2ahhcABz/Gz3Yn4GWxY7rAslJvXb
+         N8JQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:mime-version:subject:message-id:from:date:dkim-signature
+         :dkim-signature;
+        bh=czX6ugLRwzYEXi4PdmZjAW0bzOC/nsd2WjeB2vI6dgo=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=ylyd7YRvSFV+dHLOMqr3THXyxlr9CsPPQGhYxnV0InoNPXJ0G8sFRm9bwcf4le+/OD
+         OX176abu+cClvelDcFp/rcQWl2UwTEDB6lDD2wNLWRuiVj5bCHzgtK6aGtLN4nTnplAx
+         1pElPOIbdcZMlt3GfaBsFlEfrMgs9UjQ6reuq0SSL6PrMhJH9Xtr2w9JtrFrdP730+EW
+         eGydjb7oc8UpUKMohw8GtyOCfDUp/qm8FqoEL2wBRb5bdlZRaVYzynpWO3E1CD03TgMj
+         f4UBuQT8WdC7vYGb/godvHC8FRbIBIlt5ATk4q40KDYMSOo14PwLAh+Fq5J2433WZZph
+         QVOw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@palia.com header.s=s1 header.b=Vs+OKkMH;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=VBnxYhJu;
+       spf=pass (google.com: domain of bounces+20583801-8854-user.idc004=gmail.com@em8844.palia.com designates 149.72.219.12 as permitted sender) smtp.mailfrom="bounces+20583801-8854-user.idc004=gmail.com@em8844.palia.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=palia.com
+Return-Path: <bounces+20583801-8854-user.idc004=gmail.com@em8844.palia.com>
+Received: from o1.ptr306.palia.com (o1.ptr306.palia.com. [149.72.219.12])
+        by mx.google.com with ESMTPS id d9443c01a7336-1fd6f311d3csi49571895ad.279.2024.07.21.11.04.23
+        for <user.idc004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Jul 2024 11:04:23 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces+20583801-8854-user.idc004=gmail.com@em8844.palia.com designates 149.72.219.12 as permitted sender) client-ip=149.72.219.12;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@palia.com header.s=s1 header.b=Vs+OKkMH;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=VBnxYhJu;
+       spf=pass (google.com: domain of bounces+20583801-8854-user.idc004=gmail.com@em8844.palia.com designates 149.72.219.12 as permitted sender) smtp.mailfrom="bounces+20583801-8854-user.idc004=gmail.com@em8844.palia.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=palia.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=palia.com;
+	h=from:subject:mime-version:x-feedback-id:to:content-type:cc:
+	content-type:from:subject:to;
+	s=s1; bh=czX6ugLRwzYEXi4PdmZjAW0bzOC/nsd2WjeB2vI6dgo=;
+	b=Vs+OKkMHBXtZfgREDJB3g5HUqFx17tp4TpsHE51Dv4IC1tb3FynUz+E+Co8ka4Qf5XbM
+	nmZhKL0/JFyPt/0T4XLo+/9d4OQIabo/+qjv6rJSBjaPKXltd1LdpqdaDKGp9wab7M4UO4
+	0sV9Esu/0BrLZUYpkipLDIoBOISISJdbfTp0PwZ9phfHPqQCqAw5Ww/dlEYQeMyztVw1Ha
+	9zg5YAOrO2fx/qnU3qw7+3V3gQf6qAaE/G4PsQGbLTtLAUdgmhkFH+31tlIGbjXDcHNXcm
+	EUOi4LPcgOFXaf6EjNIgBs/Nq/4GwfhE5SyuEUxKuCYr3Q6huHUhfTWfrc4JdUcg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=from:subject:mime-version:x-feedback-id:to:content-type:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=czX6ugLRwzYEXi4PdmZjAW0bzOC/nsd2WjeB2vI6dgo=;
+	b=VBnxYhJuWZ6aEa7qnLmEexTNR+Xw/hIcC+raPz+GG4U2msW9CzWGg0XvXB+gBKJSjXZg
+	Xz8r6Gtf+VEBIeVCyWd77GLQdD+DjX7qpDue9S9yTcsHluKQyTCoK7EZu2lNxnn4sgnOdS
+	0LDyxwE8LZ068Lx4jtqxn9vJsLoPUUL8c=
+Received: by recvd-946bcdf4b-66qhk with SMTP id recvd-946bcdf4b-66qhk-1-669D4DA7-20
+	2024-07-21 18:04:23.39425158 +0000 UTC m=+2076864.779812645
+Received: from singularity6-prod-5.instance.fusionauth.io (unknown)
+	by geopod-ismtpd-34 (SG) with ESMTP id BBFRA6qvQA2AaVbvSv827g
+	for <user.idc004@gmail.com>; Sun, 21 Jul 2024 18:04:23.328 +0000 (UTC)
+Date: Sun, 21 Jul 2024 18:04:23 +0000 (UTC)
+From: Palia Accounts <accounts@palia.com>
+Message-ID: <326250989.66239.1721585063221@singularity6-prod-5.instance.fusionauth.io>
+Subject: Thank You For Signing Up. Verify Your Email
+MIME-Version: 1.0
+X-Feedback-ID: 20583801:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EXmjstg0RcJX65G+aF7jPO2M4McnnLBmEnJcuMS+AAUjyOE2mNcqbzuM49?=
+ =?us-ascii?Q?GpxCi4G=2Fwh7LvJ0rbUjGtX6tpd+u86MJJKU85rj?=
+ =?us-ascii?Q?iUrRvNHLja1nl2kQ9PFb9aDhRMX03QwlNUmFa2D?=
+ =?us-ascii?Q?2jdK=2Fbxva2aENv=2FIwy5qH4QEmWt5oGcwTkP5E7V?=
+ =?us-ascii?Q?riNoPu9GU5e3fcJFN0xnKVzfLnGxtMbovc9u13L?=
+ =?us-ascii?Q?1taH5hpmUlZk2jwtLnDZWNKVli3BrAqhnSODwkb?= =?us-ascii?Q?d9DZ?=
+To: user.idc004@gmail.com
+X-Entity-ID: u001.ryDxl89AS8c4CDW8jKmZ+Q==
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_66238_1091918296.1721585063221"
+X-TUID: wjn+xJjYEDqp
+
+------=_Part_66238_1091918296.1721585063221
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+
+Thank you for signing up and making an account. You are one step closer to starting your journey in Kilima Village!
+
+Please click below to verify your email address.
+
+http://url1387.palia.com/ls/click?upn=u001.7Hz8a146D78k-2BpbXPrsxrVs3rBZpDyIcq-2FUVbYxNvpnQzXsR-2BuQO-2FadR0q8GmxYrd8fOoojopWwAQtH4gvB7LnaMqdMKocWRF7WDpFC-2B5bOnW3U2Gv-2FkLOtgT5WgbDghJtWd8nZTY3WNetLoMBH90OMetHIfAG-2BHkshrg8eXqlc-3D5c4o_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBVPXd1WTIIjpGTAkOz-2BqYIHka3ADEoyMwAuLifvb0rNU49STQnKVCPg5fGn6jqDhE5rJG-2FMNYQSA-2FIkvzim80VGvMEq0ReISrpZGbMeGoUUsrNxW-2FWX3VLSPl6fe1rco5GK780A7UZNbdtLA3HJRT0sPZmDEs4zVYTbjYl-2BGr-2BDow-3D-3D
+
+If you encounter any issues, please feel free to *contact us* at http://url1387.palia.com/ls/click?upn=u001.2M6JsqdOegkQEsrTSlBW5R1UEF1X-2FvipwHVmSFJja4xVmljnufypSkCRqVlHCqFJyaom_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBVPXd1WTIIjpGTAkOz-2BqYIHcNzpQPb9loq1ru7f0ivxq76I3HJ-2FeS0IMcE51rV1oOjwAGQA9M1elulZrxLQy1EkDnAJCLX5xoSOx95TfV8EekkZK00sID5CFlxfs24ksR3cAiWvSaBYfOnuwpD0RKua8rUpGNf1xtACuFAzfx5wDg-3D-3D
+------=_Part_66238_1091918296.1721585063221
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html data-editor-version=3D"2" class=3D"sg-campaigns" xmlns=3D"http://www.=
+w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1, minimum-scale=3D1, maximum-scale=3D1">
+      <!--[if !mso]><!-->
+      <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type=3D"text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #000000;
+    }
+    body a {
+      color: #ff005c;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start--><!--End Head user entered-->
+    </head>
+    <body>
+      <center class=3D"wrapper" data-link-color=3D"#ff005c" data-body-style=
+=3D"font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; =
+background-color:#ffffff;">
+        <div class=3D"webkit">
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"=
+100%" class=3D"wrapper" bgcolor=3D"#ffffff">
+            <tr>
+              <td valign=3D"top" bgcolor=3D"#ffffff" width=3D"100%">
+                <table width=3D"100%" role=3D"content-container" class=3D"o=
+uter" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                  <tr>
+                    <td width=3D"100%">
+                      <table width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width=3D"600">
+  <![endif]-->
+                                    <table width=3D"100%" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" style=3D"width:100%; max-width:600px;" alig=
+n=3D"center">
+                                      <tr>
+                                        <td role=3D"modules-container" styl=
+e=3D"padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor=3D"#=
+FEF4E6" width=3D"100%" align=3D"left"><table class=3D"module preheader preh=
+eader-hide" role=3D"module" data-type=3D"preheader" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display: none !important;=
+ mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height:=
+ 0; width: 0;">
+    <tr>
+      <td role=3D"module-content">
+        <p>Your Palia Account Has Been Successfully Created - Verify Your E=
+mail Now</p>
+      </td>
+    </tr>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"=
+center" width=3D"100%" role=3D"module" data-type=3D"columns" style=3D"paddi=
+ng:0px 0px 0px 0px;" bgcolor=3D"#FFFCF7" data-distribution=3D"1">
+    <tbody>
+      <tr role=3D"module-content">
+        <td height=3D"100%" valign=3D"top"><table width=3D"600" style=3D"wi=
+dth:600px; border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 0=
+px;" cellpadding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcolo=
+r=3D"" class=3D"column column-0">
+      <tbody>
+        <tr>
+          <td style=3D"padding:0px;margin:0px;border-spacing:0;"><table cla=
+ss=3D"wrapper" role=3D"module" data-type=3D"image" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" data=
+-muid=3D"b6Cx82W2NxRbJuwjK7gAbP">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"center">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block; col=
+or:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif;=
+ font-size:16px; max-width:100% !important; width:100%; height:auto !import=
+ant;" width=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-=
+responsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net=
+/a6ec7418016faf5a/5e54b49e-d310-489d-a97f-cb2e34c99605/600x160.jpg">
+        </td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"6f77a2fb-1d30-4ee6-8053-17ff46645d42" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:25px 30px 10px 30px; line-height:30px; text-al=
+ign:inherit; background-color:fef4e6;" height=3D"100%" valign=3D"top" bgcol=
+or=3D"fef4e6" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><span style=3D"font-family: georgia, serif; font-si=
+ze: 30px; color: #594f42"><strong>Thank You For Signing Up</strong></span><=
+/div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"6f77a2fb-1d30-4ee6-8053-17ff46645d42.1" data-mc-=
+module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:15px 30px 15px 30px; line-height:25px; text-al=
+ign:inherit; background-color:#FEF4E6;" height=3D"100%" valign=3D"top" bgco=
+lor=3D"#FEF4E6" role=3D"module-content"><div><div style=3D"font-family: inh=
+erit; text-align: inherit"><span style=3D"color: #594f42; font-size: 14px; =
+font-family: arial, helvetica, sans-serif; background-color: rgb(254, 244, =
+230)">Thank you for signing up and making an account. You are one step clos=
+er to starting your journey in Kilima Village!<br>
+<br>
+Please click the button below to verify your email address.</span></div><di=
+v></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"3f9f50b5-bfa6-4925-b6f9-fd4cb300d364.1.1">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 15px 0px;" role=3D"module-content" bgc=
+olor=3D"fef4e6">
+        </td>
+      </tr>
+    </tbody>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+module" data-role=3D"module-button" data-type=3D"button" role=3D"module" st=
+yle=3D"table-layout:fixed;" width=3D"100%" data-muid=3D"33456789-6385-4dac-=
+b6b5-e7503ed97810.1">
+      <tbody>
+        <tr>
+          <td align=3D"center" bgcolor=3D"FEF4E6" class=3D"outer-td" style=
+=3D"padding:0px 0px 0px 0px; background-color:FEF4E6;">
+            <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"wrapper-mobile" style=3D"text-align:center;">
+              <tbody>
+                <tr>
+                <td align=3D"center" bgcolor=3D"#45B5FF" class=3D"inner-td"=
+ style=3D"border-radius:6px; font-size:16px; text-align:center; background-=
+color:inherit;">
+                  <a href=3D"http://url1387.palia.com/ls/click?upn=3Du001.7=
+Hz8a146D78k-2BpbXPrsxrVs3rBZpDyIcq-2FUVbYxNvpnQzXsR-2BuQO-2FadR0q8GmxYrd8fO=
+oojopWwAQtH4gvB7LnaMqdMKocWRF7WDpFC-2B5bOnW3U2Gv-2FkLOtgT5WgbDghJtWd8nZTY3W=
+NetLoMBH90OMetHIfAG-2BHkshrg8eXqlc-3DPdmm_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRK=
+PWh-2BVBrXbqhMtEBVPXd1WTIIjpGTAkOz-2BqYIH9wvKxY80uVpBz6eVjf8-2B3-2BeKQlZQgH=
+Xdzc2SMrzRGGGLZBjhJVbIIy70uW3wnO4a7k-2BIae2r1Sxf89IFKeqkSMM-2BVxaDz4IIJeCFl=
+Ctd3niLluxwSsEi32lvap40xuEzTJYjvcIS6WHs68qYsBIhSA-3D-3D" style=3D"backgroun=
+d-color:#45B5FF; border:2px solid #005b98; border-color:#005b98; border-rad=
+ius:20px; border-width:2px; color:#ffffff; display:inline-block; font-size:=
+20px; font-weight:700; letter-spacing:0px; line-height:normal; padding:12px=
+ 18px 12px 18px; text-align:center; text-decoration:none; border-style:soli=
+d; font-family:georgia,serif;" target=3D"_blank">Verify Email</a>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"tabl=
+e-layout: fixed;" data-muid=3D"c8cbce15-0bb1-45ad-b2d0-59dc369387e0">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 15px 0px;" role=3D"module-content" bgc=
+olor=3D"FEF4E6">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"e5f2ff74-4b75-4524-bd0a-5864401becb3" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:15px 30px 15px 30px; line-height:25px; text-al=
+ign:inherit; background-color:#FEF4E6;" height=3D"100%" valign=3D"top" bgco=
+lor=3D"#FEF4E6" role=3D"module-content"><div><div style=3D"font-family: inh=
+erit; text-align: left"><span style=3D"color: #594f42; font-family: arial, =
+helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant-li=
+gatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacin=
+g: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform:=
+ none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-=
+space-collapse: preserve; text-wrap: wrap; background-color: rgb(254, 244, =
+230); text-decoration-thickness: initial; text-decoration-style: initial; t=
+ext-decoration-color: initial; float: none; display: inline">Button not wor=
+king? Copy and paste this link below to a browser window:</span></div>
+<div style=3D"font-family: inherit; text-align: left"><span style=3D"color:=
+ #594f42; font-family: arial, helvetica, sans-serif; font-size: 14px; font-=
+style: normal; font-variant-ligatures: normal; font-variant-caps: normal; f=
+ont-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; tex=
+t-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-=
+text-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; ba=
+ckground-color: rgb(254, 244, 230); text-decoration-thickness: initial; tex=
+t-decoration-style: initial; text-decoration-color: initial; float: none; d=
+isplay: inline">https://accounts.palia.com/verify-email/3DP7aCj_8bIPCHTnM-y=
+OzuENeYRtHZj1bmyXs5WmfXM?email=3Duser.idc004%40gmail.com</span></div>
+<div style=3D"font-family: inherit; text-align: left"><span style=3D"color:=
+ #594f42; font-family: arial, helvetica, sans-serif; font-size: 14px; font-=
+style: normal; font-variant-ligatures: normal; font-variant-caps: normal; f=
+ont-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; tex=
+t-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-=
+text-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; ba=
+ckground-color: rgb(254, 244, 230); text-decoration-thickness: initial; tex=
+t-decoration-style: initial; text-decoration-color: initial; float: none; d=
+isplay: inline"><br>
+If you encounter any issues, please feel free to </span><a href=3D"http://u=
+rl1387.palia.com/ls/click?upn=3Du001.2M6JsqdOegkQEsrTSlBW5R1UEF1X-2FvipwHVm=
+SFJja4xVmljnufypSkCRqVlHCqFJTf1S_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBr=
+XbqhMtEBVPXd1WTIIjpGTAkOz-2BqYIH-2BvWns5YeYczUr8QL16V5ImzTOZHYvrrekVxKJVT6v=
+uq4f6Skb6-2BLU9yHy9JQsyZ7IU9b9FWp0SH85qXh4FQG6Wbrk7q2H9og6LdgT5qwIt2nLUzdjh=
+KjuJZc6VFBev5jmtK2VJE9UUU-2BjXxv8-2Bq15A-3D-3D"><span style=3D"font-family:=
+ arial, helvetica, sans-serif; font-size: 14px; font-style: normal; font-va=
+riant-ligatures: normal; font-variant-caps: normal; font-weight: 400; lette=
+r-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-tr=
+ansform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px=
+; white-space-collapse: preserve; text-wrap: wrap; background-color: rgb(25=
+4, 244, 230); text-decoration-thickness: initial; text-decoration-style: in=
+itial; text-decoration-color: initial; float: none; display: inline; color:=
+ #45b5ff"><u><strong>contact us</strong></u></span></a><span style=3D"color=
+: #594f42; font-family: arial, helvetica, sans-serif; font-size: 14px; font=
+-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; te=
+xt-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit=
+-text-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; b=
+ackground-color: rgb(254, 244, 230); text-decoration-thickness: initial; te=
+xt-decoration-style: initial; text-decoration-color: initial; float: none; =
+display: inline">.</span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"e2e76c7c-75ea-417e-a57a-164befa10dd3">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 30px 0px;" role=3D"module-content" bgc=
+olor=3D"FEF4E6">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"d14fbe55-5ba7-46de-a6ec-c8b62d7fa0c5">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"center"><img class=3D"max-width" border=3D"0" =
+style=3D"display:block; color:#594F42; text-decoration:none; font-family:He=
+lvetica, arial, sans-serif; font-size:16px; max-width:100% !important; widt=
+h:100%; height:auto !important;" width=3D"600" alt=3D"" data-proportionally=
+-constrained=3D"true" data-responsive=3D"true" src=3D"http://cdn.mcauto-ima=
+ges-production.sendgrid.net/a6ec7418016faf5a/62195871-9328-4e79-b3a3-581bf7=
+39ce0b/600x50.png"></td>
+      </tr>
+    </tbody>
+  </table></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    </body>
+  </html>
+------=_Part_66238_1091918296.1721585063221--

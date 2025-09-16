@@ -1,0 +1,20 @@
+((dirvish-dired-cheatsheet nil)
+ (dirvish-emerge--menu nil
+											 (("Src"
+												 (extensions "cpp")
+												 nil nil)))
+ (dirvish-ls-switches-menu
+	("--time-style=+" "--group-directories-first" "--human-readable" "-g")
+	("--time=birth" "--time-style=+" "--group-directories-first" "--human-readable")
+	("--time=birth" "--time-style=+" "--group-directories-first")
+	("--time=birth" "--time-style=locale" "--group-directories-first")
+	("--time=birth" "--time-style=iso" "--group-directories-first")
+	("--almost-all" "--group-directories-first")
+	("--group-directories-first"))
+ (dirvish-mark-menu nil)
+ (dirvish-quick-access nil)
+ (dirvish-vc-menu nil)
+ (dirvish-yank-menu nil)
+ (listen-menu nil)
+ (magit-dispatch nil)
+ (rg-menu nil))

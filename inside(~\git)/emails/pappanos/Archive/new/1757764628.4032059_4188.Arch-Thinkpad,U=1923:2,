@@ -1,0 +1,1328 @@
+Delivered-To: pappanos004@gmail.com
+Received: by 2002:a67:dc2:0:0:0:0:0 with SMTP id 185csp366500vsn;
+        Thu, 11 Feb 2021 05:15:54 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzAsbobA9sOtcIqif+pw8e0JRB+17ZWgtI0YTdYd2GuKom53dpYXoEKabCkCiDcz5Lvkzb8
+X-Received: by 2002:a17:90a:2ec6:: with SMTP id h6mr3916991pjs.103.1613049354495;
+        Thu, 11 Feb 2021 05:15:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1613049354; cv=none;
+        d=google.com; s=arc-20160816;
+        b=R5FonAiOczOdqJ8Kta1en84Y4mmeJM4Js3h0VOYQCxhVVqpNEc7xjS9CJgupjUAs/g
+         5BPShJc0asIm/o0T1eA/dJhbCYOkhATTaquRDMv/sqb0uK0R5qwS3YEb4EGkbF+b2T+e
+         2YInqJIhJduuJq7lj1OhO1WLbhoqEaQQX5bjkxmQS3Gjlz58E7RnFEiqWvuZVds+x5UE
+         p1f9KXrjE8fKFDIC7XiECE+AucT2HAxaVdFWU33Lzdvv2BkaKM1SNLkz6vCyUFNgmmv4
+         esfFCmZgUXkuN7xUUmT6J8aLBUJpKjYYTIzKiKrSvD3AJ00uOTuc4IUbhQFL2lKHt1+o
+         yj8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=from:subject:mime-version:date:message-id:to:dkim-signature;
+        bh=o/LGG6YMwphfxbo9fWbMeS6liz2Xy9cOc9NHrtxvvfI=;
+        b=A0aEENaqhjynGmx7wJ+ATavoOO7vsO4L4kyXzx7YSTuYHwDgDKXv8fLm83kx/rRNKX
+         OZbbnyvfW/MqF5BBen0Ka3/nV+uuehp1Mz4gaCnGMAU64NSWZviP+dHf9A+UBUNu3t1+
+         SkX1IbT7b2paizTkasgB8rQKGfzvfP5X88YVgGFOd5OLF78j+Y68PYHioS8f74GDaqlg
+         LwXjn5c/oNMXhYEK2jtuMmfeDQUjNZYzaNkMg3IYBqq6WGGX70tjvbGDgyK+uArjMisL
+         su4A2E9Fk5s0Hdym0dR9lh6D8t7CMMgld+CYretNEudE3m+JT8X2efF7P+/2CzYbc+pP
+         hSJA==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@news.edx.org header.s=scph1120 header.b=A5CKKe53;
+       spf=pass (google.com: domain of msprvs1=186768wijmoly=bounces-266693-64@news.edx.org designates 156.70.13.150 as permitted sender) smtp.mailfrom="msprvs1=186768WIjmoly=bounces-266693-64@news.edx.org";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=edx.org
+Return-Path: <msprvs1=186768WIjmoly=bounces-266693-64@news.edx.org>
+Received: from mta-70-13-150.sparkpostmail.com (mta-70-13-150.sparkpostmail.com. [156.70.13.150])
+        by mx.google.com with ESMTPS id t13si4818468pjo.29.2021.02.11.05.15.54
+        for <pappanos004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Feb 2021 05:15:54 -0800 (PST)
+Received-SPF: pass (google.com: domain of msprvs1=186768wijmoly=bounces-266693-64@news.edx.org designates 156.70.13.150 as permitted sender) client-ip=156.70.13.150;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@news.edx.org header.s=scph1120 header.b=A5CKKe53;
+       spf=pass (google.com: domain of msprvs1=186768wijmoly=bounces-266693-64@news.edx.org designates 156.70.13.150 as permitted sender) smtp.mailfrom="msprvs1=186768WIjmoly=bounces-266693-64@news.edx.org";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=edx.org
+X-MSFBL: 1sk/If9RdDrQlmooEeXC3B3dw52nhRIi9NE8kKau9CM=|eyJtZXNzYWdlX2lkIjo
+	iNjAyMTYxMmIyNTYwOTA4ODQxODEiLCJzdWJhY2NvdW50X2lkIjoiNjQiLCJ0ZW5
+	hbnRfaWQiOiJzcGMiLCJyIjoicGFwcGFub3MwMDRAZ21haWwuY29tIiwiY3VzdG9
+	tZXJfaWQiOiIyNjY2OTMifQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=news.edx.org;
+	s=scph1120; t=1613048673; i=@news.edx.org;
+	bh=o/LGG6YMwphfxbo9fWbMeS6liz2Xy9cOc9NHrtxvvfI=;
+	h=To:Message-ID:Date:Content-Type:Subject:From;
+	b=A5CKKe53g6uQN+MAabfbhAyhW4toLhA/EZMPRhHToTHwMId70mBGmYoSQ+Rd+pT1M
+	 K2F86tHaMcZq4R1UOix+F1hBQchoQyu6pHKf4B1tv4i9EMV241r+4p7JY4cwJJwdfr
+	 22jhOIghjXGyRFOSjERvhx1B7ShY/c0dFKuOVYYk=
+To: pappanos004@gmail.com
+Message-ID: <14.18.20908.16B25206@aj.mta1vrest.cc.prd.sparkpost>
+Date: Thu, 11 Feb 2021 13:04:32 +0000
+Content-Type: multipart/alternative; boundary="_----VYuBWyQwSBZ0bywPYjUBFA===_D5/79-20908-14B25206"
+MIME-Version: 1.0
+Subject: Build the skills you need to excel at work
+From: "edX" <edX@news.edx.org>
+X-TUID: xRjvesbyE82T
+
+--_----VYuBWyQwSBZ0bywPYjUBFA===_D5/79-20908-14B25206
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+
+Here=E2=80=99s how one learner did it=0A=0AedX ( https://clicks.edx.org/f/a=
+/Z_f63JqxGLH7pJN4UneO2w~~/AAQRxQA~/RgRiB7BgP0QUaHR0cHM6Ly93d3cuZWR4Lm9yZy9X=
+A3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )           Co=
+urses =0A( https://clicks.edx.org/f/a/hNaq0djjtmjsxPFlFxMvoA~~/AAQRxQA~/RgR=
+iB7BgP0QaaHR0cHM6Ly93d3cuZWR4Lm9yZy9jb3Vyc2VXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcG=
+Fub3MwMDRAZ21haWwuY29tWAQAAABA ) | Programs =0A( https://clicks.edx.org/f/a=
+/5_BBrriuQw1X5SM5gbEkcw~~/AAQRxQA~/RgRiB7BgP0QmaHR0cHM6Ly93d3cuZWR4Lm9yZy9j=
+b3Vyc2U_cHJvZ3JhbT1hbGxXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29=
+tWAQAAABA ) | My Account =0A( https://clicks.edx.org/f/a/VEG0T23Ytqx6iMnrq2=
+nEOA~~/AAQRxQA~/RgRiB7BgP0QdaHR0cHM6Ly9jb3Vyc2VzLmVkeC5vcmcvbG9naW5XA3NwY0I=
+KYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0AWhy a business=
+ manager pursued an innovation-focused master's=0Adegree. Meet edX learner,=
+ Stefen =0A( https://clicks.edx.org/f/a/tEQt0qRHWdhdy4vWr2dk2Q~~/AAQRxQA~/R=
+gRiB7BgP0RYaHR0cHM6Ly9ibG9nLmVkeC5vcmcvd2h5LWEtYnVzaW5lc3MtbWFuYWdlci1wdXJz=
+dWVkLWFuLWlubm92YXRpb24tZm9jdXNlZC1tYXN0ZXJzLWRlZ3JlZVcDc3BjQgpgIWErJWCQiEG=
+BUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~ )=0A=0A=0AAs a business solution =
+manager at a global innovation service=0Aprovider in Germany, Stefan is pas=
+sionate about innovation. To=0Aensure he has the knowledge he needs to exce=
+l at work, he=E2=80=99s=0Apursuing a Master of Leadership in Service Innova=
+tion =0A( https://clicks.edx.org/f/a/EUW38mWmBQUh6oHIoZ74jg~~/AAQRxQA~/RgRi=
+B7BgP0RjaHR0cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItaW4tbGVhZGV=
+yc2hpcC1zZXJ2aWNlLWlubm92YXRpb24tdW5pdmVyc2l0eS1vZi1xdWVlbnNsYW5kVwNzcGNCCm=
+AhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~ )=0A at the Universi=
+ty of Queensland. Read his story =0A( https://clicks.edx.org/f/a/tEQt0qRHWd=
+hdy4vWr2dk2Q~~/AAQRxQA~/RgRiB7BgP0RYaHR0cHM6Ly9ibG9nLmVkeC5vcmcvd2h5LWEtYnV=
+zaW5lc3MtbWFuYWdlci1wdXJzdWVkLWFuLWlubm92YXRpb24tZm9jdXNlZC1tYXN0ZXJzLWRlZ3=
+JlZVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~ )=0A to =
+learn about his experience and hear his advice for future=0Astudents.=0A=0A=
+Explore all programs ( https://clicks.edx.org/f/a/AAaksYz1c4LwrJnW83lyQg~~/=
+AAQRxQA~/RgRiB7BgP0QmaHR0cHM6Ly93d3cuZWR4Lm9yZy9zZWFyY2g_dGFiPXByb2dyYW1XA3=
+NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0A---------=
+---------------=0AMaster's Degree Programs=0A=0A------------------------=0A=
+=0AIUx=0A=0AMaster of Science in Accounting =0A( https://clicks.edx.org/f/a=
+/uR5Z4nuxIPr5emmXt391dg~~/AAQRxQA~/RgRiB7BgP0RKaHR0cHM6Ly93d3cuZWR4Lm9yZy9t=
+YXN0ZXJzL29ubGluZS1tYXN0ZXItaW4tYWNjb3VudGluZy1pbmRpYW5hLXVuaXZlcnNpdHlXA3N=
+wY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0A----------=
+-------------------------------------------------------=0A=0ANext Start: Fa=
+ll 2021=0A=0AIUx=0A=0AMaster of Science in IT Management =0A( https://click=
+s.edx.org/f/a/KW0ODAf69tEKqDJi99f9-A~~/AAQRxQA~/RgRiB7BgP0RNaHR0cHM6Ly93d3c=
+uZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItaW4taXQtbWFuYWdlbWVudC1pbmRpYW5hLX=
+VuaXZlcnNpdHlXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA =
+)=0A=0A-----------------------------------------------------------------=0A=
+=0ANext Start: Fall 2021=0A=0APurdueX=0A=0AMaster of Science in Electrical =
+and Computer Engineering =0A( https://clicks.edx.org/f/a/j8PBdsJ1W2p_RL_05J=
+rPrA~~/AAQRxQA~/RgRiB7BgP0RRaHR0cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1=
+tYXN0ZXJzLWluLWVsZWN0cmljYWwtYW5kLWNvbXB1dGVyLWVuZ2luZWVyaW5nVwNzcGNCCmAhYS=
+slYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~ )=0A=0A-----------------=
+------------------------------------------------=0A=0ANext Start: Fall 2021=
+=0A=0ABUx=0A=0AMaster of Business Administration =0A( https://clicks.edx.or=
+g/f/a/y3P4HcDBw4JBsIIFUkK2ew~~/AAQRxQA~/RgRiB7BgP0RJaHR0cHM6Ly93d3cuZWR4Lm9=
+yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItYnVzaW5lc3MtYWRtaW5pc3RyYXRpb24tbWJhLWJ1eF=
+cDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~ )=0A=0A-----=
+------------------------------------------------------------=0A=0ANext Star=
+t: Fall 2021=0A=0AUQx=0A=0AMaster of Leadership in Service Innovation =0A( =
+https://clicks.edx.org/f/a/EUW38mWmBQUh6oHIoZ74jg~~/AAQRxQA~/RgRiB7BgP0RjaH=
+R0cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItaW4tbGVhZGVyc2hpcC1zZ=
+XJ2aWNlLWlubm92YXRpb24tdW5pdmVyc2l0eS1vZi1xdWVlbnNsYW5kVwNzcGNCCmAhYSslYJCI=
+QYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~ )=0A=0A-----------------------=
+------------------------------------------=0A=0ANext Start: Fall 2021=0A=0A=
+ASUx=0A=0AMaster of Science in Supply Chain Management =0A( https://clicks.=
+edx.org/f/a/D1BSsYbkSJGOHheNDUpgaQ~~/AAQRxQA~/RgRiB7BgP0RJaHR0cHM6Ly93d3cuZ=
+WR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItaW4tc3VwcGx5LWNoYWluLW1hbmFnZW1lbnQt=
+YXN1eFcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~ )=0A=
+=0A-----------------------------------------------------------------=0A=0AN=
+ext Start: Fall 2021=0A=0A----------------------=0AMicroMasters=C2=AE Progr=
+ams=0A=0A----------------------=0A=0AIUx=0A=0AAccounting ( https://clicks.e=
+dx.org/f/a/2ONwNWWutB5zP5J3sWgpdQ~~/AAQRxQA~/RgRiB7BgP0QvaHR0cHM6Ly93d3cuZW=
+R4Lm9yZy9taWNyb21hc3RlcnMvaXV4LWFjY291bnRpbmdXA3NwY0IKYCFhKyVgkIhBgVIVcGFwc=
+GFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0A3 Courses=0A------------------------=
+--------------------------------------=0A=0AIUx=0A=0AInformation Systems =
+=0A( https://clicks.edx.org/f/a/1FopEkI6ZOPG2VCHe5ppkg~~/AAQRxQA~/RgRiB7BgP=
+0Q4aHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc3RlcnMvaXV4LWluZm9ybWF0aW9uLXN5c3Rl=
+bXNXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0A3 C=
+ourses=0A-----------------------------------------------------------------=
+=0A=0ARITx=0A=0AProject Management =0A( https://clicks.edx.org/f/a/lhnL3hZb=
+0nO5DDl7yI8_NA~~/AAQRxQA~/RgRiB7BgP0Q4aHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc=
+3RlcnMvcml0eC1wcm9qZWN0LW1hbmFnZW1lbnRXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3Mw=
+MDRAZ21haWwuY29tWAQAAABA )=0A=0A4 Courses=0A-------------------------------=
+----------------------------------=0A=0ABerkeleyX=0A=0AMarketing Analytics =
+=0A( https://clicks.edx.org/f/a/gnYrz0mPIXKS1hyMuqIz-Q~~/AAQRxQA~/RgRiB7BgP=
+0Q-aHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc3RlcnMvYmVya2VsZXl4LW1hcmtldGluZy1h=
+bmFseXRpY3NXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=
+=0A-----------------------------------------------------------------=0A=0A4=
+ Courses=0A=0AUMGC and USMx=0A=0AUMGC and USMx=0A=0ACloud Computing =0A( ht=
+tps://clicks.edx.org/f/a/QJbhO_m9VF_tLlmBr9OLwA~~/AAQRxQA~/RgRiB7BgP0Q6aHR0=
+cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc3RlcnMvdXNteC11bWdjLWNsb3VkLWNvbXB1dGluZ1c=
+Dc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~ )=0A---------=
+--------------------------------------------------------=0A=0A4 Courses=0A=
+=0AUMD and USMx=0A=0AUMD and USMx=0A=0AMBA Core Curriculum =0A( https://cli=
+cks.edx.org/f/a/icouWHJEaGdH53UYDM43UQ~~/AAQRxQA~/RgRiB7BgP0Q9aHR0cHM6Ly93d=
+3cuZWR4Lm9yZy9taWNyb21hc3RlcnMvVVNNeC1VTUQtTUJBLUNvcmUtQ3VycmljdWx1bVcDc3Bj=
+QgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~ )=0A--------------=
+---------------------------------------------------=0A=0A7 Courses=0A=0A---=
+---------------------=0AMicroBachelors=C2=AE Programs=0A=0A----------------=
+--------=0A=0ASNHUx=0A=0ABusiness Analytics Foundations =0A( https://clicks=
+.edx.org/f/a/UENwYnSHW14esofeBsKJCA~~/AAQRxQA~/RgRiB7BgP0RHaHR0cHM6Ly93d3c=
+uZWR4Lm9yZy9taWNyb2JhY2hlbG9ycy9zbmh1eC1idXNpbmVzcy1hbmFseXRpY3MtZm91bmRhdG=
+lvbnNXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0A-=
+----------------------------------------------------------------=0A=0ANYUx=
+=0A=0AIntroduction to=0ADatabases =0A( https://clicks.edx.org/f/a/_qzJt-cLZ=
+uqZhFjDD20InQ~~/AAQRxQA~/RgRiB7BgP0RBaHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb2JhY2=
+hlbG9ycy9ueXV4LWludHJvZHVjdGlvbi10by1kYXRhYmFzZXNXA3NwY0IKYCFhKyVgkIhBgVIVc=
+GFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0A=0A-----------------------------=
+------------------------------------=0A=0A---------------------------------=
+=0AProfessional Certificate Programs=0A=0A---------------------------------=
+=0A=0AIBM=0A=0AData Analyst =0A( https://clicks.edx.org/f/a/ZZMQeZXPl8GBD7G=
+ypD-lIQ~~/AAQRxQA~/RgRiB7BgP0Q9aHR0cHM6Ly93d3cuZWR4Lm9yZy9wcm9mZXNzaW9uYWwt=
+Y2VydGlmaWNhdGUvaWJtLWRhdGEtYW5hbHlzdFcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczA=
+wNEBnbWFpbC5jb21YBAAAAEA~ )=0A---------------------------------------------=
+--------------------=0A=0AUTAustinX=0A=0AFintech: The Future of Finance =0A=
+( https://clicks.edx.org/f/a/YhE-kpgQJQji_LI2GZXjSg~~/AAQRxQA~/RgRiB7BgP0RU=
+aHR0cHM6Ly93d3cuZWR4Lm9yZy9wcm9mZXNzaW9uYWwtY2VydGlmaWNhdGUvdXRhdXN0aW54LWZ=
+pbnRlY2gtdGhlLWZ1dHVyZS1vZi1maW5hbmNlVwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMD=
+A0QGdtYWlsLmNvbVgEAAAAQA~~ )=0A=0A-----------------------------------------=
+------------------------=0A=0AUBCx=0A=0AExcel for Everyone =0A( https://cli=
+cks.edx.org/f/a/mi6VG5ryeH22GqhcD31cgQ~~/AAQRxQA~/RgRiB7BgP0REaHR0cHM6Ly93d=
+3cuZWR4Lm9yZy9wcm9mZXNzaW9uYWwtY2VydGlmaWNhdGUvdWJjeC1leGNlbC1mb3ItZXZlcnlv=
+bmVXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0A=0A---=
+--------------------------------------------------------------=0A=0ATwitter=
+ ( https://clicks.edx.org/f/a/WW-q--Q87wVvg1lr-j7M0Q~~/AAQRxQA~/RgRiB7BgP0Q=
+daHR0cHM6Ly90d2l0dGVyLmNvbS9lZFhPbmxpbmVXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3=
+MwMDRAZ21haWwuY29tWAQAAABA )=0ALinkedIn ( https://clicks.edx.org/f/a/0_zI-B=
+PsvYodQpuo8qYFIw~~/AAQRxQA~/RgRiB7BgP0QjaHR0cDovL3d3dy5saW5rZWRpbi5jb20vY29=
+tcGFueS9lZHhXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=
+  Facebook =0A( https://clicks.edx.org/f/a/ZhhztnLK07riI9P0SSlnkA~~/AAQRxQA=
+~/RgRiB7BgP0QhaHR0cDovL3d3dy5mYWNlYm9vay5jb20vRWR4T25saW5lVwNzcGNCCmAhYSslY=
+JCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~ )  Instagram =0A( https://c=
+licks.edx.org/f/a/SF-Ct7UG0vl84KvmDxOpPg~~/AAQRxQA~/RgRiB7BgP0QkaHR0cHM6Ly9=
+3d3cuaW5zdGFncmFtLmNvbS9lZHhvbmxpbmUvVwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMD=
+A0QGdtYWlsLmNvbVgEAAAAQA~~ )  Reddit =0A( https://clicks.edx.org/f/a/wJv89C=
+ymtwaNYOm7iuwfFA~~/AAQRxQA~/RgRiB7BgP0QbaHR0cDovL3d3dy5yZWRkaXQuY29tL3IvZWR=
+4VwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~ )        =
+       Download edX's App =0A( https://clicks.edx.org/f/a/UPo4GiGqbfEWFBSV9=
+ijniA~~/AAQRxQA~/RgRiB7BgP0QmaHR0cHM6Ly9lZHguYXBwLmxpbmsvZW1haWwtYXBwLWluc3=
+RhbGxXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )  Downl=
+oad edX's Google=0APlay App ( https://clicks.edx.org/f/a/UPo4GiGqbfEWFBSV9i=
+jniA~~/AAQRxQA~/RgRiB7BgP0QmaHR0cHM6Ly9lZHguYXBwLmxpbmsvZW1haWwtYXBwLWluc3R=
+hbGxXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA )=0ASave =
+10% on select programs! Click here. =0A( https://clicks.edx.org/f/a/3tX-Pcx=
+hoa8_I_FpfdWfUQ~~/AAQRxQA~/RgRiB7BgP0QoaHR0cHM6Ly93d3cuZWR4Lm9yZy9iZW5lZml0=
+cy1vZi1idW5kbGluZ1cDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAA=
+AAEA~ )      edX for Business=0A=E2=80=94 eLearning Solutions for Your Comp=
+any =0A( https://clicks.edx.org/f/a/AvQ4MnD5arBAChC0SHCdKg~~/AAQRxQA~/RgRiB=
+7BgP0QZaHR0cHM6Ly9idXNpbmVzcy5lZHgub3JnL1cDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5v=
+czAwNEBnbWFpbC5jb21YBAAAAEA~ )      =C2=A9 2021 edX Inc. All rights=0Areser=
+ved.      Unsubscribe ( https://clicks.edx.org/f/a/3rbpQKkmJYh97O04oGnjkA~~=
+/AAQRxQA~/RgRiB7BgP4SpAWh0dHBzOi8vZGFzaGJvYXJkLTA2LmJyYXplLmNvbS9lbmNfdXNlc=
+i91bnN1YnNjcmliZT9kPSUyQmdrck1BcmYlMkYlMkJhSFhPYVBnZm1Ya3clM0QlM0QlMjRQVEY0=
+cVRUSmFVM0MxTVpWUG1kS01kUlA0eVVNNWJuWFF3YVBrVEFPV2VsdE1mWm9wTHh4NGQwTFBxMyU=
+yQiUwQWs3N0pleFRjWEFzQzNTaDNKY040Wm1pclBjbE1XcTdDa0szUnhiZ2ljJTJGMVNlQ1lIeG=
+t4VW5uRnVkbW5FJTBBa3lSeFp1RzhUT2E3JTJCU20zM2lheTk3NGd3WFZJWU13M0NkVzlCZiUyQ=
+nNEUjJtekpRV09ZRWJzQVRlNzRPZCUwQUJMY2xkanFWTjk0R1lqaWMlMkZ3aE9yUnBNJTJCazJ3=
+bXBzNW1iUmNSY1NZZ3BwZWppRVJnUzRJYjRoOEJvMDElMEFHbmdrT3dObUw5WUJBWTU2JTJGJTJ=
+CYnRUMlllVXdVcFlLTDZoWkM3amVaWlBwaGdjeUZweEk1SVJDTDJJU0UlM0QmMT0xVwNzcGNCCm=
+AhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~ )=0A| Update Prefere=
+nce ( https://clicks.edx.org/f/a/rtYvtSRb34nsUsNuVmvhWg~~/AAQRxQA~/RgRiB7Bg=
+P4QMAmh0dHBzOi8vMDYuZW1haWxpbmJvdW5kcHJvY2Vzc2luZy5jb20vZW1haWwvbWFuYWdlX3N=
+1YnNjcmlwdGlvbnMvJTJGTmVuVlk4RGxjR1BSQiUyRml3SHozSWclM0QlM0QlMjRNcmNoWHJUM3=
+psTHclMkZOdUVPOW1IUTklMkZibVU3NWtGbTFuVXVYaDZlT0ZrVSUzRD9kPSUyQmdrck1BcmYlM=
+kYlMkJhSFhPYVBnZm1Ya3clM0QlM0QlMjRQVEY0cVRUSmFVM0MxTVpWUG1kS01kUlA0eVVNNWJu=
+WFF3YVBrVEFPV2VsdE1mWm9wTHh4NGQwTFBxMyUyQiUwQWs3N0pleFRjWEFzQzNTaDNKY040Wm1=
+pclBjbE1XcTdDa0szUnhiZ2ljJTJGMVNlQ1lIeGt4VW5uRnVkbW5FJTBBa3lSeFp1RzhUT2E3JT=
+JCU20zM2lheTk3NGd3WFZJWU13M0NkVzlCZiUyQnNEUjJtekpRV09ZRWJzQVRlNzRPZCUwQUJMY=
+2xkanFWTjk0R1lqaWMlMkZ3aE9yUnBNJTJCazJ3bXBzNW1iUmNSY1NZZ3BwZWppRVJnUzRJYjRo=
+OEJvMDElMEFHbmdrT3dObUw5WUJBWTU2JTJGJTJCYnRUMlllVXdVcFlLTDZoWkM3amVaWlBwaGd=
+jeUZweEk1SVJDTDJJU0UlM0QmMT0xVwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYW=
+lsLmNvbVgEAAAAQA~~ )=0A141 Portland St. 9th Floor, Cambridge, MA 02139
+--_----VYuBWyQwSBZ0bywPYjUBFA===_D5/79-20908-14B25206
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="UTF-8"
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">=0A<html xmlns=3D"http://www.=
+w3.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" styl=
+e=3D"width: 100%; font-family: arial, 'helvetica neue', helvetica, sans-ser=
+if; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; =
+padding: 0;"><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3DUTF-8"><meta charset=3D"UTF-8"><meta content=3D"width=3Ddevice-wi=
+dth, initial-scale=3D1" name=3D"viewport"><meta name=3D"x-apple-disable-mes=
+sage-reformatting"><meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedg=
+e"><meta content=3D"telephone=3Dno" name=3D"format-detection"><title>Build =
+the skills you need to excel at work</title> <!--[if (mso 16)]><style type=
+=3D"text/css">     a {text-decoration: none;}     </style><![endif]--> <!--=
+[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-=
+-> <!--[if gte mso 9]><xml> <o:OfficeDocumentSettings> <o:AllowPNG></o:Allo=
+wPNG>=0A <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> =
+</xml><![endif]--><style>.ExternalClass {=0Awidth: 100%;=0A}=0A.ExternalCla=
+ss {=0Aline-height: 100%;=0A}=0A@media only screen and (max-width:600px) {=
+=0A  p {=0A    font-size: 14px !important; line-height: 150% !important;=0A=
+  }=0A  ul li {=0A    font-size: 14px !important; line-height: 150% !import=
+ant;=0A  }=0A  ol li {=0A    font-size: 14px !important; line-height: 150% =
+!important;=0A  }=0A  a {=0A    font-size: 14px !important; line-height: 15=
+0% !important;=0A  }=0A  h1 {=0A    font-size: 30px !important; text-align:=
+ left; line-height: 120% !important;=0A  }=0A  h2 {=0A    font-size: 26px !=
+important; text-align: left; line-height: 120% !important;=0A  }=0A  h3 {=
+=0A    font-size: 20px !important; text-align: left; line-height: 120% !imp=
+ortant;=0A  }=0A  h1 a {=0A    font-size: 30px !important; text-align: left=
+;=0A  }=0A  h2 a {=0A    font-size: 26px !important; text-align: left;=0A  =
+}=0A  h3 a {=0A    font-size: 20px !important; text-align: left;=0A  }=0A  =
+.es-menu td a {=0A    font-size: 14px !important;=0A  }=0A  .es-header-bod=
+y p {=0A    font-size: 14px !important;=0A  }=0A  .es-header-body ul li {=
+=0A    font-size: 14px !important;=0A  }=0A  .es-header-body ol li {=0A    =
+font-size: 14px !important;=0A  }=0A  .es-header-body a {=0A    font-size: =
+14px !important;=0A  }=0A  .es-footer-body p {=0A    font-size: 12px !impor=
+tant;=0A  }=0A  .es-footer-body ul li {=0A    font-size: 12px !important;=
+=0A  }=0A  .es-footer-body ol li {=0A    font-size: 12px !important;=0A  }=
+=0A  .es-footer-body a {=0A    font-size: 12px !important;=0A  }=0A  .es-in=
+foblock p {=0A    font-size: 11px !important;=0A  }=0A  .es-infoblock ul li=
+ {=0A    font-size: 11px !important;=0A  }=0A  .es-infoblock ol li {=0A    =
+font-size: 11px !important;=0A  }=0A  .es-infoblock a {=0A    font-size: 11=
+px !important;=0A  }=0A  *[class=3D"gmail-fix"] {=0A    display: none !impo=
+rtant;=0A  }=0A  .es-m-txt-c {=0A    text-align: center !important;=0A  }=
+=0A  .es-m-txt-c h1 {=0A    text-align: center !important;=0A  }=0A  .es-m-=
+txt-c h2 {=0A    text-align: center !important;=0A  }=0A  .es-m-txt-c h3 {=
+=0A    text-align: center !important;=0A  }=0A  .es-m-txt-r {=0A    text-al=
+ign: right !important;=0A  }=0A  .es-m-txt-r h1 {=0A    text-align: right !=
+important;=0A  }=0A  .es-m-txt-r h2 {=0A    text-align: right !important;=
+=0A  }=0A  .es-m-txt-r h3 {=0A    text-align: right !important;=0A  }=0A  .=
+es-m-txt-l {=0A    text-align: left !important;=0A  }=0A  .es-m-txt-l h1 {=
+=0A    text-align: left !important;=0A  }=0A  .es-m-txt-l h2 {=0A    text-a=
+lign: left !important;=0A  }=0A  .es-m-txt-l h3 {=0A    text-align: left !i=
+mportant;=0A  }=0A  .es-m-txt-r img {=0A    display: inline !important;=0A =
+ }=0A  .es-m-txt-c img {=0A    display: inline !important;=0A  }=0A  .es-m-=
+txt-l img {=0A    display: inline !important;=0A  }=0A  .es-button-border {=
+=0A    display: inline-block !important;=0A  }=0A  .es-btn-fw {=0A    borde=
+r-width: 10px 0px !important; text-align: center !important;=0A  }=0A  .es-=
+adaptive table {=0A    width: 100% !important;=0A  }=0A  .es-btn-fw {=0A   =
+ width: 100% !important;=0A  }=0A  .es-btn-fw-brdr {=0A    width: 100% !imp=
+ortant;=0A  }=0A  .es-left {=0A    width: 100% !important;=0A  }=0A  .es-ri=
+ght {=0A    width: 100% !important;=0A  }=0A  .es-content table {=0A    wid=
+th: 100% !important; max-width: 600px !important;=0A  }=0A  .es-header tabl=
+e {=0A    width: 100% !important; max-width: 600px !important;=0A  }=0A  .e=
+s-footer table {=0A    width: 100% !important; max-width: 600px !important;=
+=0A  }=0A  .es-content {=0A    width: 100% !important; max-width: 600px !im=
+portant;=0A  }=0A  .es-footer {=0A    width: 100% !important; max-width: 60=
+0px !important;=0A  }=0A  .es-header {=0A    width: 100% !important; max-wi=
+dth: 600px !important;=0A  }=0A  .es-adapt-td {=0A    display: block !impor=
+tant; width: 100% !important;=0A  }=0A  .adapt-img {=0A    width: 100% !imp=
+ortant; height: auto !important;=0A  }=0A  .es-m-p0 {=0A    padding: 0 !imp=
+ortant;=0A  }=0A  .es-m-p0r {=0A    padding-right: 0 !important;=0A  }=0A  =
+.es-m-p0l {=0A    padding-left: 0 !important;=0A  }=0A  .es-m-p0t {=0A    =
+padding-top: 0 !important;=0A  }=0A  .es-m-p0b {=0A    padding-bottom: 0 !i=
+mportant;=0A  }=0A  .es-m-p20b {=0A    padding-bottom: 20px !important;=0A =
+ }=0A  .es-mobile-hidden {=0A    display: none !important;=0A  }=0A  .es-hi=
+dden {=0A    display: none !important;=0A  }=0A  tr.es-desk-hidden {=0A    =
+width: auto !important; overflow: visible !important; float: none !importan=
+t; max-height: inherit !important; line-height: inherit !important;=0A  }=
+=0A  td.es-desk-hidden {=0A    width: auto !important; overflow: visible !i=
+mportant; float: none !important; max-height: inherit !important; line-heig=
+ht: inherit !important;=0A  }=0A  table.es-desk-hidden {=0A    width: auto =
+!important; overflow: visible !important; float: none !important; max-heigh=
+t: inherit !important; line-height: inherit !important;=0A  }=0A  tr.es-des=
+k-hidden {=0A    display: table-row !important;=0A  }=0A  table.es-desk-hid=
+den {=0A    display: table !important;=0A  }=0A  td.es-desk-menu-hidden {=
+=0A    display: table-cell !important;=0A  }=0A  .es-menu td {=0A    width:=
+ 1% !important;=0A  }=0A  table.es-table-not-adapt {=0A    width: auto !imp=
+ortant;=0A  }=0A  .esd-block-html table {=0A    width: auto !important;=0A =
+ }=0A  table.es-social {=0A    display: inline-block !important;=0A  }=0A  =
+table.es-social td {=0A    display: inline-block !important;=0A  }=0A  .es-=
+m-p5 {=0A    padding: 5px !important;=0A  }=0A  .es-m-p5t {=0A    padding-t=
+op: 5px !important;=0A  }=0A  .es-m-p5b {=0A    padding-bottom: 5px !import=
+ant;=0A  }=0A  .es-m-p5r {=0A    padding-right: 5px !important;=0A  }=0A  .=
+es-m-p5l {=0A    padding-left: 5px !important;=0A  }=0A  .es-m-p10 {=0A    =
+padding: 10px !important;=0A  }=0A  .es-m-p10t {=0A    padding-top: 10px !i=
+mportant;=0A  }=0A  .es-m-p10b {=0A    padding-bottom: 10px !important;=0A =
+ }=0A  .es-m-p10r {=0A    padding-right: 10px !important;=0A  }=0A  .es-m-p=
+10l {=0A    padding-left: 10px !important;=0A  }=0A  .es-m-p15 {=0A    padd=
+ing: 15px !important;=0A  }=0A  .es-m-p15t {=0A    padding-top: 15px !impor=
+tant;=0A  }=0A  .es-m-p15b {=0A    padding-bottom: 15px !important;=0A  }=
+=0A  .es-m-p15r {=0A    padding-right: 15px !important;=0A  }=0A  .es-m-p15=
+l {=0A    padding-left: 15px !important;=0A  }=0A  .es-m-p20 {=0A    paddin=
+g: 20px !important;=0A  }=0A  .es-m-p20t {=0A    padding-top: 20px !importa=
+nt;=0A  }=0A  .es-m-p20r {=0A    padding-right: 20px !important;=0A  }=0A  =
+.es-m-p20l {=0A    padding-left: 20px !important;=0A  }=0A  .es-m-p25 {=0A=
+    padding: 25px !important;=0A  }=0A  .es-m-p25t {=0A    padding-top: 25p=
+x !important;=0A  }=0A  .es-m-p25b {=0A    padding-bottom: 25px !important;=
+=0A  }=0A  .es-m-p25r {=0A    padding-right: 25px !important;=0A  }=0A  .es=
+-m-p25l {=0A    padding-left: 25px !important;=0A  }=0A  .es-m-p30 {=0A    =
+padding: 30px !important;=0A  }=0A  .es-m-p30t {=0A    padding-top: 30px !i=
+mportant;=0A  }=0A  .es-m-p30b {=0A    padding-bottom: 30px !important;=0A =
+ }=0A  .es-m-p30r {=0A    padding-right: 30px !important;=0A  }=0A  .es-m-p=
+30l {=0A    padding-left: 30px !important;=0A  }=0A  .es-m-p35 {=0A    padd=
+ing: 35px !important;=0A  }=0A  .es-m-p35t {=0A    padding-top: 35px !impor=
+tant;=0A  }=0A  .es-m-p35b {=0A    padding-bottom: 35px !important;=0A  }=
+=0A  .es-m-p35r {=0A    padding-right: 35px !important;=0A  }=0A  .es-m-p35=
+l {=0A    padding-left: 35px !important;=0A  }=0A  .es-m-p40 {=0A    paddin=
+g: 40px !important;=0A  }=0A  .es-m-p40t {=0A    padding-top: 40px !importa=
+nt;=0A  }=0A  .es-m-p40b {=0A    padding-bottom: 40px !important;=0A  }=0A =
+ .es-m-p40r {=0A    padding-right: 40px !important;=0A  }=0A  .es-m-p40l {=
+=0A    padding-left: 40px !important;=0A  }=0A  a.es-button {=0A    font-si=
+ze: 18px !important; display: inline-block !important;=0A  }=0A  button.es-=
+button {=0A    font-size: 18px !important; display: inline-block !important=
+;=0A  }=0A}=0A</style></head><body style=3D"width: 100%; font-family: arial=
+, 'helvetica neue', helvetica, sans-serif; -webkit-text-size-adjust: 100%; =
+-ms-text-size-adjust: 100%; margin: 0; padding: 0;"><span style=3D"display:=
+ none !important; font-size: 0px; line-height: 0; color: #FFFFFF; visibilit=
+y: hidden; opacity: 0; height: 0; width: 0; mso-hide: all;">Here=E2=80=99s =
+how one learner did it</span><div class=3D"es-wrapper-color" style=3D"backg=
+round-color: #F7F7F7;"> <!--[if gte mso 9]><v:background xmlns:v=3D"urn:sch=
+emas-microsoft-com:vml" fill=3D"t"> <v:fill type=3D"tile" color=3D"#f7f7f7"=
+></v:fill> </v:background><![endif]-->=0A<table class=3D"es-wrapper" width=
+=3D"100%" cellspacing=3D"0" cellpadding=3D"0" style=3D"mso-table-lspace: 0p=
+t; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; w=
+idth: 100%; height: 100%; background: repeat center top; margin: 0; padding=
+: 0;"><tr style=3D"border-collapse: collapse;"><td valign=3D"top" style=3D"=
+margin: 0; padding: 0;"><table cellpadding=3D"0" cellspacing=3D"0" class=3D=
+"es-content" align=3D"center" data-ol-has-click-handler=3D"" style=3D"mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-=
+spacing: 0px; table-layout: fixed !important; width: 100%;"><tr style=3D"bo=
+rder-collapse: collapse;"><td align=3D"center" style=3D"margin: 0; padding:=
+ 0;"><table class=3D"es-content-body" style=3D"mso-table-lspace: 0pt; mso-t=
+able-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; width: 60=
+0px;" cellspacing=3D"0" cellpadding=3D"0" bgcolor=3D"#ffffff" align=3D"cent=
+er"><tr style=3D"border-collapse: collapse;">=0A<td align=3D"left" bgcolor=
+=3D"#f7f7f7" style=3D"margin: 0; padding: 10px;"><table cellspacing=3D"0" c=
+ellpadding=3D"0" width=3D"100%" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; border-collapse: collapse; border-spacing: 0px;"><tr style=3D"b=
+order-collapse: collapse;"><td align=3D"left" style=3D"width: 580px; margin=
+: 0; padding: 0;">               <table width=3D"100%" cellpadding=3D"0" ce=
+llspacing=3D"0">=0A                <tr>=0A                  <td width=3D"5"=
+ class=3D"width_20">&nbsp;</td>=0A                  <td align=3D"left" vali=
+gn=3D"top">=0A                    <table width=3D"100%" cellpadding=3D"0" c=
+ellspacing=3D"0">=0A                      <tr>=0A                        <t=
+d align=3D"left" valign=3D"top">=0A                          <table cellpad=
+ding=3D"0" cellspacing=3D"0" align=3D"left" class=3D"w100">=0A             =
+               <tr><td align=3D"center" valign=3D"top"><a href=3D"https://c=
+licks.edx.org/f/a/e4s8koiCyZojne-l2I8TfQ~~/AAQRxQA~/RgRiB7BgP0RkaHR0cHM6Ly9=
+3d3cuZWR4Lm9yZy8_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYW=
+lnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwY=
+XBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~" target=3D"_blank"><img src=3D"https://=
+appboy-images.com/appboy/communication/assets/image_assets/images/5fc568622=
+213594dcbda2623/original.png=3F1606772834" width=3D"110" height=3D"52" bord=
+er=3D"0" style=3D"display: block;" alt=3D"edX" id=3D"logo"></a></td></tr>=
+=0A                          </table>=0A                          <!--[if m=
+so]>=0A                            </td>=0A                            <td =
+align=3D"left" valign=3D"top">=0A                          <![endif]-->=0A =
+                         <table cellpadding=3D"0" cellspacing=3D"0" align=
+=3D"right" class=3D"w100">=0A                            <tr>=0A           =
+                   <td height=3D"52" align=3D"center" valign=3D"bottom" cla=
+ss=3D"nav_height">=0A                                <table cellpadding=3D"=
+0" cellspacing=3D"0">=0A                                  <tr>=0A          =
+                          <td align=3D"left" valign=3D"top"><a href=3D"http=
+s://clicks.edx.org/f/a/SywW1QSB_-QE6gKUkFJQVQ~~/AAQRxQA~/RgRiB7BgP0RqaHR0cH=
+M6Ly93d3cuZWR4Lm9yZy9jb3Vyc2U_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJ=
+nV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWEr=
+JWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~" target=3D"_blank" style=
+=3D"font-family: 'inter',Arial,sans-serif; font-size: 18px; line-height: 21=
+px; text-decoration: none; color: #00262B;" class=3D"font_15"><span style=
+=3D"color: #00262B;">Courses</span></a></td>=0A                            =
+        <td align=3D"left" valign=3D"top" style=3D"font-family: 'inter',Ari=
+al,sans-serif; font-size: 18px; line-height: 21px; color: #D23228; padding:=
+ 0 7px;" class=3D"font_15">|</td>=0A                                    <td=
+ align=3D"left" valign=3D"top"><a href=3D"https://clicks.edx.org/f/a/8FLUZM=
+wizem-wrBaPY6Odw~~/AAQRxQA~/RgRiB7BgP0R2aHR0cHM6Ly93d3cuZWR4Lm9yZy9jb3Vyc2U=
+_cHJvZ3JhbT1hbGwmdXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYW=
+lnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwY=
+XBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~" target=3D"_blank" style=3D"font-family=
+: 'inter',Arial,sans-serif; font-size: 18px; line-height: 21px; text-decora=
+tion: none; color: #00262B;" class=3D"font_15"><span style=3D"color: #00262=
+B;">Programs</span></a></td>=0A                                    <td alig=
+n=3D"left" valign=3D"top" style=3D"font-family: 'inter',Arial,sans-serif; f=
+ont-size: 18px; line-height: 21px; color: #D23228; padding: 0 7px;" class=
+=3D"font_15">|</td>=0A                                    <td align=3D"left=
+" valign=3D"top"><a href=3D"https://clicks.edx.org/f/a/-2-oM5piH-eLfNI0H_6a=
+SQ~~/AAQRxQA~/RgRiB7BgP0RtaHR0cHM6Ly9jb3Vyc2VzLmVkeC5vcmcvbG9naW4_dXRtX3Nvd=
+XJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFt=
+c19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21=
+YBAAAAEA~" target=3D"_blank" style=3D"font-family: 'inter',Arial,sans-serif=
+; font-size: 18px; line-height: 21px; text-decoration: none; color: #00262B=
+;" class=3D"font_15"><span style=3D"color: #00262B;">My Account</span></a><=
+/td>=0A                                  </tr>=0A                          =
+      </table>=0A                              </td>=0A                    =
+        </tr>=0A                          </table>=0A                      =
+  </td>=0A                      </tr>=0A                    </table>=0A    =
+              </td>=0A                  <td width=3D"5" class=3D"width_20">=
+&nbsp;</td>=0A                </tr>=0A              </table>=0A <table widt=
+h=3D"100%" cellspacing=3D"0" cellpadding=3D"0" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse=
+; border-spacing: 0px;"></table></td></tr></table></td></tr><tr data-ol-has=
+-click-handler=3D"" style=3D"border-collapse: collapse;"><td style=3D"backg=
+round-repeat: no-repeat; margin: 0; padding: 0;" align=3D"left"><table widt=
+h=3D"100%" cellspacing=3D"0" cellpadding=3D"0" style=3D"mso-table-lspace: 0=
+pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px;"=
+><tr data-ol-has-click-handler=3D"" style=3D"border-collapse: collapse;">=
+=0A<td valign=3D"top" align=3D"center" style=3D"width: 600px; margin: 0; pa=
+dding: 0;"><table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" role=
+=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; bo=
+rder-collapse: collapse; border-spacing: 0px;"><tr data-ol-has-click-handle=
+r=3D"" style=3D"border-collapse: collapse;"><td style=3D"position: relative=
+; margin: 0; padding: 0;" align=3D"center"><a target=3D"_blank" href=3D"htt=
+ps://clicks.edx.org/f/a/oHzgPU7DbGRiwjrEMj_kdg~~/AAQRxQA~/RgRiB7BgP0SoaHR0c=
+HM6Ly9ibG9nLmVkeC5vcmcvd2h5LWEtYnVzaW5lc3MtbWFuYWdlci1wdXJzdWVkLWFuLWlubm92=
+YXRpb24tZm9jdXNlZC1tYXN0ZXJzLWRlZ3JlZT91dG1fc291cmNlPWJyYXplJnV0bV9tZWRpdW0=
+9ZW1haWwmdXRtX2NhbXBhaWduPVRodXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjExVwNzcG=
+NCCmAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~" style=3D"-webki=
+t-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-rule:=
+ exactly; font-family: arial, 'helvetica neue', helvetica, sans-serif; font=
+-size: 14px; text-decoration: underline; color: #3D5CA3;">=0A<img class=3D"=
+adapt-img" src=3D"https://fzvpwi.stripocdn.email/content/guids/bannerImgGui=
+d/images/10371612988213321.png" alt=3D"Why a business manager pursued an in=
+novation-focused master's degree. Meet edX learner, Stefen" title=3D"Why a =
+business manager pursued an innovation-focused master's degree. Meet edX le=
+arner, Stefen" width=3D"600" style=3D"display: block; outline: none; text-d=
+ecoration: none; -ms-interpolation-mode: bicubic; border: 0;"></a></td></tr=
+></table></td></tr></table></td></tr><tr data-ol-has-click-handler=3D"" sty=
+le=3D"border-collapse: collapse;"><td style=3D"margin: 0; padding: 10px 20p=
+x 5px;" align=3D"left" bgcolor=3D"#ffffff"><table cellspacing=3D"0" cellpad=
+ding=3D"0" width=3D"100%" style=3D"mso-table-lspace: 0pt; mso-table-rspace:=
+ 0pt; border-collapse: collapse; border-spacing: 0px;"><tr data-ol-has-clic=
+k-handler=3D"" style=3D"border-collapse: collapse;">=0A<td valign=3D"top" a=
+lign=3D"center" style=3D"width: 560px; margin: 0; padding: 0;"><table width=
+=3D"100%" cellspacing=3D"0" cellpadding=3D"0" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse=
+; border-spacing: 0px;"><tr data-ol-has-click-handler=3D"" style=3D"border-=
+collapse: collapse;"><td align=3D"left" style=3D"margin: 0; padding: 0 15px=
+ 20px;"><p style=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust: n=
+one; mso-line-height-rule: exactly; font-size: 16px; font-family: helvetica=
+, 'helvetica neue', arial, verdana, sans-serif; line-height: 24px; color: #=
+333333; margin: 0;">=0AAs a business solution manager at a global innovatio=
+n service provider in Germany, Stefan is passionate about innovation. To en=
+sure he has the knowledge he needs to excel at work, he=E2=80=99s pursuing =
+a <a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text-si=
+ze-adjust: none; mso-line-height-rule: exactly; font-family: helvetica, 'he=
+lvetica neue', arial, verdana, sans-serif; font-size: 16px; text-decoration=
+: none; color: #D03529;" href=3D"https://clicks.edx.org/f/a/NVRi8Jj4it3R1iu=
+KXXdnQg~~/AAQRxQA~/RgRiB7BgP0SzaHR0cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGlu=
+ZS1tYXN0ZXItaW4tbGVhZGVyc2hpcC1zZXJ2aWNlLWlubm92YXRpb24tdW5pdmVyc2l0eS1vZi1=
+xdWVlbnNsYW5kP3V0bV9zb3VyY2U9YnJhemUmdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ2=
+49VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAyMTFXA3NwY0IKYCFhKyVgkIhBgVIVcGFwc=
+GFub3MwMDRAZ21haWwuY29tWAQAAABA">Master of Leadership in Service Innovation=
+</a> at the University of Queensland. <a target=3D"_blank" style=3D"-webkit=
+-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-rule: =
+exactly; font-family: helvetica, 'helvetica neue', arial, verdana, sans-ser=
+if; font-size: 16px; text-decoration: none; color: #D03529;" href=3D"https:=
+//clicks.edx.org/f/a/oHzgPU7DbGRiwjrEMj_kdg~~/AAQRxQA~/RgRiB7BgP0SoaHR0cHM6=
+Ly9ibG9nLmVkeC5vcmcvd2h5LWEtYnVzaW5lc3MtbWFuYWdlci1wdXJzdWVkLWFuLWlubm92YXR=
+pb24tZm9jdXNlZC1tYXN0ZXJzLWRlZ3JlZT91dG1fc291cmNlPWJyYXplJnV0bV9tZWRpdW09ZW=
+1haWwmdXRtX2NhbXBhaWduPVRodXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjExVwNzcGNCC=
+mAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~">=0ARead his story<=
+/a> to learn about his experience and hear his advice for future students.<=
+/p></td></tr><tr data-ol-has-click-handler=3D"" style=3D"border-collapse: c=
+ollapse;"><td align=3D"left" style=3D"margin: 0; padding: 0 0 15px 10px;"><=
+span class=3D"es-button-border" style=3D"background-color: #D03529; display=
+: inline-block; border-radius: 0px; width: auto; border: 2px solid #d03529;=
+"><a href=3D"https://clicks.edx.org/f/a/TyCIxcJYnEqBC9pPC2aKPg~~/AAQRxQA~/R=
+gRiB7BgP0R2aHR0cHM6Ly93d3cuZWR4Lm9yZy9zZWFyY2g_dGFiPXByb2dyYW0mdXRtX3NvdXJj=
+ZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19=
+Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBA=
+AAAEA~" class=3D"es-button" target=3D"_blank" style=3D"mso-style-priority: =
+100 !important; text-decoration: none !important; -webkit-text-size-adjust:=
+ none; -ms-text-size-adjust: none; mso-line-height-rule: exactly; font-fami=
+ly: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 16p=
+x; color: #FFFFFF; display: inline-block; background-color: #D03529; border=
+-radius: 0px; font-weight: normal; font-style: normal; line-height: 19px; w=
+idth: auto; text-align: center; border-color: #d03529; border-style: solid;=
+ border-width: 10px 15px;">=0AExplore all programs</a></span></td></tr></ta=
+ble></td></tr></table></td></tr><tr style=3D"border-collapse: collapse;"><t=
+d align=3D"left" bgcolor=3D"#00262b" style=3D"margin: 0; padding: 10px 20px=
+ 5px;"> <!--[if mso]><table style=3D"width:560px" cellpadding=3D"0" cellspa=
+cing=3D"0"><tr><td style=3D"width:194px" valign=3D"top"><![endif]--><h2 sty=
+le=3D"line-height: 29px; mso-line-height-rule: exactly; font-family: arial,=
+ 'helvetica neue', helvetica, sans-serif; font-size: 24px; font-style: norm=
+al; font-weight: normal; color: #333333; margin: 0;"><font color=3D"ffffff"=
+>Master's Degree Programs</font><br><br></h2><table cellpadding=3D"0" cells=
+pacing=3D"0" align=3D"left" class=3D"es-left" style=3D"mso-table-lspace: 0p=
+t; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; f=
+loat: left;"><tr style=3D"border-collapse: collapse;"><td class=3D"es-m-p20=
+b" align=3D"center" valign=3D"top" style=3D"width: 174px; margin: 0; paddin=
+g: 0;">=0A<table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=
+=3D"#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-=
+collapse: collapse; border-spacing: 0px; box-shadow: 4px 7px 9px 0px #D6D5D=
+5;" role=3D"presentation"><tr style=3D"border-collapse: collapse;"><td alig=
+n=3D"center" class=3D"es-m-txt-c" style=3D"font-size: 0px; margin: 0; paddi=
+ng: 5px 20px 15px;"><img src=3D"https://fzvpwi.stripocdn.email/content/guid=
+s/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/34951612973424901.png" al=
+t=3D"IUx" style=3D"display: block; outline: none; text-decoration: none; -m=
+s-interpolation-mode: bicubic; border: 0;" width=3D"129" title=3D"IUx"></td=
+></tr><tr style=3D"border-collapse: collapse;"><td align=3D"center" class=
+=3D"es-m-txt-c" style=3D"margin: 0; padding: 10px 10px 15px;">=0A<h3 style=
+=3D"line-height: 20px; mso-line-height-rule: exactly; font-family: helvetic=
+a, 'helvetica neue', arial, verdana, sans-serif; font-size: 17px; font-styl=
+e: normal; font-weight: normal; color: #454545; margin: 0;" align=3D"center=
+"><strong><a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms=
+-text-size-adjust: none; mso-line-height-rule: exactly; font-family: helvet=
+ica, 'helvetica neue', arial, verdana, sans-serif; font-size: 17px; text-de=
+coration: none; color: #454545; line-height: 20px; text-align: center;" hre=
+f=3D"https://clicks.edx.org/f/a/ocjM1-uVc6xyCZxzuQS9ww~~/AAQRxQA~/RgRiB7BgP=
+0SaaHR0cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItaW4tYWNjb3VudGlu=
+Zy1pbmRpYW5hLXVuaXZlcnNpdHk_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV=
+0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJW=
+CQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~">Master of Science in Accoun=
+ting</a></strong></h3><p style=3D"-webkit-text-size-adjust: none; -ms-text-=
+size-adjust: none; mso-line-height-rule: exactly; font-size: 14px; font-fam=
+ily: arial, 'helvetica neue', helvetica, sans-serif; line-height: 21px; col=
+or: #333333; margin: 0;"><br><br><em>Next Start:</em>&nbsp;Fall&nbsp;2021</=
+p></td></tr></table></td>=0A<td class=3D"es-hidden" style=3D"width: 20px; m=
+argin: 0; padding: 0;"></td></tr></table> <!--[if mso]></td><td style=3D"wi=
+dth:173px" valign=3D"top"><![endif]--><table cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"es-left" align=3D"left" style=3D"mso-table-lspace: 0pt; mso=
+-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; float: =
+left;"><tr style=3D"border-collapse: collapse;"><td class=3D"es-m-p20b" ali=
+gn=3D"center" valign=3D"top" style=3D"width: 173px; margin: 0; padding: 0;"=
+><table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ffff=
+ff" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse:=
+ collapse; border-spacing: 0px; box-shadow: 4px 7px 9px 0px #D6D5D5;" role=
+=3D"presentation"><tr style=3D"border-collapse: collapse;"><td align=3D"cen=
+ter" class=3D"es-m-txt-c" style=3D"font-size: 0px; margin: 0; padding: 5px =
+20px 15px;">=0A<img src=3D"https://fzvpwi.stripocdn.email/content/guids/CAB=
+INET_9a9e5d0ff1edd97c2447860a474f1ed6/images/34951612973424901.png" alt=3D"=
+IUx" style=3D"display: block; outline: none; text-decoration: none; -ms-int=
+erpolation-mode: bicubic; border: 0;" width=3D"129" title=3D"IUx"></td></tr=
+><tr style=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-=
+m-txt-c" style=3D"margin: 0; padding: 10px 10px 15px;"><h3 style=3D"line-he=
+ight: 20px; mso-line-height-rule: exactly; font-family: helvetica, 'helveti=
+ca neue', arial, verdana, sans-serif; font-size: 17px; font-style: normal; =
+font-weight: normal; color: #454545; margin: 0;" align=3D"center"><strong>=
+=0A<a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text-s=
+ize-adjust: none; mso-line-height-rule: exactly; font-family: helvetica, 'h=
+elvetica neue', arial, verdana, sans-serif; font-size: 17px; text-decoratio=
+n: none; color: #454545; line-height: 20px; text-align: center;" href=3D"ht=
+tps://clicks.edx.org/f/a/8Z6IkaxAqYQW7SA4qJ5d1A~~/AAQRxQA~/RgRiB7BgP0SdaHR0=
+cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItaW4taXQtbWFuYWdlbWVudC1=
+pbmRpYW5hLXVuaXZlcnNpdHk_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV=
+9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQi=
+EGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~">Master of Science in IT Manage=
+ment</a></strong></h3><p style=3D"-webkit-text-size-adjust: none; -ms-text-=
+size-adjust: none; mso-line-height-rule: exactly; font-size: 14px; font-fam=
+ily: arial, 'helvetica neue', helvetica, sans-serif; line-height: 21px; col=
+or: #333333; margin: 0;"><span style=3D"font-size: 10px;"></span><span styl=
+e=3D"font-size: 10px;"><br></span><br><em>Next Start:</em>&nbsp;Fall&nbsp;2=
+021</p></td></tr></table></td></tr></table> <!--[if mso]></td><td style=3D"=
+width:20px"></td><td style=3D"width:173px" valign=3D"top"><![endif]-->=0A<t=
+able cellpadding=3D"0" cellspacing=3D"0" class=3D"es-right" align=3D"right"=
+ style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: co=
+llapse; border-spacing: 0px; float: right;"><tr style=3D"border-collapse: c=
+ollapse;"><td align=3D"center" valign=3D"top" style=3D"width: 173px; margin=
+: 0; padding: 0;"><table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%"=
+ bgcolor=3D"#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;=
+ border-collapse: collapse; border-spacing: 0px; box-shadow: #D6D5D5 4px 7p=
+x 9px 0px;" role=3D"presentation"><tr style=3D"border-collapse: collapse;">=
+<td align=3D"center" class=3D"es-m-txt-c" style=3D"font-size: 0px; margin: =
+0; padding: 0 20px;"><img src=3D"https://fzvpwi.stripocdn.email/content/gui=
+ds/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/37841611763140094.png" a=
+lt=3D"PurdueX" style=3D"display: block; outline: none; text-decoration: non=
+e; -ms-interpolation-mode: bicubic; border: 0;" width=3D"133" title=3D"Purd=
+ueX">=0A</td></tr><tr style=3D"border-collapse: collapse;"><td align=3D"cen=
+ter" class=3D"es-m-txt-c" style=3D"margin: 0; padding: 0 5px 15px;"><h3 sty=
+le=3D"line-height: 20px; mso-line-height-rule: exactly; font-family: helvet=
+ica, 'helvetica neue', arial, verdana, sans-serif; font-size: 17px; font-st=
+yle: normal; font-weight: normal; color: #454545; margin: 0;" align=3D"cent=
+er"><strong><a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -=
+ms-text-size-adjust: none; mso-line-height-rule: exactly; font-family: helv=
+etica, 'helvetica neue', arial, verdana, sans-serif; font-size: 17px; text-=
+decoration: none; color: #454545; line-height: 20px; text-align: center;" h=
+ref=3D"https://clicks.edx.org/f/a/V6elpTIsOqFLttQcQ4imzA~~/AAQRxQA~/RgRiB7B=
+gP0ShaHR0cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXJzLWluLWVsZWN0cm=
+ljYWwtYW5kLWNvbXB1dGVyLWVuZ2luZWVyaW5nP3V0bV9zb3VyY2U9YnJhemUmdXRtX21lZGl1b=
+T1lbWFpbCZ1dG1fY2FtcGFpZ249VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAyMTFXA3Nw=
+Y0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA">Master of Science=
+ in Electrical and Computer Engineering</a></strong></h3>=0A<p style=3D"-we=
+bkit-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-ru=
+le: exactly; font-size: 8px; font-family: arial, 'helvetica neue', helvetic=
+a, sans-serif; line-height: 12px; color: #454545; margin: 0;"><br></p><p st=
+yle=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust: none; mso-line=
+-height-rule: exactly; font-size: 14px; font-family: helvetica, 'helvetica =
+neue', arial, verdana, sans-serif; line-height: 17px; color: #454545; margi=
+n: 0;"><br><em>Next Start:</em>&nbsp;Fall&nbsp;2021</p></td></tr></table></=
+td></tr></table> <!--[if mso]></td></tr></table><![endif]--></td></tr><tr s=
+tyle=3D"border-collapse: collapse;"><td align=3D"left" bgcolor=3D"#00262b" =
+style=3D"margin: 0; padding: 5px 20px 10px;"> <!--[if mso]><table style=3D"=
+width:560px" cellpadding=3D"0" cellspacing=3D"0"><tr><td style=3D"width:194=
+px" valign=3D"top"><![endif]-->=0A<table cellpadding=3D"0" cellspacing=3D"0=
+" align=3D"left" class=3D"es-left" style=3D"mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; float: left;=
+"><tr style=3D"border-collapse: collapse;"><td class=3D"es-m-p20b" align=3D=
+"center" valign=3D"top" style=3D"width: 174px; margin: 0; padding: 0;"><tab=
+le cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ffffff" s=
+tyle=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: coll=
+apse; border-spacing: 0px; box-shadow: 4px 7px 9px 0px #D6D5D5;" role=3D"pr=
+esentation"><tr style=3D"border-collapse: collapse;"><td align=3D"center" c=
+lass=3D"es-m-txt-c" style=3D"font-size: 0px; margin: 0; padding: 10px 20px =
+5px;">=0A<img src=3D"https://fzvpwi.stripocdn.email/content/guids/CABINET_9=
+a9e5d0ff1edd97c2447860a474f1ed6/images/39831606924077167.png" alt=3D"BUx" s=
+tyle=3D"display: block; outline: none; text-decoration: none; -ms-interpola=
+tion-mode: bicubic; border: 0;" width=3D"134" title=3D"BUx"></td></tr><tr s=
+tyle=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-m-txt-=
+c" style=3D"margin: 0; padding: 5px 5px 15px;"><h3 style=3D"line-height: 20=
+px; mso-line-height-rule: exactly; font-family: helvetica, 'helvetica neue'=
+, arial, verdana, sans-serif; font-size: 17px; font-style: normal; font-wei=
+ght: normal; color: #454545; margin: 0;" align=3D"center"><strong>=0A<a tar=
+get=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text-size-adjus=
+t: none; mso-line-height-rule: exactly; font-family: helvetica, 'helvetica =
+neue', arial, verdana, sans-serif; font-size: 17px; text-decoration: none; =
+color: #454545; line-height: 20px; text-align: center;" href=3D"https://cli=
+cks.edx.org/f/a/iYpbf35ZhiDCfApaR4E-Pw~~/AAQRxQA~/RgRiB7BgP0SZaHR0cHM6Ly93d=
+3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItYnVzaW5lc3MtYWRtaW5pc3RyYXRpb24t=
+bWJhLWJ1eD91dG1fc291cmNlPWJyYXplJnV0bV9tZWRpdW09ZW1haWwmdXRtX2NhbXBhaWduPVR=
+odXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjExVwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm=
+9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~">Master of Business Administration</a></stro=
+ng></h3><p style=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust: n=
+one; mso-line-height-rule: exactly; font-size: 8px; font-family: arial, 'he=
+lvetica neue', helvetica, sans-serif; line-height: 12px; color: #454545; ma=
+rgin: 0;"><br></p><p style=3D"-webkit-text-size-adjust: none; -ms-text-size=
+-adjust: none; mso-line-height-rule: exactly; font-size: 14px; font-family:=
+ helvetica, 'helvetica neue', arial, verdana, sans-serif; line-height: 17px=
+; color: #454545; margin: 0;"><br><br><em>Next Start:</em>&nbsp;Fall 2021</=
+p></td></tr></table></td>=0A<td class=3D"es-hidden" style=3D"width: 20px; m=
+argin: 0; padding: 0;"></td></tr></table> <!--[if mso]></td><td style=3D"wi=
+dth:173px" valign=3D"top"><![endif]--><table cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"es-left" align=3D"left" style=3D"mso-table-lspace: 0pt; mso=
+-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; float: =
+left;"><tr style=3D"border-collapse: collapse;"><td class=3D"es-m-p20b" ali=
+gn=3D"center" valign=3D"top" style=3D"width: 173px; margin: 0; padding: 0;"=
+><table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ffff=
+ff" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse:=
+ collapse; border-spacing: 0px; box-shadow: 4px 7px 9px 0px #D6D5D5;" role=
+=3D"presentation"><tr style=3D"border-collapse: collapse;"><td align=3D"cen=
+ter" class=3D"es-m-txt-c" style=3D"font-size: 0px; margin: 0; padding: 10px=
+ 20px 5px;">=0A<img src=3D"https://fzvpwi.stripocdn.email/content/guids/CAB=
+INET_9a9e5d0ff1edd97c2447860a474f1ed6/images/87301611762934523.png" alt=3D"=
+UQx" style=3D"display: block; outline: none; text-decoration: none; -ms-int=
+erpolation-mode: bicubic; border: 0;" width=3D"129" title=3D"UQx"></td></tr=
+><tr style=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-=
+m-txt-c" style=3D"margin: 0; padding: 5px 5px 15px;"><h3 style=3D"line-heig=
+ht: 20px; mso-line-height-rule: exactly; font-family: helvetica, 'helvetica=
+ neue', arial, verdana, sans-serif; font-size: 17px; font-style: normal; fo=
+nt-weight: normal; color: #454545; margin: 0;" align=3D"center"><strong>=0A=
+<a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text-size=
+-adjust: none; mso-line-height-rule: exactly; font-family: helvetica, 'helv=
+etica neue', arial, verdana, sans-serif; font-size: 17px; text-decoration: =
+none; color: #454545; line-height: 20px; text-align: center;" href=3D"https=
+://clicks.edx.org/f/a/NVRi8Jj4it3R1iuKXXdnQg~~/AAQRxQA~/RgRiB7BgP0SzaHR0cHM=
+6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0ZXItaW4tbGVhZGVyc2hpcC1zZXJ2aW=
+NlLWlubm92YXRpb24tdW5pdmVyc2l0eS1vZi1xdWVlbnNsYW5kP3V0bV9zb3VyY2U9YnJhemUmd=
+XRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAy=
+MTAyMTFXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA">Maste=
+r of Leadership in Service Innovation</a></strong></h3><p style=3D"-webkit-=
+text-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-rule: e=
+xactly; font-size: 8px; font-family: arial, 'helvetica neue', helvetica, sa=
+ns-serif; line-height: 12px; color: #454545; margin: 0;"><br></p><p style=
+=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-he=
+ight-rule: exactly; font-size: 14px; font-family: helvetica, 'helvetica neu=
+e', arial, verdana, sans-serif; line-height: 17px; color: #454545; margin: =
+0;"><br><em>Next Start:</em>&nbsp;Fall&nbsp;2021</p></td></tr></table></td>=
+</tr>=0A</table> <!--[if mso]></td><td style=3D"width:20px"></td><td style=
+=3D"width:173px" valign=3D"top"><![endif]--><table cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"es-right" align=3D"right" style=3D"mso-table-lspace: 0=
+pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; =
+float: right;"><tr style=3D"border-collapse: collapse;"><td align=3D"center=
+" valign=3D"top" style=3D"width: 173px; margin: 0; padding: 0;"><table cell=
+padding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ffffff" style=3D=
+"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; b=
+order-spacing: 0px; box-shadow: #D6D5D5 4px 7px 9px 0px;" role=3D"presentat=
+ion"><tr style=3D"border-collapse: collapse;"><td align=3D"center" class=3D=
+"es-m-txt-c" style=3D"font-size: 0px; margin: 0; padding: 10px 20px 0;">=0A=
+<img src=3D"https://fzvpwi.stripocdn.email/content/guids/CABINET_9a9e5d0ff1=
+edd97c2447860a474f1ed6/images/49491609946394495.png" alt=3D"ASUx" style=3D"=
+display: block; outline: none; text-decoration: none; -ms-interpolation-mod=
+e: bicubic; border: 0;" width=3D"133" title=3D"ASUx"></td></tr><tr style=3D=
+"border-collapse: collapse;"><td align=3D"center" class=3D"es-m-txt-c" styl=
+e=3D"margin: 0; padding: 10px 5px 15px 10px;"><h3 style=3D"line-height: 20p=
+x; mso-line-height-rule: exactly; font-family: helvetica, 'helvetica neue',=
+ arial, verdana, sans-serif; font-size: 17px; font-style: normal; font-weig=
+ht: normal; color: #454545; margin: 0;" align=3D"center"><strong>=0A<a targ=
+et=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust=
+: none; mso-line-height-rule: exactly; font-family: helvetica, 'helvetica n=
+eue', arial, verdana, sans-serif; font-size: 17px; text-decoration: none; c=
+olor: #454545;" href=3D"https://clicks.edx.org/f/a/OymNsTFyZJ-h0y3WVVhFOw~~=
+/AAQRxQA~/RgRiB7BgP0SZaHR0cHM6Ly93d3cuZWR4Lm9yZy9tYXN0ZXJzL29ubGluZS1tYXN0Z=
+XItaW4tc3VwcGx5LWNoYWluLW1hbmFnZW1lbnQtYXN1eD91dG1fc291cmNlPWJyYXplJnV0bV9t=
+ZWRpdW09ZW1haWwmdXRtX2NhbXBhaWduPVRodXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjE=
+xVwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~">Master o=
+f Science in Supply Chain Management</a></strong></h3><h3 style=3D"line-hei=
+ght: 10px; mso-line-height-rule: exactly; font-family: arial, 'helvetica ne=
+ue', helvetica, sans-serif; font-size: 8px; font-style: normal; font-weight=
+: normal; color: #454545; margin: 0;"><br></h3><p style=3D"-webkit-text-siz=
+e-adjust: none; -ms-text-size-adjust: none; mso-line-height-rule: exactly; =
+font-size: 14px; font-family: helvetica, 'helvetica neue', arial, verdana, =
+sans-serif; line-height: 17px; color: #454545; margin: 0;"><br><em>Next Sta=
+rt:</em>&nbsp;Fall 2021</p></td></tr></table></td></tr></table> <!--[if mso=
+]></td></tr></table><![endif]--></td></tr>=0A<tr style=3D"border-collapse: =
+collapse;"><td align=3D"left" bgcolor=3D"#FAFAFA" style=3D"margin: 0; paddi=
+ng: 10px 20px 5px;"> <!--[if mso]><table style=3D"width:560px" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td style=3D"width:194px" valign=3D"top"><![en=
+dif]--><h2 style=3D"line-height: 29px; mso-line-height-rule: exactly; font-=
+family: arial, 'helvetica neue', helvetica, sans-serif; font-size: 24px; fo=
+nt-style: normal; font-weight: normal; color: #333333; margin: 0;"><font co=
+lor=3D"000000">MicroMasters=C2=AE Programs</font><br><br></h2><table cellpa=
+dding=3D"0" cellspacing=3D"0" align=3D"left" class=3D"es-left" style=3D"mso=
+-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; borde=
+r-spacing: 0px; float: left;"><tr style=3D"border-collapse: collapse;"><td =
+class=3D"es-m-p20b" align=3D"center" valign=3D"top" style=3D"width: 174px; =
+margin: 0; padding: 0;">=0A<table cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" bgcolor=3D"#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-rsp=
+ace: 0pt; border-collapse: collapse; border-spacing: 0px; box-shadow: 4px 7=
+px 9px 0px #D6D5D5;" role=3D"presentation"><tr style=3D"border-collapse: co=
+llapse;"><td align=3D"center" class=3D"es-m-txt-c" style=3D"font-size: 0px;=
+ margin: 0; padding: 5px 20px 15px;"><img src=3D"https://fzvpwi.stripocdn.e=
+mail/content/guids/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/54301612=
+372009205.png" alt=3D"IUx" style=3D"display: block; outline: none; text-dec=
+oration: none; -ms-interpolation-mode: bicubic; border: 0;" width=3D"134" t=
+itle=3D"IUx"></td></tr><tr style=3D"border-collapse: collapse;"><td align=
+=3D"center" class=3D"es-m-txt-c" style=3D"margin: 0; padding: 5px 20px;">=
+=0A<h3 style=3D"line-height: 22px; mso-line-height-rule: exactly; font-fami=
+ly: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 18p=
+x; font-style: normal; font-weight: normal; color: #454545; margin: 0;"><st=
+rong><a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text=
+-size-adjust: none; mso-line-height-rule: exactly; font-family: helvetica, =
+'helvetica neue', arial, verdana, sans-serif; font-size: 18px; text-decorat=
+ion: none; color: #454545;" href=3D"https://clicks.edx.org/f/a/1YnCUDhLf6Z6=
+DwaIUBz3hQ~~/AAQRxQA~/RgRiB7BgP0R_aHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc3Rlc=
+nMvaXV4LWFjY291bnRpbmc_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9j=
+YW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEG=
+BUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~">Accounting</a></strong><br><br><=
+br><span style=3D"font-size: 14px;">3 Courses</span></h3></td></tr><tr styl=
+e=3D"border-collapse: collapse;"><td align=3D"center" style=3D"font-size: 0=
+; margin: 0; padding: 0;" bgcolor=3D"#cccccc"><table border=3D"0" width=3D"=
+100%" height=3D"100%" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
+ion" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse=
+: collapse; border-spacing: 0px;"><tr style=3D"border-collapse: collapse;">=
+=0A<td style=3D"border-bottom-width: 0px; border-bottom-color: #CCCCCC; bor=
+der-bottom-style: solid; background-image: none; height: 1px; width: 100%; =
+margin: 0px; padding: 0;"></td></tr></table></td></tr></table></td><td clas=
+s=3D"es-hidden" style=3D"width: 20px; margin: 0; padding: 0;"></td></tr></t=
+able> <!--[if mso]></td><td style=3D"width:173px" valign=3D"top"><![endif]-=
+-><table cellpadding=3D"0" cellspacing=3D"0" class=3D"es-left" align=3D"lef=
+t" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: =
+collapse; border-spacing: 0px; float: left;"><tr style=3D"border-collapse: =
+collapse;"><td class=3D"es-m-p20b" align=3D"center" valign=3D"top" style=3D=
+"width: 173px; margin: 0; padding: 0;"><table cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%" bgcolor=3D"#ffffff" style=3D"mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; box-s=
+hadow: 4px 7px 9px 0px #D6D5D5;" role=3D"presentation"><tr style=3D"border-=
+collapse: collapse;">=0A<td align=3D"center" class=3D"es-m-txt-c" style=3D"=
+font-size: 0px; margin: 0; padding: 5px 20px 15px;"><img src=3D"https://fzv=
+pwi.stripocdn.email/content/guids/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/=
+images/54301612372009205.png" alt=3D"IUx" style=3D"display: block; outline:=
+ none; text-decoration: none; -ms-interpolation-mode: bicubic; border: 0;" =
+width=3D"133" title=3D"IUx"></td></tr><tr style=3D"border-collapse: collaps=
+e;"><td align=3D"center" class=3D"es-m-txt-c" style=3D"margin: 0; padding: =
+0 20px 10px;"><h3 style=3D"line-height: 22px; mso-line-height-rule: exactly=
+; font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif; fon=
+t-size: 18px; font-style: normal; font-weight: normal; color: #454545; marg=
+in: 0;"><strong>=0A<a target=3D"_blank" style=3D"-webkit-text-size-adjust: =
+none; -ms-text-size-adjust: none; mso-line-height-rule: exactly; font-famil=
+y: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 18px=
+; text-decoration: none; color: #454545;" href=3D"https://clicks.edx.org/f/=
+a/qv7fqkh-J823DpIEnTe7XA~~/AAQRxQA~/RgRiB7BgP0SIaHR0cHM6Ly93d3cuZWR4Lm9yZy9=
+taWNyb21hc3RlcnMvaXV4LWluZm9ybWF0aW9uLXN5c3RlbXM_dXRtX3NvdXJjZT1icmF6ZSZ1dG=
+1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxM=
+DIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~">Inform=
+ation Systems</a></strong><br><br><span style=3D"font-size: 14px;">3 Course=
+s</span></h3></td></tr></table></td></tr></table> <!--[if mso]></td><td sty=
+le=3D"width:20px"></td><td style=3D"width:173px" valign=3D"top"><![endif]--=
+><table cellpadding=3D"0" cellspacing=3D"0" class=3D"es-right" align=3D"rig=
+ht" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse:=
+ collapse; border-spacing: 0px; float: right;"><tr style=3D"border-collapse=
+: collapse;"><td align=3D"center" valign=3D"top" style=3D"width: 173px; mar=
+gin: 0; padding: 0;">=0A<table cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" bgcolor=3D"#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-rspace=
+: 0pt; border-collapse: collapse; border-spacing: 0px; box-shadow: #D6D5D5 =
+4px 7px 9px 0px;" role=3D"presentation"><tr style=3D"border-collapse: colla=
+pse;"><td align=3D"center" class=3D"es-m-txt-c" style=3D"font-size: 0px; ma=
+rgin: 0; padding: 5px 20px 20px;"><img src=3D"https://fzvpwi.stripocdn.emai=
+l/content/guids/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/69301612975=
+184267.png" alt=3D"RITx" style=3D"display: block; outline: none; text-decor=
+ation: none; -ms-interpolation-mode: bicubic; border: 0;" width=3D"113" tit=
+le=3D"RITx"></td></tr><tr style=3D"border-collapse: collapse;"><td align=3D=
+"center" class=3D"es-m-txt-c" style=3D"margin: 0; padding: 0 15px 20px;">=
+=0A<h3 style=3D"line-height: 22px; mso-line-height-rule: exactly; font-fami=
+ly: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 18p=
+x; font-style: normal; font-weight: normal; color: #454545; margin: 0;"><st=
+rong><a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text=
+-size-adjust: none; mso-line-height-rule: exactly; font-family: helvetica, =
+'helvetica neue', arial, verdana, sans-serif; font-size: 18px; text-decorat=
+ion: none; color: #454545;" href=3D"https://clicks.edx.org/f/a/bp-lOlnTK5H5=
+1RkMurqQFg~~/AAQRxQA~/RgRiB7BgP0SIaHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc3Rlc=
+nMvcml0eC1wcm9qZWN0LW1hbmFnZW1lbnQ_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVt=
+YWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgp=
+gIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~">Project Management</=
+a></strong><br><br><span style=3D"font-size: 14px;">4 Courses</span></h3></=
+td></tr><tr style=3D"border-collapse: collapse;"><td align=3D"center" style=
+=3D"font-size: 0; margin: 0; padding: 0;" bgcolor=3D"#cccccc"><table border=
+=3D"0" width=3D"100%" height=3D"100%" cellpadding=3D"0" cellspacing=3D"0" r=
+ole=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;=
+ border-collapse: collapse; border-spacing: 0px;"><tr style=3D"border-colla=
+pse: collapse;">=0A<td style=3D"border-bottom-width: 0px; border-bottom-col=
+or: #CCCCCC; border-bottom-style: solid; background-image: none; height: 1p=
+x; width: 100%; margin: 0px; padding: 0;"></td></tr></table></td></tr></tab=
+le></td></tr></table><table cellpadding=3D"0" cellspacing=3D"0" align=3D"le=
+ft" class=3D"es-left" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; border-collapse: collapse; border-spacing: 0px; float: left;"><tr style=
+=3D"border-collapse: collapse;"><td class=3D"es-m-p20b" align=3D"center" va=
+lign=3D"top" style=3D"width: 174px; margin: 0; padding: 0;"><table cellpadd=
+ing=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ffffff" style=3D"mso=
+-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; borde=
+r-spacing: 0px; box-shadow: 4px 7px 9px 0px #D6D5D5;" role=3D"presentation"=
+><tr style=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-=
+m-txt-c" style=3D"font-size: 0px; margin: 0; padding: 10px 20px 30px;">=0A<=
+img src=3D"https://fzvpwi.stripocdn.email/content/guids/CABINET_9a9e5d0ff1e=
+dd97c2447860a474f1ed6/images/26641611159249430.png" alt=3D"BerkeleyX" style=
+=3D"display: block; outline: none; text-decoration: none; -ms-interpolation=
+-mode: bicubic; border: 0;" width=3D"119" title=3D"BerkeleyX"></td></tr><tr=
+ style=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-m-tx=
+t-c" style=3D"margin: 0; padding: 0 20px 20px;"><h3 style=3D"line-height: 2=
+2px; mso-line-height-rule: exactly; font-family: helvetica, 'helvetica neue=
+', arial, verdana, sans-serif; font-size: 18px; font-style: normal; font-we=
+ight: normal; color: #454545; margin: 0;"><strong><a target=3D"_blank" styl=
+e=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-h=
+eight-rule: exactly; font-family: helvetica, 'helvetica neue', arial, verda=
+na, sans-serif; font-size: 18px; text-decoration: none; color: #454545;" hr=
+ef=3D"https://clicks.edx.org/f/a/vqgytr4I24jowEnobjyttA~~/AAQRxQA~/RgRiB7Bg=
+P0SOaHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc3RlcnMvYmVya2VsZXl4LW1hcmtldGluZy1=
+hbmFseXRpY3M_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj=
+1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwY=
+W5vczAwNEBnbWFpbC5jb21YBAAAAEA~">=0AMarketing Analytics</a></strong></h3><p=
+ style=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust: none; mso-l=
+ine-height-rule: exactly; font-size: 14px; font-family: helvetica, 'helveti=
+ca neue', arial, verdana, sans-serif; line-height: 21px; color: #454545; ma=
+rgin: 0;"><br><br>4 Courses</p></td></tr></table></td><td class=3D"es-hidde=
+n" style=3D"width: 20px; margin: 0; padding: 0;"></td></tr></table> <!--[if=
+ mso]></td><td style=3D"width:173px" valign=3D"top"><![endif]--><table cell=
+padding=3D"0" cellspacing=3D"0" class=3D"es-left" align=3D"left" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; bor=
+der-spacing: 0px; float: left;"><tr style=3D"border-collapse: collapse;"><t=
+d class=3D"es-m-p20b" align=3D"center" valign=3D"top" style=3D"width: 173px=
+; margin: 0; padding: 0;">=0A<table cellpadding=3D"0" cellspacing=3D"0" wid=
+th=3D"100%" bgcolor=3D"#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; border-collapse: collapse; border-spacing: 0px; box-shadow: 4px=
+ 7px 9px 0px #D6D5D5;" role=3D"presentation"><tr style=3D"border-collapse: =
+collapse;"><td align=3D"center" style=3D"font-size: 0; margin: 0; padding: =
+0;" bgcolor=3D"#cccccc"><table border=3D"0" width=3D"100%" height=3D"100%" =
+cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-tabl=
+e-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spa=
+cing: 0px;"><tr style=3D"border-collapse: collapse;"><td style=3D"border-bo=
+ttom-width: 0px; border-bottom-color: #CCCCCC; border-bottom-style: solid; =
+background-image: none; height: 1px; width: 100%; margin: 0px; padding: 0;"=
+></td></tr></table></td></tr><tr style=3D"border-collapse: collapse;"><td a=
+lign=3D"center" class=3D"es-m-txt-c" style=3D"font-size: 0px; margin: 0; pa=
+dding: 0 20px;">=0A<img src=3D"https://fzvpwi.stripocdn.email/content/guids=
+/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/58671612975369205.png" alt=
+=3D"UMGC and USMx" style=3D"display: block; outline: none; text-decoration:=
+ none; -ms-interpolation-mode: bicubic; border: 0;" width=3D"123" title=3D"=
+UMGC and USMx"></td></tr><tr style=3D"border-collapse: collapse;"><td align=
+=3D"center" class=3D"es-m-txt-c" style=3D"font-size: 0px; margin: 0; paddin=
+g: 0 20px;"><img src=3D"https://fzvpwi.stripocdn.email/content/guids/CABINE=
+T_9a9e5d0ff1edd97c2447860a474f1ed6/images/96761612975395575.png" alt=3D"UMG=
+C and USMx" style=3D"display: block; outline: none; text-decoration: none; =
+-ms-interpolation-mode: bicubic; border: 0;" width=3D"118" title=3D"UMGC an=
+d USMx"></td></tr><tr style=3D"border-collapse: collapse;"><td align=3D"cen=
+ter" class=3D"es-m-txt-c" style=3D"margin: 0; padding: 0 20px 20px;">=0A<h3=
+ style=3D"line-height: 22px; mso-line-height-rule: exactly; font-family: he=
+lvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 18px; fon=
+t-style: normal; font-weight: normal; color: #454545; margin: 0;"><strong><=
+a target=3D"_blank" style=3D"-webkit-text-size-adjust: none; -ms-text-size-=
+adjust: none; mso-line-height-rule: exactly; font-family: helvetica, 'helve=
+tica neue', arial, verdana, sans-serif; font-size: 18px; text-decoration: n=
+one; color: #454545;" href=3D"https://clicks.edx.org/f/a/WKw3D1wswqBsWXfe8w=
+oWVA~~/AAQRxQA~/RgRiB7BgP0SKaHR0cHM6Ly93d3cuZWR4Lm9yZy9taWNyb21hc3RlcnMvdXN=
+teC11bWdjLWNsb3VkLWNvbXB1dGluZz91dG1fc291cmNlPWJyYXplJnV0bV9tZWRpdW09ZW1haW=
+wmdXRtX2NhbXBhaWduPVRodXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjExVwNzcGNCCmAhY=
+SslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~">Cloud Computing</a></s=
+trong></h3><p style=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust=
+: none; mso-line-height-rule: exactly; font-size: 14px; font-family: helvet=
+ica, 'helvetica neue', arial, verdana, sans-serif; line-height: 21px; color=
+: #454545; margin: 0;"><br>4 Courses</p></td></tr></table></td></tr></table=
+> <!--[if mso]></td><td style=3D"width:20px"></td><td style=3D"width:173px"=
+ valign=3D"top"><![endif]-->=0A<table cellpadding=3D"0" cellspacing=3D"0" c=
+lass=3D"es-right" align=3D"right" style=3D"mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; float: right;=
+"><tr style=3D"border-collapse: collapse;"><td align=3D"center" valign=3D"t=
+op" style=3D"width: 173px; margin: 0; padding: 0;"><table cellpadding=3D"0"=
+ cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ffffff" style=3D"mso-table-ls=
+pace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing=
+: 0px; box-shadow: #D6D5D5 4px 7px 9px 0px;" role=3D"presentation"><tr styl=
+e=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-m-txt-c" =
+style=3D"font-size: 0px; margin: 0; padding: 5px 20px 0;">=0A<img src=3D"ht=
+tps://fzvpwi.stripocdn.email/content/guids/CABINET_9a9e5d0ff1edd97c2447860a=
+474f1ed6/images/19691612975556915.png" alt=3D"UMD and USMx" style=3D"displa=
+y: block; outline: none; text-decoration: none; -ms-interpolation-mode: bic=
+ubic; border: 0;" width=3D"123" title=3D"UMD and USMx"></td></tr><tr style=
+=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-m-txt-c" s=
+tyle=3D"font-size: 0px; margin: 0; padding: 0 20px;"><img src=3D"https://fz=
+vpwi.stripocdn.email/content/guids/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6=
+/images/46521612975575704.png" alt=3D"UMD and USMx" style=3D"display: block=
+; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; bo=
+rder: 0;" width=3D"108" title=3D"UMD and USMx"></td></tr><tr style=3D"borde=
+r-collapse: collapse;"><td align=3D"center" class=3D"es-m-txt-c" style=3D"m=
+argin: 0; padding: 0 20px 20px;">=0A<h3 style=3D"line-height: 22px; mso-lin=
+e-height-rule: exactly; font-family: helvetica, 'helvetica neue', arial, ve=
+rdana, sans-serif; font-size: 18px; font-style: normal; font-weight: normal=
+; color: #454545; margin: 0;"><strong><a target=3D"_blank" style=3D"-webkit=
+-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-rule: =
+exactly; font-family: helvetica, 'helvetica neue', arial, verdana, sans-ser=
+if; font-size: 18px; text-decoration: none; color: #454545;" href=3D"https:=
+//clicks.edx.org/f/a/Zb4k_OVOTZ-obRuqh8O6-A~~/AAQRxQA~/RgRiB7BgP0SNaHR0cHM6=
+Ly93d3cuZWR4Lm9yZy9taWNyb21hc3RlcnMvVVNNeC1VTUQtTUJBLUNvcmUtQ3VycmljdWx1bT9=
+1dG1fc291cmNlPWJyYXplJnV0bV9tZWRpdW09ZW1haWwmdXRtX2NhbXBhaWduPVRodXJzZGF5X1=
+Byb2dyYW1zX1Byb21vXzIwMjEwMjExVwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtY=
+WlsLmNvbVgEAAAAQA~~">MBA Core Curriculum</a></strong></h3><p style=3D"-webk=
+it-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-rule=
+: exactly; font-size: 14px; font-family: helvetica, 'helvetica neue', arial=
+, verdana, sans-serif; line-height: 21px; color: #454545; margin: 0;"><br>7=
+ Courses</p></td></tr></table></td></tr></table> <!--[if mso]></td></tr></t=
+able><![endif]--></td></tr><tr style=3D"border-collapse: collapse;">=0A<td =
+align=3D"left" bgcolor=3D"#00262B" style=3D"margin: 0; padding: 10px 20px;"=
+> <!--[if mso]><table style=3D"width:560px" cellpadding=3D"0" cellspacing=
+=3D"0"><tr><td style=3D"width:270px" valign=3D"top"><![endif]--><h2 style=
+=3D"line-height: 29px; mso-line-height-rule: exactly; font-family: arial, '=
+helvetica neue', helvetica, sans-serif; font-size: 24px; font-style: normal=
+; font-weight: normal; color: #333333; margin: 0;"><font color=3D"ffffff">M=
+icroBachelors=C2=AE Programs</font><br><br></h2><table cellpadding=3D"0" ce=
+llspacing=3D"0" class=3D"es-left" align=3D"left" style=3D"mso-table-lspace:=
+ 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px=
+; float: left;"><tr style=3D"border-collapse: collapse;"><td class=3D"es-m-=
+p20b" align=3D"left" style=3D"width: 270px; margin: 0; padding: 0;">=0A<tab=
+le cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ffffff" s=
+tyle=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: coll=
+apse; border-spacing: 0px;" role=3D"presentation"><tr style=3D"border-colla=
+pse: collapse;"><td align=3D"center" class=3D"es-m-txt-c" style=3D"font-siz=
+e: 0px; margin: 0; padding: 0 20px;"><img src=3D"https://fzvpwi.stripocdn.e=
+mail/content/guids/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/17511611=
+158419919.png" alt=3D"SNHUx" style=3D"display: block; outline: none; text-d=
+ecoration: none; -ms-interpolation-mode: bicubic; border: 0;" width=3D"113"=
+ title=3D"SNHUx"></td></tr><tr style=3D"border-collapse: collapse;"><td ali=
+gn=3D"center" class=3D"es-m-txt-c" style=3D"margin: 0; padding: 0 20px 20px=
+;">=0A<h3 style=3D"line-height: 22px; mso-line-height-rule: exactly; font-f=
+amily: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: =
+18px; font-style: normal; font-weight: normal; color: #454545; margin: 0;" =
+align=3D"center"><strong><a target=3D"_blank" href=3D"https://clicks.edx.or=
+g/f/a/3smzoqjuvOUoTpJca6YvoQ~~/AAQRxQA~/RgRiB7BgP0SXaHR0cHM6Ly93d3cuZWR4Lm9=
+yZy9taWNyb2JhY2hlbG9ycy9zbmh1eC1idXNpbmVzcy1hbmFseXRpY3MtZm91bmRhdGlvbnM_dX=
+RtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qc=
+m9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFp=
+bC5jb21YBAAAAEA~" style=3D"-webkit-text-size-adjust: none; -ms-text-size-ad=
+just: none; mso-line-height-rule: exactly; font-family: helvetica, 'helveti=
+ca neue', arial, verdana, sans-serif; font-size: 18px; text-decoration: non=
+e; color: #454545;">Business Analytics Foundations</a></strong></h3></td></=
+tr></table></td></tr></table> <!--[if mso]></td><td style=3D"width:20px"></=
+td><td style=3D"width:270px" valign=3D"top"><![endif]--><table cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"es-right" align=3D"right" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-s=
+pacing: 0px; float: right;"><tr style=3D"border-collapse: collapse;">=0A<td=
+ class=3D"es-m-p20b" align=3D"left" style=3D"width: 270px; margin: 0; paddi=
+ng: 0;"><table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=
+=3D"#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-=
+collapse: collapse; border-spacing: 0px;" role=3D"presentation"><tr style=
+=3D"border-collapse: collapse;"><td align=3D"center" style=3D"font-size: 0p=
+x; margin: 0; padding: 10px 0 5px;"><img src=3D"https://fzvpwi.stripocdn.em=
+ail/content/guids/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/373615961=
+14098930.png" alt=3D"NYUx" style=3D"display: block; outline: none; text-dec=
+oration: none; -ms-interpolation-mode: bicubic; border: 0;" width=3D"140" t=
+itle=3D"NYUx"></td></tr><tr style=3D"border-collapse: collapse;"><td align=
+=3D"center" class=3D"es-m-txt-c" style=3D"margin: 0; padding: 0 20px 20px;"=
+>=0A<h3 style=3D"line-height: 22px; mso-line-height-rule: exactly; font-fam=
+ily: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 18=
+px; font-style: normal; font-weight: normal; color: #454545; margin: 0;" al=
+ign=3D"center"><strong><a target=3D"_blank" href=3D"https://clicks.edx.org/=
+f/a/c1aqbGr1rqwHxGAIHZonug~~/AAQRxQA~/RgRiB7BgP0SRaHR0cHM6Ly93d3cuZWR4Lm9yZ=
+y9taWNyb2JhY2hlbG9ycy9ueXV4LWludHJvZHVjdGlvbi10by1kYXRhYmFzZXM_dXRtX3NvdXJj=
+ZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19=
+Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBA=
+AAAEA~" style=3D"-webkit-text-size-adjust: none; -ms-text-size-adjust: none=
+; mso-line-height-rule: exactly; font-family: helvetica, 'helvetica neue', =
+arial, verdana, sans-serif; font-size: 18px; text-decoration: none; color: =
+#454545;">Introduction to <br>Databases</a></strong><br></h3></td></tr></ta=
+ble></td></tr></table> <!--[if mso]></td></tr></table><![endif]--></td></tr=
+><tr style=3D"border-collapse: collapse;"><td align=3D"left" bgcolor=3D"#fa=
+fafa" style=3D"margin: 0; padding: 10px 20px;"> <!--[if mso]><table style=
+=3D"width:560px" cellpadding=3D"0" cellspacing=3D"0"><tr>=0A<td style=3D"wi=
+dth:194px" valign=3D"top"><![endif]--><h2 style=3D"line-height: 29px; mso-l=
+ine-height-rule: exactly; font-family: arial, 'helvetica neue', helvetica, =
+sans-serif; font-size: 24px; font-style: normal; font-weight: normal; color=
+: #333333; margin: 0;">Professional Certificate Programs<br><br></h2> <!--[=
+if mso]></td><td style=3D"width:173px" valign=3D"top"><![endif]--><table ce=
+llpadding=3D"0" cellspacing=3D"0" align=3D"left" class=3D"es-left" style=3D=
+"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; b=
+order-spacing: 0px; float: left;"><tr style=3D"border-collapse: collapse;">=
+<td class=3D"es-m-p20b" align=3D"center" valign=3D"top" style=3D"width: 174=
+px; margin: 0; padding: 0;"><table cellpadding=3D"0" cellspacing=3D"0" widt=
+h=3D"100%" bgcolor=3D"#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-rs=
+pace: 0pt; border-collapse: collapse; border-spacing: 0px; box-shadow: 4px =
+7px 9px 0px #D6D5D5;" role=3D"presentation"><tr style=3D"border-collapse: c=
+ollapse;">=0A<td align=3D"center" class=3D"es-m-txt-c" style=3D"font-size: =
+0px; margin: 0; padding: 10px 15px 15px;"><img src=3D"https://fzvpwi.stripo=
+cdn.email/content/guids/CABINET_9a9e5d0ff1edd97c2447860a474f1ed6/images/536=
+41611161590531.png" alt=3D"IBM" style=3D"display: block; outline: none; tex=
+t-decoration: none; -ms-interpolation-mode: bicubic; border: 0;" width=3D"1=
+38" title=3D"IBM"></td></tr><tr style=3D"border-collapse: collapse;"><td al=
+ign=3D"center" class=3D"es-m-txt-c" style=3D"margin: 0; padding: 0 10px 20p=
+x;"><h3 style=3D"line-height: 22px; mso-line-height-rule: exactly; font-fam=
+ily: helvetica, 'helvetica neue', arial, verdana, sans-serif; font-size: 18=
+px; font-style: normal; font-weight: normal; color: #454545; margin: 0;"><s=
+trong>=0A<a target=3D"_blank" href=3D"https://clicks.edx.org/f/a/zEtLov6OeD=
+dkqrvJymSlCQ~~/AAQRxQA~/RgRiB7BgP0SNaHR0cHM6Ly93d3cuZWR4Lm9yZy9wcm9mZXNzaW9=
+uYWwtY2VydGlmaWNhdGUvaWJtLWRhdGEtYW5hbHlzdD91dG1fc291cmNlPWJyYXplJnV0bV9tZW=
+RpdW09ZW1haWwmdXRtX2NhbXBhaWduPVRodXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjExV=
+wNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~" style=3D"-=
+webkit-text-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-=
+rule: exactly; font-family: helvetica, 'helvetica neue', arial, verdana, sa=
+ns-serif; font-size: 18px; text-decoration: none; color: #454545;">Data Ana=
+lyst</a></strong></h3></td></tr><tr style=3D"border-collapse: collapse;"><t=
+d align=3D"center" style=3D"font-size: 0px; margin: 0; padding: 0;" bgcolor=
+=3D"#fafafa"><table border=3D"0" width=3D"5%" height=3D"100%" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; border-collapse: collapse; border-spacing: 0px; display: inline-table;=
+ width: 5% !important;" role=3D"presentation"><tr style=3D"border-collapse:=
+ collapse;"><td style=3D"border-bottom-width: 1px; border-bottom-color: #FA=
+FAFA; border-bottom-style: solid; background-image: none; height: 1px; widt=
+h: 100%; margin: 0px; padding: 0;"></td></tr></table></td></tr></table></td=
+><td class=3D"es-hidden" style=3D"width: 20px; margin: 0; padding: 0;"></td=
+></tr>=0A</table> <!--[if mso]></td><td style=3D"width:20px"></td><td style=
+=3D"width:173px" valign=3D"top"><![endif]--><table cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"es-left" align=3D"left" style=3D"mso-table-lspace: 0pt=
+; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px; fl=
+oat: left;"><tr style=3D"border-collapse: collapse;"><td class=3D"es-m-p20b=
+" align=3D"center" valign=3D"top" style=3D"width: 173px; margin: 0; padding=
+: 0;"><table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"=
+#ffffff" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-coll=
+apse: collapse; border-spacing: 0px; box-shadow: 4px 7px 9px 0px #D6D5D5;" =
+role=3D"presentation"><tr style=3D"border-collapse: collapse;"><td align=3D=
+"center" style=3D"font-size: 0px; margin: 0; padding: 0 15px;">=0A<img src=
+=3D"https://fzvpwi.stripocdn.email/content/guids/CABINET_9a9e5d0ff1edd97c24=
+47860a474f1ed6/images/7731612992279406.png" alt=3D"UTAustinX" style=3D"disp=
+lay: block; outline: none; text-decoration: none; -ms-interpolation-mode: b=
+icubic; border: 0;" width=3D"143" title=3D"UTAustinX"></td></tr><tr style=
+=3D"border-collapse: collapse;"><td align=3D"center" class=3D"es-m-txt-c" s=
+tyle=3D"margin: 0; padding: 0 5px 20px;"><h3 style=3D"line-height: 22px; ms=
+o-line-height-rule: exactly; font-family: helvetica, 'helvetica neue', aria=
+l, verdana, sans-serif; font-size: 18px; font-style: normal; font-weight: n=
+ormal; color: #454545; margin: 0;"><strong>=0A<a target=3D"_blank" href=3D"=
+https://clicks.edx.org/f/a/F1joWahjHfXnJKwmMfRF-g~~/AAQRxQA~/RgRiB7BgP0SkaH=
+R0cHM6Ly93d3cuZWR4Lm9yZy9wcm9mZXNzaW9uYWwtY2VydGlmaWNhdGUvdXRhdXN0aW54LWZpb=
+nRlY2gtdGhlLWZ1dHVyZS1vZi1maW5hbmNlP3V0bV9zb3VyY2U9YnJhemUmdXRtX21lZGl1bT1l=
+bWFpbCZ1dG1fY2FtcGFpZ249VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAyMTFXA3NwY0I=
+KYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA" style=3D"-webkit-tex=
+t-size-adjust: none; -ms-text-size-adjust: none; mso-line-height-rule: exac=
+tly; font-family: helvetica, 'helvetica neue', arial, verdana, sans-serif; =
+font-size: 18px; text-decoration: none; color: #454545;">Fintech: The Futur=
+e of Finance</a></strong></h3></td></tr><tr style=3D"border-collapse: colla=
+pse;"><td align=3D"center" style=3D"font-size: 0px; margin: 0; padding: 0;"=
+ bgcolor=3D"#fafafa"><table border=3D"0" width=3D"25%" height=3D"100%" cell=
+padding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; border-collapse: collapse; border-spacing: 0px; display: inline=
+-table; width: 25% !important;" role=3D"presentation"><tr style=3D"border-c=
+ollapse: collapse;"><td style=3D"border-bottom-width: 0px; border-bottom-co=
+lor: #FAFAFA; border-bottom-style: solid; background-image: none; height: 1=
+px; width: 100%; margin: 0px; padding: 0;"></td></tr></table></td></tr><tr =
+style=3D"border-collapse: collapse;">=0A<td align=3D"center" style=3D"font-=
+size: 0px; margin: 0; padding: 0;" bgcolor=3D"#fafafa"><table border=3D"0" =
+width=3D"5%" height=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; bor=
+der-spacing: 0px; display: inline-table; width: 5% !important;" role=3D"pre=
+sentation"><tr style=3D"border-collapse: collapse;"><td style=3D"border-bot=
+tom-width: 1px; border-bottom-color: #FAFAFA; border-bottom-style: solid; b=
+ackground-image: none; height: 1px; width: 100%; margin: 0px; padding: 0;">=
+</td></tr></table></td></tr></table></td></tr></table><table cellpadding=3D=
+"0" cellspacing=3D"0" class=3D"es-right" align=3D"right" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spac=
+ing: 0px; float: right;"><tr style=3D"border-collapse: collapse;"><td align=
+=3D"center" valign=3D"top" style=3D"width: 173px; margin: 0; padding: 0;">=
+=0A<table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" bgcolor=3D"#ff=
+ffff" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collaps=
+e: collapse; border-spacing: 0px; box-shadow: 4px 7px 9px 0px #D6D5D5;" rol=
+e=3D"presentation"><tr style=3D"border-collapse: collapse;"><td align=3D"ce=
+nter" style=3D"font-size: 0px; margin: 0; padding: 10px 15px 10px 20px;"><i=
+mg src=3D"https://fzvpwi.stripocdn.email/content/guids/CABINET_9a9e5d0ff1ed=
+d97c2447860a474f1ed6/images/17651612992377553.png" alt=3D"UBCx" style=3D"di=
+splay: block; outline: none; text-decoration: none; -ms-interpolation-mode:=
+ bicubic; border: 0;" width=3D"123" title=3D"UBCx"></td></tr><tr style=3D"b=
+order-collapse: collapse;"><td align=3D"center" class=3D"es-m-txt-c" style=
+=3D"margin: 0; padding: 0 10px 10px;">=0A<h3 style=3D"line-height: 22px; ms=
+o-line-height-rule: exactly; font-family: helvetica, 'helvetica neue', aria=
+l, verdana, sans-serif; font-size: 18px; font-style: normal; font-weight: n=
+ormal; color: #454545; margin: 0;"><strong><a target=3D"_blank" href=3D"htt=
+ps://clicks.edx.org/f/a/n0JhGewq5OC1uZkBD4kX6w~~/AAQRxQA~/RgRiB7BgP0SUaHR0c=
+HM6Ly93d3cuZWR4Lm9yZy9wcm9mZXNzaW9uYWwtY2VydGlmaWNhdGUvdWJjeC1leGNlbC1mb3It=
+ZXZlcnlvbmU_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1=
+UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW=
+5vczAwNEBnbWFpbC5jb21YBAAAAEA~" style=3D"-webkit-text-size-adjust: none; -m=
+s-text-size-adjust: none; mso-line-height-rule: exactly; font-family: helve=
+tica, 'helvetica neue', arial, verdana, sans-serif; font-size: 18px; text-d=
+ecoration: none; color: #454545;">Excel for Everyone</a></strong></h3></td>=
+</tr><tr style=3D"border-collapse: collapse;"><td align=3D"center" style=3D=
+"font-size: 0px; margin: 0; padding: 0;" bgcolor=3D"#fafafa"><table border=
+=3D"0" width=3D"5%" height=3D"100%" cellpadding=3D"0" cellspacing=3D"0" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collap=
+se; border-spacing: 0px; display: inline-table; width: 5% !important;" role=
+=3D"presentation"><tr style=3D"border-collapse: collapse;">=0A<td style=3D"=
+border-bottom-width: 1px; border-bottom-color: #FAFAFA; border-bottom-style=
+: solid; background-image: none; height: 1px; width: 100%; margin: 0px; pad=
+ding: 0;"></td></tr></table></td></tr></table></td></tr></table> <!--[if ms=
+o]></td></tr></table><![endif]--></td></tr></table></td></tr></table><table=
+ cellpadding=3D"0" cellspacing=3D"0" class=3D"es-content" align=3D"center" =
+style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: col=
+lapse; border-spacing: 0px; table-layout: fixed !important; width: 100%;"><=
+tr style=3D"border-collapse: collapse;"><td align=3D"center" style=3D"margi=
+n: 0; padding: 0;"><table class=3D"es-content-body" style=3D"mso-table-lspa=
+ce: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: =
+0px; width: 600px;" cellspacing=3D"0" cellpadding=3D"0" bgcolor=3D"#eeeeee"=
+ align=3D"center"><tr style=3D"border-collapse: collapse;"><td align=3D"lef=
+t" bgcolor=3D"#f7f7f7" style=3D"margin: 0; padding: 0 20px;">=0A<table cell=
+padding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"mso-table-lspace: 0=
+pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px;"=
+><tr style=3D"border-collapse: collapse;"><td align=3D"center" valign=3D"to=
+p" style=3D"width: 560px; margin: 0; padding: 0;"><table cellpadding=3D"0" =
+cellspacing=3D"0" width=3D"100%" role=3D"presentation" style=3D"mso-table-l=
+space: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacin=
+g: 0px;"><tr style=3D"border-collapse: collapse;"><td align=3D"left" style=
+=3D"margin: 0; padding: 0;"><p style=3D"-webkit-text-size-adjust: none; -ms=
+-text-size-adjust: none; mso-line-height-rule: exactly; font-size: 14px; fo=
+nt-family: arial, 'helvetica neue', helvetica, sans-serif; line-height: 21p=
+x; color: #333333; margin: 0;">=0A</p><table cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%">=0A=09<tbody>=0A=09=09<tr>=0A=09=09=09<td class=3D"he=
+ight_20" height=3D"10" style=3D"line-height: 1px; font-size: 1px;"></td>=0A=
+=09=09</tr>=0A=09=09<tr>=0A=09=09=09<td align=3D"left" class=3D"paddingside=
+s_20" valign=3D"top">=0A=09=09=09<table cellpadding=3D"0" cellspacing=3D"0"=
+ width=3D"100%">=0A=09=09=09=09<tbody>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=
+=09=09<td height=3D"30" style=3D"line-height: 1px; font-size: 1px;"></td>=
+=0A=09=09=09=09=09</tr>=0A=09=09=09=09=09<!-- social -->=0A=09=09=09=09=09<=
+tr>=0A=09=09=09=09=09=09<td align=3D"left" valign=3D"top">=0A=09=09=09=09=
+=09=09<table cellpadding=3D"0" cellspacing=3D"0">=0A=09=09=09=09=09=09=09<t=
+body>=0A=09=09=09=09=09=09=09=09<tr>=0A=09=09=09=09=09=09=09=09=09<td width=
+=3D"15"></td>=0A=09=09=09=09=09=09=09=09=09<td align=3D"left" valign=3D"top=
+"><a href=3D"https://clicks.edx.org/f/a/VR6zOCJkJiwQ5qnkmB7JEQ~~/AAQRxQA~/R=
+gRiB7BgP0RtaHR0cHM6Ly90d2l0dGVyLmNvbS9lZFhPbmxpbmU_dXRtX3NvdXJjZT1icmF6ZSZ1=
+dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDI=
+xMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~" targ=
+et=3D"_blank"><img alt=3D"Twitter" border=3D"0" src=3D"https://media.sailth=
+ru.com/595/1k2/b/7/5be3395300a00.png" style=3D"display: block; height: auto=
+;" width=3D"40"></a></td>=0A=09=09=09=09=09=09=09=09=09<td width=3D"15"></t=
+d>=0A=09=09=09=09=09=09=09=09=09<td align=3D"left" valign=3D"top"><a href=
+=3D"https://clicks.edx.org/f/a/Nge_B_n498_RfUeznEfxFw~~/AAQRxQA~/RgRiB7BgP0=
+RzaHR0cDovL3d3dy5saW5rZWRpbi5jb20vY29tcGFueS9lZHg_dXRtX3NvdXJjZT1icmF6ZSZ1d=
+G1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIx=
+MDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~" targe=
+t=3D"_blank"><img alt=3D"LinkedIn" border=3D"0" src=3D"https://media.sailth=
+ru.com/595/1k2/b/7/5be3397de9f8e.png" style=3D"display: block; height: auto=
+;" width=3D"40"></a></td>=0A=09=09=09=09=09=09=09=09=09<td width=3D"15"></t=
+d>=0A=09=09=09=09=09=09=09=09=09<td align=3D"left" valign=3D"top"><a href=
+=3D"https://clicks.edx.org/f/a/Jn0HPnYTdJxbjxP-SSBYQw~~/AAQRxQA~/RgRiB7BgP0=
+RxaHR0cDovL3d3dy5mYWNlYm9vay5jb20vRWR4T25saW5lP3V0bV9zb3VyY2U9YnJhemUmdXRtX=
+21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAy=
+MTFXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA" target=3D=
+"_blank"><img alt=3D"Facebook" border=3D"0" src=3D"https://media.sailthru.c=
+om/595/1k2/b/7/5be339a32fc31.png" style=3D"display: block; height: auto;" w=
+idth=3D"40"></a></td>=0A=09=09=09=09=09=09=09=09=09<td width=3D"15"></td>=
+=0A=09=09=09=09=09=09=09=09=09<td align=3D"left" valign=3D"top"><a href=3D"=
+https://clicks.edx.org/f/a/QYyICKhlKVbRs44los4PuA~~/AAQRxQA~/RgRiB7BgP0R0aH=
+R0cHM6Ly93d3cuaW5zdGFncmFtLmNvbS9lZHhvbmxpbmUvP3V0bV9zb3VyY2U9YnJhemUmdXRtX=
+21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAy=
+MTFXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA" target=3D=
+"_blank"><img alt=3D"Instagram" border=3D"0" src=3D"https://media.sailthru.=
+com/595/1k3/5/3/5ccc7c9a76b04.jpg" style=3D"display: block; height: auto;" =
+width=3D"40"></a></td>=0A=09=09=09=09=09=09=09=09=09<td width=3D"15"></td>=
+=0A=09=09=09=09=09=09=09=09=09<td align=3D"left" valign=3D"top"><a href=3D"=
+https://clicks.edx.org/f/a/x8UQ4BaZz0bzFvi2RZvleA~~/AAQRxQA~/RgRiB7BgP0RraH=
+R0cDovL3d3dy5yZWRkaXQuY29tL3IvZWR4P3V0bV9zb3VyY2U9YnJhemUmdXRtX21lZGl1bT1lb=
+WFpbCZ1dG1fY2FtcGFpZ249VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAyMTFXA3NwY0IK=
+YCFhKyVgkIhBgVIVcGFwcGFub3MwMDRAZ21haWwuY29tWAQAAABA" target=3D"_blank"><im=
+g alt=3D"Reddit" border=3D"0" src=3D"https://media.sailthru.com/595/1k2/b/7=
+/5be339cbc452e.png" style=3D"display: block; height: auto;" width=3D"40"></=
+a></td>=0A=09=09=09=09=09=09=09=09</tr>=0A=09=09=09=09=09=09=09</tbody>=0A=
+=09=09=09=09=09=09</table>=0A=09=09=09=09=09=09</td>=0A=09=09=09=09=09</tr>=
+=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td height=3D"10" style=3D"line-=
+height: 1px; font-size: 1px;"></td>=0A=09=09=09=09=09</tr>=0A=09=09=09=09=
+=09<!-- apps -->=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td align=3D"lef=
+t" valign=3D"top">=0A=09=09=09=09=09=09<table cellpadding=3D"0" cellspacing=
+=3D"0">=0A=09=09=09=09=09=09=09<tbody>=0A=09=09=09=09=09=09=09=09<tr>=0A=09=
+=09=09=09=09=09=09=09=09<td align=3D"left" valign=3D"top"><a href=3D"https:=
+//clicks.edx.org/f/a/FSrMaohSUHML_Ij56t-M7g~~/AAQRxQA~/RgRiB7BgP0R2aHR0cHM6=
+Ly9lZHguYXBwLmxpbmsvZW1haWwtYXBwLWluc3RhbGw_dXRtX3NvdXJjZT1icmF6ZSZ1dG1fbWV=
+kaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb18yMDIxMDIxMV=
+cDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~" target=3D"_=
+blank"><img alt=3D"Download edX's App" border=3D"0" src=3D"https://media.sa=
+ilthru.com/595/1k2/b/7/5be338f1d96e3.png" style=3D"display: block; height: =
+auto;" width=3D"126"></a></td>=0A=09=09=09=09=09=09=09=09=09<td width=3D"15=
+"></td>=0A=09=09=09=09=09=09=09=09=09<td align=3D"left" valign=3D"top"><a h=
+ref=3D"https://clicks.edx.org/f/a/FSrMaohSUHML_Ij56t-M7g~~/AAQRxQA~/RgRiB7B=
+gP0R2aHR0cHM6Ly9lZHguYXBwLmxpbmsvZW1haWwtYXBwLWluc3RhbGw_dXRtX3NvdXJjZT1icm=
+F6ZSZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9jYW1wYWlnbj1UaHVyc2RheV9Qcm9ncmFtc19Qcm9tb=
+18yMDIxMDIxMVcDc3BjQgpgIWErJWCQiEGBUhVwYXBwYW5vczAwNEBnbWFpbC5jb21YBAAAAEA~=
+" target=3D"_blank"><img alt=3D"Download edX's Google Play App" border=3D"0=
+" src=3D"https://media.sailthru.com/595/1k2/b/7/5be33880e3f90.png" style=3D=
+"display: block; height: auto;" width=3D"126"></a></td>=0A=09=09=09=09=09=
+=09=09=09</tr>=0A=09=09=09=09=09=09=09</tbody>=0A=09=09=09=09=09=09</table>=
+=0A=09=09=09=09=09=09</td>=0A=09=09=09=09=09</tr>=0A=09=09=09=09=09<tr>=0A=
+=09=09=09=09=09=09<td height=3D"30" style=3D"line-height: 1px; font-size: 1=
+px;"></td>=0A=09=09=09=09=09</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=
+=09<td height=3D"20" style=3D"line-height: 1px; font-size: 1px;"></td>=0A=
+=09=09=09=09=09</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td align=3D=
+"left" valign=3D"top"><a href=3D"https://clicks.edx.org/f/a/eljgE7T1jYNrswU=
+tp59QNg~~/AAQRxQA~/RgRiB7BgP0R4aHR0cHM6Ly93d3cuZWR4Lm9yZy9iZW5lZml0cy1vZi1i=
+dW5kbGluZz91dG1fc291cmNlPWJyYXplJnV0bV9tZWRpdW09ZW1haWwmdXRtX2NhbXBhaWduPVR=
+odXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjExVwNzcGNCCmAhYSslYJCIQYFSFXBhcHBhbm=
+9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~" style=3D"font-family: 'Open Sans',Arial,san=
+s-serif; font-size: 14px; line-height: 17px; text-decoration: none; color: =
+#414141; font-weight: bold;" target=3D"_blank"><span style=3D"color: #41414=
+1;">Save 10% on select programs!</span> <span style=3D"color: #00262b;">Cli=
+ck here</span><span style=3D"color: #0075B4;">.</span></a></td>=0A=09=09=09=
+=09=09</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td height=3D"20" sty=
+le=3D"line-height: 1px; font-size: 1px;"></td>=0A=09=09=09=09=09</tr>=0A=09=
+=09=09=09=09<tr>=0A=09=09=09=09=09=09<td align=3D"left" valign=3D"top"><a h=
+ref=3D"https://clicks.edx.org/f/a/raAwpJbTe-YZcfOLnlYjlA~~/AAQRxQA~/RgRiB7B=
+gP0RpaHR0cHM6Ly9idXNpbmVzcy5lZHgub3JnLz91dG1fc291cmNlPWJyYXplJnV0bV9tZWRpdW=
+09ZW1haWwmdXRtX2NhbXBhaWduPVRodXJzZGF5X1Byb2dyYW1zX1Byb21vXzIwMjEwMjExVwNzc=
+GNCCmAhYSslYJCIQYFSFXBhcHBhbm9zMDA0QGdtYWlsLmNvbVgEAAAAQA~~" style=3D"font-=
+family: 'Open Sans',Arial,sans-serif; font-size: 14px; line-height: 17px; t=
+ext-decoration: none; color: #707070;" target=3D"_blank"><span style=3D"col=
+or: #00262b;">edX for Business</span><span style=3D"color: #707070;"> =E2=
+=80=94 eLearning Solutions for Your Company</span></a></td>=0A=09=09=09=09=
+=09</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td height=3D"20" style=
+=3D"line-height: 1px; font-size: 1px;"></td>=0A=09=09=09=09=09</tr>=0A=09=
+=09=09=09=09<tr>=0A=09=09=09=09=09=09<td align=3D"left" style=3D"font-famil=
+y: 'Open Sans',Arial,sans-serif; color: #707070; font-size: 14px; line-heig=
+ht: 17px;" valign=3D"top">=C2=A9 2021 edX Inc. All rights reserved.</td>=0A=
+=09=09=09=09=09</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td height=
+=3D"20" style=3D"line-height: 1px; font-size: 1px;"></td>=0A=09=09=09=09=09=
+</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td align=3D"left" style=3D=
+"font-family: 'Open Sans',Arial,sans-serif; color: #707070; font-size: 14px=
+; line-height: 17px;" valign=3D"top"><span style=3D'font-family: "Open Sans=
+", Arial, sans-serif; font-size: 14px; line-height: 17px; text-decoration: =
+none; color: rgb(112, 112, 112);'><a href=3D"https://clicks.edx.org/f/a/0eY=
+-I0jiD17_9KeUvwU0SQ~~/AAQRxQA~/RgRiB7BgP4T5AWh0dHBzOi8vZGFzaGJvYXJkLTA2LmJy=
+YXplLmNvbS9lbmNfdXNlci91bnN1YnNjcmliZT9kPSUyQmdrck1BcmYlMkYlMkJhSFhPYVBnZm1=
+Ya3clM0QlM0QlMjRQVEY0cVRUSmFVM0MxTVpWUG1kS01kUlA0eVVNNWJuWFF3YVBrVEFPV2VsdE=
+1mWm9wTHh4NGQwTFBxMyUyQiUwQWs3N0pleFRjWEFzQzNTaDNKY040Wm1pclBjbE1XcTdDa0szU=
+nhiZ2ljJTJGMVNlQ1lIeGt4VW5uRnVkbW5FJTBBa3lSeFp1RzhUT2E3JTJCU20zM2lheTk3NGd3=
+WFZJWU13M0NkVzlCZiUyQnNEUjJtekpRV09ZRWJzQVRlNzRPZCUwQUJMY2xkanFWTjk0R1lqaWM=
+lMkZ3aE9yUnBNJTJCazJ3bXBzNW1iUmNSY1NZZ3BwZWppRVJnUzRJYjRoOEJvMDElMEFHbmdrT3=
+dObUw5WUJBWTU2JTJGJTJCYnRUMlllVXdVcFlLTDZoWkM3amVaWlBwaGdjeUZweEk1SVJDTDJJU=
+0UlM0QmMT0xP3V0bV9zb3VyY2U9YnJhemUmdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249=
+VGh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAyMTFXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGF=
+ub3MwMDRAZ21haWwuY29tWAQAAABA" style=3D"font-family: 'Open Sans',Arial,sans=
+-serif; font-size: 14px; line-height: 17px; text-decoration: none; color: #=
+707070;" target=3D"_blank">Unsubscribe</a>=C2=A0| <a href=3D"https://clicks=
+.edx.org/f/a/nh-FX0V1tL6A6rnxUFW4hQ~~/AAQRxQA~/RgRiB7BgP4RcAmh0dHBzOi8vMDY=
+uZW1haWxpbmJvdW5kcHJvY2Vzc2luZy5jb20vZW1haWwvbWFuYWdlX3N1YnNjcmlwdGlvbnMvJT=
+JGTmVuVlk4RGxjR1BSQiUyRml3SHozSWclM0QlM0QlMjRNcmNoWHJUM3psTHclMkZOdUVPOW1IU=
+TklMkZibVU3NWtGbTFuVXVYaDZlT0ZrVSUzRD9kPSUyQmdrck1BcmYlMkYlMkJhSFhPYVBnZm1Y=
+a3clM0QlM0QlMjRQVEY0cVRUSmFVM0MxTVpWUG1kS01kUlA0eVVNNWJuWFF3YVBrVEFPV2VsdE1=
+mWm9wTHh4NGQwTFBxMyUyQiUwQWs3N0pleFRjWEFzQzNTaDNKY040Wm1pclBjbE1XcTdDa0szUn=
+hiZ2ljJTJGMVNlQ1lIeGt4VW5uRnVkbW5FJTBBa3lSeFp1RzhUT2E3JTJCU20zM2lheTk3NGd3W=
+FZJWU13M0NkVzlCZiUyQnNEUjJtekpRV09ZRWJzQVRlNzRPZCUwQUJMY2xkanFWTjk0R1lqaWMl=
+MkZ3aE9yUnBNJTJCazJ3bXBzNW1iUmNSY1NZZ3BwZWppRVJnUzRJYjRoOEJvMDElMEFHbmdrT3d=
+ObUw5WUJBWTU2JTJGJTJCYnRUMlllVXdVcFlLTDZoWkM3amVaWlBwaGdjeUZweEk1SVJDTDJJU0=
+UlM0QmMT0xP3V0bV9zb3VyY2U9YnJhemUmdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249V=
+Gh1cnNkYXlfUHJvZ3JhbXNfUHJvbW9fMjAyMTAyMTFXA3NwY0IKYCFhKyVgkIhBgVIVcGFwcGFu=
+b3MwMDRAZ21haWwuY29tWAQAAABA" style=3D"font-family: 'Open Sans',Arial,sans-=
+serif; font-size: 14px; line-height: 17px; text-decoration: none; color: #7=
+07070;" target=3D"_blank">Update Preference</a></span></td>=0A=09=09=09=09=
+=09</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td height=3D"20" style=
+=3D"line-height: 1px; font-size: 1px;"></td>=0A=09=09=09=09=09</tr>=0A=09=
+=09=09=09=09<tr>=0A=09=09=09=09=09=09<td align=3D"left" style=3D"font-famil=
+y: 'Open Sans',Arial,sans-serif; color: #707070; font-size: 14px; line-heig=
+ht: 17px;" valign=3D"top">141 Portland St. 9th Floor, Cambridge, MA 02139</=
+td>=0A=09=09=09=09=09</tr>=0A=09=09=09=09=09<tr>=0A=09=09=09=09=09=09<td he=
+ight=3D"30" style=3D"line-height: 1px; font-size: 1px;"></td>=0A=09=09=09=
+=09=09</tr>=0A=09=09=09=09</tbody>=0A=09=09=09</table>=0A=09=09=09</td>=0A=
+=09=09</tr>=0A=09</tbody>=0A</table>=0A</td></tr></table></td></tr></table>=
+</td></tr></table></td></tr></table></td></tr></table></div>=0D=0A<img bord=
+er=3D"0" width=3D"1" height=3D"1" alt=3D"" src=3D"https://clicks.edx.org/q/=
+5FBSjFPHHzBYKecPBxklZw~~/AAQRxQA~/RgRiB7BgPlcDc3BjQgpgIWErJWCQiEGBUhVwYXBwY=
+W5vczAwNEBnbWFpbC5jb21YBAAAAEA~">=0D=0A</body>=0A</html>
+--_----VYuBWyQwSBZ0bywPYjUBFA===_D5/79-20908-14B25206--
+

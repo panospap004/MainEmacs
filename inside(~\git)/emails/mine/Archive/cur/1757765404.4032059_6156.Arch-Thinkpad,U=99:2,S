@@ -1,0 +1,837 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:6359:aa6:b0:b5:90c5:f495 with SMTP id em38csp1083153rwb;
+        Fri, 2 Sep 2022 08:15:00 -0700 (PDT)
+X-Google-Smtp-Source: AA6agR62POrpydhTt54eCCULLjlPm8snkDaedM6gvw9QelvGOh2keXxrptc0mxCZO9ts1Gm6/Kg1
+X-Received: by 2002:a81:598b:0:b0:33d:d632:312a with SMTP id n133-20020a81598b000000b0033dd632312amr27574732ywb.501.1662131700461;
+        Fri, 02 Sep 2022 08:15:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1662131700; cv=none;
+        d=google.com; s=arc-20160816;
+        b=JE2s1pi5wa9/lDOxueEGP3DNzJFOfcCNAgdRydY5vwoKecYCPVdYdvliTQ8u5NgGnZ
+         Ws6Tt7EvUUKsb2BtlI6i4SolcQ8HWFBJ6Z8sd7xjh4vNxlso00n6jOpxwBV+eIItb0ra
+         bZUqu++CNOa3Y4BPmgCTviwZrbCzbOkr1JGArnt3ygqLnIWDimIUFNv9DV96WG6i7H5+
+         oHkD2LoMwj+q4VwPkW6wNBn6vwkvy8Cn6ShBo+zGxjrbUMBSKyE8xhK/oO6VENS6pjvI
+         zhCddAo6DZ3E3GtpJ9525ZQptMD25+EJlZ1ghiBYiOp70ixkn0u/W4vZLIyYv9qchYU8
+         ZKMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:date:feedback-id:to:message-id:reply-to:subject:from
+         :dkim-signature:dkim-signature;
+        bh=jx+HpXy6OeZW5MSYap1+qtZx/7jlRreg0LmHEWDc1Dc=;
+        b=e510kA8n/j8Qw5PSPKgy5NMfWJBt2vd7cReVOEQkUlQQsqddd7JMYLwmcZ8XCweikx
+         YCziy68UqQpWD/A3JTG/u1hytVBDdwcII9sTeJbi70hHH5SOfGuLNygGWKsMeIt0j22u
+         ++mwiiCuO4VAgKA3ap3V+qEhXd7NZMU3WkCBM0/NwuqfQq/ybYnCz02jFge1LKtp1ZlR
+         J5zTelf/0/Z+N+NYzxdgqSXVeqYRX4OB8c6nBDkCKD6f2EoKTeIGYaEdpD+zOhuJIzo1
+         628VFrB7OuReeSsqHuIkkPpdRt5p3n79c3q6lGQISWrSKl4ZKbr4DKSrClKv6uMJMmLb
+         qvvw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@cubebrush.co header.s=mandrill header.b=jVtktL3b;
+       dkim=pass header.i=@mandrillapp.com header.s=mandrill header.b=QobBwIso;
+       spf=pass (google.com: domain of bounce-md_30724166.63121df4.v1-bda8a90926dd4c2da9af894268afcd7b@mandrillapp.com designates 198.2.179.11 as permitted sender) smtp.mailfrom=bounce-md_30724166.63121df4.v1-bda8a90926dd4c2da9af894268afcd7b@mandrillapp.com
+Return-Path: <bounce-md_30724166.63121df4.v1-bda8a90926dd4c2da9af894268afcd7b@mandrillapp.com>
+Received: from mail179-11.suw41.mandrillapp.com (mail179-11.suw41.mandrillapp.com. [198.2.179.11])
+        by mx.google.com with ESMTPS id h66-20020a816c45000000b00341503ad355si1452671ywc.77.2022.09.02.08.15.00
+        for <lets.mine004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Sep 2022 08:15:00 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounce-md_30724166.63121df4.v1-bda8a90926dd4c2da9af894268afcd7b@mandrillapp.com designates 198.2.179.11 as permitted sender) client-ip=198.2.179.11;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@cubebrush.co header.s=mandrill header.b=jVtktL3b;
+       dkim=pass header.i=@mandrillapp.com header.s=mandrill header.b=QobBwIso;
+       spf=pass (google.com: domain of bounce-md_30724166.63121df4.v1-bda8a90926dd4c2da9af894268afcd7b@mandrillapp.com designates 198.2.179.11 as permitted sender) smtp.mailfrom=bounce-md_30724166.63121df4.v1-bda8a90926dd4c2da9af894268afcd7b@mandrillapp.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cubebrush.co;
+	s=mandrill; t=1662131700; x=1662434100; i=info@cubebrush.co;
+	bh=jx+HpXy6OeZW5MSYap1+qtZx/7jlRreg0LmHEWDc1Dc=;
+	h=From:Subject:Reply-To:Message-Id:To:Feedback-ID:Date:MIME-Version:
+	 Content-Type:CC:Date:Subject:From;
+	b=jVtktL3beA/AhSLuTNMkFoJOnJ/UW++vJpK3g+XlY/5F6juSbV9LwfvrvXaMkFWD/
+	 9R+LSPkKnccPfEbbWfpTp2m76DQSQ8AfZtTHBhu5TuVBVPWhgz/IGRg79Mxlu8Uzv6
+	 xHHriXdpCzbyUX30RVqQhBAO/+4UYghQRZWzr6lw=
+Received: from pmta12.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
+	by mail179-11.suw41.mandrillapp.com (Mailchimp) with ESMTP id 4MK1g82Nt0zLfJ3LM
+	for <lets.mine004@gmail.com>; Fri,  2 Sep 2022 15:15:00 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
+ i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1662131700; h=From : 
+ Subject : Reply-To : Message-Id : To : Date : MIME-Version : 
+ Content-Type : From : Subject : Date : X-Mandrill-User : 
+ List-Unsubscribe; bh=jx+HpXy6OeZW5MSYap1+qtZx/7jlRreg0LmHEWDc1Dc=; 
+ b=QobBwIsohWCAVlsThrHY/ZNLQQR664j9efF45p4KdzYLQ/OBBYmwxN2t5rpODozGtpp1YD
+ b8YrxKvOyyDyE6FsN8TT62fHZA/42GJxnAq3PmzjRK07icEDyofvi4DeDkWtRTjFSK/RPP61
+ 8v04JAms6wo2Cee5j6ko2Bm36hsD0=
+From: "Marc Brunet (via Cubebrush)" <info@cubebrush.co>
+Subject: Your order has been processed (#159G6BHIAH)
+Received: from [52.6.118.79] by mandrillapp.com id bda8a90926dd4c2da9af894268afcd7b; Fri, 02 Sep 2022 15:15:00 +0000
+Reply-To: "Marc Brunet (via Cubebrush)" <marc@cubebrush.co>
+Message-Id: <63121df3f38a8_43fad3635d13067630@371fe641-1a6c-4f99-ba98-cf6f078051e1.mail>
+To: lets.mine004@gmail.com
+X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
+X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=30724166.bda8a90926dd4c2da9af894268afcd7b
+X-Mandrill-User: md_30724166
+Feedback-ID: 30724166:30724166.20220902:md
+Date: Fri, 02 Sep 2022 15:15:00 +0000
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_av-gdHX-LV9JAgpkGQMvc_Upg"
+X-TUID: oMVV5yp9tqwo
+
+--_av-gdHX-LV9JAgpkGQMvc_Upg
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+     Your order has been processed (#159G6BHIAH) <https://cubebrush.co/>   
+                         
+                     
+  Hey Lolakias004!
+  Thanks for purchasing this product 
+ - the Cubebrush team
+<https://cubebrush.co/mb/products/m2ri4q/starter-brush-pack-2021>         
+    
+      Starter Brush Pack 2021
+<https://cubebrush.co/mb/products/m2ri4q/starter-brush-pack-2021>  by Marc
+Brunet <https://cubebrush.co/mb> 
+ Order date: 2 September 2022
+            
+             $0.0
+                   Download files
+<https://cubebrush.co/mb/products/m2ri4q/starter-brush-pack-2021?autodownlo=
+ad=3Dtrue&amp;token=3D26-ZuYENjB-cipELCBB2>
+           
+                                     My library
+<https://cubebrush.co/my_library> 
+                    
+                 
+                            2022 =C2=A9 Cubebrush.co <https://cubebrush.co/=
+>.
+All Rights Reserved Email settings <https://cubebrush.co/settings/base>   |
+Unsubscribe from these types of emails
+<https://cubebrush.co/subscription?subscription=3Dnotifications&amp;token=
+=3D26-ZuYENjB-cipELCBB2>
+
+--_av-gdHX-LV9JAgpkGQMvc_Upg
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+  <head>
+  <!-- This is a simple example template that you can edit to create your o=
+wn custom templates -->
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8" =
+/>
+
+  <title>Your order has been processed (#159G6BHIAH)</title>
+
+  <style type=3D"text/css">
+    table{
+      border-collapse:collapse !important;
+      padding:0px !important;
+      border:none !important;
+      border-bottom-width:0px !important;
+      mso-table-lspace:0pt;
+      mso-table-rspace:0pt;
+    }
+
+    table td{
+      border-collapse:collapse;
+    }
+
+    body{
+      margin:0px;
+      padding:0px;
+      background-color:#FFFFFF;
+    }
+
+    .blue-btn,
+    .blue-link,
+    .deep-gray-link,
+    .light-gray-link,
+    .black-link,
+    .img-link img {
+      -webkit-transition: all .15s ease;
+      -o-transition: all .15s ease;
+      transition: all .15s ease;
+    }
+
+    .blue-btn:hover,
+    .blue-btn:active,
+    .blue-btn:focus {
+      color: #fff !important;
+    }
+
+    .blue-btn:hover {
+      background: #66c2e5 !important;
+    }
+
+    .blue-btn:active {
+      background: #39a1c7 !important;
+    }
+
+    .blue-link:hover {
+      color: #66c2e5 !important;
+    }
+
+    .blue-link:active {
+      color: #39a1c7 !important;
+    }
+
+    .deep-gray-link:hover {
+      color: #646b79 !important;
+    }
+
+    .deep-gray-link:active {
+      color: #363d4b !important;
+    }
+
+    .light-gray-link:hover {
+      color: #8b959e !important;
+    }
+
+    .light-gray-link:active {
+      color: #656e76 !important;
+    }
+
+    .black-link:hover {
+      color: #525763 !important;
+    }
+    .black-link:active {
+      color: #282d3a !important;
+    }
+
+    .img-link img {
+      opacity: 1;
+    }
+
+    .img-link:hover img {
+      opacity: .8;
+    }
+
+    img {
+      max-width: 100%;
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+
+    .bordered {
+      border-radius: 4px 4px 4px 4px;
+      -moz-border-radius: 4px 4px 4px 4px;
+      -webkit-border-radius: 4px 4px 4px 4px;
+    }
+
+    table {
+      border-spacing: 0;
+    }
+
+    .bordered > tbody > tr > td {
+      border: 1px solid #e5e5e5;
+      border-radius: 4px 4px 4px 4px;
+      -moz-border-radius: 4px 4px 4px 4px;
+      -webkit-border-radius: 4px 4px 4px 4px;
+    }
+
+    @media only screen and (max-width:740px){
+      table[class=3Dscale-inner]{
+        min-width: 100%!important;
+      }
+    }
+
+    @media only screen and (max-width:740px){
+      table td[data-bg=3DTable-bg] {
+        min-width: 100%!important;
+      }
+    }
+
+    @media only screen and (max-width:740px){
+      table[class=3Dscale] {
+        width:100%!important;
+        min-width:100%!important;
+        max-width:100%!important;
+      }
+    }
+
+    @media only screen and (max-width:480px){
+        table[class=3Dcode-block] div[class=3Dcode-txt] {
+            font-size: 18px !important;
+            line-height: 24px !important;
+        }
+    }
+  </style>
+    <style type=3D"text/css" media=3D"screen">
+    .blue-btn,
+    .blue-link,
+    .deep-gray-link,
+    .light-gray-link,
+    .black-link,
+    .img-link img {
+      -webkit-transition: all .15s ease;
+      -o-transition: all .15s ease;
+      transition: all .15s ease;
+    }
+
+    .blue-btn:hover,
+    .blue-btn:active,
+    .blue-btn:focus {
+      color: #fff !important;
+    }
+
+    .blue-btn:hover {
+      background: #66c2e5 !important;
+    }
+
+    .blue-btn:active {
+      background: #39a1c7 !important;
+    }
+
+    .blue-link:hover {
+      color: #66c2e5 !important;
+    }
+
+    .blue-link:active {
+      color: #39a1c7 !important;
+    }
+
+    .deep-gray-link:hover {
+      color: #646b79 !important;
+    }
+
+    .deep-gray-link:active {
+      color: #363d4b !important;
+    }
+
+    .light-gray-link:hover {
+      color: #8b959e !important;
+    }
+
+    .light-gray-link:active {
+      color: #656e76 !important;
+    }
+
+    .black-link:hover {
+      color: #525763 !important;
+    }
+    .black-link:active {
+      color: #282d3a !important;
+    }
+
+    .img-link img {
+      opacity: 1;
+    }
+
+    .img-link:hover img {
+      opacity: .8;
+    }
+
+    img {
+      max-width: 100%;
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+  </style>
+
+</head>
+<body leftmargin=3D"0" marginwidth=3D"0" topmargin=3D"0" marginheight=3D"0"=
+ offset=3D"0">
+  <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" al=
+ign=3D"center" data-module=3D"header" style=3D"min-width: 100%; margin: 20p=
+x 0 0 0;">
+    <tr>
+      <td width=3D"100%" style=3D"background: #f9f8fb; min-width: 100%;" da=
+ta-bg=3D"Header">
+        <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0" align=3D"center">
+          <tr>
+            <td width=3D"100%" valign=3D"top" style=3D"">
+              <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadd=
+ing=3D"0" align=3D"center">
+                <tr>
+                  <td width=3D"100%" valign=3D"top">
+                    <table width=3D"100%" border=3D"0" cellspacing=3D"0" ce=
+llpadding=3D"0" align=3D"center" style=3D"color:#FFFFFF; font-family:'Aveni=
+r LT W01 35 Light', Helvetica, Arial, sans-serif; font-size: 22px; letter-s=
+pacing:2px; max-width:700px; min-width:670px;" class=3D"scale">
+                      <tr>
+                        <td height=3D"40" width=3D"100%" valign=3D"top">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align=3D"center" class=3D"scale-center-both" wi=
+dth=3D"100%" valign=3D"top">
+                          <span style=3D"display: inline-block;">
+                            <a href=3D"https://mandrillapp.com/track/click/=
+30724166/cubebrush.co?p=3DeyJzIjoiQTU0LXdJM1hYVlNRTWM3RVBqYUhwVnk5d3VBIiwid=
+iI6MSwicCI6IntcInVcIjozMDcyNDE2NixcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxc=
+L2N1YmVicnVzaC5jb1xcXC9cIixcImlkXCI6XCJiZGE4YTkwOTI2ZGQ0YzJkYTlhZjg5NDI2OGF=
+mY2Q3YlwiLFwidXJsX2lkc1wiOltcIjcyZTFjMjljMGY5M2RmYzc3MzdiMThkZmY1M2NkYjk2OW=
+Y4MmUxYTlcIl19In0" style=3D"display: inline-block;" title=3D"Cubebrush"><im=
+g src=3D"https://djm6btoj9k6cu.cloudfront.net/assets/email/logo-e6fbc89a5c9=
+eebbc4749e8984f88bc08f58d43662e8d7688128432afb3c7cea6.png" width=3D"98px" h=
+eight=3D"69px" alt=3D"Cubebrush"></a>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height=3D"38" width=3D"100%" valign=3D"top">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" al=
+ign=3D"center" style=3D"min-width:100%;">
+    <tbody>
+      <tr>
+        <td width=3D"100%" style=3D"background: #f9f8fb;" data-bg=3D"Table-=
+bg" align=3D"center">
+          <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" align=3D"center" class=3D"scale-inner">
+            <tbody>
+              <tr>
+                <td valign=3D"top">
+                  <table width=3D"100%" border=3D"0" cellspacing=3D"0" cell=
+padding=3D"0" align=3D"center">
+                    <tbody>
+                      <tr>
+                        <td width=3D"20" height=3D"20" valign=3D"top"><div =
+style=3D"display:inline-block;width:20px;height:20px;"></div></td>
+                        <td>
+                          <table width=3D"100%" border=3D"0" cellspacing=3D=
+"0" cellpadding=3D"0" align=3D"center" class=3D"scale" style=3D"max-width: =
+700px; min-width: 630px;">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <table border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0" width=3D"100%" align=3D"center" class=3D"scale bordered" sty=
+le=3D"border-radius: 4px 4px 4px 4px; -moz-border-radius: 4px 4px 4px 4px; =
+-webkit-border-radius: 4px 4px 4px 4px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style=3D"background: #ffffff; b=
+order: 1px solid #e5e5e5; border-radius: 4px 4px 4px 4px; -moz-border-radiu=
+s: 4px 4px 4px 4px; -webkit-border-radius: 4px 4px 4px 4px;">
+                                          
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" alig=
+n=3D"center" class=3D"scale">
+  <tbody>
+    <tr>
+      <td>
+        <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0" align=3D"center">
+          <tbody>
+            <tr>
+              <td height=3D"20" colspan=3D"3">
+              </td>
+            </tr>
+            <tr>
+              <td width=3D"24" height=3D"24"><div style=3D"display:inline-b=
+lock;width:24px;height:24px;"></div></td>
+              <td>
+                    <div style=3D"font-size: 18px; line-height: 24px; margi=
+n: 0; letter-spacing: 0; font-family: Helvetica, sans-serif; font-weight: 3=
+00; margin: 0 0 4px;">Hey Lolakias004!</div>
+                    <div style=3D"font-size: 14px; line-height: 18px; lette=
+r-spacing: 0; font-family: Helvetica, sans-serif; font-weight: 300; margin:=
+ 4px 0;">
+                      Thanks for purchasing this product
+                    </div>
+                <div style=3D"font-size: 12px; line-height: 20px; color: #9=
+39ca2; letter-spacing: .85px; font-family: Helvetica, sans-serif; font-weig=
+ht: 300;">- the Cubebrush team</div>
+              </td>
+              <td width=3D"24" height=3D"24"><div style=3D"display:inline-b=
+lock;width:24px;height:24px;"></div></td>
+            </tr>
+            <tr>
+              <td height=3D"11" colspan=3D"3">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+  <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" al=
+ign=3D"center" class=3D"scale">
+    <tbody>
+      <tr>
+        <td style=3D"border-top:1px solid #e5e5e5;">
+          <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" align=3D"center">
+            <tbody>
+              <tr>
+                <td height=3D"24">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <table width=3D"100%" border=3D"0" cellspacing=3D"0" cell=
+padding=3D"0" align=3D"center" class=3D"scale">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <table border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"100%" align=3D"left" class=3D"scale">
+                            <tbody>
+                              <tr>
+                                <td>
+
+                                  <table border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0" width=3D"203" align=3D"left" class=3D"img-mini">
+                                    <tbody>
+                                      <tr>
+                                        <td width=3D"24" height=3D"45"><div=
+ style=3D"width:24px; height: 45px;"></div></td>
+                                        <td align=3D"center">
+                                          <a href=3D"https://mandrillapp.co=
+m/track/click/30724166/cubebrush.co?p=3DeyJzIjoiVzdMZ3cyM0duZ1dzTm83WENKQ3d=
+yc2swUUpvIiwidiI6MSwicCI6IntcInVcIjozMDcyNDE2NixcInZcIjoxLFwidXJsXCI6XCJodH=
+RwczpcXFwvXFxcL2N1YmVicnVzaC5jb1xcXC9tYlxcXC9wcm9kdWN0c1xcXC9tMnJpNHFcXFwvc=
+3RhcnRlci1icnVzaC1wYWNrLTIwMjFcIixcImlkXCI6XCJiZGE4YTkwOTI2ZGQ0YzJkYTlhZjg5=
+NDI2OGFmY2Q3YlwiLFwidXJsX2lkc1wiOltcIjVhN2Y4NzQ1NGY1YTYyNDNmMzA0ZDU0ZWEzZjA=
+xYzhlMWM3ZjNmNmVcIl19In0" class=3D"img-link" style=3D"display: inline-block=
+; width: 179px; float: left; border: 1px solid #e5e5e5; border-radius: 5px;=
+" title=3D"Starter Brush Pack 2021">
+                                            <img src=3D"https://d27nqrvkk22=
+y65.cloudfront.net/cover/image/95692/cropped_thumb_bdde2711fb.jpg" width=3D=
+"179" style=3D"border-radius: 4px; float: left;" alt=3D"Starter Brush Pack =
+2021" />
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                  <table border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0" width=3D"226" align=3D"left" class=3D"thx-item-descr">
+                                    <tbody>
+                                      <tr>
+                                        <td colspan=3D"2" height=3D"8">
+                                          <div style=3D"display:inline-bloc=
+k;width:100%;height:8px;"></div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td width=3D"24" height=3D"24"><div=
+ style=3D"display:inline-block;width:24px;height:24px;"></div></td>
+                                        <td align=3D"left">
+                                          <table border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" width=3D"202" align=3D"left" class=3D"scale">
+                                            <tbody>
+                                              <tr>
+                                                <td style=3D"font-family: H=
+elvetica, sans-serif; font-weight: 300;">
+                                                  <a href=3D"https://mandri=
+llapp.com/track/click/30724166/cubebrush.co?p=3DeyJzIjoiVzdMZ3cyM0duZ1dzTm8=
+3WENKQ3dyc2swUUpvIiwidiI6MSwicCI6IntcInVcIjozMDcyNDE2NixcInZcIjoxLFwidXJsXC=
+I6XCJodHRwczpcXFwvXFxcL2N1YmVicnVzaC5jb1xcXC9tYlxcXC9wcm9kdWN0c1xcXC9tMnJpN=
+HFcXFwvc3RhcnRlci1icnVzaC1wYWNrLTIwMjFcIixcImlkXCI6XCJiZGE4YTkwOTI2ZGQ0YzJk=
+YTlhZjg5NDI2OGFmY2Q3YlwiLFwidXJsX2lkc1wiOltcIjVhN2Y4NzQ1NGY1YTYyNDNmMzA0ZDU=
+0ZWEzZjAxYzhlMWM3ZjNmNmVcIl19In0" class=3D"deep-gray-link" style=3D"display=
+: inline; font-size: 20px; line-height: 24px; color: #424a5b; text-decorati=
+on: none;  margin: 0; overflow: hidden;" title=3D"Starter Brush Pack 2021">=
+Starter Brush Pack 2021</a>
+                                                  <div style=3D"font-size: =
+12px; line-height: 24px; color: #babfc4; letter-spacing: .8px; height: 24px=
+; overflow: hidden;">
+                                                    by <a href=3D"https://m=
+andrillapp.com/track/click/30724166/cubebrush.co?p=3DeyJzIjoib2ZpemJ2Nnkydm=
+taMHNPWUZMRWFSdWJOcVV3IiwidiI6MSwicCI6IntcInVcIjozMDcyNDE2NixcInZcIjoxLFwid=
+XJsXCI6XCJodHRwczpcXFwvXFxcL2N1YmVicnVzaC5jb1xcXC9tYlwiLFwiaWRcIjpcImJkYThh=
+OTA5MjZkZDRjMmRhOWFmODk0MjY4YWZjZDdiXCIsXCJ1cmxfaWRzXCI6W1wiNWE3OTgzMzM4YWN=
+hZmI2MjU2ZThiYmNkZGI4NzFiNDY1MzNhZGQ1NFwiXX0ifQ" class=3D"blue-link" style=
+=3D"color: #47b4dc; text-decoration: none;" title=3D"Marc Brunet">Marc Brun=
+et</a>
+                                                  </div>
+
+
+                                                  <div class=3D"ordered-thx=
+-txt" style=3D"display: block; font-size: 12px; color: #939ca2; display: in=
+line-block; width: 100%; line-height: 24px; margin:0; padding: 0 0 0 1px;">=
+Order date: 2 September 2022</div>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                  <table border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0" width=3D"194" align=3D"right" class=3D"btn-wrapper-thx">
+                                    <tbody>
+                                      <tr>
+                                        <td width=3D"24" height=3D"24"><div=
+ style=3D"display:inline-block;width:24px;height:24px;"></div></td>
+                                        <td align=3D"right" style=3D"margin=
+:3px 0 0;">
+                                          <table border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" width=3D"100%" align=3D"left" class=3D"scale">
+                                            <tbody>
+                                                <tr>
+                                                  <td>
+                                                    <table border=3D"0" cel=
+lspacing=3D"0" cellpadding=3D"0" width=3D"100%">
+                                                      <tbody>
+                                                        <tr>
+                                                          <td height=3D"7">=
+</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td class=3D"td-b=
+tn-wrapper-thx" style=3D"text-align: right;">
+                                                            <div style=3D"d=
+isplay: inline-block; font-family: Helvetica, sans-serif; font-weight: 300;=
+ font-size: 16px;line-height: 24px;color: #424a5b; width: 100%; -webkit-box=
+-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; p=
+adding: 0 3px 0 0;">$0.0</div>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class=3D"thx-margin-t=
+op" height=3D"53">
+                                                  </td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <table border=3D"0" c=
+ellspacing=3D"0" cellpadding=3D"0">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td width=3D"12=
+" height=3D"36" bgcolor=3D"#47b4dc" style=3D"border-radius:4px 0 0 4px;">
+                                                            </td>
+                                                            <td height=3D"3=
+6" align=3D"center" style=3D"border-radius:0;color:#4e5864 !important;" bgc=
+olor=3D"#47b4dc">
+                                                              <a href=3D"ht=
+tps://mandrillapp.com/track/click/30724166/cubebrush.co?p=3DeyJzIjoiZkN0Tnl=
+seTY5SU5OWVJqd2RoOTVIeWwzQmt3IiwidiI6MSwicCI6IntcInVcIjozMDcyNDE2NixcInZcIj=
+oxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL2N1YmVicnVzaC5jb1xcXC9tYlxcXC9wcm9kdWN0c=
+1xcXC9tMnJpNHFcXFwvc3RhcnRlci1icnVzaC1wYWNrLTIwMjE_YXV0b2Rvd25sb2FkPXRydWUm=
+dG9rZW49MjYtWnVZRU5qQi1jaXBFTENCQjJcIixcImlkXCI6XCJiZGE4YTkwOTI2ZGQ0YzJkYTl=
+hZjg5NDI2OGFmY2Q3YlwiLFwidXJsX2lkc1wiOltcIjVhN2Y4NzQ1NGY1YTYyNDNmMzA0ZDU0ZW=
+EzZjAxYzhlMWM3ZjNmNmVcIl19In0" target=3D"_blank" style=3D"font-size:12px;le=
+tter-spacing: .9px;font-family:Helvetica, sans-serif;color:#fff !important;=
+text-decoration:none;text-transform:uppercase;border-radius:0;padding:0;bor=
+der:none;display:inline-block;" title=3D"Download files">Download files</a>
+                                                            </td>
+                                                            <td width=3D"12=
+" height=3D"36" bgcolor=3D"#47b4dc" style=3D"border-radius:0 4px 4px 0;">
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                        <td width=3D"24" height=3D"24"><div=
+ style=3D"display:inline-block;width:24px;height:24px;"></div></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td height=3D"24">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" al=
+ign=3D"center" class=3D"scale">
+    <tbody>
+      <tr>
+        <td style=3D"border-top:1px solid #e5e5e5;">
+          <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"=
+100%" align=3D"center" class=3D"scale">
+            <tbody>
+              <tr>
+                <td colspan=3D"3" height=3D"17"></td>
+              </tr>
+              <tr>
+                <td width=3D"17" height=3D"24"></td>
+                <td align=3D"left">
+                  <div id=3D"user-nav" style=3D"font-family: Helvetica, san=
+s-serif; font-weight: 400;">
+                    <a href=3D"https://mandrillapp.com/track/click/30724166=
+/cubebrush.co?p=3DeyJzIjoiRkxvc05wWURENWw1MzlMczFqOHFoSmFmR1I4IiwidiI6MSwic=
+CI6IntcInVcIjozMDcyNDE2NixcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL2N1YmVi=
+cnVzaC5jb1xcXC9teV9saWJyYXJ5XCIsXCJpZFwiOlwiYmRhOGE5MDkyNmRkNGMyZGE5YWY4OTQ=
+yNjhhZmNkN2JcIixcInVybF9pZHNcIjpbXCJjYWNlYzAwZWQwNjlkOTJkNGQ5MDk1ZjgyOTA4MW=
+NhOTBmNzRmOTIxXCJdfSJ9" class=3D"black-link" style=3D"display: inline-block=
+; color: #2c3241; text-transform: uppercase; font-size: 12px; line-height: =
+24px; text-decoration: none;margin: 0 12px;letter-spacing: 1.1px;" title=3D=
+"My library">My library</a>
+                  </div>
+                </td>
+                <td width=3D"17" height=3D"24"></td>
+              </tr>
+              <tr>
+                <td colspan=3D"3" height=3D"15"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <table width=3D"100%" border=3D"0" cellsp=
+acing=3D"0" cellpadding=3D"0" align=3D"center" class=3D"scale" style=3D"max=
+-width:700px;min-width:630px;">
+                                    <tbody>
+                                      <tr>
+                                        <td width=3D"100%" height=3D"24"><d=
+iv style=3D"height: 24px;"></div></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <table width=3D"100%" border=3D"0" cellsp=
+acing=3D"0" cellpadding=3D"0" align=3D"center" class=3D"scale" style=3D"max=
+-width:700px;min-width:630px;">
+                                    <tbody>
+                                      <tr>
+                                        <td valign=3D"top" align=3D"left">
+                                          
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td width=3D"20" height=3D"20" valign=3D"top"><div =
+style=3D"display: inline-block; width: 20px; height: 20px;"></div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" al=
+ign=3D"center" data-module=3D"footer" style=3D"min-width: 100%; margin: 0 0=
+ 20px 0;">
+    <tr>
+      <td width=3D"100%" style=3D"background: #f9f8fb; min-width: 100%;" dd=
+ata-bg=3D"Footer">
+        <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0" align=3D"center">
+          <tr>
+            <td width=3D"100%" valign=3D"top" style=3D"">
+              <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadd=
+ing=3D"0" align=3D"center">
+                <tr>
+                  <td width=3D"100%" valign=3D"top">
+                    <table width=3D"100%" border=3D"0" cellspacing=3D"0" ce=
+llpadding=3D"0" align=3D"center" style=3D"color:#000000; font-family:'Aveni=
+r LT W01 35 Light', Helvetica, Arial, sans-serif; font-size: 22px; letter-s=
+pacing:2px; max-width:700px; min-width:670px;" class=3D"scale">
+                      <tr>
+                        <td height=3D"26" width=3D"100%" valign=3D"top">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align=3D"center" class=3D"scale-center-both" wi=
+dth=3D"100%" valign=3D"top">
+                          <span style=3D"display: inline-block; width: 100%=
+; font-size: 12px; line-height: 16px; color: #7e8993; margin: 0 0 1px; lett=
+er-spacing: 0; font-family: Helvetica, sans-serif; font-weight: 300;">2022 =
+=C2=A9 <a href=3D"https://mandrillapp.com/track/click/30724166/cubebrush.co=
+?p=3DeyJzIjoiQTU0LXdJM1hYVlNRTWM3RVBqYUhwVnk5d3VBIiwidiI6MSwicCI6IntcInVcIj=
+ozMDcyNDE2NixcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL2N1YmVicnVzaC5jb1xcX=
+C9cIixcImlkXCI6XCJiZGE4YTkwOTI2ZGQ0YzJkYTlhZjg5NDI2OGFmY2Q3YlwiLFwidXJsX2lk=
+c1wiOltcIjcyZTFjMjljMGY5M2RmYzc3MzdiMThkZmY1M2NkYjk2OWY4MmUxYTlcIl19In0" cl=
+ass=3D"light-gray-link" style=3D"color: #7e8993; text-decoration: none;" ti=
+tle=3D"Cubebrush.co">Cubebrush.co</a>. All Rights Reserved</span>
+                            <a href=3D"https://mandrillapp.com/track/click/=
+30724166/cubebrush.co?p=3DeyJzIjoiTFZWOWpPLUh5QVZ6NjNXelc3RXZRV21TSW9VIiwid=
+iI6MSwicCI6IntcInVcIjozMDcyNDE2NixcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxc=
+L2N1YmVicnVzaC5jb1xcXC9zZXR0aW5nc1xcXC9iYXNlXCIsXCJpZFwiOlwiYmRhOGE5MDkyNmR=
+kNGMyZGE5YWY4OTQyNjhhZmNkN2JcIixcInVybF9pZHNcIjpbXCIzN2JhOTM0MDdhYTFiNGFkOD=
+FlZjUxMWE0NDc0ZGY4Yzg0NTYzMzAxXCJdfSJ9" class=3D"light-gray-link" style=3D"=
+display: inline-block; font-size: 10px !important; line-height: 16px !impor=
+tant; color: #7e8993; letter-spacing: 0; font-family: Helvetica, sans-serif=
+; font-weight: 300 !important;" title=3D"Subscribe settings">Email settings=
+</a><span style=3D"display: inline-block; font-size: 10px !important; line-=
+height: 16px !important; color: #7e8993; letter-spacing: 0; font-family: He=
+lvetica, sans-serif; font-weight: 300 !important;">&nbsp;&nbsp;&nbsp;|</spa=
+n>
+                            <a href=3D"https://mandrillapp.com/track/click/=
+30724166/cubebrush.co?p=3DeyJzIjoiOWlVOWMtT1o4aVpZV0hUdlZhVU5VOGRQRkRBIiwid=
+iI6MSwicCI6IntcInVcIjozMDcyNDE2NixcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxc=
+L2N1YmVicnVzaC5jb1xcXC9zdWJzY3JpcHRpb24_c3Vic2NyaXB0aW9uPW5vdGlmaWNhdGlvbnM=
+mdG9rZW49MjYtWnVZRU5qQi1jaXBFTENCQjJcIixcImlkXCI6XCJiZGE4YTkwOTI2ZGQ0YzJkYT=
+lhZjg5NDI2OGFmY2Q3YlwiLFwidXJsX2lkc1wiOltcImZmZmY3MzkyZTIyYWRlNmYxZDI4ODdlM=
+GU1NTBkZTE0NTU0M2E3MzlcIl19In0" class=3D"light-gray-link" style=3D"display:=
+ inline-block; font-size: 10px !important; line-height: 16px !important; co=
+lor: #7e8993; letter-spacing: 0; font-family: Helvetica, sans-serif; font-w=
+eight: 300 !important;" title=3D"Unsubscribe from these types of emails">Un=
+subscribe from these types of emails</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height=3D"44" width=3D"100%" valign=3D"top">
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+<img src=3D"https://mandrillapp.com/track/open.php?u=3D30724166&id=3Dbda8a9=
+0926dd4c2da9af894268afcd7b" height=3D"1" width=3D"1"></body>
+</html>
+
+
+--_av-gdHX-LV9JAgpkGQMvc_Upg--
+

@@ -1,0 +1,580 @@
+Delivered-To: pappanos004@gmail.com
+Received: by 10.200.4.159 with SMTP id s31csp2029248qtg;
+        Sat, 21 Apr 2018 20:01:24 -0700 (PDT)
+X-Google-Smtp-Source: AIpwx49w2a+AyP1rF6Q8xJVMR8GL2FYWtDP10Uv7T3bE5KGSzVp1wZ3FkHiY7v3HKa34yMTh5YzP
+X-Received: by 2002:aca:3407:: with SMTP id b7-v6mr10235169oia.183.1524366084095;
+        Sat, 21 Apr 2018 20:01:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1524366084; cv=none;
+        d=google.com; s=arc-20160816;
+        b=E0qb++TEyZc7nz39rQJtjgY5y1ApFDxqwmo0/HMGBT2R69v1F4565x0n8/ncnX5CiD
+         nq6J24pbs52BGtW0HjmcsVe1ZazSybt84jiGRH9hxLehOGoGMpDAZ8cJ9+ro651os1DK
+         MMJNA9ajmvFEo02H7hqnO/0VVi4RsWMydjV0ntK8ilTA5t9265iJvm20x0SHCWGACF7G
+         LoPajFV2kTmgn81sKbmafQOuVnT9UpqudqI8rm4Rp/k7WoG4Jt8xAbHGqupvDnRfWUTa
+         SETBfy6ziKmWkzSaJ3yDbHDj3exdVL2mM0gcsHRRwejqLeFDjZmLek4XxdOpYkkI9zZv
+         i/oQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:message-id:feedback-id:list-unsubscribe:errors-to
+         :reply-to:from:subject:to:date:dkim-signature
+         :arc-authentication-results;
+        bh=D4WErTmP7Erbnx0WxzShGRg9GucYP6jLSR5vonFs03U=;
+        b=oJU2RUkCSOi3MmV9k4wLwgwg4ObokcBc4rIBxUGyRhZYlRBtx9QVJpWU5WXDTIMvzK
+         VAgqkMFHXTTjiZ1WI3wbZsagQvkqw4IlKG8GG47sqDNfV8KYCVlFQlAgzVCXnlC+13FN
+         5HjeuSJK2i3oGMnkXXqeB72HIfnmhbtnuKkFuH5XZcIXp/Yya9fjwd50FZkzKr3I6PXG
+         8WUhVQyj3bUfFHSW8XIDSlZIwDekYcZou3f9K2bnleF6fgM02+WoXWNpmuztfSLI2V47
+         TA0o6bMZK0j/jH81BoQ1gI5av4xGUpOkBqJG4ByocVDeqmoe/cA8oOArD0Xk6qNf7FUZ
+         rtJg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@facebookmail.com header.s=s1024-2013-q3 header.b=C/iVWvXI;
+       spf=pass (google.com: domain of security@facebookmail.com designates 69.171.232.134 as permitted sender) smtp.mailfrom=security@facebookmail.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=facebookmail.com
+Return-Path: <security@facebookmail.com>
+Received: from mx-out.facebook.com (69-171-232-134.mail-mail.facebook.com. [69.171.232.134])
+        by mx.google.com with ESMTPS id c30-v6si3334015ote.108.2018.04.21.20.01.23
+        for <pappanos004@gmail.com>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 21 Apr 2018 20:01:24 -0700 (PDT)
+Received-SPF: pass (google.com: domain of security@facebookmail.com designates 69.171.232.134 as permitted sender) client-ip=69.171.232.134;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@facebookmail.com header.s=s1024-2013-q3 header.b=C/iVWvXI;
+       spf=pass (google.com: domain of security@facebookmail.com designates 69.171.232.134 as permitted sender) smtp.mailfrom=security@facebookmail.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=facebookmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=facebookmail.com;
+	s=s1024-2013-q3; t=1524366082;
+	bh=D4WErTmP7Erbnx0WxzShGRg9GucYP6jLSR5vonFs03U=;
+	h=Date:To:Subject:From:MIME-Version:Content-Type;
+	b=C/iVWvXIu8E4f+rhdaK8R8wZQG7L4oYZHKkYN+buVAiznZfJHyptxyC4uLxX79OA+
+	 41pr4x2G3Lk1WCndHUnUN2XofkXzTBXgvlZQvi1FuhwaUytqFS0l8pyxZk/m6iyyA6
+	 ybbo173Jd915DjG0yy4Ba9cmO3AdZyo9yPpzsVow=
+Received: from facebook.com (V7jAX1ITfqIfsaDW+EREcx34ssVAd4va6RNCE2SQgCvqXfkL2YIMQMU5Sc10R9lM 2401:db00:1110:50e8:face:0000:0035:0000)
+ by facebook.com with Thrift id 6fe9cdb645d911e8b449248a07965b2a-b9fab58;
+ Sat, 21 Apr 2018 20:01:22 -0700
+X-Facebook: from 2401:db00:1110:2227:face:0:8b:0 ([MTI3LjAuMC4x]) 
+	by async with HTTPS (ZuckMail);
+Date: Sat, 21 Apr 2018 20:01:22 -0700
+To: =?UTF-8?B?zqDOsc69zrHOs865z47PhM63z4IgzqDOsc+Az4A=?=
+ =?UTF-8?B?zqzPgg==?= <pappanos004@gmail.com>
+Subject: =?UTF-8?B?zqDOsc69zrHOs865z47PhM63z4IsIM6zzrnOsQ==?=
+ =?UTF-8?B?IM69zrEgz4PPhc69zrXPh86vz4POtc+EzrUg?=
+ =?UTF-8?B?zr3OsSDPh8+BzrfPg865zrzOv8+Azr/Ouc61zq8=?=
+ =?UTF-8?B?z4TOtSDPhM6/IEZhY2Vib29rLA==?=
+ =?UTF-8?B?IM6xz4DOv860zrXPh8+EzrXOr8+EzrUgz4TOvw==?=
+ =?UTF-8?B?z4XPgiDOtc69zrfOvM61z4HPic68zq3Ovc6/z4U=?=
+ =?UTF-8?B?z4IgzozPgc6/z4XPgiDOvM6xLi4u?=
+X-Priority: 3
+X-Mailer: ZuckMail [version 1.00]
+Return-Path: security@facebookmail.com
+From: "Facebook" <security@facebookmail.com>
+Reply-to: noreply <noreply@facebookmail.com>
+Errors-To: security@facebookmail.com
+X-Facebook-Notify: gdpr_upsell; mailid=56a66d9405cf5G5af65c0e6847G56a6722d65fc7Ga1c
+List-Unsubscribe: <https://www.facebook.com/o.php?k=AS3T9EjBHgB7OD73&u=100014152902727&mid=56a66d9405cf5G5af65c0e6847G56a6722d65fc7Ga1c>
+Feedback-ID: 14:gdpr_upsell:Facebook
+X-FACEBOOK-PRIORITY: 0
+X-Auto-Response-Suppress: All
+Message-ID: <2724dd99e08b65accf559c292c397ea8@async>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="b1_2724dd99e08b65accf559c292c397ea8"
+X-TUID: KAuuIAkWsywA
+
+
+--b1_2724dd99e08b65accf559c292c397ea8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=CE=88=CE=BB=CE=B5=CE=B3=CF=87=CE=BF=CF=82 =CF=84=CF=8E=CF=81=CE=B1
+https://www.facebook.com/n/?gdpr%2Fconsent%2F&consent_mode=3D0&consent_reg=
+ion=3D0&entry_product=3Dnotification_email&aref=3D1524366082203591&medium=
+=3Demail&mid=3D56a66d9405cf5G5af65c0e6847G56a6722d65fc7Ga1c&bcode=3D2.1524=
+366082.AbyqElSd8T9Shx0SYzw&n_m=3Dpappanos004%40gmail.com
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+=CE=91=CE=B3=CE=B1=CF=80=CE=B7=CF=84=CE=AD/=CE=AE =
+=CE=A0=CE=B1=CE=BD=CE=B1=CE=B3=CE=B9=CF=8E=CF=84=CE=B7=CF=82,
+
+=CE=91=CE=B3=CE=B1=CF=80=CE=B7=CF=84=CE=AD/=CE=AE =CE=A0=CE=B1=CE=BD=CE=B1=
+=CE=B3=CE=B9=CF=8E=CF=84=CE=B7=CF=82,=CE=A4=CF=81=CE=BF=CF=80=CE=BF=CF=80=
+=CE=BF=CE=B9=CE=AE=CF=83=CE=B1=CE=BC=CE=B5 =CF=84=CE=BF=CF=85=CF=82 =
+=CE=8C=CF=81=CE=BF=CF=85=CF=82 =CF=87=CF=81=CE=AE=CF=83=CE=B7=CF=82 =
+=CF=80=CF=81=CE=BF=CE=BA=CE=B5=CE=B9=CE=BC=CE=AD=CE=BD=CE=BF=CF=85 =
+=CE=BD=CE=B1 =CE=B5=CF=80=CE=B5=CE=BE=CE=B7=CE=B3=CE=BF=CF=8D=CE=BD =
+=CE=BA=CE=B1=CE=BB=CF=8D=CF=84=CE=B5=CF=81=CE=B1 =CF=84=CE=B7=CE=BD =
+=CF=85=CF=80=CE=B7=CF=81=CE=B5=CF=83=CE=AF=CE=B1 =CE=BC=CE=B1=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=84=CE=B9=CF=82 =
+=CE=B1=CF=80=CE=B1=CE=B9=CF=84=CE=AE=CF=83=CE=B5=CE=B9=CF=82 =
+=CF=80=CE=BF=CF=85 =CE=AD=CF=87=CE=BF=CF=85=CE=BC=CE=B5 =CE=B1=CF=80=CF=8C =
+=CF=84=CE=BF=CF=85=CF=82 =CF=87=CF=81=CE=AE=CF=83=CF=84=CE=B5=CF=82 =
+=CF=84=CE=BF=CF=85 Facebook.=CE=A4=CF=8E=CF=81=CE=B1, =
+=CE=BC=CF=80=CE=BF=CF=81=CE=B5=CE=AF=CF=84=CE=B5 =CE=BD=CE=B1 =
+=CE=B1=CE=BD=CE=B1=CF=84=CF=81=CE=AD=CF=87=CE=B5=CF=84=CE=B5 =
+=CF=83=CF=84=CE=B9=CF=82 =
+=CE=A1=CF=85=CE=B8=CE=BC=CE=AF=CF=83=CE=B5=CE=B9=CF=82 =
+=CE=BF=CF=80=CE=BF=CE=B9=CE=B1=CE=B4=CE=AE=CF=80=CE=BF=CF=84=CE=B5 =
+=CF=83=CF=84=CE=B9=CE=B3=CE=BC=CE=AE =CE=BA=CE=B1=CE=B9 =CE=BD=CE=B1 =
+=CE=B5=CE=BB=CE=AD=CE=B3=CF=87=CE=B5=CF=84=CE=B5 =CF=84=CE=B9=CF=82 =
+=CE=B5=CF=80=CE=B9=CE=BB=CE=BF=CE=B3=CE=AD=CF=82 =CF=83=CE=B1=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=B1 =
+=CE=B4=CE=B5=CE=B4=CE=BF=CE=BC=CE=AD=CE=BD=CE=B1, =CF=84=CE=BF =
+=CE=B1=CF=80=CF=8C=CF=81=CF=81=CE=B7=CF=84=CE=BF =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B7=CE=BD =CE=B1=CF=83=CF=86=CE=AC=CE=BB=CE=B5=CE=B9=CE=B1 =
+=CF=80=CE=B9=CE=BF =CE=B5=CF=8D=CE=BA=CE=BF=CE=BB=CE=B1, =
+=CE=BA=CE=B1=CE=B8=CF=8E=CF=82 =CE=B5=CE=AF=CE=BD=CE=B1=CE=B9 =
+=CF=83=CF=85=CE=B3=CE=BA=CE=B5=CE=BD=CF=84=CF=81=CF=89=CE=BC=CE=AD=CE=BD=
+=CE=B5=CF=82 =CF=83=CE=B5 =CE=AD=CE=BD=CE=B1 =
+=CF=83=CE=B7=CE=BC=CE=B5=CE=AF=CE=BF. =
+=CE=95=CF=80=CE=AF=CF=83=CE=B7=CF=82, =CF=84=CF=81=CE=BF=CF=80=CE=BF=CF=80=
+=CE=BF=CE=B9=CE=AE=CF=83=CE=B1=CE=BC=CE=B5 =CF=84=CE=B7=CE=BD =
+=CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =
+=CE=B4=CE=B5=CE=B4=CE=BF=CE=BC=CE=AD=CE=BD=CF=89=CE=BD =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B7=CE=BD =CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=B1 cookies =
+=CF=80=CF=81=CE=BF=CE=BA=CE=B5=CE=B9=CE=BC=CE=AD=CE=BD=CE=BF=CF=85 =
+=CE=BD=CE=B1 =CE=B1=CE=BD=CF=84=CE=B9=CE=BA=CE=B1=CF=84=CE=BF=CF=80=CF=84=
+=CF=81=CE=AF=CE=B6=CE=BF=CF=85=CE=BD =CF=84=CE=B9=CF=82 =
+=CE=BD=CE=AD=CE=B5=CF=82 =
+=CE=B4=CF=85=CE=BD=CE=B1=CF=84=CF=8C=CF=84=CE=B7=CF=84=CE=B5=CF=82 =
+=CF=80=CE=BF=CF=85 =CF=83=CE=B1=CF=82 =
+=CF=80=CE=B1=CF=81=CE=AD=CF=87=CE=BF=CF=85=CE=BC=CE=B5 =CE=BA=CE=B1=CE=B9 =
+=CE=BD=CE=B1 =CE=B5=CE=BE=CE=B7=CE=B3=CE=BF=CF=8D=CE=BD =
+=CE=B1=CE=BD=CE=B1=CE=BB=CF=85=CF=84=CE=B9=CE=BA=CF=8C=CF=84=CE=B5=CF=81=
+=CE=B1 =CE=BC=CE=B5 =CF=80=CE=BF=CE=B9=CE=BF=CE=BD =
+=CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=B4=CE=B7=CE=BC=CE=B9=CE=BF=CF=85=CF=81=CE=B3=CE=BF=CF=8D=CE=BC=CE=B5 =
+=CE=B5=CE=BE=CE=B1=CF=84=CE=BF=CE=BC=CE=B9=CE=BA=CE=B5=CF=85=CE=BC=CE=AD=
+=CE=BD=CE=B5=CF=82 =CE=B5=CE=BC=CF=80=CE=B5=CE=B9=CF=81=CE=AF=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CF=84=CE=B5=CF=82 =CE=BC=CE=B1=CF=82. =
+=CE=9F=CE=B9 =CF=84=CF=81=CE=BF=CF=80=CE=BF=CF=80=CE=BF=CE=B9=CE=AE=CF=83=
+=CE=B5=CE=B9=CF=82 =CE=B1=CF=85=CF=84=CE=AD=CF=82 =CF=80=CE=B5=CF=81=CE=B9=
+=CE=BB=CE=B1=CE=BC=CE=B2=CE=AC=CE=BD=CE=BF=CF=85=CE=BD =CF=84=CE=B1 =
+=CE=B5=CE=BE=CE=AE=CF=82:=CE=BD=CE=AD=CE=B5=CF=82 =
+=CE=B4=CF=85=CE=BD=CE=B1=CF=84=CF=8C=CF=84=CE=B7=CF=84=CE=B5=CF=82, =
+=CF=8C=CF=80=CF=89=CF=82 =CF=84=CE=BF Marketplace, =CF=84=CE=B1 =
+=CE=B5=CF=86=CE=AD =CE=BA=CE=AC=CE=BC=CE=B5=CF=81=CE=B1=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=84=CE=B1 =
+=CE=B5=CF=81=CE=B3=CE=B1=CE=BB=CE=B5=CE=AF=CE=B1 =CF=80=CF=81=CE=BF=CF=83=
+=CE=B2=CE=B1=CF=83=CE=B9=CE=BC=CF=8C=CF=84=CE=B7=CF=84=CE=B1=CF=82=CF=80=
+=CE=B5=CF=81=CE=B9=CF=83=CF=83=CF=8C=CF=84=CE=B5=CF=81=CE=B5=CF=82 =
+=CE=BB=CE=B5=CF=80=CF=84=CE=BF=CE=BC=CE=AD=CF=81=CE=B5=CE=B9=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CE=BD =CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=BC=CE=B5 =CF=84=CE=BF=CE=BD =CE=BF=CF=80=CE=BF=CE=AF=CE=BF =
+=CF=84=CE=B1 =CF=83=CF=85=CF=83=CF=84=CE=AE=CE=BC=CE=B1=CF=84=CE=AC =
+=CE=BC=CE=B1=CF=82 =CE=B5=CF=80=CE=B5=CE=BE=CE=B5=CF=81=CE=B3=CE=AC=CE=B6=
+=CE=BF=CE=BD=CF=84=CE=B1=CE=B9 =CF=8C=CF=83=CE=B1 =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=80=CE=BF=CE=B9=CE=B5=CE=AF=CF=84=CE=B5, =
+=CF=80.=CF=87. =CE=BA=CE=B5=CE=AF=CE=BC=CE=B5=CE=BD=CE=B1, =
+=CF=86=CF=89=CF=84=CE=BF=CE=B3=CF=81=CE=B1=CF=86=CE=AF=CE=B5=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CE=B2=CE=AF=CE=BD=CF=84=CE=B5=CE=BF=CF=80=CE=B5=CF=81=
+=CE=B9=CF=83=CF=83=CF=8C=CF=84=CE=B5=CF=81=CE=B5=CF=82 =
+=CE=BB=CE=B5=CF=80=CF=84=CE=BF=CE=BC=CE=AD=CF=81=CE=B5=CE=B9=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CE=BD =CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=BC=CE=B5 =CF=84=CE=BF=CE=BD =CE=BF=CF=80=CE=BF=CE=AF=CE=BF =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=80=CE=BF=CE=B9=CE=BF=CF=8D=CE=BC=CE=B5 =
+=CF=80=CE=BB=CE=B7=CF=81=CE=BF=CF=86=CE=BF=CF=81=CE=AF=CE=B5=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=87=CF=81=CE=B7=CF=83=CE=B9=CE=BC=CE=BF=CF=80=CE=BF=
+=CE=B9=CE=BF=CF=8D=CE=BC=CE=B5 =CE=B1=CF=80=CF=8C =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=8D =
+=CF=83=CF=85=CF=83=CF=84=CE=AE=CE=BC=CE=B1=CF=84=CE=B1 =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B5=CF=87=CE=BD=CE=BF=CE=BB=CE=BF=CE=B3=CE=AF=CE=B5=CF=82 =
+=CF=83=CF=84=CE=B1 =CE=B4=CE=B9=CE=AC=CF=86=CE=BF=CF=81=CE=B1 =
+=CE=A0=CF=81=CE=BF=CF=8A=CF=8C=CE=BD=CF=84=CE=B1 =CF=84=CF=89=CE=BD =
+=CE=B5=CF=84=CE=B1=CE=B9=CF=81=CE=B5=CE=B9=CF=8E=CE=BD Facebook, =
+=CF=83=CF=85=CE=BC=CF=80=CE=B5=CF=81=CE=B9=CE=BB=CE=B1=CE=BC=CE=B2=CE=B1=
+=CE=BD=CE=BF=CE=BC=CE=AD=CE=BD=CF=89=CE=BD =CF=84=CF=89=CE=BD WhatsApp, =
+Instagram =CE=BA=CE=B1=CE=B9 =
+Oculus=CF=80=CF=81=CE=BF=CF=83=CE=B8=CE=AE=CE=BA=CE=B7 =CF=84=CE=BF=CF=85 =
+Instagram, =CE=BC=CE=B9=CE=B1=CF=82 =
+=CF=85=CF=80=CE=B7=CF=81=CE=B5=CF=83=CE=AF=CE=B1=CF=82 =CF=80=CE=BF=CF=85 =
+=CF=80=CE=B1=CF=81=CE=AD=CF=87=CE=B5=CF=84=CE=B1=CE=B9 =CE=B1=CF=80=CF=8C =
+=CF=84=CE=B7 Facebook Ireland, =CF=83=CF=84=CE=B7=CE=BD =
+=CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =CE=B4=CE=B5=CE=B4=CE=BF=
+=CE=BC=CE=AD=CE=BD=CF=89=CE=BD=CE=95=CF=80=CE=B9=CF=83=CE=BA=CE=B5=CF=86=
+=CF=84=CE=B5=CE=AF=CF=84=CE=B5 =CF=84=CE=BF Facebook =CE=B3=CE=B9=CE=B1 =
+=CE=BD=CE=B1 =CE=B4=CE=B5=CE=AF=CF=84=CE=B5 =CE=BA=CE=B1=CE=B9 =
+=CE=BD=CE=B1 =
+=CE=B1=CF=80=CE=BF=CE=B4=CE=B5=CF=87=CF=84=CE=B5=CE=AF=CF=84=CE=B5 =
+=CF=84=CE=BF=CF=85=CF=82 =CE=8C=CF=81=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CE=B7=CF=82.
+
+=CE=A3=CE=B1=CF=82 =
+=CE=B5=CF=85=CF=87=CE=B1=CF=81=CE=B9=CF=83=CF=84=CE=BF=CF=8D=CE=BC=CE=B5,
+=CE=97 =CE=BF=CE=BC=CE=AC=CE=B4=CE=B1 =CF=84=CE=BF=CF=85 Facebook
+
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=CE=A4=CE=BF =CE=BC=CE=AE=CE=BD=CF=85=CE=BC=CE=B1 =CE=AD=CF=87=CE=B5=CE=B9 =
+=CF=83=CF=84=CE=B1=CE=BB=CE=B5=CE=AF =CF=83=CF=84=CE=B7 =
+=CE=B4=CE=B9=CE=B5=CF=8D=CE=B8=CF=85=CE=BD=CF=83=CE=B7 =
+pappanos004@gmail.com. =CE=91=CE=BD =CE=B4=CE=B5=CE=BD =
+=CE=B8=CE=AD=CE=BB=CE=B5=CF=84=CE=B5 =CE=BD=CE=B1 =
+=CE=BB=CE=B1=CE=BC=CE=B2=CE=AC=CE=BD=CE=B5=CF=84=CE=B5 =CF=83=CF=84=CE=BF =
+=CE=BC=CE=AD=CE=BB=CE=BB=CE=BF=CE=BD =CE=B1=CF=85=CF=84=CE=AC =CF=84=CE=B1 =
+email =CE=B1=CF=80=CF=8C =CF=84=CE=BF Facebook, =
+=CE=B1=CE=BA=CE=BF=CE=BB=CE=BF=CF=85=CE=B8=CE=AE=CF=83=CF=84=CE=B5 =
+=CF=84=CE=BF=CE=BD =CF=80=CE=B1=CF=81=CE=B1=CE=BA=CE=AC=CF=84=CF=89 =
+=CF=83=CF=8D=CE=BD=CE=B4=CE=B5=CF=83=CE=BC=CE=BF =CE=B3=CE=B9=CE=B1 =
+=CE=BD=CE=B1 =
+=CE=BE=CE=B5=CE=B3=CF=81=CE=B1=CF=86=CF=84=CE=B5=CE=AF=CF=84=CE=B5.
+https://www.facebook.com/o.php?k=3DAS3T9EjBHgB7OD73&u=3D100014152902727&mi=
+d=3D56a66d9405cf5G5af65c0e6847G56a6722d65fc7Ga1c
+Facebook, Inc., Attention: Community Support, 1 Facebook Way, Menlo Park, =
+CA 94025
+
+
+--b1_2724dd99e08b65accf559c292c397ea8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional =
+//EN"><html><head><title>Facebook</title><meta http-equiv=3D"Content-Type" =
+content=3D"text/html; charset=3Dutf-8" /><style>@media all and (max-width: =
+480px){*[class].ib_t{min-width:100% =
+!important}*[class].ib_row{display:block =
+!important}*[class].ib_ext{display:block !important;padding:10px 0 5px =
+0;vertical-align:top !important;width:100% =
+!important}*[class].ib_img,*[class].ib_mid{vertical-align:top =
+!important}*[class].mb_blk{display:block =
+!important;padding-bottom:10px;width:100% =
+!important}*[class].mb_hide{display:none =
+!important}*[class].mb_inl{display:inline =
+!important}*[class].d_mb_flex{display:block !important}}.d_mb_show{display=
+:none}.d_mb_show_center{display:table;margin:auto}.d_mb_flex{display:flex}=
+@media only screen and (max-device-width: 480px){.d_mb_hide{display:none =
+!important}.d_mb_show{display:block !important}.d_mb_flex{display:block =
+!important}}.mb_text h1,.mb_text h2,.mb_text h3,.mb_text h4,.mb_text =
+h5,.mb_text h6{line-height:normal}.mb_work_text =
+h1{font-size:18px;line-height:normal;margin-top:4px}.mb_work_text =
+h2,.mb_work_text =
+h3{font-size:16px;line-height:normal;margin-top:4px}.mb_work_text =
+h4,.mb_work_text h5,.mb_work_text =
+h6{font-size:14px;line-height:normal}.mb_work_text =
+a{color:#1270e9}.mb_work_text p{margin-top:4px}</style></head><body =
+style=3D"margin:0;padding:0;" dir=3D"ltr" bgcolor=3D"#ffffff"><table =
+border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"center" =
+id=3D"email_table" style=3D"border-collapse:collapse;"><tr><td =
+id=3D"email_content" style=3D"font-family:Helvetica Neue,Helvetica,Lucida =
+Grande,tahoma,verdana,arial,sans-serif;background:#ffffff;"><table =
+border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" =
+style=3D"border-collapse:collapse;"><tr style=3D""><td height=3D"20" =
+style=3D"line-height:20px;" colspan=3D"3">&nbsp;</td></tr><tr><td =
+height=3D"1" colspan=3D"3" style=3D"line-height:1px;"><span =
+style=3D"color:#FFFFFF;display:none !important;font-size:1px;">=C2=A0 =
+=CE=91=CE=B3=CE=B1=CF=80=CE=B7=CF=84=CE=AD/=CE=AE =
+=CE=A0=CE=B1=CE=BD=CE=B1=CE=B3=CE=B9=CF=8E=CF=84=CE=B7=CF=82, =
+=CE=A4=CF=81=CE=BF=CF=80=CE=BF=CF=80=CE=BF=CE=B9=CE=AE=CF=83=CE=B1=CE=BC=
+=CE=B5 =CF=84=CE=BF=CF=85=CF=82 =CE=8C=CF=81=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CE=B7=CF=82 =
+=CF=80=CF=81=CE=BF=CE=BA=CE=B5=CE=B9=CE=BC=CE=AD=CE=BD=CE=BF=CF=85 =
+=CE=BD=CE=B1 =CE=B5=CF=80=CE=B5=CE=BE=CE=B7=CE=B3=CE=BF=CF=8D=CE=BD =
+=CE=BA=CE=B1=CE=BB=CF=8D=CF=84=CE=B5=CF=81=CE=B1 =CF=84=CE=B7=CE=BD =
+=CF=85=CF=80=CE=B7=CF=81=CE=B5=CF=83=CE=AF=CE=B1 =CE=BC=CE=B1=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=84=CE=B9=CF=82 =
+=CE=B1=CF=80=CE=B1=CE=B9=CF=84=CE=AE=CF=83=CE=B5=CE=B9=CF=82 =
+=CF=80=CE=BF=CF=85 =CE=AD=CF=87=CE=BF=CF=85=CE=BC=CE=B5 =CE=B1=CF=80=CF=8C =
+=CF=84=CE=BF=CF=85=CF=82 =CF=87=CF=81=CE=AE=CF=83=CF=84=CE=B5=CF=82 =
+=CF=84=CE=BF=CF=85 Facebook. =CE=A4=CF=8E=CF=81=CE=B1, =
+=CE=BC=CF=80=CE=BF=CF=81=CE=B5=CE=AF=CF=84=CE=B5 =CE=BD=CE=B1 =
+=CE=B1=CE=BD=CE=B1=CF=84=CF=81=CE=AD=CF=87=CE=B5=CF=84=CE=B5 =
+=CF=83=CF=84=CE=B9=CF=82 =
+=CE=A1=CF=85=CE=B8=CE=BC=CE=AF=CF=83=CE=B5=CE=B9=CF=82 =
+=CE=BF=CF=80=CE=BF=CE=B9=CE=B1=CE=B4=CE=AE=CF=80=CE=BF=CF=84=CE=B5 =
+=CF=83=CF=84=CE=B9=CE=B3=CE=BC=CE=AE =CE=BA=CE=B1=CE=B9 =CE=BD=CE=B1 =
+=CE=B5=CE=BB=CE=AD=CE=B3=CF=87=CE=B5=CF=84=CE=B5 =CF=84=CE=B9=CF=82 =
+=CE=B5=CF=80=CE=B9=CE=BB=CE=BF=CE=B3=CE=AD=CF=82 =CF=83=CE=B1=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=B1 =
+=CE=B4=CE=B5=CE=B4=CE=BF=CE=BC=CE=AD=CE=BD=CE=B1, =CF=84=CE=BF =
+=CE=B1=CF=80=CF=8C=CF=81=CF=81=CE=B7=CF=84=CE=BF =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B7=CE=BD =CE=B1=CF=83=CF=86=CE=AC=CE=BB=CE=B5=CE=B9=CE=B1 =
+=CF=80=CE=B9=CE=BF =CE=B5=CF=8D=CE=BA=CE=BF=CE=BB=CE=B1, =
+=CE=BA=CE=B1=CE=B8=CF=8E=CF=82 =CE=B5=CE=AF=CE=BD=CE=B1=CE=B9 =
+=CF=83=CF=85=CE=B3=CE=BA=CE=B5=CE=BD=CF=84=CF=81=CF=89=CE=BC=CE=AD=CE=BD=
+=CE=B5=CF=82 =CF=83=CE=B5 =CE=AD=CE=BD=CE=B1 =
+=CF=83=CE=B7=CE=BC=CE=B5=CE=AF=CE=BF. =
+=CE=95=CF=80=CE=AF=CF=83=CE=B7=CF=82, =CF=84=CF=81=CE=BF=CF=80=CE=BF=CF=80=
+=CE=BF=CE=B9=CE=AE=CF=83=CE=B1=CE=BC=CE=B5 =CF=84=CE=B7=CE=BD =
+=CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =
+=CE=B4=CE=B5=CE=B4=CE=BF=CE=BC=CE=AD=CE=BD=CF=89=CE=BD =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B7=CE=BD =CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=B1 cookies =
+=CF=80=CF=81=CE=BF=CE=BA=CE=B5=CE=B9=CE=BC=CE=AD=CE=BD=CE=BF=CF=85 =
+=CE=BD=CE=B1 =CE=B1=CE=BD=CF=84=CE=B9=CE=BA=CE=B1=CF=84=CE=BF=CF=80=CF=84=
+=CF=81=CE=AF=CE=B6=CE=BF=CF=85=CE=BD =CF=84=CE=B9=CF=82 =
+=CE=BD=CE=AD=CE=B5=CF=82 =
+=CE=B4=CF=85=CE=BD=CE=B1=CF=84=CF=8C=CF=84=CE=B7=CF=84=CE=B5=CF=82 =
+=CF=80=CE=BF=CF=85 =CF=83=CE=B1=CF=82 =
+=CF=80=CE=B1=CF=81=CE=AD=CF=87=CE=BF=CF=85=CE=BC=CE=B5 =CE=BA=CE=B1=CE=B9 =
+=CE=BD=CE=B1 =CE=B5=CE=BE=CE=B7=CE=B3=CE=BF=CF=8D=CE=BD =
+=CE=B1=CE=BD=CE=B1=CE=BB=CF=85=CF=84=CE=B9=CE=BA=CF=8C=CF=84=CE=B5=CF=81=
+=CE=B1 =CE=BC=CE=B5 =CF=80=CE=BF=CE=B9=CE=BF=CE=BD =
+=CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=B4=CE=B7=CE=BC=CE=B9=CE=BF=CF=85=CF=81=CE=B3=CE=BF=CF=8D=CE=BC=CE=B5 =
+=CE=B5=CE=BE=CE=B1=CF=84=CE=BF=CE=BC=CE=B9=CE=BA=CE=B5=CF=85=CE=BC=CE=AD=
+=CE=BD=CE=B5=CF=82 =CE=B5=CE=BC=CF=80=CE=B5=CE=B9=CF=81=CE=AF=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CF=84=CE=B5=CF=82 =CE=BC=CE=B1=CF=82. =
+=CE=9F=CE=B9 =CF=84=CF=81=CE=BF=CF=80=CE=BF=CF=80=CE=BF=CE=B9=CE=AE=CF=83=
+=CE=B5=CE=B9=CF=82 =CE=B1=CF=85=CF=84=CE=AD=CF=82 =CF=80=CE=B5=CF=81=CE=B9=
+=CE=BB=CE=B1=CE=BC=CE=B2=CE=AC=CE=BD=CE=BF=CF=85=CE=BD =CF=84=CE=B1 =
+=CE=B5=CE=BE=CE=AE=CF=82: =CE=BD=CE=AD=CE=B5=CF=82 =
+=CE=B4=CF=85=CE=BD=CE=B1=CF=84=CF=8C=CF=84=CE=B7=CF=84=CE=B5=CF=82, =
+=CF=8C=CF=80=CF=89=CF=82 =CF=84=CE=BF Marketplace, =CF=84=CE=B1 =
+=CE=B5=CF=86=CE=AD =CE=BA=CE=AC=CE=BC=CE=B5=CF=81=CE=B1=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=84=CE=B1 =
+=CE=B5=CF=81=CE=B3=CE=B1=CE=BB=CE=B5=CE=AF=CE=B1 =CF=80=CF=81=CE=BF=CF=83=
+=CE=B2=CE=B1=CF=83=CE=B9=CE=BC=CF=8C=CF=84=CE=B7=CF=84=CE=B1=CF=82 =
+=CF=80=CE=B5=CF=81=CE=B9=CF=83=CF=83=CF=8C=CF=84=CE=B5=CF=81=CE=B5=CF=82 =
+=CE=BB=CE=B5=CF=80=CF=84=CE=BF=CE=BC=CE=AD=CF=81=CE=B5=CE=B9=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CE=BD =CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=BC=CE=B5 =CF=84=CE=BF=CE=BD =CE=BF=CF=80=CE=BF=CE=AF=CE=BF =
+=CF=84=CE=B1 =CF=83=CF=85=CF=83=CF=84=CE=AE=CE=BC=CE=B1=CF=84=CE=AC =
+=CE=BC=CE=B1=CF=82 =CE=B5=CF=80=CE=B5=CE=BE=CE=B5=CF=81=CE=B3=CE=AC=CE=B6=
+=CE=BF=CE=BD=CF=84=CE=B1=CE=B9 =CF=8C=CF=83=CE=B1 =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=80=CE=BF=CE=B9=CE=B5=CE=AF=CF=84=CE=B5, =
+=CF=80.=CF=87. =CE=BA=CE=B5=CE=AF=CE=BC=CE=B5=CE=BD=CE=B1, =
+=CF=86=CF=89=CF=84=CE=BF=CE=B3=CF=81=CE=B1=CF=86=CE=AF=CE=B5=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CE=B2=CE=AF=CE=BD=CF=84=CE=B5=CE=BF =
+=CF=80=CE=B5=CF=81=CE=B9=CF=83=CF=83=CF=8C=CF=84=CE=B5=CF=81=CE=B5=CF=82 =
+=CE=BB=CE=B5=CF=80=CF=84=CE=BF=CE=BC=CE=AD=CF=81=CE=B5=CE=B9=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CE=BD =CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=BC=CE=B5 =CF=84=CE=BF=CE=BD =CE=BF=CF=80=CE=BF=CE=AF=CE=BF =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=80=CE=BF=CE=B9=CE=BF=CF=8D=CE=BC=CE=B5 =
+=CF=80=CE=BB=CE=B7=CF=81=CE=BF=CF=86=CE=BF=CF=81=CE=AF=CE=B5=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=87=CF=81=CE=B7=CF=83=CE=B9=CE=BC=CE=BF=CF=80=CE=BF=
+=CE=B9=CE=BF=CF=8D=CE=BC=CE=B5 =CE=B1=CF=80=CF=8C =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=8D =
+=CF=83=CF=85=CF=83=CF=84=CE=AE=CE=BC=CE=B1=CF=84=CE=B1 =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B5=CF=87=CE=BD=CE=BF=CE=BB=CE=BF=CE=B3=CE=AF=CE=B5=CF=82 =
+=CF=83=CF=84=CE=B1 =CE=B4=CE=B9=CE=AC=CF=86=CE=BF=CF=81=CE=B1 =
+=CE=A0=CF=81=CE=BF=CF=8A=CF=8C=CE=BD=CF=84=CE=B1 =CF=84=CF=89=CE=BD =
+=CE=B5=CF=84=CE=B1=CE=B9=CF=81=CE=B5=CE=B9=CF=8E=CE=BD Facebook, =
+=CF=83=CF=85=CE=BC=CF=80=CE=B5=CF=81=CE=B9=CE=BB=CE=B1=CE=BC=CE=B2=CE=B1=
+=CE=BD=CE=BF=CE=BC=CE=AD=CE=BD=CF=89=CE=BD =CF=84=CF=89=CE=BD WhatsApp, =
+Instagram =CE=BA=CE=B1=CE=B9 Oculus =
+=CF=80=CF=81=CE=BF=CF=83=CE=B8=CE=AE=CE=BA=CE=B7 =CF=84=CE=BF=CF=85 =
+Instagram, =CE=BC=CE=B9=CE=B1=CF=82 =
+=CF=85=CF=80=CE=B7=CF=81=CE=B5=CF=83=CE=AF=CE=B1=CF=82 =CF=80=CE=BF=CF=85 =
+=CF=80=CE=B1=CF=81=CE=AD=CF=87=CE=B5=CF=84=CE=B1=CE=B9 =CE=B1=CF=80=CF=8C =
+=CF=84=CE=B7 Facebook Ireland, =CF=83=CF=84=CE=B7=CE=BD =
+=CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =
+=CE=B4=CE=B5=CE=B4=CE=BF=CE=BC=CE=AD=CE=BD=CF=89=CE=BD =
+=CE=95=CF=80=CE=B9=CF=83=CE=BA=CE=B5=CF=86=CF=84=CE=B5=CE=AF=CF=84=CE=B5 =
+=CF=84=CE=BF Facebook =CE=B3=CE=B9=CE=B1 =CE=BD=CE=B1 =
+=CE=B4=CE=B5=CE=AF=CF=84=CE=B5 =CE=BA=CE=B1=CE=B9 =CE=BD=CE=B1 =
+=CE=B1=CF=80=CE=BF=CE=B4=CE=B5=CF=87=CF=84=CE=B5=CE=AF=CF=84=CE=B5 =
+=CF=84=CE=BF=CF=85=CF=82 =CE=8C=CF=81=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CE=B7=CF=82. =C2=A0</span></td></tr><tr><td =
+width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td><td =
+style=3D""><table border=3D"0" width=3D"100%" cellspacing=3D"0" =
+cellpadding=3D"0" style=3D"border-collapse:collapse;"><tr style=3D""><td =
+height=3D"16" style=3D"line-height:16px;" =
+colspan=3D"3">&nbsp;</td></tr><tr><td width=3D"32" align=3D"left" =
+valign=3D"middle" style=3D"height:32;line-height:0px;"><a =
+href=3D"https://www.facebook.com/n/?gdpr%2Fconsent%2F&amp;consent_mode=3D6=
+&amp;referrer=3Dnotification_jewel&amp;aref=3D1524366082203591&amp;medium=
+=3Demail&amp;mid=3D56a66d9405cf5G5af65c0e6847G56a6722d65fc7Ga1c&amp;bcode=
+=3D2.1524366082.AbyqElSd8T9Shx0SYzw&amp;n_m=3Dpappanos004%40gmail.com" =
+style=3D"color:#3b5998;text-decoration:none;"><img =
+src=3D"https://static.xx.fbcdn.net/rsrc.php/v3/yL/r/vd4aB0GIe9z.png" =
+width=3D"32" height=3D"32" style=3D"border:0;" /></a></td><td width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td><td =
+width=3D"100%" style=3D""><a href=3D"https://www.facebook.com/n/?gdpr%2Fco=
+nsent%2F&amp;consent_mode=3D6&amp;referrer=3Dnotification_jewel&amp;aref=
+=3D1524366082203591&amp;medium=3Demail&amp;mid=3D56a66d9405cf5G5af65c0e684=
+7G56a6722d65fc7Ga1c&amp;bcode=3D2.1524366082.AbyqElSd8T9Shx0SYzw&amp;n_m=
+=3Dpappanos004%40gmail.com" =
+style=3D"color:#3b5998;text-decoration:none;font-family:Helvetica =
+Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:19p=
+x;line-height:32px;">Facebook</a></td></tr><tr =
+style=3D"border-bottom:solid 1px #e5e5e5;"><td height=3D"16" =
+style=3D"line-height:16px;" colspan=3D"3">&nbsp;</td></tr></table></td><td =
+width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td></tr><tr><td =
+width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td><td =
+style=3D""><table border=3D"0" width=3D"100%" cellspacing=3D"0" =
+cellpadding=3D"0" style=3D"border-collapse:collapse;"><tr style=3D""><td =
+height=3D"28" style=3D"line-height:28px;">&nbsp;</td></tr><tr><td =
+style=3D""><span class=3D"mb_text" style=3D"font-family:Helvetica =
+Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:16p=
+x;line-height:21px;color:#141823;"><p><p>=CE=91=CE=B3=CE=B1=CF=80=CE=B7=CF=
+=84=CE=AD =CE=A0=CE=B1=CE=BD=CE=B1=CE=B3=CE=B9=CF=8E=CF=84=CE=B7=CF=82,</p=
+><p>=CE=A4=CF=81=CE=BF=CF=80=CE=BF=CF=80=CE=BF=CE=B9=CE=AE=CF=83=CE=B1=CE=
+=BC=CE=B5 =CF=84=CE=BF=CF=85=CF=82 =CE=8C=CF=81=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CE=B7=CF=82 =
+=CF=80=CF=81=CE=BF=CE=BA=CE=B5=CE=B9=CE=BC=CE=AD=CE=BD=CE=BF=CF=85 =
+=CE=BD=CE=B1 =CE=B5=CF=80=CE=B5=CE=BE=CE=B7=CE=B3=CE=BF=CF=8D=CE=BD =
+=CE=BA=CE=B1=CE=BB=CF=8D=CF=84=CE=B5=CF=81=CE=B1 =CF=84=CE=B7=CE=BD =
+=CF=85=CF=80=CE=B7=CF=81=CE=B5=CF=83=CE=AF=CE=B1 =CE=BC=CE=B1=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=84=CE=B9=CF=82 =
+=CE=B1=CF=80=CE=B1=CE=B9=CF=84=CE=AE=CF=83=CE=B5=CE=B9=CF=82 =
+=CF=80=CE=BF=CF=85 =CE=AD=CF=87=CE=BF=CF=85=CE=BC=CE=B5 =CE=B1=CF=80=CF=8C =
+=CF=84=CE=BF=CF=85=CF=82 =CF=87=CF=81=CE=AE=CF=83=CF=84=CE=B5=CF=82 =
+=CF=84=CE=BF=CF=85 Facebook.</p><p>=CE=A4=CF=8E=CF=81=CE=B1, =
+=CE=BC=CF=80=CE=BF=CF=81=CE=B5=CE=AF=CF=84=CE=B5 =CE=BD=CE=B1 =
+=CE=B1=CE=BD=CE=B1=CF=84=CF=81=CE=AD=CF=87=CE=B5=CF=84=CE=B5 =
+=CF=83=CF=84=CE=B9=CF=82 =
+=CE=A1=CF=85=CE=B8=CE=BC=CE=AF=CF=83=CE=B5=CE=B9=CF=82 =
+=CE=BF=CF=80=CE=BF=CE=B9=CE=B1=CE=B4=CE=AE=CF=80=CE=BF=CF=84=CE=B5 =
+=CF=83=CF=84=CE=B9=CE=B3=CE=BC=CE=AE =CE=BA=CE=B1=CE=B9 =CE=BD=CE=B1 =
+=CE=B5=CE=BB=CE=AD=CE=B3=CF=87=CE=B5=CF=84=CE=B5 =CF=84=CE=B9=CF=82 =
+=CE=B5=CF=80=CE=B9=CE=BB=CE=BF=CE=B3=CE=AD=CF=82 =CF=83=CE=B1=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=B1 =
+=CE=B4=CE=B5=CE=B4=CE=BF=CE=BC=CE=AD=CE=BD=CE=B1, =CF=84=CE=BF =
+=CE=B1=CF=80=CF=8C=CF=81=CF=81=CE=B7=CF=84=CE=BF =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B7=CE=BD =CE=B1=CF=83=CF=86=CE=AC=CE=BB=CE=B5=CE=B9=CE=B1 =
+=CF=80=CE=B9=CE=BF =CE=B5=CF=8D=CE=BA=CE=BF=CE=BB=CE=B1, =
+=CE=BA=CE=B1=CE=B8=CF=8E=CF=82 =CE=B5=CE=AF=CE=BD=CE=B1=CE=B9 =
+=CF=83=CF=85=CE=B3=CE=BA=CE=B5=CE=BD=CF=84=CF=81=CF=89=CE=BC=CE=AD=CE=BD=
+=CE=B5=CF=82 =CF=83=CE=B5 =CE=AD=CE=BD=CE=B1 =
+=CF=83=CE=B7=CE=BC=CE=B5=CE=AF=CE=BF. =
+=CE=95=CF=80=CE=AF=CF=83=CE=B7=CF=82, =CF=84=CF=81=CE=BF=CF=80=CE=BF=CF=80=
+=CE=BF=CE=B9=CE=AE=CF=83=CE=B1=CE=BC=CE=B5 =CF=84=CE=B7=CE=BD =
+=CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =
+=CE=B4=CE=B5=CE=B4=CE=BF=CE=BC=CE=AD=CE=BD=CF=89=CE=BD =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B7=CE=BD =CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=B1 cookies =
+=CF=80=CF=81=CE=BF=CE=BA=CE=B5=CE=B9=CE=BC=CE=AD=CE=BD=CE=BF=CF=85 =
+=CE=BD=CE=B1 =CE=B1=CE=BD=CF=84=CE=B9=CE=BA=CE=B1=CF=84=CE=BF=CF=80=CF=84=
+=CF=81=CE=AF=CE=B6=CE=BF=CF=85=CE=BD =CF=84=CE=B9=CF=82 =
+=CE=BD=CE=AD=CE=B5=CF=82 =
+=CE=B4=CF=85=CE=BD=CE=B1=CF=84=CF=8C=CF=84=CE=B7=CF=84=CE=B5=CF=82 =
+=CF=80=CE=BF=CF=85 =CF=83=CE=B1=CF=82 =
+=CF=80=CE=B1=CF=81=CE=AD=CF=87=CE=BF=CF=85=CE=BC=CE=B5 =CE=BA=CE=B1=CE=B9 =
+=CE=BD=CE=B1 =CE=B5=CE=BE=CE=B7=CE=B3=CE=BF=CF=8D=CE=BD =
+=CE=B1=CE=BD=CE=B1=CE=BB=CF=85=CF=84=CE=B9=CE=BA=CF=8C=CF=84=CE=B5=CF=81=
+=CE=B1 =CE=BC=CE=B5 =CF=80=CE=BF=CE=B9=CE=BF=CE=BD =
+=CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=B4=CE=B7=CE=BC=CE=B9=CE=BF=CF=85=CF=81=CE=B3=CE=BF=CF=8D=CE=BC=CE=B5 =
+=CE=B5=CE=BE=CE=B1=CF=84=CE=BF=CE=BC=CE=B9=CE=BA=CE=B5=CF=85=CE=BC=CE=AD=
+=CE=BD=CE=B5=CF=82 =CE=B5=CE=BC=CF=80=CE=B5=CE=B9=CF=81=CE=AF=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CF=84=CE=B5=CF=82 =CE=BC=CE=B1=CF=82. =
+=CE=9F=CE=B9 =CF=84=CF=81=CE=BF=CF=80=CE=BF=CF=80=CE=BF=CE=B9=CE=AE=CF=83=
+=CE=B5=CE=B9=CF=82 =CE=B1=CF=85=CF=84=CE=AD=CF=82 =CF=80=CE=B5=CF=81=CE=B9=
+=CE=BB=CE=B1=CE=BC=CE=B2=CE=AC=CE=BD=CE=BF=CF=85=CE=BD =CF=84=CE=B1 =
+=CE=B5=CE=BE=CE=AE=CF=82:</p><ul><li>=CE=BD=CE=AD=CE=B5=CF=82 =
+=CE=B4=CF=85=CE=BD=CE=B1=CF=84=CF=8C=CF=84=CE=B7=CF=84=CE=B5=CF=82, =
+=CF=8C=CF=80=CF=89=CF=82 =CF=84=CE=BF Marketplace, =CF=84=CE=B1 =
+=CE=B5=CF=86=CE=AD =CE=BA=CE=AC=CE=BC=CE=B5=CF=81=CE=B1=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=84=CE=B1 =
+=CE=B5=CF=81=CE=B3=CE=B1=CE=BB=CE=B5=CE=AF=CE=B1 =CF=80=CF=81=CE=BF=CF=83=
+=CE=B2=CE=B1=CF=83=CE=B9=CE=BC=CF=8C=CF=84=CE=B7=CF=84=CE=B1=CF=82</li><br =
+/><li>=CF=80=CE=B5=CF=81=CE=B9=CF=83=CF=83=CF=8C=CF=84=CE=B5=CF=81=CE=B5=
+=CF=82 =
+=CE=BB=CE=B5=CF=80=CF=84=CE=BF=CE=BC=CE=AD=CF=81=CE=B5=CE=B9=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CE=BD =CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=BC=CE=B5 =CF=84=CE=BF=CE=BD =CE=BF=CF=80=CE=BF=CE=AF=CE=BF =
+=CF=84=CE=B1 =CF=83=CF=85=CF=83=CF=84=CE=AE=CE=BC=CE=B1=CF=84=CE=AC =
+=CE=BC=CE=B1=CF=82 =CE=B5=CF=80=CE=B5=CE=BE=CE=B5=CF=81=CE=B3=CE=AC=CE=B6=
+=CE=BF=CE=BD=CF=84=CE=B1=CE=B9 =CF=8C=CF=83=CE=B1 =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=80=CE=BF=CE=B9=CE=B5=CE=AF=CF=84=CE=B5, =
+=CF=80.=CF=87. =CE=BA=CE=B5=CE=AF=CE=BC=CE=B5=CE=BD=CE=B1, =
+=CF=86=CF=89=CF=84=CE=BF=CE=B3=CF=81=CE=B1=CF=86=CE=AF=CE=B5=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CE=B2=CE=AF=CE=BD=CF=84=CE=B5=CE=BF</li><br =
+/><li>=CF=80=CE=B5=CF=81=CE=B9=CF=83=CF=83=CF=8C=CF=84=CE=B5=CF=81=CE=B5=
+=CF=82 =
+=CE=BB=CE=B5=CF=80=CF=84=CE=BF=CE=BC=CE=AD=CF=81=CE=B5=CE=B9=CE=B5=CF=82 =
+=CE=B3=CE=B9=CE=B1 =CF=84=CE=BF=CE=BD =CF=84=CF=81=CF=8C=CF=80=CE=BF =
+=CE=BC=CE=B5 =CF=84=CE=BF=CE=BD =CE=BF=CF=80=CE=BF=CE=AF=CE=BF =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=80=CE=BF=CE=B9=CE=BF=CF=8D=CE=BC=CE=B5 =
+=CF=80=CE=BB=CE=B7=CF=81=CE=BF=CF=86=CE=BF=CF=81=CE=AF=CE=B5=CF=82 =
+=CE=BA=CE=B1=CE=B9 =CF=87=CF=81=CE=B7=CF=83=CE=B9=CE=BC=CE=BF=CF=80=CE=BF=
+=CE=B9=CE=BF=CF=8D=CE=BC=CE=B5 =CE=B1=CF=80=CF=8C =
+=CE=BA=CE=BF=CE=B9=CE=BD=CE=BF=CF=8D =
+=CF=83=CF=85=CF=83=CF=84=CE=AE=CE=BC=CE=B1=CF=84=CE=B1 =CE=BA=CE=B1=CE=B9 =
+=CF=84=CE=B5=CF=87=CE=BD=CE=BF=CE=BB=CE=BF=CE=B3=CE=AF=CE=B5=CF=82 =
+=CF=83=CF=84=CE=B1 =CE=B4=CE=B9=CE=AC=CF=86=CE=BF=CF=81=CE=B1 =
+=CE=A0=CF=81=CE=BF=CF=8A=CF=8C=CE=BD=CF=84=CE=B1 =CF=84=CF=89=CE=BD =
+=CE=B5=CF=84=CE=B1=CE=B9=CF=81=CE=B5=CE=B9=CF=8E=CE=BD Facebook, =
+=CF=83=CF=85=CE=BC=CF=80=CE=B5=CF=81=CE=B9=CE=BB=CE=B1=CE=BC=CE=B2=CE=B1=
+=CE=BD=CE=BF=CE=BC=CE=AD=CE=BD=CF=89=CE=BD =CF=84=CF=89=CE=BD WhatsApp, =
+Instagram =CE=BA=CE=B1=CE=B9 Oculus</li><br =
+/><li>=CF=80=CF=81=CE=BF=CF=83=CE=B8=CE=AE=CE=BA=CE=B7 =CF=84=CE=BF=CF=85 =
+Instagram, =CE=BC=CE=B9=CE=B1=CF=82 =
+=CF=85=CF=80=CE=B7=CF=81=CE=B5=CF=83=CE=AF=CE=B1=CF=82 =CF=80=CE=BF=CF=85 =
+=CF=80=CE=B1=CF=81=CE=AD=CF=87=CE=B5=CF=84=CE=B1=CE=B9 =CE=B1=CF=80=CF=8C =
+=CF=84=CE=B7 Facebook Ireland, =CF=83=CF=84=CE=B7=CE=BD =
+=CE=A0=CE=BF=CE=BB=CE=B9=CF=84=CE=B9=CE=BA=CE=AE =CE=B4=CE=B5=CE=B4=CE=BF=
+=CE=BC=CE=AD=CE=BD=CF=89=CE=BD</li></ul><p>=CE=95=CF=80=CE=B9=CF=83=CE=BA=
+=CE=B5=CF=86=CF=84=CE=B5=CE=AF=CF=84=CE=B5 =CF=84=CE=BF Facebook =
+=CE=B3=CE=B9=CE=B1 =CE=BD=CE=B1 =CE=B4=CE=B5=CE=AF=CF=84=CE=B5 =
+=CE=BA=CE=B1=CE=B9 =CE=BD=CE=B1 =
+=CE=B1=CF=80=CE=BF=CE=B4=CE=B5=CF=87=CF=84=CE=B5=CE=AF=CF=84=CE=B5 =
+=CF=84=CE=BF=CF=85=CF=82 =CE=8C=CF=81=CE=BF=CF=85=CF=82 =
+=CF=87=CF=81=CE=AE=CF=83=CE=B7=CF=82.</p></p></span></td></tr><tr =
+style=3D""><td height=3D"14" =
+style=3D"line-height:14px;">&nbsp;</td></tr></table></td><td width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td></tr><tr><td =
+width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td><td =
+style=3D""><table border=3D"0" width=3D"100%" cellspacing=3D"0" =
+cellpadding=3D"0" style=3D"border-collapse:collapse;"><tr style=3D""><td =
+height=3D"2" style=3D"line-height:2px;" =
+colspan=3D"3">&nbsp;</td></tr><tr><td class=3D"mb_blk" style=3D""><a =
+href=3D"https://www.facebook.com/n/?gdpr%2Fconsent%2F&amp;consent_mode=3D0=
+&amp;consent_region=3D0&amp;entry_product=3Dnotification_email&amp;aref=3D=
+1524366082203591&amp;medium=3Demail&amp;mid=3D56a66d9405cf5G5af65c0e6847G5=
+6a6722d65fc7Ga1c&amp;bcode=3D2.1524366082.AbyqElSd8T9Shx0SYzw&amp;n_m=3Dpa=
+ppanos004%40gmail.com" =
+style=3D"color:#3b5998;text-decoration:none;"><table border=3D"0" =
+width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" =
+style=3D"border-collapse:collapse;"><tr><td style=3D"border-collapse:colla=
+pse;border-radius:2px;text-align:center;display:block;border:solid 1px =
+#344c80;box-shadow:inset 0 1px 1px rgba(255, 255, 255, 0.1),0 1px 0 =
+rgba(0, 0, 0, 0.1);background:#4c649b;padding:7px 16px 11px 16px;"><a =
+href=3D"https://www.facebook.com/n/?gdpr%2Fconsent%2F&amp;consent_mode=3D0=
+&amp;consent_region=3D0&amp;entry_product=3Dnotification_email&amp;aref=3D=
+1524366082203591&amp;medium=3Demail&amp;mid=3D56a66d9405cf5G5af65c0e6847G5=
+6a6722d65fc7Ga1c&amp;bcode=3D2.1524366082.AbyqElSd8T9Shx0SYzw&amp;n_m=3Dpa=
+ppanos004%40gmail.com" =
+style=3D"color:#3b5998;text-decoration:none;display:block;"><center><font =
+size=3D"3"><span style=3D"font-family:Helvetica Neue,Helvetica,Lucida =
+Grande,tahoma,verdana,arial,sans-serif;white-space:nowrap;font-weight:bold=
+;vertical-align:middle;color:#ffffff;text-shadow:0 -1px 0 =
+#415686;font-size:14px;line-height:14px;">=CE=88=CE=BB=CE=B5=CE=B3=CF=87=
+=CE=BF=CF=82&nbsp;=CF=84=CF=8E=CF=81=CE=B1</span></font></center></a></td>=
+</tr></table></a></td><td width=3D"100%" class=3D"mb_hide" =
+style=3D""></td></tr><tr style=3D""><td height=3D"32" =
+style=3D"line-height:32px;" colspan=3D"3">&nbsp;</td></tr></table></td><td =
+width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td></tr><tr><td =
+width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td><td =
+style=3D""><table border=3D"0" width=3D"100%" cellspacing=3D"0" =
+cellpadding=3D"0" align=3D"left" style=3D"border-collapse:collapse;"><tr =
+style=3D"border-top:solid 1px #e5e5e5;"><td height=3D"16" =
+style=3D"line-height:16px;">&nbsp;</td></tr><tr><td =
+style=3D"font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana=
+,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px;">=CE=A4=
+=CE=BF =CE=BC=CE=AE=CE=BD=CF=85=CE=BC=CE=B1 =CE=AD=CF=87=CE=B5=CE=B9 =
+=CF=83=CF=84=CE=B1=CE=BB=CE=B5=CE=AF =CF=83=CF=84=CE=B7 =
+=CE=B4=CE=B9=CE=B5=CF=8D=CE=B8=CF=85=CE=BD=CF=83=CE=B7 <a =
+href=3D"mailto:pappanos004&#064;gmail.com" style=3D"color:#3b5998;text-dec=
+oration:none;">pappanos004&#064;gmail.com</a>. =CE=91=CE=BD =
+=CE=B4=CE=B5=CE=BD =CE=B8=CE=AD=CE=BB=CE=B5=CF=84=CE=B5 =CE=BD=CE=B1 =
+=CE=BB=CE=B1=CE=BC=CE=B2=CE=AC=CE=BD=CE=B5=CF=84=CE=B5 =CF=83=CF=84=CE=BF =
+=CE=BC=CE=AD=CE=BB=CE=BB=CE=BF=CE=BD =CE=B1=CF=85=CF=84=CE=AC =CF=84=CE=B1 =
+email =CE=B1=CF=80=CF=8C =CF=84=CE=BF Facebook, <a href=3D"https://www.fac=
+ebook.com/o.php?k=3DAS3T9EjBHgB7OD73&amp;u=3D100014152902727&amp;mid=3D56a=
+66d9405cf5G5af65c0e6847G56a6722d65fc7Ga1c" style=3D"color:#3b5998;text-dec=
+oration:none;">=CE=BE=CE=B5=CE=B3=CF=81=CE=B1=CF=86=CF=84=CE=B5=CE=AF=CF=
+=84=CE=B5</a>.<br />Facebook, Inc., Attention: Community Support, 1 =
+Facebook Way, Menlo Park, CA 94025</td></tr></table></td><td width=3D"15" =
+style=3D"display:block;width:15px;">&nbsp;&nbsp;&nbsp;</td></tr><tr =
+style=3D""><td height=3D"20" style=3D"line-height:20px;" =
+colspan=3D"3">&nbsp;</td></tr></table><span style=3D""><img =
+src=3D"https://www.facebook.com/email_open_log_pic.php?mid=3D56a66d9405cf5=
+G5af65c0e6847G56a6722d65fc7Ga1c" style=3D"border:0;width:1px;height:1px;" =
+/></span></td></tr></table></body></html>
+
+
+
+--b1_2724dd99e08b65accf559c292c397ea8--
+

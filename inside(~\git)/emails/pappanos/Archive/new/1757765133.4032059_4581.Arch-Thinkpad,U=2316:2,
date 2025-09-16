@@ -1,0 +1,1023 @@
+Delivered-To: pappanos004@gmail.com
+Received: by 2002:a05:6a10:be58:b0:583:5cce:d216 with SMTP id yq24csp193995pxc;
+        Thu, 18 Jul 2024 15:44:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHS7DOJT1ZCUY+j+G1j/+GA78apg3R0wAj413kbcYgsk28sOT6IqC2jwZNLxAlWHh+/tM4P
+X-Received: by 2002:a05:6358:94a6:b0:1aa:bc07:a3da with SMTP id e5c5f4694b2df-1aca9ec8d77mr310087755d.14.1721342652668;
+        Thu, 18 Jul 2024 15:44:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1721342652; cv=none;
+        d=google.com; s=arc-20160816;
+        b=TGNWe1JyegboaUElYyKs/BvCMbSXCyEeHqekIzKkF74WvSs98EtzwGpQUE1nMG4dRR
+         /ljx8HW5bMzLYXesCjGNN2zXivdbfXA3bWSoLn6XJaekehiyx2esuu3ZZbYS9/cHBuR2
+         rgod31CZHkZ64xqC2mCWisnAf/VjPUNyyk0GpkEZHU8nknTSO0IlRDhclsxjwK98oQGO
+         qOkQBUMCFUuksmatf527tx4lalhzftRvdbGRr1TBr9q1OwJ/gEu+kVrJdA593wjZTY38
+         q8J1aZvOoodYtJmeL3HX/bVNQejXl7k4ntbvqpN+Hc+RnFvVQpjhFFsoUu/aqNVRnKKS
+         SRog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:content-transfer-encoding:mime-version
+         :subject:to:from:dkim-signature:dkim-signature;
+        bh=KRa6bqXzRGz+PZPBy05bvEoTJOz0Li+HtG6fgrYkZNk=;
+        fh=/HlUdswXRye2WTbFm8xpM+qpT6gAyb+KwI+GRO2WI5o=;
+        b=a8ofO8u+9BQwwUoz1BajkqrDOmOnMZVXi+6HNxbv6QyH3UyYL80W3jB8fHBn9dxq0n
+         MsI/M1KTbad6rFZ1wXFd4XFPtH3QYAJiAhplRgAMf7N9uSxiHzVJhzwZ/ypBaNXIfvSb
+         vBUqKZskv8hReemRThXdPKnsphsl7hXb1++fblzj485wH0wjF5xi57KhPtiuRqp68Rs5
+         usGxBjRNNdzX70hrRbjFAKjfEX9HJVBjBkDHJqqzVoPoab+Au6pSUgMa3KDZOt8iyTGH
+         kZX9r5g5wgcl/7roDo57Sn6KXrL3/Sa0MZOG+UE+nilLXZCrfeFch4ZFJVuSGBmiI4tL
+         HAYg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@vercel.com header.s=cyuqv3wc3p37tm2ykaadh4apqog7zvb6 header.b=Cv+VHKK+;
+       dkim=pass header.i=@amazonses.com header.s=7v7vs6w47njt4pimodk5mmttbegzsi6n header.b=3p71AJhK;
+       spf=pass (google.com: domain of 01010190c8046ec1-7cd1912e-91a5-4a43-94be-84734e618dcb-000000@mail.vercel.com designates 54.240.27.59 as permitted sender) smtp.mailfrom=01010190c8046ec1-7cd1912e-91a5-4a43-94be-84734e618dcb-000000@mail.vercel.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vercel.com
+Return-Path: <01010190c8046ec1-7cd1912e-91a5-4a43-94be-84734e618dcb-000000@mail.vercel.com>
+Received: from a27-59.smtp-out.us-west-2.amazonses.com (a27-59.smtp-out.us-west-2.amazonses.com. [54.240.27.59])
+        by mx.google.com with ESMTPS id 41be03b00d2f7-79db8c7f406si212095a12.386.2024.07.18.15.44.12
+        for <pappanos004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jul 2024 15:44:12 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 01010190c8046ec1-7cd1912e-91a5-4a43-94be-84734e618dcb-000000@mail.vercel.com designates 54.240.27.59 as permitted sender) client-ip=54.240.27.59;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@vercel.com header.s=cyuqv3wc3p37tm2ykaadh4apqog7zvb6 header.b=Cv+VHKK+;
+       dkim=pass header.i=@amazonses.com header.s=7v7vs6w47njt4pimodk5mmttbegzsi6n header.b=3p71AJhK;
+       spf=pass (google.com: domain of 01010190c8046ec1-7cd1912e-91a5-4a43-94be-84734e618dcb-000000@mail.vercel.com designates 54.240.27.59 as permitted sender) smtp.mailfrom=01010190c8046ec1-7cd1912e-91a5-4a43-94be-84734e618dcb-000000@mail.vercel.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vercel.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=cyuqv3wc3p37tm2ykaadh4apqog7zvb6; d=vercel.com; t=1721342652;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date;
+	bh=gVtBZzIG3igix0wsBfvTLmEHZ8NrPmwVSPbQh2Q3jj0=;
+	b=Cv+VHKK+1VHmYb8q/JuBjLlXRG5v2D5kms6qpfHIynWMoFxYPzCSC+chEGx5rABT
+	YvMtNi26JCdb0OTMutQODxm3EugWlX7bSuhBLmQd8EkE/U8T1A6e24vMsZizVXQFK1u
+	zFH44K2TgzNk44x2ijl0Xqmz1mcJHKPXmPzIJitY=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=7v7vs6w47njt4pimodk5mmttbegzsi6n; d=amazonses.com; t=1721342652;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:Feedback-ID;
+	bh=gVtBZzIG3igix0wsBfvTLmEHZ8NrPmwVSPbQh2Q3jj0=;
+	b=3p71AJhKlkim6DHIkKr0/GepMBvxAf8MQqPeTKVm/Tgq3A0fiAld8W9IsrQVo/AE
+	7uMW/CjzU52jAa+3QWTqypd85gYTRwTzOPqckluPvpwawr/KsHqbvkciFvye/luejPU
+	Qj+/keBrccxl3jZuNulEkERwfb1Y7Xpmn1tNbt80=
+From: no-reply@vercel.com
+To: pappanos004@gmail.com
+Subject: [Update] Vercel Terms of Service and Subprocessor Notification
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Message-ID: <01010190c8046ec1-7cd1912e-91a5-4a43-94be-84734e618dcb-000000@us-west-2.amazonses.com>
+Date: Thu, 18 Jul 2024 22:44:12 +0000
+Feedback-ID: ::1.us-west-2.FoOqCThWXVf6UxtlBCXjpN6DawGbMccagHDueWriYXM=:AmazonSES
+X-SES-Outgoing: 2024.07.18-54.240.27.59
+X-TUID: OLqt+ModyJ7O
+
+<!DOCTYPE html>
+<html
+  xmlns=3D"https://www.w3.org/1999/xhtml"
+  xmlns:v=3D"urn:schemas-microsoft-com:vml"
+  xmlns:o=3D"urn:schemas-microsoft-com:office:office"
+  style=3D"width: 100%"
+>
+  <head>
+    <!--[if mso]>
+      <style>
+        span,
+        td,
+        table,
+        div {
+          font-family: Arial, serif !important;
+        }
+      </style>
+    <![endif]-->
+    <meta name=3D"color-scheme" content=3D"light dark" />
+    <meta name=3D"supported-color-schemes" content=3D"light dark" />
+    <!-- Global variables -->
+    <title>Vercel</title>
+    <!--[if gte mso 9]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG />
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    <![endif]-->
+    <!--[if mso]>
+<style> body,table tr,table td,a, span,table.MsoNormalTable {font-family: A=
+rial !important;}</style>
+<!--<![endif]-->
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8=
+" />
+    <meta
+      name=3D"viewport"
+      content=3D"width=3Ddevice-width, initial-scale=3D1, minimum-scale=3D1=
+, maximum-scale=3D1"
+    />
+    <meta name=3D"robots" content=3D"noindex,nofollow" />
+    <meta content=3D"telephone=3Dno" name=3D"format-detection" />
+    <meta name=3D"format-detection" content=3D"date=3Dno" />
+    <meta name=3D"format-detection" content=3D"address=3Dno" />
+    <meta name=3D"format-detection" content=3D"email=3Dno" />
+    <meta name=3D"x-apple-disable-message-reformatting" />
+    <style media=3D"all">
+      @import url(https://fonts.googleapis.com/css2?family=3DGeist:wght@400=
+;600&amp;amp;display=3Dswap);
+    </style>
+    <style>
+      /* CLIENT-SPECIFIC STYLES */
+      img {
+        -ms-interpolation-mode: bicubic;
+      }
+
+      /* Force IE to smoothly render resized images. */
+      #outlook a {
+        padding: 0;
+      }
+
+      /* Force Outlook 2007 and up to provide a "view in browser" message. =
+*/
+      table {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+
+      /* Remove spacing between tables in Outlook 2007 and up. */
+      .ReadMsgBody {
+        width: 100%;
+      }
+
+      .ExternalClass {
+        width: 100%;
+      }
+
+      /* Force Outlook.com to display emails at full width. */
+      p,
+      a,
+      li,
+      td,
+      blockquote {
+        mso-line-height-rule: exactly;
+      }
+
+      /* Force Outlook to render line heights as they're originally set. */
+      a[href^=3D'tel'],
+      a[href^=3D'sms'] {
+        color: inherit;
+        cursor: default;
+        text-decoration: none;
+      }
+
+      /* Force mobile devices to inherit declared link styles. */
+      p,
+      a,
+      li,
+      td,
+      body,
+      table,
+      blockquote {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      /* Prevent Windows- and Webkit-based mobile platforms from changing d=
+eclared text sizes. */
+      .ExternalClass,
+      .ExternalClass p,
+      .ExternalClass td,
+      .ExternalClass div,
+      .ExternalClass span,
+      .ExternalClass font {
+        line-height: 100%;
+      }
+
+      /* Force Outlook.com to display line heights normally. */
+      table {
+        border-collapse: collapse;
+      }
+
+      html {
+        -webkit-text-size-adjust: none;
+      }
+
+      a {
+        font-weight: bold;
+        color: #0070f3;
+        text-decoration: none;
+      }
+
+      #titlemodtxt {
+        letter-spacing: -4px;
+        font-weight: 600;
+      }
+
+      ul li {
+        margin-bottom: 10px;
+      }
+
+      ol li {
+        margin-bottom: 10px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .mktoText p,
+        div.mktoText,
+        .mktoText div {
+          color: #ffffff !important;
+        }
+
+        .dark-img {
+          display: inline-block !important;
+          width: auto !important;
+          overflow: visible !important;
+          max-height: inherit !important;
+          max-width: inherit !important;
+          line-height: auto !important;
+          margin-top: 0px !important;
+          visibility: inherit !important;
+        }
+
+        .light-img {
+          display: none !important;
+        }
+
+        .darkmode {
+          background-color: #000000 !important;
+          background: #000000 !important;
+        }
+
+        .darkmodebg {
+          background-color: #000000 !important;
+          background: #000000 !important;
+        }
+
+        .dklinkclr {
+          color: #ffffff !important;
+        }
+      }
+
+      @media only screen and (max-width: 600px) {
+        .main {
+          width: 100% !important;
+          min-width: 100% !important;
+        }
+
+        .inner_table {
+          width: 90% !important;
+          margin: 0 auto !important;
+        }
+
+        .logomob {
+          max-width: 90% !important;
+          margin: 0 auto !important;
+          height: auto !important;
+        }
+
+        .show {
+          display: block !important;
+          visibility: visible !important;
+        }
+
+        .res {
+          width: 100% !important;
+          display: block;
+          height: auto !important;
+        }
+
+        .block {
+          display: block;
+          margin: 0 auto;
+          float: none !important;
+          width: 100% !important;
+        }
+
+        .left_align {
+          text-align: left !important;
+        }
+
+        .center {
+          text-align: center !important;
+          margin: 0 auto;
+          float: none !important;
+        }
+
+        .hidden {
+          display: none !important;
+        }
+
+        .top_pad {
+          padding-top: 20px !important;
+        }
+
+        .top_pad1 {
+          padding-top: 30px !important;
+        }
+
+        .mobileimg {
+          width: 100% !important;
+          height: auto !important;
+        }
+
+        .imgmaxwidth {
+          width: 100% !important;
+          height: auto !important;
+        }
+
+        .navtxt {
+          font-size: 12px !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body
+    style=3D"
+      -webkit-text-size-adjust: 100% !important;
+      -ms-text-size-adjust: 100% !important;
+      width: 100%;
+      min-width: 100%;
+      margin-top: 0;
+      margin-right: 0;
+      margin-bottom: 0;
+      margin-left: 0;
+      padding-top: 0;
+      padding-right: 0;
+      padding-bottom: 0;
+      padding-left: 0;
+    "
+  >
+    <table
+      class=3D"full-container darkmodebg"
+      align=3D"center"
+      width=3D"100%"
+      border=3D"0"
+      cellpadding=3D"0"
+      cellspacing=3D"0"
+      style=3D"
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin: 0 auto;
+      "
+    >
+      <tbody>
+        <tr>
+          <td
+            class=3D"darkmodebg"
+            bgcolor=3D"#ffffff"
+            style=3D"background-color: #ffffff"
+          >
+            <table
+              class=3D"main"
+              id=3D"outer_table"
+              width=3D"600"
+              border=3D"0"
+              cellpadding=3D"0"
+              cellspacing=3D"0"
+              align=3D"center"
+              style=3D"
+                mso-table-lspace: 0pt !important;
+                mso-table-rspace: 0pt !important;
+                border-spacing: 0;
+                border-collapse: collapse;
+                min-width: 600px;
+                width: 600px;
+                margin: 0 auto;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td class=3D"mktoContainer" id=3D"template-wrapper">
+                    <table
+                      class=3D"mktoModule"
+                      id=3D"logo"
+                      cellpadding=3D"0"
+                      align=3D"center"
+                      cellspacing=3D"0"
+                      style=3D"
+                        mso-table-lspace: 0pt !important;
+                        mso-table-rspace: 0pt !important;
+                        margin: 0 auto;
+                        width: 100%;
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                      "
+                      border=3D"0"
+                      width=3D"100%"
+                    >
+                      <tbody>
+                        <tr>
+                          <td
+                            class=3D"darkmodebg"
+                            bgcolor=3D"#ffffff"
+                            valign=3D"top"
+                            style=3D"
+                              background-color: #ffffff;
+                              vertical-align: top;
+                            "
+                          >
+                            <table
+                              class=3D"darkmodebg"
+                              cellpadding=3D"0"
+                              cellspacing=3D"0"
+                              align=3D"center"
+                              style=3D"
+                                mso-table-lspace: 0pt !important;
+                                mso-table-rspace: 0pt !important;
+                                margin: 0 auto;
+                                width: 100%;
+                                border-collapse: collapse;
+                                border-spacing: 0;
+                              "
+                              border=3D"0"
+                              width=3D"100%"
+                            >
+                              <tbody>
+                                <tr>
+                                  <td
+                                    height=3D"20"
+                                    style=3D"line-height: 1px; font-size: 1=
+px"
+                                  >
+                                    &nbsp;
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th
+                                    width=3D"100%"
+                                    class=3D"center block"
+                                    align=3D"center"
+                                    style=3D"width: 120px; text-align: cent=
+er"
+                                  >
+                                    <div
+                                      class=3D"mktoImg"
+                                      id=3D"headerLogo1s"
+                                      mktolockimgsize=3D"false"
+                                    >
+                                      <a
+                                        href=3D"https://vercel.com/"
+                                        target=3D"_blank"
+                                        ><img
+                                          class=3D"light-img"
+                                          src=3D"https://go.vercel.com/rs/0=
+01-LRG-194/images/tricon_2x.png"
+                                          width=3D"32"
+                                          height=3D"28"
+                                          border=3D"0"
+                                          style=3D"
+                                            height: auto !important;
+                                            -ms-interpolation-mode: bicubic=
+ !important;
+                                          "
+                                        />
+                                        <div
+                                          class=3D"dark-img"
+                                          style=3D"
+                                            display: none;
+                                            overflow: hidden;
+                                            width: 0px;
+                                            max-height: 0px;
+                                            max-width: 0px;
+                                            line-height: 0px;
+                                            visibility: hidden;
+                                          "
+                                          align=3D"center"
+                                        >
+                                          <img
+                                            alt=3D""
+                                            src=3D"https://go.vercel.com/rs=
+/001-LRG-194/images/tricon_2x_white.png"
+                                            width=3D"32"
+                                            height=3D"28"
+                                            border=3D"0"
+                                            style=3D"
+                                              height: auto !important;
+                                              -ms-interpolation-mode: bicub=
+ic !important;
+                                            "
+                                          />
+                                        </div>
+                                      </a>
+                                    </div>
+                                  </th>
+                                </tr>
+                                <tr>
+                                  <td
+                                    height=3D"20"
+                                    style=3D"line-height: 1px; font-size: 1=
+px"
+                                  >
+                                    &nbsp;
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table
+                      class=3D"mktoModule"
+                      id=3D"CopyModuleco"
+                      cellpadding=3D"0"
+                      align=3D"center"
+                      cellspacing=3D"0"
+                      style=3D"
+                        mso-table-lspace: 0pt !important;
+                        mso-table-rspace: 0pt !important;
+                        margin: 0 auto;
+                        width: 100%;
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                      "
+                      border=3D"0"
+                      width=3D"100%"
+                    >
+                      <tbody>
+                        <tr>
+                          <td
+                            class=3D"darkmodebg"
+                            bgcolor=3D"#ffffff"
+                            valign=3D"top"
+                            style=3D"
+                              background-color: #ffffff;
+                              vertical-align: top;
+                            "
+                          >
+                            <table
+                              class=3D"inner_table"
+                              cellpadding=3D"0"
+                              cellspacing=3D"0"
+                              align=3D"center"
+                              style=3D"
+                                mso-table-lspace: 0pt !important;
+                                mso-table-rspace: 0pt !important;
+                                margin: 0 auto;
+                                width: 560px;
+                                border-collapse: collapse;
+                                border-spacing: 0;
+                              "
+                              border=3D"0"
+                              width=3D"560"
+                            >
+                              <tbody>
+                                <tr>
+                                  <td
+                                    height=3D"0"
+                                    style=3D"line-height: 1px; font-size: 1=
+px"
+                                  >
+                                    &nbsp;
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    style=3D"
+                                      font-family: 'Inter', sans-serif;
+                                      color: #000000;
+                                      font-size: 16px;
+                                      line-height: 24px;
+                                      mso-line-height-rule: exactly;
+                                      text-align: center;
+                                      font-weight: 400;
+                                    "
+                                  >
+                                    <div class=3D"mktoText" id=3D"bannertex=
+tthb">
+                                      <p style=3D"text-align: left">
+                                        We have updated our
+                                        <a
+                                          href=3D"https://vercel.com/legal/=
+terms"
+                                          target=3D"_blank"
+                                          id=3D""
+                                          class=3D"mktNoTok"
+                                          >Terms of Service</a
+                                        >.
+                                      </p>
+                                      <p style=3D"text-align: left">
+                                        Notable updates include:
+                                      </p>
+                                      <ul>
+                                        <li style=3D"text-align: left">
+                                          Incorporation of Vercel=E2=80=99s=
+ product
+                                          terms, including v0 and domain na=
+me
+                                          registrations.
+                                        </li>
+                                        <li style=3D"text-align: left">
+                                          Updates to our data protection
+                                          compliance and security practices=
+,
+                                          including our Data Processing Add=
+endum
+                                          and PCI DSS, to the extent it is
+                                          applicable to you.
+                                        </li>
+                                        <li style=3D"text-align: left">
+                                          More details and clarifications a=
+round
+                                          acceptable use.
+                                        </li>
+                                      </ul>
+                                      <p style=3D"text-align: left">
+                                        <strong
+                                          >By continuing to use Vercel=E2=
+=80=99s
+                                          services under a free or paid
+                                          self-service subscription (i.e., =
+Hobby
+                                          or Pro plan), you acknowledge and
+                                          accept these updated</strong
+                                        >
+                                        <a
+                                          href=3D"https://vercel.com/legal/=
+terms"
+                                          style=3D"text-decoration: none"
+                                          target=3D"_blank"
+                                          class=3D"mktNoTok"
+                                          ><span
+                                            class=3D"txt-color"
+                                            style=3D"text-decoration: none"
+                                            >Terms of Service</span
+                                          ></a
+                                        >.
+                                      </p>
+                                      <p style=3D"text-align: left">
+                                        <strong
+                                          >If your use of the Services is u=
+nder
+                                          an Enterprise plan, these updated
+                                          Terms of Service do not apply to
+                                          you.</strong
+                                        >
+                                      </p>
+                                      <p style=3D"text-align: left">
+                                        Additionally, we have updated our
+                                        <a
+                                          href=3D"https://security.vercel.c=
+om/?itemName=3Dlegal&amp;itemUid=3De3fae2ca-94a9-416b-b577-5c90e382df57"
+                                          style=3D"text-decoration: none"
+                                          target=3D"_blank"
+                                          class=3D"mktNoTok"
+                                          ><span
+                                            class=3D"txt-color"
+                                            style=3D"text-decoration: none"
+                                            >subprocessor list</span
+                                          ></a
+                                        >. We have added the following
+                                        subprocessor:
+                                      </p>
+                                      <ul>
+                                        <li style=3D"text-align: left">
+                                          Civilized Discourse Construction =
+Kit
+                                          Inc. (USA) for community support =
+and
+                                          communication services
+                                        </li>
+                                      </ul>
+                                      <p style=3D"text-align: left">
+                                        This third-party data processor, en=
+gaged
+                                        by Vercel to provide services in
+                                        accordance with your instructions, =
+has
+                                        been evaluated as part of Vercel=E2=
+=80=99s
+                                        third-party risk management process=
+. If
+                                        you have any questions about the
+                                        subprocessor change, please do not
+                                        hesitate to contact us at
+                                        <a
+                                          href=3D"mailto:privacy@vercel.com=
+"
+                                          style=3D"text-decoration: none"
+                                          target=3D"_blank"
+                                          >privacy@vercel.com</a
+                                        >.
+                                      </p>
+                                      <p style=3D"text-align: left">
+                                        Thanks,<br />
+                                        Vercel
+                                      </p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    height=3D"20"
+                                    style=3D"line-height: 1px; font-size: 1=
+px"
+                                  >
+                                    &nbsp;
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table
+                      class=3D"mktoModule"
+                      id=3D"footermd"
+                      cellpadding=3D"0"
+                      align=3D"center"
+                      cellspacing=3D"0"
+                      style=3D"
+                        mso-table-lspace: 0pt !important;
+                        mso-table-rspace: 0pt !important;
+                        margin: 0 auto;
+                        width: 100%;
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                      "
+                      border=3D"0"
+                      width=3D"100%"
+                    >
+                      <tbody>
+                        <tr>
+                          <td
+                            class=3D"darkmodebg"
+                            bgcolor=3D"#ffffff"
+                            valign=3D"top"
+                            style=3D"
+                              background-color: #ffffff;
+                              vertical-align: top;
+                            "
+                          >
+                            <table
+                              class=3D"inner_table"
+                              cellpadding=3D"0"
+                              cellspacing=3D"0"
+                              align=3D"center"
+                              style=3D"
+                                mso-table-lspace: 0pt !important;
+                                mso-table-rspace: 0pt !important;
+                                margin: 0 auto;
+                                width: 560px;
+                                border-collapse: collapse;
+                                border-spacing: 0;
+                              "
+                              border=3D"0"
+                              width=3D"560"
+                            >
+                              <tbody>
+                                <tr>
+                                  <td
+                                    height=3D"20"
+                                    style=3D"line-height: 1px; font-size: 1=
+px"
+                                  >
+                                    &nbsp;
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td align=3D"center">
+                                    <table
+                                      width=3D"80"
+                                      cellpadding=3D"0"
+                                      cellspacing=3D"0"
+                                      align=3D"center"
+                                      style=3D"
+                                        mso-table-lspace: 0pt !important;
+                                        mso-table-rspace: 0pt !important;
+                                      "
+                                    >
+                                      <tbody>
+                                        <tr>
+                                          <td width=3D"30">
+                                            <a
+                                              href=3D"https://twitter.com/v=
+ercel"
+                                              target=3D"_blank"
+                                              ><img
+                                                class=3D"light-img"
+                                                alt=3D"Twitter"
+                                                src=3D"https://go.vercel.co=
+m/rs/001-LRG-194/images/twitter.png"
+                                                width=3D"30"
+                                                height=3D"auto"
+                                                border=3D"0"
+                                                style=3D"
+                                                  height: auto !important;
+                                                  -ms-interpolation-mode: b=
+icubic !important;
+                                                "
+                                              />
+                                              <div
+                                                class=3D"dark-img"
+                                                style=3D"
+                                                  display: none;
+                                                  overflow: hidden;
+                                                  float: left;
+                                                  width: 0px;
+                                                  max-height: 0px;
+                                                  max-width: 0px;
+                                                  line-height: 0px;
+                                                  visibility: hidden;
+                                                "
+                                                align=3D"center"
+                                              >
+                                                <img
+                                                  alt=3D"Twitter"
+                                                  src=3D"https://go.vercel.=
+com/rs/001-LRG-194/images/twitter_white.png"
+                                                  width=3D"30"
+                                                  height=3D"auto"
+                                                  border=3D"0"
+                                                  style=3D"
+                                                    height: auto !important=
+;
+                                                    -ms-interpolation-mode:=
+ bicubic !important;
+                                                  "
+                                                />
+                                              </div>
+                                            </a>
+                                          </td>
+                                          <td width=3D"20"></td>
+                                          <td width=3D"30">
+                                            <a
+                                              href=3D"https://github.com/ve=
+rcel"
+                                              target=3D"_blank"
+                                              ><img
+                                                class=3D"light-img"
+                                                alt=3D"GiftHub"
+                                                src=3D"https://go.vercel.co=
+m/rs/001-LRG-194/images/github.png"
+                                                width=3D"30"
+                                                height=3D"auto"
+                                                border=3D"0"
+                                                style=3D"
+                                                  height: auto !important;
+                                                  -ms-interpolation-mode: b=
+icubic !important;
+                                                "
+                                              />
+                                              <div
+                                                class=3D"dark-img"
+                                                style=3D"
+                                                  display: none;
+                                                  overflow: hidden;
+                                                  float: left;
+                                                  width: 0px;
+                                                  max-height: 0px;
+                                                  max-width: 0px;
+                                                  line-height: 0px;
+                                                  visibility: hidden;
+                                                "
+                                                align=3D"center"
+                                              >
+                                                <img
+                                                  alt=3D"GiftHub"
+                                                  src=3D"https://go.vercel.=
+com/rs/001-LRG-194/images/github_white.png"
+                                                  width=3D"30"
+                                                  height=3D"auto"
+                                                  border=3D"0"
+                                                  style=3D"
+                                                    height: auto !important=
+;
+                                                    -ms-interpolation-mode:=
+ bicubic !important;
+                                                  "
+                                                />
+                                              </div>
+                                            </a>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    height=3D"10"
+                                    style=3D"line-height: 1px; font-size: 1=
+px"
+                                  >
+                                    &nbsp;
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    align=3D"center"
+                                    style=3D"
+                                      font-family: 'Inter', sans-serif;
+                                      color: #8c8c8c;
+                                      font-size: 14px;
+                                      line-height: 24px;
+                                      mso-line-height-rule: exactly;
+                                      text-align: center;
+                                    "
+                                  >
+                                    <div class=3D"mktoText" id=3D"fttxt">
+                                      <p>
+                                        <a
+                                          class=3D"dkmode mktNoTok"
+                                          href=3D"https://vercel.com/docs"
+                                          target=3D"_blank"
+                                          style=3D"
+                                            color: #a1a1a1;
+                                            text-decoration: none;
+                                          "
+                                          >Docs</a
+                                        >
+                                        |
+                                        <a
+                                          class=3D"dkmode mktNoTok"
+                                          href=3D"https://vercel.com/blog"
+                                          target=3D"_blank"
+                                          style=3D"
+                                            color: #a1a1a1;
+                                            text-decoration: none;
+                                          "
+                                          >Blog</a
+                                        >
+                                        |
+                                        <a
+                                          class=3D"dkmode mktNoTok"
+                                          href=3D"https://vercel.com/contac=
+t"
+                                          target=3D"_blank"
+                                          style=3D"
+                                            color: #a1a1a1;
+                                            text-decoration: none;
+                                          "
+                                          >Contact</a
+                                        >
+                                        |
+                                        <a
+                                          class=3D"dkmode mktNoTok"
+                                          href=3D"https://vercel.com/career=
+s"
+                                          target=3D"_blank"
+                                          style=3D"
+                                            color: #a1a1a1;
+                                            text-decoration: none;
+                                          "
+                                          >Careers</a
+                                        >
+                                        |
+                                        <a
+                                          class=3D"dkmode mktNoTok"
+                                          href=3D"https://vercel.com/legal/=
+privacy-policy"
+                                          target=3D"_blank"
+                                          style=3D"
+                                            color: #a1a1a1;
+                                            text-decoration: none;
+                                          "
+                                          >Privacy Policy</a
+                                        >
+                                        <br />
+                                        <span style=3D"color: #a1a1a1"
+                                          >440 N Barranca Ave #4133 Covina,=
+ CA
+                                          91723 </span
+                                        ><br /><span style=3D"color: #a1a1a=
+1">
+                                          Copyright =C2=A9 2024 Vercel Inc.=
+ All
+                                          rights reserved. </span
+                                        ><br /><span style=3D"color: #a1a1a=
+1"
+                                          ><em
+                                            >This is a mandatory legal or
+                                            account-related notice that you=
+ are
+                                            receiving even if you have
+                                            unsubscribed from marketing
+                                            emails.</em
+                                          ></span
+                                        >
+                                      </p>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    height=3D"20"
+                                    style=3D"line-height: 1px; font-size: 1=
+px"
+                                  >
+                                    &nbsp;
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,364 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6359:7c10:b0:1ac:f9bd:24a6 with SMTP id xm16csp318770rwb;
+        Sat, 10 Aug 2024 01:07:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFR/+O1qE/BYGJZbGStvbBJrNpX0/tGzvEZselRHaBnwKFTXlKC3Gy40iL7povsTlqdjH1B
+X-Received: by 2002:a05:6214:3993:b0:6b5:e403:43ee with SMTP id 6a1803df08f44-6bd78f05e9dmr38543296d6.50.1723277242893;
+        Sat, 10 Aug 2024 01:07:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1723277242; cv=none;
+        d=google.com; s=arc-20160816;
+        b=GRS/KGvLWvfPkUv2DFbgjhAK4Tkb3gcDt7OmBpGZl3rT1Zr1SNDdD49avPuC8oVmMR
+         S31+EIcNHgFP8z9mIdAPA3gfIWENSBw4F3zlLtHercLNaOwyRV6Z+GSOc/PHOLOjD4i1
+         KCbZV0guez5Uc0QV5zfoqPhjxsy6W0GR/9nT1gYKLrW5JfcnTEka9cpAnREMFkv+m9gu
+         AL/NzN99YwEzkCByklg5QY+w7L/QecXuLuNJsQZesmKPMYwITgw2BL4VhZN1MyAT59Sd
+         Tv3fYpJ/M68jKkuvIKAn8hxVhhT9U/YIR6LNXq+w2TXrXBdZyjnLFDJlH5PxBnnNWSC5
+         Y9+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:subject:message-id:mime-version:from:date:dkim-signature
+         :dkim-signature;
+        bh=4sYQEP+ylOKfzx4jpxMVBvSJvIL3QJ+jI0jTILHBqAg=;
+        fh=reAQvH1LW7nMrPUKDIyGrrddnsiHs2I+sLVa4Rjf7pU=;
+        b=tmEuWZmOyw97+pAGWnNSl7K5OLzjDWN/t00/GvdqpJ9C1UoHuxeH05zoxycvsmuQV6
+         AS/wxh3DMXFVrcnoeFUR2wkc9y3EhRVHui/H+ZvXelEwNeWF48gOw5xpnS3LIq6AUw4U
+         RcC5QNhJ+tlz9HsrNozASmwrd3NZNUQlIRQ0TOq5b2qJ+OPEHa8kEGBnEaoG8dL8PpXL
+         AAfnHoLIXWqn9917sjuHFHDFcBDtiB6QZhGUKcmOz811iGvWX30Hf5xTxklYWRTYlnvG
+         e2Sm1lMo+IzLg0RBon+26pwvDZ23gZC15t5+bzEWFZVIr2VfMEQuUJ3rKmmOv/u6kOGN
+         udtw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@codeium.com header.s=s1 header.b="kIUy/HqC";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=HzwdsHYw;
+       spf=pass (google.com: domain of bounces+23487209-92ef-user.idc004=gmail.com@em6293.codeium.com designates 159.183.224.109 as permitted sender) smtp.mailfrom="bounces+23487209-92ef-user.idc004=gmail.com@em6293.codeium.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=codeium.com
+Return-Path: <bounces+23487209-92ef-user.idc004=gmail.com@em6293.codeium.com>
+Received: from s.wfbtzhsd.outbound-mail.sendgrid.net (s.wfbtzhsd.outbound-mail.sendgrid.net. [159.183.224.109])
+        by mx.google.com with ESMTPS id 6a1803df08f44-6bd82c637f5si14268176d6.31.2024.08.10.01.07.22
+        for <user.idc004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 10 Aug 2024 01:07:22 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces+23487209-92ef-user.idc004=gmail.com@em6293.codeium.com designates 159.183.224.109 as permitted sender) client-ip=159.183.224.109;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@codeium.com header.s=s1 header.b="kIUy/HqC";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=HzwdsHYw;
+       spf=pass (google.com: domain of bounces+23487209-92ef-user.idc004=gmail.com@em6293.codeium.com designates 159.183.224.109 as permitted sender) smtp.mailfrom="bounces+23487209-92ef-user.idc004=gmail.com@em6293.codeium.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=codeium.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codeium.com;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=s1; bh=4sYQEP+ylOKfzx4jpxMVBvSJvIL3QJ+jI0jTILHBqAg=;
+	b=kIUy/HqC9M/xb8e0TpIz/shETiLdXotkWpuMoGilToOCb4G3/MPaK8ydfKohO5brG1s2
+	yyK4PiMb/skk09L4Q4rGgZTsEK+HVwy4Jc9ZtVAvpgDsVdYvK8OEKTM/BfjPA9raSdh6+w
+	ckDzO+WEij5j4V4NXbKqdxdFn5OODI2GbE0JAxscMVcc/627pcolPMKkbnbyy53ys5OkHD
+	v5Ank4wXvIUPph1Jv02ced47P5UhH2O7x2V/3/lVMqg9mEhbL5m8+lub/Eal3G90aABK8e
+	g4NeXdlhH0O2bHUyvNiJ1y5oXOWpK8jPifE2NdNaVQ2sBTEMO/KFvSZ/3UJg/nYg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=4sYQEP+ylOKfzx4jpxMVBvSJvIL3QJ+jI0jTILHBqAg=;
+	b=HzwdsHYwwDPJo3efm4BmDps2z44+gv3eF08po11Ni0A3c7PQ/tJXnZB4D5+F3bpZJ9Z3
+	InMLP664RqccJWhGHmuXaVV6P83TWF6wxHVuPjeK9A6hxSZyTj0BrG4WgMN1EVb2yD3kUS
+	hLiltRMdolIBj43lmBFYzEWk3BqssrSW4=
+Received: by recvd-5f4fb4fdd7-sxwz9 with SMTP id recvd-5f4fb4fdd7-sxwz9-1-66B71FB8-29
+	2024-08-10 08:07:20.930292786 +0000 UTC m=+989274.077134007
+Received: from MjM0ODcyMDk (unknown)
+	by geopod-ismtpd-6 (SG) with HTTP
+	id HIOoHlGiR323NpkSozXjvg
+	Sat, 10 Aug 2024 08:07:20.891 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=fb8cdd845469f31186ce7ed8e84a29683e92b79ef3191f2ff6506432df33
+Date: Sat, 10 Aug 2024 08:07:20 +0000 (UTC)
+From: Kevin from Codeium <khou@codeium.com>
+Mime-Version: 1.0
+Message-ID: <HIOoHlGiR323NpkSozXjvg@geopod-ismtpd-6>
+Subject: Codeium is here to help you get more done!
+X-Entity-Ref-ID: b823caa0-aad5-47d9-961d-bd2a60f07ae3
+X-Feedback-ID: 23487209:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EW7F9bZCHY82l12fPrCmVc2ASL+BlHlR6XcsmrXUR2h9wD3Cady=2F+2cAmv?=
+ =?us-ascii?Q?j+MBIPovgFQM07K0GoKfGrOI=2FR+CjG7f8P2+Aae?=
+ =?us-ascii?Q?WQTXsWzcUlb5sWe0+EryHcyxhQc0yXSFAfsxnpJ?=
+ =?us-ascii?Q?H8jVkiOBuMBuajF6CX6rUDAE0ZHSX2wj6V0VaJZ?=
+ =?us-ascii?Q?2=2F8YAzCmKvAUnplKTm9dbnCAf6YjX1Ec+OFAyh4?=
+ =?us-ascii?Q?95vhJP5Rg5Ry1RD5VhIFzBZObpUm1lglrVhhfg3?= =?us-ascii?Q?lxBX?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BpTL9BgbK5wfSJMJGMsmprDsPyUTnMagHRCjb?=
+ =?us-ascii?Q?=2F65GublBdZUrWUkrefpEaseMPVZRvwKtYlDdNye?=
+ =?us-ascii?Q?lNXYQ2RMbQCFUCLce=2F+aROlKDjAkigwmb+0Qspl?=
+ =?us-ascii?Q?VUirw6depCnp22OUsAGWbmfEPS4PWgwP67pwaPL?=
+ =?us-ascii?Q?XOy13IXmzkiB+qibT3?=
+To: User use <user.idc004@gmail.com>
+X-Entity-ID: u001.zlAPfX1XxKYKNBRFnbP+Ig==
+X-TUID: mkcLRCNGoPHL
+
+--fb8cdd845469f31186ce7ed8e84a29683e92b79ef3191f2ff6506432df33
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Hi User,
+
+Welcome to Codeium ( https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.=
+DmjxBrisJBN7qiR7Dr3XgQ1Ey4SU0wMQr80FLCZFa73Alo5MqAVuzojhHyRIZgkHBSR-_qc-2B5=
+-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTlpDqAc7d5trsZYiG6d=
+ditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3mj-2BYKnMPpEh5Dpo=
+iQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEyHdmgSwNjYiwS-2Fjn=
+RC9Md7u7DxhRC519Af-2BGqot7AuKBpBh39Drv2nphjJPS6V1-2BZwq9638uQQvkI-2BvEgVZXu=
+NcdCfITjJ78cKWl7OysSyZYAt0dRPbRXUq9cD9BAye72zHpy7oAayi-2BOelJFxRMX-2BI1SZNP=
+zZPxmQhf94-3D ) ! Thank you for choosing us to level up your coding. Here's=
+ how it works:
+
+* *Unlimited Autocomplete:* simply start writing code as you would and Code=
+ium will automatically suggest ways to complete either your line(s) or bloc=
+k.
+* *Context Awareness:* If you have a library pulled up on your editor that =
+you are working with, Codeium will take it into account when providing auto=
+complete suggestions.
+* *Codeium Chat:* You can open up our Codeium Chat panel in the sidebar to =
+ask our AI questions about your code and your own codebase! Pro tip: Type @=
+ in the message input to insert snippets of your code, reference external d=
+ocs, and more.
+* *Code lenses:* You=E2=80=99ll notice "Refactor", "Explain", and "Generate=
+ Docstring" code lenses above your functions. These AI features help speed =
+up your workflow in an easy to access manner. They are toggle-able in the e=
+xtension settings if you wish to turn them off.
+* *Badges, Achievements and Stats:* You=E2=80=99ll earn cool trophies and r=
+each higher levels the more you use Codeium. You can even share your profil=
+e ( https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBrisJBN7qiR7D=
+r3XgYu-2BU-2FFYmmZLy9dsQYx89MGvdFpGJWNqlSYWFGlLeBzoF3m4KkA1kG4K-2BJ5A3rO6tg=
+-3D-3DiENz_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTl=
+pDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3=
+mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEy=
+HdmgSwNjYiwS-2FjnSThk-2FWCIrfEW6CCSl2RJuNqI1-2B8wPxTBamufkaD5doxS8N6czinUlW=
+-2FeK2GnLv0iuAsJJ5nc8LVfHy5lAzOCzhBrYydVwK1FI8CBxKuihvyn7SThruDQIphkO5J0dUZ=
+KJSUFcFN02nBSjq-2BvvXg1RI-3D ) with your friends where you can see your cod=
+ing stats (number of autocomplete suggestions accepted, number of chats sen=
+t etc).
+
+Codeium has plenty more to offer but this should be enough to get you start=
+ed. As promised, all these features are free for individual use. We work ha=
+rd to provide you best-in-class AI autocomplete, chat, and search entirely =
+for free, forever. If you'd like an expanded featureset (advanced personali=
+zation, self-hosting, bigger models, etc.) you can check out our teams and =
+enterprise ( https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBris=
+JBN7qiR7Dr3XgRGeoO7syiEYCyvKvi9AVXgPcQwTJiIttV4r-2Ba3yBt9urs5KzOgtiLyXhW9-2=
+F2CZUZA-3D-3Dcmdx_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1F=
+yBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH=
+9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJ=
+mXaXpEyHdmgSwNjYiwS-2Fjnc73uNDBK3GrSDWIjWPIRNdntlpVrs-2FiP7tUo6siwigy7czl9t=
+XyisQHCuivghPwAPvkT9YKIJOBuM8KjwOg3sjcxHu4yb2HI2cEi0wUTWaacfsU4ZHSaEZoeCEQI=
+CJ1jCf2PWerjZDk7-2BIMTsb51-2B4-3D ) plans.
+
+If you have any feedback or suggestions, we'd be happy to hear them on Disc=
+ord ( https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBrisJBN7qiR=
+7Dr3Xgfy26z6gpuXHiO0tzy4CqhQiJzLMNcTCgQGnPL6J7KS5P75__qc-2B5-2FkKSl1hS4gzzz=
+RXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1=
+izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs=
+7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEyHdmgSwNjYiwS-2FjnZL3pquZa6VfaYb-=
+2F-2FOQf4RHJOoxfzDWMlB1VcLRpuTwMv3oQlmr-2FYmoXJZZK2NenDWNjRfAZDXHM-2BQWc-2B=
+53459g4X8OtHxt-2FHqF2bElgXLgzFo1uKWF789N-2Bv8AJM-2FRpJ4D1g3vzssjaV1DPYBD3fj=
+4-3D ) or mention us on Twitter ( https://u23487209.ct.sendgrid.net/ls/clic=
+k?upn=3Du001.DmjxBrisJBN7qiR7Dr3XgWjvD-2Fuy4z0FJfqwn-2BzQD4HK6CdvXlYBboCZbn=
+MGxYOyhteb_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTl=
+pDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3=
+mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEy=
+HdmgSwNjYiwS-2FjnTinwgBWVy-2FEizpiCFSsJoTeHZ39fy-2FWcdSd0LmxZdZ8MzPL-2Fs80U=
+LiruAzWRIbW1CRZ3smMiiuW-2Ff5dx858EZpYBQyFAgDqYO1V96K3N4QJhOiU2GlpqMNhWvMkj8=
+Dkdi-2BSdc4qLPEzknGO80-2BKSNM-3D ) =E2=80=94 happy coding!
+
+Best,
+Kevin
+
+--
+
+Kevin Hou
+
+Email: khou@codeium.com
+
+codeium.com ( https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBri=
+sJBN7qiR7Dr3XgUmzaz0F0fEGLA9n4Q8BvwXYPBTJQhdrlPK8QDTXOXGHsqO5DxykasZZAG9Lr1=
+yJOw-3D-3D7HYo_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBr=
+iuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-=
+2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXa=
+XpEyHdmgSwNjYiwS-2FjncRD-2BIL39FzRtQDsmtUvOX8cBQg3PkH7434FONDEcoece7vL7pyPo=
+TW6sc41Ss6nu7-2FydVs8rWOh2PoBl7ctUFCqwcn81z14t2l7HI3L7fSjMDbjLUmL5VH1qQp9oq=
+5xfqmKKafVCYzV2z-2Fpz-2BJIcpc-3D ) | @kevinhou22 ( https://u23487209.ct.sen=
+dgrid.net/ls/click?upn=3Du001.DmjxBrisJBN7qiR7Dr3XgR6Hw-2Fth8RJTafZplQZQcm8=
+QFE2GFvEKNAl8IxjbT9FtRYhd_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtE=
+BW0cze1FyBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBR=
+N1aVqGYH9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2=
+B-2FgvRJmXaXpEyHdmgSwNjYiwS-2FjnSQdBPdYnfiT00fOcznKXqdF6-2BT8Vh5IhZtvbusI79=
+uQEPkPtNzNi6EMD5IALbDgfpW0hdR-2BZVJZz511xP3DG38VkegLmsiKdZpiGoyayLkGBpcbHPa=
+HEV30vThXObx9nhskdNPfp7LaZYoZODyd-2Bys-3D )
+
+You can always unsubscribe ( https://u23487209.ct.sendgrid.net/ls/click?upn=
+=3Du001.DmjxBrisJBN7qiR7Dr3XgWyl5aQoU8rNIIacgdqh2DzA5Fqn529igr09cmRO-2Bat8w=
+5uGwx7Ta4gEmyVFQVNMPgEXZ6OiwLoYh4lGLMPouAY-3D_vhW_qc-2B5-2FkKSl1hS4gzzzRXAt=
+iY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx=
+66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2a=
+CxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEyHdmgSwNjYiwS-2FjnY-2F1izKI5H6HoxdHDd=
+k-2F-2FhGeijDRQTEJh2OtLs4bKaYL5mzjN06psAjSEGOp-2B-2FNmAUymwiw2AlUFpvhjDQTTt=
+1S-2Fhkp0wJF0hKUygSdtyf41pQWIBERTTH093IMUMxK-2FrjcMOcHld-2BWbxOcM4u5xK4o-3D=
+ ) if you do not want future emails from Codeium.
+--fb8cdd845469f31186ce7ed8e84a29683e92b79ef3191f2ff6506432df33
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome to Codeium</title>
+	</head>
+	<body style=3D"color:rgb(34, 34, 34);font-family:Arial, Helvetica, sans-se=
+rif;font-size:13px;font-weight:400;line-height:19.5px;">
+		<p>Hi User,</p>
+		<p>Welcome to <a href=3D"https://u23487209.ct.sendgrid.net/ls/click?upn=
+=3Du001.DmjxBrisJBN7qiR7Dr3XgQ1Ey4SU0wMQr80FLCZFa73Alo5MqAVuzojhHyRIZgkHE1b=
+k_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTlpDqAc7d5t=
+rsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3mj-2BYKnM=
+PpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEyHdmgSwNjY=
+iwS-2FjnQ4dlf0WHS18vqdi8seQCi5HbzPoCD81V-2BA2vStMw4ChPJeFBuAjqS766euyLiWgXW=
+yZkgJRLRrjcOeh80dN1eJSSKDQJO9mpbO3gjyhZEOLek9b6jdz3VMg-2BvsPCbN0KLRaJrRZ1b6=
+sAwNHbXZm17E-3D">Codeium</a>! Thank you for choosing us to level up your co=
+ding. Here's how it works:</p>
+		<ul>
+			<li>
+			    <strong>Unlimited Autocomplete:</strong> simply start writing code a=
+s you would and Codeium will automatically suggest ways to complete either =
+your line(s) or block.
+			</li>
+			<li>
+			    <strong>Context Awareness:</strong> If you have a library pulled up =
+on your editor that you are working with, Codeium will take it into account=
+ when providing autocomplete suggestions.
+			</li>
+			<li>
+			    <strong>Codeium Chat:</strong> You can open up our Codeium Chat pane=
+l in the sidebar to ask our AI questions about your code and your own codeb=
+ase! Pro tip: Type @ in the message input to insert snippets of your code, =
+reference external docs, and more.
+		    </li>
+			<li>
+			    <strong>Code lenses:</strong> You=E2=80=99ll notice "Refactor", "Exp=
+lain", and "Generate Docstring" code lenses above your functions. These AI =
+features help speed up your workflow in an easy to access manner. They are =
+toggle-able in the extension settings if you wish to turn them off.</li>
+			<li>
+				<strong>Badges, Achievements and Stats:</strong>  You=E2=80=99ll earn c=
+ool trophies and reach higher levels the more you use Codeium. You can even=
+ <a href=3D"https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBrisJ=
+BN7qiR7Dr3XgYu-2BU-2FFYmmZLy9dsQYx89MGvdFpGJWNqlSYWFGlLeBzoF3m4KkA1kG4K-2BJ=
+5A3rO6tg-3D-3Dkaca_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1=
+FyBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGY=
+H9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvR=
+JmXaXpEyHdmgSwNjYiwS-2FjnQce4S-2B3vJsm94kJ2d-2FZZmf4KM7dwKEDf6jBZB2vAho-2Bv=
+AMBZGlEqn0MhX-2FEWrXIO-2BXmEeDt5zMCiz-2BDUeVnsRMpIcuVF7e7-2Ff7q-2BR0FUR-2F7=
+2LOu8-2Brh-2FhmkBu53e5a4A7Lr8D7Gxiw-2BYUpJTXOeMH0-3D">share your profile</a=
+> with your friends where you can see your coding stats (number of autocomp=
+lete suggestions accepted, number of chats sent etc).
+			</li>
+		</ul>
+		<p>
+		    Codeium has plenty more to offer but this should be enough to get you=
+ started. As promised, <i>all these features are free for individual use</i=
+>. We work hard to provide you best-in-class AI autocomplete, chat, and sea=
+rch entirely for <i>free, forever</i>. If you'd like an expanded featureset=
+ (advanced personalization, self-hosting, bigger models, etc.) you can chec=
+k out our <a href=3D"https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.=
+DmjxBrisJBN7qiR7Dr3XgRGeoO7syiEYCyvKvi9AVXgPcQwTJiIttV4r-2Ba3yBt9urs5KzOgti=
+LyXhW9-2F2CZUZA-3D-3DQMD3_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtE=
+BW0cze1FyBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBR=
+N1aVqGYH9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2=
+B-2FgvRJmXaXpEyHdmgSwNjYiwS-2FjnUtu9XJ3kKQj40P-2FZ9-2B91B06-2Boh9oN6c5VhQeo=
+8U4g7se7RKmgSIeU2gP6c9khdVKqMp4IHQPpgzRwJhr2Eso02-2Bay9hFW8DNBCEmtMWzqO7Cqt=
+Prj7-2Fzbu90SwE4D5BOFW4Zqpq9fVvQaIx4e7qfK8-3D">teams and enterprise</a> pla=
+ns.
+        </p>
+		<p>
+		If you have any feedback or suggestions, we'd be happy to hear them on <a=
+ href=3D"https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBrisJBN7=
+qiR7Dr3Xgfy26z6gpuXHiO0tzy4CqhQiJzLMNcTCgQGnPL6J7KS5km1F_qc-2B5-2FkKSl1hS4g=
+zzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f=
+5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjA=
+kMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEyHdmgSwNjYiwS-2FjnW4v8OUGjbIwV=
+28Y3c1r-2B098aSjY7FiqDCg7xGDlXEKsJtBsmPnT5UiEHgzc4DQjTAzTGVr5jsDBPahkklImHd=
+Y8zS85jbQSHVjaOaTidJzGr2DBGFmqC7B94OyxgVXnApilf5jaZWI7Jxv0adAHiB8-3D">Disco=
+rd</a> or mention us on <a href=3D"https://u23487209.ct.sendgrid.net/ls/cli=
+ck?upn=3Du001.DmjxBrisJBN7qiR7Dr3XgWjvD-2Fuy4z0FJfqwn-2BzQD4HK6CdvXlYBboCZb=
+nMGxYOyEAT7_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuT=
+lpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM=
+3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpE=
+yHdmgSwNjYiwS-2FjnZVolp-2FX-2BCSSfK9BUp6VI3ChSdhSyEspjg6LpbbqWXtHl8a84Rr90G=
+W6NoXNyrjWSpn5-2B5Q8kzuYS9XEYpcEAwnpPPp9kGM24wVB4RNI7e9dTZMc1TQjBSYIwk8cuvX=
+p4xOnWoyEJpGb-2FrQrsAWduxA-3D">Twitter</a> =E2=80=94 happy coding!
+		</p>
+		<p>Best,<br>Kevin</p>
+	=09
+		<p style=3D"color:#666">--</p>
+	=09
+		<table style=3D"color:rgb(0,0,0);border:none;border-collapse:collapse">
+        	<tbody>
+        		<tr style=3D"height:0pt">
+        			<td style=3D"vertical-align:top;padding:5pt;overflow:hidden">
+        				<p style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt">=
+<span style=3D"font-family:Arial;background-color:transparent;vertical-alig=
+n:baseline"><span style=3D"border:none;display:inline-block;overflow:hidden=
+;width:39px;height:39px"><img width=3D"36" height=3D"36" style=3D"margin-ri=
+ght:0px" src=3D"https://exafunction.github.io/public/icons/codeium_logo.png=
+"></span></span></p>
+        			</td>
+        			<td style=3D"vertical-align:top;overflow:hidden">
+        				<span style=3D"font-weight:700">Kevin Hou</span><br>
+        				<p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-b=
+ottom:0pt"><span style=3D"color:rgb(102,102,102);vertical-align:baseline">E=
+mail:</span><span style=3D"vertical-align:baseline"> </span><a href=3D"mail=
+to:khou@codeium.com" style=3D"color:rgb(9,182,162)" target=3D"_blank">khou@=
+codeium.com</a></p>
+        				<p dir=3D"ltr" style=3D"line-height:1.2;margin-top:0pt;margin-b=
+ottom:0pt"><span style=3D"vertical-align:baseline"></span><a href=3D"https:=
+//u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBrisJBN7qiR7Dr3XgUmzaz0=
+F0fEGLA9n4Q8BvwXYPBTJQhdrlPK8QDTXOXGHsqO5DxykasZZAG9Lr1yJOw-3D-3Du5ks_qc-2B=
+5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTlpDqAc7d5trsZYiG6=
+dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3mj-2BYKnMPpEh5Dp=
+oiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEyHdmgSwNjYiwS-2Fj=
+nUZeoL6vPy-2ByFppf5-2FRpMg3B8jmvX86uhslD-2FKXBqqFVpxx1ce76lmiJV8VG2ULBW2YPU=
+h-2BECKoAayg-2FHpkVTa-2FlfCcYHat-2BG6FXfgYFO74t9GelBmp-2F2-2FWWktfbRmahdi0A=
+-2BazhYfM6oP9UAGwnY4U-3D" style=3D"color:rgb(9,182,162)" target=3D"_blank">=
+codeium.com</a> | <a href=3D"https://u23487209.ct.sendgrid.net/ls/click?upn=
+=3Du001.DmjxBrisJBN7qiR7Dr3XgR6Hw-2Fth8RJTafZplQZQcm8QFE2GFvEKNAl8IxjbT9FtI=
+fPN_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW0cze1FyBriuTlpDqAc7d=
+5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOBRN1aVqGYH9F-2BM3mj-2BYK=
+nMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-2B-2FgvRJmXaXpEyHdmgSwN=
+jYiwS-2FjnRaAzdfcKBke9VnDQ3ig0PmXkCP7k2usltlWzCnbcctH-2BW6oExo8AtlpuHpQiMt-=
+2BqYQwsr4H6-2BbYnTfwBTJ4qk9eybh9qmSNqA2-2BrScpv9s7L3qqRAg3t-2BnVZaSgxE9Whtn=
+P-2FrPcAOHWYD-2Fu-2BGtETbk-3D" style=3D"color:rgb(9,182,162)" target=3D"_bl=
+ank">@kevinhou22</a></p>
+        			</td>
+        		</tr>
+        	</tbody>
+        </table>
+        <div style=3D"text-align: center; padding-top: 20px;">
+    </div>
+    <p>
+	    You can always <a style=3D"" class=3D"Unsubscribe--unsubscribeLink" hr=
+ef=3D"https://u23487209.ct.sendgrid.net/ls/click?upn=3Du001.DmjxBrisJBN7qiR=
+7Dr3XgWyl5aQoU8rNIIacgdqh2DzA5Fqn529igr09cmRO-2Bat8w5uGwx7Ta4gEmyVFQVNMPgEX=
+Z6OiwLoYh4lGLMPouAY-3DPTxC_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMt=
+EBW0cze1FyBriuTlpDqAc7d5trsZYiG6dditXq84Z1G4f5g1izAx66N4pY7pp0oLokoYsGIieOB=
+RN1aVqGYH9F-2BM3mj-2BYKnMPpEh5DpoiQCL8mTFUkjAkMs7A2aCxjoXDOZHHWrWABBeTCp6m-=
+2B-2FgvRJmXaXpEyHdmgSwNjYiwS-2FjnbLY5TW0SKxdRMfBBB2bgSLr-2FfL-2BVr9ckWIEhNe=
+KbNfyQX1WwFomQryssHJNBAx9ixU3RnhWwY-2BjW7kbXit7aJUkdtct4UXvWH07skp0Mq2glMgU=
+lR6mk1ENoCcF6kn1oZS5xehqDIxJWYoyGJEj244-3D" target=3D"_blank">unsubscribe</=
+a> if you do not want future emails from Codeium.
+    </p>
+	<img src=3D"https://u23487209.ct.sendgrid.net/wf/open?upn=3Du001.l5a-2F2ad=
+OWlMcxeiVQtRHormuVdgoxHXTTM4E0byNYiKlpNDUHfh28jjVu8iXEcamePWi-2Fh2rh1O9jaUq=
+A5XZqdqY4CuRDWZqYU-2B7bql2PFguFoNzIa-2BGVSsIq1X1EisPgf3dANDTNDehRq8CzKx8sD4=
+AnzZQsAdwpqcaTUwgTqvzgBemaR4yb8z4VeaZe6XRRARg9pD3t4ob52KmpyMTpdqYskFxF3TXvA=
+gv3B6s7bE5HrdpRp9ee9sxi28MDYRtG6Fu6QCSLHLMwuQR-2FIVOAwfGcFk4eMo1-2BxEu-2BTJ=
+lMvv9iKd5BWpz6MSaWnLXzmuLFgVPGxaXMtypj0OAej6Sh4YnAoG9eis9thZJD7RPv3A-3D" al=
+t=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important=
+;width:1px !important;border-width:0 !important;margin-top:0 !important;mar=
+gin-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;=
+padding-top:0 !important;padding-bottom:0 !important;padding-right:0 !impor=
+tant;padding-left:0 !important;"/></body>
+</html>
+--fb8cdd845469f31186ce7ed8e84a29683e92b79ef3191f2ff6506432df33--

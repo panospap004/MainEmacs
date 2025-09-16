@@ -1,0 +1,545 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6358:458:b0:174:c362:8432 with SMTP id 24csp323782rwe;
+        Thu, 21 Dec 2023 11:00:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFjfEhZaA2ZFrMqUdHI90dKZdj2rBCvwwTDcI+9RhfgHtbel+VJ/tPWsMbeQ33GowqD1avb
+X-Received: by 2002:a17:90a:6886:b0:28c:4d2:6105 with SMTP id a6-20020a17090a688600b0028c04d26105mr238372pjd.27.1703185206217;
+        Thu, 21 Dec 2023 11:00:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1703185206; cv=none;
+        d=google.com; s=arc-20160816;
+        b=aTVS1X3/TQHwWzMgaZYvG711sU5yxivtlxWvLUEXDcBLRC31soHAlxaJ4XvgRKVUHg
+         hPgfSRt5UfGCXJBhJ/IsbdChUmBZcx4BNgQ9LKOWEZXrxWvfOXdXKzyQ9WsGLlBEMbcm
+         /xMef3J7RPqGavQmo4D1BKVTZ2YdIL+bKrUbsSR/cgytVZWea4ZIdbPnp07v8tk+tJCI
+         yjMxSgC5dxT25BqHQdz3gE3atojyrCHslYxlc3DjOiy1k9Ht5rttExZlNRNDTAt7a8cO
+         cd+AaqgN4Hzw3mMoH07swHOO6UoOhqrvbenSe9qk7/gcazkjHRkrMNMch823Gps9kq7I
+         mJ4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:mime-version:message-id:subject:to:from
+         :dkim-signature:dkim-signature;
+        bh=2EVlcQ/zRaJnDiUqhX7EydGMkrnPyuaMApz4xkTeLoI=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=j34iZd1nWBwN3bmAspGdg1x6WlN4SmazqIn073LBNP3W1bcinWn5twYxVwS2QHeIuH
+         H55lf51HV6iuVhgJrxZzf203EH/PPhi2UkSaSZhPV7454tdS/vEGHeXSRGJshWCXI8r7
+         mgfyIS01UVWxVuZkaegbW8NlZWbKPBBXfcQp7yPHD21gEzad+hw4PT3zOGujr/VKeMxH
+         bDz4spIex9h8P9yrxIMt1y2HeIoQiCywwOWF2smUsJV9eeJCBVhCFHlTIUCqoH2iwpRj
+         SwsDKKAT+BTclLmN51W6A1g3yqxtTcidJXjjOaVPD8Cs49QPCeskdpPtgMIb4RiKEAeJ
+         vX4g==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mod.io header.s=xnejnj6qqddlj6herw6wfvn2ageeormo header.b=Fd7Hwnxk;
+       dkim=pass header.i=@amazonses.com header.s=hsbnp7p3ensaochzwyq5wwmceodymuwv header.b=c4SJWZ8K;
+       spf=pass (google.com: domain of 0101018c8dbfc868-c956a6c0-6770-4089-bf80-153ef0bacd77-000000@amazonses-us-west-2.mod.io designates 54.240.27.207 as permitted sender) smtp.mailfrom=0101018c8dbfc868-c956a6c0-6770-4089-bf80-153ef0bacd77-000000@amazonses-us-west-2.mod.io;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mod.io
+Return-Path: <0101018c8dbfc868-c956a6c0-6770-4089-bf80-153ef0bacd77-000000@amazonses-us-west-2.mod.io>
+Received: from a27-207.smtp-out.us-west-2.amazonses.com (a27-207.smtp-out.us-west-2.amazonses.com. [54.240.27.207])
+        by mx.google.com with ESMTPS id e18-20020a656bd2000000b005c67da710ddsi2020892pgw.782.2023.12.21.11.00.05
+        for <user.idc004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Dec 2023 11:00:06 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0101018c8dbfc868-c956a6c0-6770-4089-bf80-153ef0bacd77-000000@amazonses-us-west-2.mod.io designates 54.240.27.207 as permitted sender) client-ip=54.240.27.207;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mod.io header.s=xnejnj6qqddlj6herw6wfvn2ageeormo header.b=Fd7Hwnxk;
+       dkim=pass header.i=@amazonses.com header.s=hsbnp7p3ensaochzwyq5wwmceodymuwv header.b=c4SJWZ8K;
+       spf=pass (google.com: domain of 0101018c8dbfc868-c956a6c0-6770-4089-bf80-153ef0bacd77-000000@amazonses-us-west-2.mod.io designates 54.240.27.207 as permitted sender) smtp.mailfrom=0101018c8dbfc868-c956a6c0-6770-4089-bf80-153ef0bacd77-000000@amazonses-us-west-2.mod.io;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mod.io
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=xnejnj6qqddlj6herw6wfvn2ageeormo; d=mod.io; t=1703185205;
+	h=From:To:Subject:Message-ID:MIME-Version:Date:Content-Type;
+	bh=C9Bccz+wv3hxLTqSCW8fTxWb9d7C5Z6iVVtVW/83+DA=;
+	b=Fd7Hwnxk1UwMJ4OhpjO9Ou+TNEsPrWz4UHh7RRFDdenRwL7B8syXkzHA4RbXvBOb
+	/q60m5UZkcK0FREjDnyW5Fsl4AhqwclwtcqyRAbxULX94I9z6gDU6jEOdV4HpKLRjM9
+	5x4PujHmWAkmoOxk5w1HYcc+xC5aSlrEqaoRtccY=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1703185205;
+	h=From:To:Subject:Message-ID:MIME-Version:Date:Content-Type:Feedback-ID;
+	bh=C9Bccz+wv3hxLTqSCW8fTxWb9d7C5Z6iVVtVW/83+DA=;
+	b=c4SJWZ8KYu5+tNBXMBdprVOkbDJhhfVrHf5jFQCP4o0kTfvo3LRZxp3gkdLQM0HC
+	8JMFCILVs9/JtmFGOM8IUunT8g6WZxK6Zr4xPqt19m7iJJ6nzicp8d60J3harIdYWdy
+	MHsDBzzDQ0R7eYMxqU/BZFUw1AbT++XzALiynAPw=
+From: "mod.io" <support@mod.io>
+To: user.idc004@gmail.com
+Subject: mod.io Security Code
+Message-ID: <0101018c8dbfc868-c956a6c0-6770-4089-bf80-153ef0bacd77-000000@us-west-2.amazonses.com>
+MIME-Version: 1.0
+Date: Thu, 21 Dec 2023 19:00:05 +0000
+Content-Type: multipart/alternative; boundary=W5dQnbGK
+Feedback-ID: 1.us-west-2.4S/wwg7/h6nJ8ThCRTtylEP2tDjYWJx+s3ABDwrqzn4=:AmazonSES
+X-SES-Outgoing: 2023.12.21-54.240.27.207
+X-TUID: P+293TtnwPJZ
+
+--W5dQnbGK
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+To use mod.io you must verify your email user.idc004@gmail.com with the sec=
+urity code below and be 13 years of age or older:
+
+GJ6MQ
+
+Game: Mel=
+vor Idle
+
+        Time: Thu, Dec 21, 2023 7:00 PM GMT
+           =20
+=
+By confirming your email you are agreeing to the mod.io Terms of Use (https=
+://mod.io/terms) and Privacy Policy (https://mod.io/privacy).
+
+When you=
+r code is verified, if you are a new user a mod.io account will be created =
+for you to browse, share and interact with user-generated content. You agre=
+e that your account display name, avatar and content you submit will be sha=
+red through the mod.io API and website which may be publicly accessible. Yo=
+u can manage your account by logging in to mod.io: https://mod.io/me/accoun=
+t.
+
+This code can only be redeemed once and will expire in 15 minutes. =
+If you did not request this security code you can ignore this email.
+
+m=
+od.io
+
+We're here to help. Contact us via Discord or email. Our support=
+ department will get in touch as soon as possible.
+
+Discord: https://di=
+scord.mod.io
+Contact Us: https://mod.io/contact
+
+Level 3, 390 Malvern=
+ Rd, Prahran, VIC 3181.
+
+Terms of Use: https://mod.io/terms
+Privacy P=
+olicy: https://mod.io/privacy
+
+
+--W5dQnbGK
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html>
+    <head>
+        <meta name=3D"viewport" con=
+tent=3D"width=3Ddevice-width">
+        <meta http-equiv=3D"Content-Type" =
+content=3D"text/html; charset=3DUTF-8">
+        <meta name=3D"color-schem=
+e" content=3D"light dark">
+        <meta name=3D"supported-color-schemes"=
+ content=3D"light dark">
+        <title>mod.io Security Code</title>
+  =
+      <style>
+            @font-face {
+                font-family: 'Eu=
+clid';
+                font-weight: 400;
+                src: url('http=
+s://mod.io/fonts/EuclidCircularB-Regular-WebS.woff2') format('woff2'),
+  =
+              url('https://mod.io/fonts/EuclidCircularB-Regular-WebS.woff')=
+ format('woff');
+                font-display: auto;
+            }
+  =
+          @font-face {
+                font-family: 'Euclid';
+         =
+       font-weight: 700;
+                src: url('https://mod.io/fonts/E=
+uclidCircularB-Bold-WebS.woff2') format('woff2'),
+                url('ht=
+tps://mod.io/fonts/EuclidCircularB-Bold-WebS.woff') format('woff');
+     =
+           font-display: auto;
+            }
+
+            body {
+  =
+            color: #000000;
+            }
+
+            a {
+        =
+        color: #07c1d8 !important;
+                text-decoration: none;=
+
+                font-weight: 700;
+                outline: none;
+   =
+         }
+
+            a:hover,
+            a:focus {
+            =
+    color: #0DE4FF !important;
+            }
+
+            .bg {
+   =
+           background-color: #EFF0F7;
+            }
+
+            .mai=
+n {
+              background-color: #FFFFFF;
+            }
+
+       =
+     .label {
+              color: #575860;
+            }
+
+        =
+    @media only screen and (max-width: 620px) {
+                table[cla=
+ss=3Dbody] h1 {
+                    font-size: 28px !important;
+       =
+             margin-bottom: 10px !important;
+                }
+
+     =
+           table[class=3Dbody] p,
+                table[class=3Dbody] ul,=
+
+                table[class=3Dbody] ol,
+                table[class=3D=
+body] td,
+                table[class=3Dbody] span,
+                tab=
+le[class=3Dbody] a {
+                    font-size: 16px;
+             =
+   }
+
+                table[class=3Dbody] .wrapper,
+                t=
+able[class=3Dbody] .article {
+                    padding: 10px !importan=
+t;
+                }
+
+                table[class=3Dbody] .content {=
+
+                    padding: 0 !important;
+                }
+
+    =
+            table[class=3Dbody] .container {
+                    padding:=
+ 0 !important;
+                    width: 100% !important;
+            =
+    }
+
+                table[class=3Dbody] .main {
+                  =
+  border-left-width: 0 !important;
+                    border-radius: 0 !=
+important;
+                    border-right-width: 0 !important;
+      =
+          }
+
+                table[class=3Dbody] .btn table {
+       =
+             width: 100% !important;
+                }
+
+             =
+   table[class=3Dbody] .btn a {
+                    width: 100% !importan=
+t;
+                }
+
+                table[class=3Dbody] .img-respon=
+sive {
+                    height: auto !important;
+                   =
+ max-width: 100% !important;
+                    width: auto !important;=
+
+                }
+            }
+
+            @media all {
+      =
+          .ExternalClass {
+                    width: 100%;
+           =
+     }
+
+                .ExternalClass,
+                .ExternalClas=
+s p,
+                .ExternalClass span,
+                .ExternalClas=
+s font,
+                .ExternalClass td,
+                .ExternalCla=
+ss div {
+                    line-height: 100%;
+                }
+
+=
+                .apple-link a {
+                    color: inherit !impor=
+tant;
+                    font-family: inherit !important;
+            =
+        font-size: inherit !important;
+                    font-weight: i=
+nherit !important;
+                    line-height: inherit !important;=
+
+                    text-decoration: none !important;
+                =
+}
+
+                #MessageViewBody a {
+                    color: in=
+herit;
+                    text-decoration: none;
+                    f=
+ont-size: inherit;
+                    font-family: inherit;
+          =
+          font-weight: inherit;
+                    line-height: inherit;=
+
+                }
+
+                .btn-primary a {
+              =
+    background-color: #07c1d8 !important;
+                  color: #00000=
+0 !important;
+                }
+
+                .btn-primary table t=
+d:hover {
+                    background-color: #0DE4FF !important;
+   =
+             }
+
+                .btn-primary a:hover,
+               =
+ .btn-primary a:focus {
+                    background-color: #0DE4FF !im=
+portant;
+                    border-color: #0DE4FF !important;
+        =
+        }
+            }
+
+            @media (prefers-color-scheme: da=
+rk ) {
+              .dark-img { display: inline-block !important; }
+  =
+            .light-img { display: none !important; }
+              .bg { =
+background-color: #212945 !important; }
+              .main { background-=
+color: #2D375D !important }
+              .label { color: #CCCCCC !import=
+ant }
+              body { color: #ffffff !important; }
+            }=
+
+
+            [data-ogsc] .dark-img { display: inline-block !important;=
+ }
+            [data-ogsc] .light-img { display: none !important; }
+   =
+         [data-ogsc] .bg { background-color: #212945 !important; }
+      =
+      [data-ogsc] .main { background-color: #2D375D !important }
+        =
+    [data-ogsc] .label { color: #CCCCCC !important }
+            [data-og=
+sc] body { color: #ffffff !important; }
+        </style>
+    </head>
+=
+    <body class=3D"bg" style=3D"font-family: 'Euclid', Verdana, sans-serif;=
+ -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; ma=
+rgin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: =
+100%;">
+        <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" c=
+lass=3D"body bg" style=3D"border-collapse: separate; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt; width: 100%;">
+            <tr>
+               =
+ <td style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 14px; =
+vertical-align: top;">&nbsp;</td>
+                <td class=3D"container"=
+ style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 14px; vert=
+ical-align: top; display: block; margin: 0 auto; max-width: 580px; padding:=
+ 10px; width: 580px;">
+                    <div style=3D"box-sizing: bord=
+er-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;">=
+
+                        <div class=3D"header" align=3D"center" style=3D"=
+clear: both; margin-top: 10px; text-align: center; width: 100%;">
+       =
+                     <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" style=3D"border-collapse: separate; mso-table-lspace: 0p=
+t; mso-table-rspace: 0pt; width: 100%;">
+                                =
+<tr>
+                                    <td align=3D"center" class=3D"co=
+ntent-block" style=3D"font-family: 'Euclid', Verdana, sans-serif; vertical-=
+align: top; padding-bottom: 15px; padding-top: 10px; font-size: 20px; text-=
+align: center;">
+                                        <a href=3D"https=
+://mod.io" style=3D"text-decoration: none; font-size: 20px; text-align: cen=
+ter;">
+                                          <img class=3D"light-img"=
+ src=3D"https://mod.io/images/branding/modio-logo-bluedark.png" width=3D"16=
+5" height=3D"54" alt=3D"mod.io" border=3D"0" style=3D"border:0; outline:non=
+e; text-decoration:none;"/>
+                                          <!-=
+-[if !mso]><! --><img class=3D"dark-img" src=3D"https://mod.io/images/brand=
+ing/modio-logo-bluewhite.png" width=3D"165" height=3D"54" alt=3D"mod.io" bo=
+rder=3D"0" style=3D"display: none; border:0; outline:none; text-decoration:=
+none;"/><!--<![endif]-->
+                                        </a><br>=
+
+                                    </td>
+                            =
+    </tr>
+                            </table>
+                        =
+</div>
+                        <table class=3D"main" style=3D"border-coll=
+apse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; =
+border-radius: 12px;">
+                            <tr>
+               =
+                 <td class=3D"wrapper" style=3D"font-family: 'Euclid', Verd=
+ana, sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-b=
+ox; padding: 20px;">
+                                    <table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-collapse: separate;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+           =
+                             <tr>
+                                       =
+     <td style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 14=
+px; vertical-align: top;">
+                                              =
+      <p>To use mod.io you must verify your email <a href=3D"mailto:user.id=
+c004@gmail.com">user.idc004@gmail.com</a> with the security code below and =
+be 13 years of age or older:</p>
+
+    <p class=3D"pin bg align=3D"cente=
+r" style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 32px; fo=
+nt-weight: 700; margin: 20px auto; letter-spacing: 2px; text-align: center;=
+ width: fit-content; padding: 12px 40px; border-radius: 8px;">
+    GJ6MQ=
+
+</p>
+
+    <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; width: 100%; padding: 20px 0; border-top: 1px #eff0f7 solid; border-bo=
+ttom: 1px #eff0f7 solid;">
+            <tbody>
+                <tr>
+ =
+                   <td style=3D"width: 80px;">
+                        <i=
+mg src=3D"https://thumb.modcdn.io/games/e2c6/2869/crop_128x128/melvor.png" =
+alt=3D"Melvor Idle" style=3D"width: 5rem; height: 5rem; border-radius: 8px;=
+ display: block; object-fit: cover;" />
+                    </td>
+     =
+               <td style=3D"padding: 12px; font-weight: 700;">Melvor Idle</=
+td>
+                    <td>
+                        <p>
+            =
+                <span class=3D"label" style=3D"font-size: 12px;">Date & Tim=
+e</span><br />
+                            Thu, Dec 21, 2023 7:00 PM GMT=
+
+                        </p>
+                                         =
+   </td>
+                </tr>
+            </tbody>
+        </table>=
+
+   =20
+    <p>By confirming your email you are agreeing to the mod.io <a=
+ href=3D"https://mod.io/terms">Terms of Use</a> and <a href=3D"https://mod.=
+io/privacy">Privacy Policy</a>.</p>
+
+    <p>When your code is verified,=
+ if you are a new user a mod.io account will be created for you to browse, =
+share and interact with user-generated content. You agree that your account=
+ display name, avatar and content you submit will be shared through the mod=
+.io API and website which may be publicly accessible. You can manage your a=
+ccount by <a href=3D"https://mod.io/me/account">logging in to mod.io</a>.</=
+p>
+
+    <p>This code can only be redeemed once and will expire in 15 mi=
+nutes. If you did not request this security code you can ignore this email.=
+</p>
+                                            </td>
+                =
+                        </tr>
+                                    </table=
+>
+                                </td>
+                            </t=
+r>
+                        </table>
+                        <div class=
+=3D"footer" align=3D"center" style=3D"clear: both; margin-top: 20px; text-a=
+lign: center; width: 100%;">
+                            <table align=3D"=
+center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-co=
+llapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%=
+;">
+                                <tr>
+                              =
+      <td align=3D"center" class=3D"content-block" style=3D"font-family: 'E=
+uclid', Verdana, sans-serif; vertical-align: top; padding-bottom: 10px; pad=
+ding-top: 0px; font-size: 12px;">
+                                       =
+ <p class=3D"apple-link" style=3D"margin: 0 0 8px 0">
+                   =
+                         Level 3, 390 Malvern Rd, Prahran, VIC 3181.
+    =
+                                    </p>
+                                =
+        <p style=3D"margin-top: 0px;">
+                                  =
+                                                      <a href=3D"https://mo=
+d.io/terms">Terms of Use</a> =E2=80=A2
+                                  =
+          <a href=3D"https://mod.io/privacy">Privacy Policy</a> =E2=80=
+=A2
+                                            <a href=3D"https://mod.io=
+/contact">Contact Us</a>
+                                                =
+                                    </p>
+                                =
+    </td>
+                                </tr>
+                       =
+     </table>
+                        </div>
+                    </div>=
+
+                </td>
+                <td style=3D"font-family: 'Eucli=
+d', Verdana, sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td>=
+
+            </tr>
+        </table>
+    </body>
+</html>
+--W5dQnbGK--

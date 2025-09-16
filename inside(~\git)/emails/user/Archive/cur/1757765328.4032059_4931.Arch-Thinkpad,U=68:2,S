@@ -1,0 +1,516 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6358:458:b0:174:c362:8432 with SMTP id 24csp324077rwe;
+        Thu, 21 Dec 2023 11:00:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHtfMZTLLdnkYWfGtBUphDqUr36DA/fuWgAhQMzUCrob6kOmEJswhRW5ed2/I4XqWWcIT1B
+X-Received: by 2002:a05:6a20:7490:b0:18f:97c:9279 with SMTP id p16-20020a056a20749000b0018f097c9279mr161929pzd.94.1703185225783;
+        Thu, 21 Dec 2023 11:00:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1703185225; cv=none;
+        d=google.com; s=arc-20160816;
+        b=mr9C8DNa/6EmBZr+7Jy2Nc+dAosxr1jRPjCVzhpmD5oyR2thERcdPIcB2J5JJosm84
+         zS3CVi9+fXVNcJYDb6Zc5cISLQcXfHhZGCeXRDVU1n3r8ZYVAqEitnGaLZQFYRRNahXX
+         ebhnvMNzEcex0Rks9V5c7CRiYhAMqKFqUpJJ86TAYQbO5w+lNPmxwEQ3pCdc3o3nviXs
+         Vdr4orSVva7uMAMbPtD5U0jPf4tILSw6aj4A6TfJGIuskOprTkNIKYmivDW5NjkmlOlN
+         1zPnDXdNfO1UcyZJINCiHqPwI1qR7/L4JttLFnEuuEgR7p4jb59UjMiOIwHMCTE7KQpi
+         FFRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:mime-version:message-id:subject:to:from
+         :dkim-signature:dkim-signature;
+        bh=BZPju1qjauPn82nNfnTnjrevuAmAa6KFov7CvCR6I6Q=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=nKuVVtCNhwnT6RvbbYEYqSOtzWdDC7QETVYwDnjYhEKLC0TXOkSB2kMyk5pXebie8s
+         fRHC0ADQMlTmp2s4GUWhkV3K/iPqXgBLdlHaj2Ek9xJ/Jc0IGvhtvYYrRmKHewrC3zjx
+         o0jozaXlCv/ullo79I8Xy+SvxQqNwup0rwdCTrp7paA+pD8ZJtpw/T7gIJ1TzAV/vmW2
+         zSEkZR1WXhg6kihI/NHG9b6XIYmrip89pYBpPvwg3ug0M7LBQp0aUx1G7h8tPPIkbdoM
+         mu1MxqOFdW4IokA/5mW0/aQtdv8PTjpzzf8YQ+FOiZfJMroB7Bpv45We/8PLImnUZMzc
+         Epvg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mod.io header.s=xnejnj6qqddlj6herw6wfvn2ageeormo header.b=lnB0KN27;
+       dkim=pass header.i=@amazonses.com header.s=hsbnp7p3ensaochzwyq5wwmceodymuwv header.b="MRufwS/e";
+       spf=pass (google.com: domain of 0101018c8dc01687-03ed9351-25e8-4e02-bece-e0938399fbbb-000000@amazonses-us-west-2.mod.io designates 54.240.27.154 as permitted sender) smtp.mailfrom=0101018c8dc01687-03ed9351-25e8-4e02-bece-e0938399fbbb-000000@amazonses-us-west-2.mod.io;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mod.io
+Return-Path: <0101018c8dc01687-03ed9351-25e8-4e02-bece-e0938399fbbb-000000@amazonses-us-west-2.mod.io>
+Received: from a27-154.smtp-out.us-west-2.amazonses.com (a27-154.smtp-out.us-west-2.amazonses.com. [54.240.27.154])
+        by mx.google.com with ESMTPS id i12-20020a636d0c000000b005bdbe64cc26si1993398pgc.535.2023.12.21.11.00.25
+        for <user.idc004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Dec 2023 11:00:25 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0101018c8dc01687-03ed9351-25e8-4e02-bece-e0938399fbbb-000000@amazonses-us-west-2.mod.io designates 54.240.27.154 as permitted sender) client-ip=54.240.27.154;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mod.io header.s=xnejnj6qqddlj6herw6wfvn2ageeormo header.b=lnB0KN27;
+       dkim=pass header.i=@amazonses.com header.s=hsbnp7p3ensaochzwyq5wwmceodymuwv header.b="MRufwS/e";
+       spf=pass (google.com: domain of 0101018c8dc01687-03ed9351-25e8-4e02-bece-e0938399fbbb-000000@amazonses-us-west-2.mod.io designates 54.240.27.154 as permitted sender) smtp.mailfrom=0101018c8dc01687-03ed9351-25e8-4e02-bece-e0938399fbbb-000000@amazonses-us-west-2.mod.io;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mod.io
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=xnejnj6qqddlj6herw6wfvn2ageeormo; d=mod.io; t=1703185225;
+	h=From:To:Subject:Message-ID:MIME-Version:Date:Content-Type;
+	bh=gq7Y5hEy04yvSvBDFOU/uqtmpBomz1d2FRF2I+TWwC4=;
+	b=lnB0KN27Xz7PyxCUrU2VmzgPB7d806fzxfgnR6VMU9Y4sDG3hq0fy1aZirgBJr2y
+	SsY4yHlu2aB5Dg63rbR8oyVBM5Pz3tHtwdnkIcSGGFQn9fgCj2qG9JKRJRRhknoX/PH
+	dOB//yGGbTQ1tNoPTFY/QoLHBRyV4v4dCgKcKGCs=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1703185225;
+	h=From:To:Subject:Message-ID:MIME-Version:Date:Content-Type:Feedback-ID;
+	bh=gq7Y5hEy04yvSvBDFOU/uqtmpBomz1d2FRF2I+TWwC4=;
+	b=MRufwS/eyfZ7s4cu8jrp1tzNF0X5uc1pHtokaAzPfPjDqMo5VPhUSks5DTYiqQFa
+	OUVfZUv5xN8rciBjmSzxBT2J82qqbfJ9YwFOE6wpttrRNVDW/3LrPvJZNS5OP9HS5v4
+	VwKmMy04CLKeXd0bgN+CEvuthK7lrhUlVT7CpRk0=
+From: "mod.io" <support@mod.io>
+To: user.idc004@gmail.com
+Subject: Welcome to mod.io
+Message-ID: <0101018c8dc01687-03ed9351-25e8-4e02-bece-e0938399fbbb-000000@us-west-2.amazonses.com>
+MIME-Version: 1.0
+Date: Thu, 21 Dec 2023 19:00:25 +0000
+Content-Type: multipart/alternative; boundary=ujerr_Oa
+Feedback-ID: 1.us-west-2.4S/wwg7/h6nJ8ThCRTtylEP2tDjYWJx+s3ABDwrqzn4=:AmazonSES
+X-SES-Outgoing: 2023.12.21-54.240.27.154
+X-TUID: TWnCv3vzA4Qj
+
+--ujerr_Oa
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi useridc004, now that you are a part of the mod.io community, you can pla=
+y the best mods for your favourite games. If you are a developer, start add=
+ing games and mods you are working on!
+
+To help get you started we have=
+ compiled a small list of handy links below:
+
+- Your Profile: https://m=
+od.io/u/useridc004
+                                - Edit Profile: https:=
+//mod.io/me/account
+                                - Games: https://mod.=
+io/g
+           =20
+mod.io
+
+We're here to help. Contact us via Discor=
+d or email. Our support department will get in touch as soon as possible.=
+
+
+Discord: https://discord.mod.io
+Contact Us: https://mod.io/contact=
+
+
+Level 3, 390 Malvern Rd, Prahran, VIC 3181.
+
+Unsubscribe: https:/=
+/mod.io/notifications/unsubscribe?u=3DiZXlKcGRpSTZJblJaUkRaR1prZDBNME5qT0Vr=
+NVp6VmFRWFl6Ym1jOVBTSXNJblpoYkhWbElqb2laMlpoYUd4NFFWSmpNVEpJTm5jclVtdHZaRWw=
+1UW1kUGRubzNkRkJLVkRoNGJXWTVjV28yYmxvNU0zQlVObHBZVmpNMloyeFRiV3M1UkhKVEwycE=
+1jU0lzSW0xaFl5STZJbUk1TUdNek5UZzFZVGN4WVdOaE1qTTFNV05sTkRjNU5XUXpZVEUzWTJGa=
+E5XWmxNVFF4WVRKbVpUaGpZV0UyTVdRNFpUTm1ZbU0xTURabU56QmlZek1pTENKMFlXY2lPaUlp=
+ZlE9PQ--
+Terms of Use: https://mod.io/terms
+Privacy Policy: https://mod=
+.io/privacy
+
+You are receiving this email as a registered member of the=
+ mod.io community. If you have any questions, get in touch (https://mod.io/=
+contact).
+
+--ujerr_Oa
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html>
+    <head>
+        <meta name=3D"viewport" con=
+tent=3D"width=3Ddevice-width">
+        <meta http-equiv=3D"Content-Type" =
+content=3D"text/html; charset=3DUTF-8">
+        <meta name=3D"color-schem=
+e" content=3D"light dark">
+        <meta name=3D"supported-color-schemes"=
+ content=3D"light dark">
+        <title>Welcome to mod.io</title>
+     =
+   <style>
+            @font-face {
+                font-family: 'Eucli=
+d';
+                font-weight: 400;
+                src: url('https:/=
+/mod.io/fonts/EuclidCircularB-Regular-WebS.woff2') format('woff2'),
+     =
+           url('https://mod.io/fonts/EuclidCircularB-Regular-WebS.woff') fo=
+rmat('woff');
+                font-display: auto;
+            }
+     =
+       @font-face {
+                font-family: 'Euclid';
+            =
+    font-weight: 700;
+                src: url('https://mod.io/fonts/Eucl=
+idCircularB-Bold-WebS.woff2') format('woff2'),
+                url('https=
+://mod.io/fonts/EuclidCircularB-Bold-WebS.woff') format('woff');
+        =
+        font-display: auto;
+            }
+
+            body {
+     =
+         color: #000000;
+            }
+
+            a {
+           =
+     color: #07c1d8 !important;
+                text-decoration: none;
+=
+                font-weight: 700;
+                outline: none;
+      =
+      }
+
+            a:hover,
+            a:focus {
+               =
+ color: #0DE4FF !important;
+            }
+
+            .bg {
+      =
+        background-color: #EFF0F7;
+            }
+
+            .main {=
+
+              background-color: #FFFFFF;
+            }
+
+          =
+  .label {
+              color: #575860;
+            }
+
+           =
+ @media only screen and (max-width: 620px) {
+                table[class=
+=3Dbody] h1 {
+                    font-size: 28px !important;
+         =
+           margin-bottom: 10px !important;
+                }
+
+       =
+         table[class=3Dbody] p,
+                table[class=3Dbody] ul,=
+
+                table[class=3Dbody] ol,
+                table[class=3D=
+body] td,
+                table[class=3Dbody] span,
+                tab=
+le[class=3Dbody] a {
+                    font-size: 16px;
+             =
+   }
+
+                table[class=3Dbody] .wrapper,
+                t=
+able[class=3Dbody] .article {
+                    padding: 10px !importan=
+t;
+                }
+
+                table[class=3Dbody] .content {=
+
+                    padding: 0 !important;
+                }
+
+    =
+            table[class=3Dbody] .container {
+                    padding:=
+ 0 !important;
+                    width: 100% !important;
+            =
+    }
+
+                table[class=3Dbody] .main {
+                  =
+  border-left-width: 0 !important;
+                    border-radius: 0 !=
+important;
+                    border-right-width: 0 !important;
+      =
+          }
+
+                table[class=3Dbody] .btn table {
+       =
+             width: 100% !important;
+                }
+
+             =
+   table[class=3Dbody] .btn a {
+                    width: 100% !importan=
+t;
+                }
+
+                table[class=3Dbody] .img-respon=
+sive {
+                    height: auto !important;
+                   =
+ max-width: 100% !important;
+                    width: auto !important;=
+
+                }
+            }
+
+            @media all {
+      =
+          .ExternalClass {
+                    width: 100%;
+           =
+     }
+
+                .ExternalClass,
+                .ExternalClas=
+s p,
+                .ExternalClass span,
+                .ExternalClas=
+s font,
+                .ExternalClass td,
+                .ExternalCla=
+ss div {
+                    line-height: 100%;
+                }
+
+=
+                .apple-link a {
+                    color: inherit !impor=
+tant;
+                    font-family: inherit !important;
+            =
+        font-size: inherit !important;
+                    font-weight: i=
+nherit !important;
+                    line-height: inherit !important;=
+
+                    text-decoration: none !important;
+                =
+}
+
+                #MessageViewBody a {
+                    color: in=
+herit;
+                    text-decoration: none;
+                    f=
+ont-size: inherit;
+                    font-family: inherit;
+          =
+          font-weight: inherit;
+                    line-height: inherit;=
+
+                }
+
+                .btn-primary a {
+              =
+    background-color: #07c1d8 !important;
+                  color: #00000=
+0 !important;
+                }
+
+                .btn-primary table t=
+d:hover {
+                    background-color: #0DE4FF !important;
+   =
+             }
+
+                .btn-primary a:hover,
+               =
+ .btn-primary a:focus {
+                    background-color: #0DE4FF !im=
+portant;
+                    border-color: #0DE4FF !important;
+        =
+        }
+            }
+
+            @media (prefers-color-scheme: da=
+rk ) {
+              .dark-img { display: inline-block !important; }
+  =
+            .light-img { display: none !important; }
+              .bg { =
+background-color: #212945 !important; }
+              .main { background-=
+color: #2D375D !important }
+              .label { color: #CCCCCC !import=
+ant }
+              body { color: #ffffff !important; }
+            }=
+
+
+            [data-ogsc] .dark-img { display: inline-block !important;=
+ }
+            [data-ogsc] .light-img { display: none !important; }
+   =
+         [data-ogsc] .bg { background-color: #212945 !important; }
+      =
+      [data-ogsc] .main { background-color: #2D375D !important }
+        =
+    [data-ogsc] .label { color: #CCCCCC !important }
+            [data-og=
+sc] body { color: #ffffff !important; }
+        </style>
+    </head>
+=
+    <body class=3D"bg" style=3D"font-family: 'Euclid', Verdana, sans-serif;=
+ -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; ma=
+rgin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: =
+100%;">
+        <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" c=
+lass=3D"body bg" style=3D"border-collapse: separate; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt; width: 100%;">
+            <tr>
+               =
+ <td style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 14px; =
+vertical-align: top;">&nbsp;</td>
+                <td class=3D"container"=
+ style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 14px; vert=
+ical-align: top; display: block; margin: 0 auto; max-width: 580px; padding:=
+ 10px; width: 580px;">
+                    <div style=3D"box-sizing: bord=
+er-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;">=
+
+                        <div class=3D"header" align=3D"center" style=3D"=
+clear: both; margin-top: 10px; text-align: center; width: 100%;">
+       =
+                     <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" style=3D"border-collapse: separate; mso-table-lspace: 0p=
+t; mso-table-rspace: 0pt; width: 100%;">
+                                =
+<tr>
+                                    <td align=3D"center" class=3D"co=
+ntent-block" style=3D"font-family: 'Euclid', Verdana, sans-serif; vertical-=
+align: top; padding-bottom: 15px; padding-top: 10px; font-size: 20px; text-=
+align: center;">
+                                        <a href=3D"https=
+://mod.io" style=3D"text-decoration: none; font-size: 20px; text-align: cen=
+ter;">
+                                          <img class=3D"light-img"=
+ src=3D"https://mod.io/images/branding/modio-logo-bluedark.png" width=3D"16=
+5" height=3D"54" alt=3D"mod.io" border=3D"0" style=3D"border:0; outline:non=
+e; text-decoration:none;"/>
+                                          <!-=
+-[if !mso]><! --><img class=3D"dark-img" src=3D"https://mod.io/images/brand=
+ing/modio-logo-bluewhite.png" width=3D"165" height=3D"54" alt=3D"mod.io" bo=
+rder=3D"0" style=3D"display: none; border:0; outline:none; text-decoration:=
+none;"/><!--<![endif]-->
+                                        </a><br>=
+
+                                    </td>
+                            =
+    </tr>
+                            </table>
+                        =
+</div>
+                        <table class=3D"main" style=3D"border-coll=
+apse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; =
+border-radius: 12px;">
+                            <tr>
+               =
+                 <td class=3D"wrapper" style=3D"font-family: 'Euclid', Verd=
+ana, sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-b=
+ox; padding: 20px;">
+                                    <table border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-collapse: separate;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+           =
+                             <tr>
+                                       =
+     <td style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 14=
+px; vertical-align: top;">
+                                              =
+      <p>Hi useridc004, now that you are a part of the mod.io community, yo=
+u can play the best mods for your favourite games. If you are a developer, =
+start adding games and mods you are working on!</p>
+
+    <p>To help get=
+ you started we have compiled a small list of handy links below:</p>
+
+ =
+   <ul style=3D"font-family: 'Euclid', Verdana, sans-serif; font-size: 14px=
+; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                =
+        <li><a href=3D"https://mod.io/u/useridc004">Your Profile</a></li>=
+
+                                <li><a href=3D"https://mod.io/me/account=
+">Edit Profile</a></li>
+                                <li><a href=3D"ht=
+tps://mod.io/g">Games</a></li>
+            </ul>
+                      =
+                      </td>
+                                        </tr>=
+
+                                    </table>
+                         =
+       </td>
+                            </tr>
+                        =
+</table>
+                        <div class=3D"footer" align=3D"center" s=
+tyle=3D"clear: both; margin-top: 20px; text-align: center; width: 100%;">=
+
+                            <table align=3D"center" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" style=3D"border-collapse: separate; mso-table-=
+lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+                      =
+          <tr>
+                                    <td align=3D"center" c=
+lass=3D"content-block" style=3D"font-family: 'Euclid', Verdana, sans-serif;=
+ vertical-align: top; padding-bottom: 10px; padding-top: 0px; font-size: 12=
+px;">
+                                        <p class=3D"apple-link" sty=
+le=3D"margin: 0 0 8px 0">
+                                            Lev=
+el 3, 390 Malvern Rd, Prahran, VIC 3181.
+                                =
+        </p>
+                                        <p style=3D"margin-t=
+op: 0px;">
+                                                              =
+                          <a href=3D"https://mod.io/notifications/unsubscri=
+be?u=3DiZXlKcGRpSTZJbTlETTBsTFVHRjNaVkpRVTJGTmVEZHFjakpYWm5jOVBTSXNJblpoYkh=
+WbElqb2laV05tTjA4M1QyTXhabXgwZUROTmFYZ3ZNelZ5ZEhKalpsTkRZVU16VWpKbVRqWkpPVz=
+FtTUZoWmNYbHdSVEl4UzNaeVVEVTBiRzQwUjBoR1NtWndVaUlzSW0xaFl5STZJamczWmpFeU1qR=
+mlZakJqTVRJeE5EZ3daall6WVdZd016RTBZbUkwWkdFd056TXpZV1ExWTJRME5Ua3lOR1E0T1RN=
+eVltUmtNV013WkRjMFpqaGxaamtpTENKMFlXY2lPaUlpZlE9PQ--">Unsubscribe</a> =
+=E2=80=A2
+                                            <a href=3D"https://=
+mod.io/terms">Terms of Use</a> =E2=80=A2
+                                =
+            <a href=3D"https://mod.io/privacy">Privacy Policy</a> =E2=80=
+=A2
+                                            <a href=3D"https://mod.io=
+/contact">Contact Us</a><br>
+                                            =
+You are receiving this email as a registered member of the <a href=3D"https=
+://mod.io">mod.io</a> community. If you have any questions, <a href=3D"http=
+s://mod.io/contact">get in touch</a>.
+                                   =
+                                                 </p>
+                   =
+                 </td>
+                                </tr>
+          =
+                  </table>
+                        </div>
+             =
+       </div>
+                </td>
+                <td style=3D"font-f=
+amily: 'Euclid', Verdana, sans-serif; font-size: 14px; vertical-align: top;=
+">&nbsp;</td>
+            </tr>
+        </table>
+    </body>
+</html=
+>
+--ujerr_Oa--

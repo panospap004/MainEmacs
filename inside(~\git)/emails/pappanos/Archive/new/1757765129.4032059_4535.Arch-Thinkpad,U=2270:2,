@@ -1,0 +1,638 @@
+Delivered-To: pappanos004@gmail.com
+Received: by 2002:a05:6a10:c706:b0:4fd:2383:89e with SMTP id m6csp11845pxw;
+        Fri, 29 Sep 2023 18:49:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhYkbNr6DpNYM7pWYv4ZApugVRbfLspF2O4Gf0tZtNo2awgo782tbKd5yhQW0ekk/kv1T2
+X-Received: by 2002:ac8:7d44:0:b0:419:4c9d:8738 with SMTP id h4-20020ac87d44000000b004194c9d8738mr7930127qtb.46.1696038549193;
+        Fri, 29 Sep 2023 18:49:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1696038549; cv=none;
+        d=google.com; s=arc-20160816;
+        b=JLThk9R2XyGdQMpDUK/1LC9gyY6gRJ1mXMkVLq21mWqwA3pHBHcT9oAgRfFsIM9InQ
+         0hJg3oQSSuNlZuPXUZ96aiINqbu8dZST9U9FIsF0nnhZO9YQ6OM5xX9zhdvD+UkFnWyc
+         1zCGmzAH4cVLo2Kl6cBPhBs1NS34204/GccwXUwGu0XLPe8O7FZIjBlq6sEy1VezZOdd
+         X31/1cjNSn+eirh2+SQEwtEgkfV1BrrJCqiog73QWfX8BtYdHudJ4lB8PkKQy/KEiGP1
+         Wvi8R4Mwe2ObIfJyIN5gnUJkc8Px2jp+fOYNB/NLn77Jg+lZBs4EtP3ak0yonUeK4COg
+         TECw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature:dkim-signature;
+        bh=H9yozOFdHWB5Xx6/bDUEQKLEFDtk1L0wawMfruiHrQU=;
+        fh=/HlUdswXRye2WTbFm8xpM+qpT6gAyb+KwI+GRO2WI5o=;
+        b=V+DkUctSxcukxWb4S0qSKCX19jTGizEAS7uvTXzEnkug10QAiQTv6zbbciOzSh6kU8
+         qkz2G1wnxQwLBEc/RMFiaLrruZJpAn25nEmRCfa2z8RZCSA8K3NQ5w+gmCYBbZrwxQJM
+         9aHuWqe4fk6ZNF9Wl/0578Px8nQrlNzmaBg/evCiwahvbl4gTAINNQdK/un4fVDCD0Mq
+         BxmDU4LJQVU8KUKZM/7GZLEG0aYu18KOP4ItchM5ZDhLIVSX/EmmQoER0DLeVojL/sPZ
+         cWjFicvLkxvvEM7rTM5ljT3A/OvkqhzXe1WZlyQtSJboK4MLgUUXJHHD6VZ0tVJWiFl5
+         OZKw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@info.vercel.com header.s=m1 header.b=TPq9IqVm;
+       dkim=pass header.i=@mktdns.com header.s=m1 header.b=IsO4PKft;
+       spf=pass (google.com: domain of 001-lrg-194.0.351.0.0.1597.9.5291800-1@emailbounce.vercel.com designates 192.28.153.142 as permitted sender) smtp.mailfrom=001-LRG-194.0.351.0.0.1597.9.5291800-1@emailbounce.vercel.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vercel.com
+Return-Path: <001-LRG-194.0.351.0.0.1597.9.5291800-1@emailbounce.vercel.com>
+Received: from emailbounce.vercel.com (emailbounce.vercel.com. [192.28.153.142])
+        by mx.google.com with ESMTPS id n18-20020ac85b52000000b00417dae61addsi1136656qtw.679.2023.09.29.18.49.08
+        for <pappanos004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Sep 2023 18:49:09 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 001-lrg-194.0.351.0.0.1597.9.5291800-1@emailbounce.vercel.com designates 192.28.153.142 as permitted sender) client-ip=192.28.153.142;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@info.vercel.com header.s=m1 header.b=TPq9IqVm;
+       dkim=pass header.i=@mktdns.com header.s=m1 header.b=IsO4PKft;
+       spf=pass (google.com: domain of 001-lrg-194.0.351.0.0.1597.9.5291800-1@emailbounce.vercel.com designates 192.28.153.142 as permitted sender) smtp.mailfrom=001-LRG-194.0.351.0.0.1597.9.5291800-1@emailbounce.vercel.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vercel.com
+X-MSFBL: EoPw1PHo/4mDEu9zDLXyHe4SrIuIubog3gZWpFsFags=|eyJyIjoicGFwcGFub3M
+	wMDRAZ21haWwuY29tIiwidSI6IjAwMS1MUkctMTk0OjA6MTE5NjoxNTI1OjA6MTU
+	5Nzo5OjM1MTo1MjkxODAwLTEiLCJnIjoiYmctYWJkLTY5NyIsImIiOiJkdnAtMTk
+	yLTI4LTE1My0xNDIifQ==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1696027887;
+	s=m1; d=info.vercel.com; i=@info.vercel.com;
+	h=Content-Type:MIME-Version:Subject:To:From:Date;
+	bh=H9yozOFdHWB5Xx6/bDUEQKLEFDtk1L0wawMfruiHrQU=;
+	b=TPq9IqVmsuKNf4+mefPBNIq+8jOUwRbTH60a9mzYrHOnbGmzpDcDVtgUOiXcVHYB
+	tdJ3CmZeEpvMqUTyvFXSgejCpJQ9LpQMNOZ0t9vJ/iNzFv8fho7ZOmdfw2/RZUhARJ9
+	0fRsQ7vYo044VgHkHWrXcF/XeUlUhXPn4awtU7PE=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1696027887;
+	s=m1; d=mktdns.com; i=@mktdns.com;
+	h=Content-Type:MIME-Version:Subject:To:From:Date;
+	bh=H9yozOFdHWB5Xx6/bDUEQKLEFDtk1L0wawMfruiHrQU=;
+	b=IsO4PKft/d5qhWDNDB38WTeXrwk0fZP6a3JQUBP+wRYHB22M5EvTjrBVxyrqb4EV
+	cNw0D1lhcPCSQwS1kZYAv+iTsAub+Dlr9c4fv7Qav9WbE272Gmrl7vDLCGsqrrk/HJf
+	MNIT0MxNiEzV+VJ+xvIZN/ped1MNM3Vc8uSLUa8Q=
+Date: Fri, 29 Sep 2023 17:51:27 -0500 (CDT)
+From: Vercel <ship@info.vercel.com>
+Reply-To: no-reply@vercel.com
+To: pappanos004@gmail.com
+Message-ID: <359316526.2267417.1696027887332@abmktmail-trigger1h.marketo.org>
+Subject: Your personal Vercel account
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_2267416_1201651515.1696027887316"
+X-Binding: bg-abd-697
+X-MarketoID: 001-LRG-194:0:1196:1525:0:1597:9:351:5291800-1
+X-Mailfrom: 001-LRG-194.0.351.0.0.1597.9.5291800-1@emailbounce.vercel.com
+X-MktArchive: false
+X-MSYS-API: {"options":{"open_tracking":false,"click_tracking":false}}
+X-MktMailDKIM: true
+X-TUID: 6ZrLVKREP/NZ
+
+------=_Part_2267416_1201651515.1696027887316
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Welcome to Vercel! Most new users visit these docs <https://info.vercel.com=
+/MDAxLUxSRy0xOTQAAAGOghx2zBO7kNtKxU0STjaCaZAhCIe7yMGq2nZqeiIS01QCPfxZw_edca=
+i7RWTmdCwJAYzU2Hw=3D> to get started.
+
+Your Personal account is free and yours forever for non-commercial and=20
+hobby sites - learn more here <https://info.vercel.com/MDAxLUxSRy0xOTQAAAGO=
+ghx2zNZPr5A4IKxz_bqMnR52v4xW0Ol_MxN3UNyqbC1eItNUwtejS3axlgnSML9kk1VKwwQ=3D>=
+.
+
+If you want to unlock additional features (including support, team collabor=
+ation, or higher bandwidth & function usage), create a Pro team <https://in=
+fo.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zEnck4whDQzKimuc5nIA3aW43rinpTWVrx0y3=
+Vv4W55ro-V6OHUVDOtmjDUvT6i7T-8=3D>. You can try a Pro team for 14-days for =
+free.
+${btnText}    ${btnText} <[[${btnURL}]]>
+Docs <https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zBO7kNtKxU0STjaCaZAhC=
+Ie7yMGq2nZqeiIS01QCPfxZw_edcai7RWTmdCwJAYzU2Hw=3D> | Blog <https://info.ver=
+cel.com/MDAxLUxSRy0xOTQAAAGOghx2zBiD9NHC8vCxZbDbMbaE2jhtyOC9N301TPO_sxYr2Hv=
+L-doLfv5G3KytnJBNX5iMXhY=3D> | Contact <https://info.vercel.com/MDAxLUxSRy0=
+xOTQAAAGOghx2zJUvo944gH2z_MX8TNgFoK2r8DbPDA2fHAGzDVdCR6c2hRFatuIs2ugD_z9xgz=
+PfsyE=3D> | Careers <https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zFQKiq=
+MdQnb-QybvyzNUiD0-4tEXSxjdf4l5l60y-DpwvSk0IJZezO6YogIrPYCMgaE=3D>=20
+ 340 S Lemon Ave #4133, Walnut, California 91789=20
+ Copyright =C2=A9 2023 Vercel Inc. All rights reserved.=20
+View our Privacy Policy <https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zC=
+ilJJlgVymC90no8Begw8LGymmkOPiZfJC8zp4sVvAFimxYAIFQ6hsWywfUMR8jOig=3D> or un=
+subscribe <https://info.vercel.com/dc/I3SdgMG8P3eEUusfQBnDX5Xq8z9hdQ4Cj36NG=
+SyfQ-HxFHPIiWVw4FFeG5a2ZIGbTts5FPXW4KRFRZALGDedlcUW6C6TOYX0Ym3o3tWdg4A=3D/M=
+DAxLUxSRy0xOTQAAAGOghx2zLpAx6UQxf_aUk1ZLRXqZfqG35-suhpswyygRNR9lUJnGTuCoirL=
+VnP3ki576m2gV3c=3D>.
+
+------=_Part_2267416_1201651515.1696027887316
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html xmlns=3D"https://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-micros=
+oft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" style=3D"w=
+idth: 100%;">
+<head>=20
+<!--[if mso]>
+<style>
+span, td, table, div {
+font-family: Arial, serif !important;
+}
+</style>
+<![endif]-->=20
+<meta name=3D"color-scheme" content=3D"light dark">=20
+<meta name=3D"supported-color-schemes" content=3D"light dark">=20
+<!-- Global variables -->                                               =20
+<title>Vercel</title>=20
+<!--[if gte mso 9]>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+<![endif]-->=20
+<!--[if mso]>
+<style> body,table tr,table td,a, span,table.MsoNormalTable {font-family: A=
+rial !important;}</style>
+<!--<![endif]-->=20
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">=
+=20
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1,=
+ minimum-scale=3D1, maximum-scale=3D1">=20
+<meta name=3D"robots" content=3D"noindex,nofollow">=20
+<meta content=3D"telephone=3Dno" name=3D"format-detection">=20
+<meta name=3D"format-detection" content=3D"date=3Dno">=20
+<meta name=3D"format-detection" content=3D"address=3Dno">=20
+<meta name=3D"format-detection" content=3D"email=3Dno">=20
+<meta name=3D"x-apple-disable-message-reformatting">=20
+<style media=3D"all"> @import url(https://fonts.googleapis.com/css2?family=
+=3DInter:wght@400;600&amp;amp;display=3Dswap);</style>=20
+<style>
+      /* CLIENT-SPECIFIC STYLES */
+      img{-ms-interpolation-mode: bicubic;}=20
+      /* Force IE to smoothly render resized images. */
+      #outlook a{padding:0;}=20
+      /* Force Outlook 2007 and up to provide a "view in browser" message. =
+*/
+      table{mso-table-lspace:0pt;mso-table-rspace:0pt;}=20
+      /* Remove spacing between tables in Outlook 2007 and up. */
+      .ReadMsgBody{width:100%;}=20
+      .ExternalClass{width:100%;}=20
+      /* Force Outlook.com to display emails at full width. */
+      p, a, li, td, blockquote{mso-line-height-rule:exactly;}=20
+      /* Force Outlook to render line heights as they're originally set. */
+      a[href^=3D"tel"], a[href^=3D"sms"]{color:inherit;cursor:default; text=
+-decoration:none;}=20
+      /* Force mobile devices to inherit declared link styles. */
+      p, a, li, td, body, table, blockquote{-ms-text-size-adjust:100%;-webk=
+it-text-size-adjust:100%;}=20
+      /* Prevent Windows- and Webkit-based mobile platforms from changing d=
+eclared text sizes. */
+      .ExternalClass, .ExternalClass p, .ExternalClass td, .ExternalClass d=
+iv, .ExternalClass span, .ExternalClass font{line-height:100%;}
+      /* Force Outlook.com to display line heights normally. */
+      table{border-collapse:collapse;}
+
+      html {
+        -webkit-text-size-adjust: none;
+      }
+a {
+  font-weight: bold;
+  color: #0070f3;
+  text-decoration:none;
+}
+#titlemodtxt{
+  letter-spacing: -4px;
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mktoText p, div.mktoText, .mktoText div {
+        color:#ffffff!important;
+    }
+    .dark-img {
+         display:inline-block !important;
+         width: auto !important;
+         overflow: visible !important;
+         max-height:inherit !important;
+         max-width:inherit !important;
+         line-height: auto !important;
+         margin-top:0px !important;
+         visibility:inherit !important;
+    }
+     .light-img {
+         display:none !important;
+    }
+    .darkmode {
+        background-color:#000000!important;
+        background:#000000!important;
+    }
+     .darkmodebg {
+        background-color:#000000!important;
+        background:#000000!important;
+    }
+    .dklinkclr{
+      color:#ffffff!important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+        .main { width: 100% !important; min-width: 100% !important; } .inne=
+r_table { width: 90% !important; margin: 0 auto !important; } .logomob { ma=
+x-width: 90% !important; margin: 0 auto !important; height: auto !important=
+; } .show { display: block !important; visibility: visible !important; } .r=
+es { width: 100% !important; display: block; height: auto !important; } .bl=
+ock { display: block; margin: 0 auto; float: none !important; width: 100% !=
+important; } .left_align { text-align: left !important; } .center { text-al=
+ign: center !important; margin: 0 auto; float: none !important; } .hidden {=
+ display: none !important; } .top_pad { padding-top: 20px !important; } .to=
+p_pad1 { padding-top: 30px !important; } .mobileimg { width: 100% !importan=
+t; height: auto !important; } .imgmaxwidth {width: 100% !important; height:=
+ auto !important;}
+.navtxt{
+  font-size: 12px !important;
+}
+    }
+
+  </style>=20
+</head>=20
+<body style=3D"-webkit-text-size-adjust: 100% !important; -ms-text-size-adj=
+ust: 100% !important; width: 100%; min-width: 100%; margin-top: 0; margin-r=
+ight: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0=
+; padding-bottom: 0; padding-left: 0;"><style type=3D"text/css">div#emailPr=
+eHeader{ display: none !important; }</style><div id=3D"emailPreHeader" styl=
+e=3D"mso-hide:all; visibility:hidden; opacity:0; color:transparent; mso-lin=
+e-height-rule:exactly; line-height:0; font-size:0px; overflow:hidden; borde=
+r-width:0; display:none !important;">Get ready to ship faster with your new=
+ Hobby account.</div>=20
+<table class=3D"full-container darkmodebg" align=3D"center" width=3D"100%" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:=
+ 0pt !important; mso-table-rspace: 0pt !important; border-spacing: 0; borde=
+r-collapse: collapse;margin: 0 auto;">=20
+<tbody>=20
+<tr>=20
+<td class=3D"darkmodebg" bgcolor=3D"#ffffff" style=3D"background-color:#fff=
+fff;">=20
+<table class=3D"main" id=3D"outer_table" width=3D"600" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"mso-table-lspace: 0p=
+t !important; mso-table-rspace: 0pt !important; border-spacing: 0; border-c=
+ollapse: collapse; min-width: 600px; width: 600px; margin: 0 auto;">=20
+<tbody>=20
+<tr>=20
+<td class=3D"mktoContainer" id=3D"template-wrapper">
+<table class=3D"mktoModule" id=3D"logo" cellpadding=3D"0" align=3D"center" =
+cellspacing=3D"0" style=3D"mso-table-lspace: 0pt !important; mso-table-rspa=
+ce: 0pt !important; margin:0 auto;width:100%;border-collapse: collapse;bord=
+er-spacing: 0;" border=3D"0" width=3D"100%">=20
+<tbody>=20
+<tr>=20
+<td class=3D"darkmodebg" bgcolor=3D"#ffffff" valign=3D"top" style=3D"backgr=
+ound-Color:#ffffff;vertical-align: top;">=20
+<table class=3D"darkmodebg" cellpadding=3D"0" cellspacing=3D"0" align=3D"ce=
+nter" style=3D"mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !imp=
+ortant; margin:0 auto; width:100%; border-collapse: collapse;border-spacing=
+: 0;" border=3D"0" width=3D"100%">=20
+<tbody>=20
+<tr>=20
+<td height=3D"20" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+<tr>=20
+<th width=3D"100%" class=3D"center block" align=3D"center" style=3D"width: =
+120px; text-align: center;">=20
+<div class=3D"mktoImg" id=3D"headerLogo1s" mktolockimgsize=3D"false">=20
+<a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2y4Oh4JN5kZjos8H0loo5yxdcwA=
+tqHCeT2GsmRdp7Eik8A_auFaW_RV4RWnScdKDZz-k=3D" target=3D"_blank"
+><img class=3D"light-img" alt=3D"logo" src=3D"https://go.vercel.com/rs/001-=
+LRG-194/images/tricon_2x.png" width=3D"32" height=3D"28" border=3D"0" style=
+=3D"height: auto !important; -ms-interpolation-mode: bicubic !important; ">=
+=20
+<div class=3D"dark-img" style=3D"display:none; overflow:hidden; width:0px; =
+max-height:0px; max-width:0px; line-height:0px; visibility:hidden;" align=
+=3D"center">=20
+<img alt=3D"logo" src=3D"https://go.vercel.com/rs/001-LRG-194/images/tricon=
+_2x_white.png" width=3D"32" height=3D"28" border=3D"0" style=3D"height: aut=
+o !important; -ms-interpolation-mode: bicubic !important; ">=20
+</div> </a>=20
+</div> </th>=20
+</tr>=20
+<tr>=20
+<td height=3D"20" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+</tbody>=20
+</table> </td>=20
+</tr>=20
+</tbody>=20
+</table>
+<table class=3D"mktoModule" id=3D"spacer81bdc784-05e4-4d96-b68f-040f3ebe8fc=
+7" cellpadding=3D"0" align=3D"center" cellspacing=3D"0" style=3D"mso-table-=
+lspace: 0pt !important; mso-table-rspace: 0pt !important; margin:0 auto;wid=
+th:100%;border-collapse: collapse;border-spacing: 0;" border=3D"0" width=3D=
+"100%">=20
+<tbody>=20
+<tr>=20
+<th class=3D"module darkmodebg" align=3D"center" valign=3D"middle" bgcolor=
+=3D"#ffffff" style=3D"font-size: 0px; line-height: 0px; padding: 0; backgro=
+und-Color:#ffffff;">=20
+<table role=3D"presentation" class=3D"main" align=3D"center" cellspacing=3D=
+"0" cellpadding=3D"0" border=3D"0" width=3D"600" style=3D"mso-table-lspace:=
+ 0pt !important; mso-table-rspace: 0pt !important; width: 600px;">=20
+<tbody>=20
+<tr>=20
+<th align=3D"center" width=3D"100%" valign=3D"top" style=3D"font-size: 0px;=
+ line-height: 0px; padding: 0; color: #FFFFFF;">=20
+<table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"=
+0" width=3D"100%" style=3D"mso-table-lspace: 0pt !important; mso-table-rspa=
+ce: 0pt !important; ">=20
+<tbody>=20
+<tr>=20
+<th class=3D"content" style=3D"font-size: 0px; line-height: 0px; padding: 0=
+; color: #FFFFFF; padding-top: 0px; padding-bottom: 0px;">=20
+<table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"=
+0" width=3D"100%" style=3D"mso-table-lspace: 0pt !important; mso-table-rspa=
+ce: 0pt !important; ">=20
+<tbody>=20
+<tr>=20
+<th height=3D"20" style=3D"font-size: 0px; line-height: 0px; padding: 0; co=
+lor: #FFFFFF; height: 20px;">&nbsp; </th>=20
+</tr>=20
+</tbody>=20
+</table> </th>=20
+</tr>=20
+</tbody>=20
+</table> </th>=20
+</tr>=20
+</tbody>=20
+</table> </th>=20
+</tr>=20
+</tbody>=20
+</table>
+<table class=3D"mktoModule" id=3D"CopyModuleco" cellpadding=3D"0" align=3D"=
+center" cellspacing=3D"0" style=3D"mso-table-lspace: 0pt !important; mso-ta=
+ble-rspace: 0pt !important; margin:0 auto;width:100%;border-collapse: colla=
+pse;border-spacing: 0;" border=3D"0" width=3D"100%">=20
+<tbody>=20
+<tr>=20
+<td class=3D"darkmodebg" bgcolor=3D"#ffffff" valign=3D"top" style=3D"backgr=
+ound-Color:#ffffff;vertical-align: top;">=20
+<table class=3D"inner_table" cellpadding=3D"0" cellspacing=3D"0" align=3D"c=
+enter" style=3D"mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !im=
+portant; margin:0 auto; width:560px;border-collapse: collapse;border-spacin=
+g: 0;" border=3D"0" width=3D"560">=20
+<tbody>=20
+<tr>=20
+<td height=3D"0" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+<tr>=20
+<td style=3D"font-family: 'Inter', sans-serif; color: #000000; font-size: 1=
+6px; line-height: 24px; mso-line-height-rule: exactly; text-align: center; =
+font-weight: 400;">=20
+<div class=3D"mktoText" id=3D"bannertextthb">=20
+<div style=3D"text-align: left;">
+ Welcome to Vercel! Most new users=20
+<a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zBO7kNtKxU0STjaCaZAhCIe7yM=
+Gq2nZqeiIS01QCPfxZw_edcai7RWTmdCwJAYzU2Hw=3D" style=3D"text-decoration: non=
+e; color: #0070f3; font-weight: bold;" target=3D"_blank"
+><span class=3D"txt-color" style=3D"text-decoration: none; color: #0070f3;"=
+>visit these docs</span></a> to get started.=20
+<br>=20
+<br>=20
+<strong>Your Personal account is free and yours forever</strong> for non-co=
+mmercial and hobby sites -=20
+<a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zNZPr5A4IKxz_bqMnR52v4xW0O=
+l_MxN3UNyqbC1eItNUwtejS3axlgnSML9kk1VKwwQ=3D" style=3D"text-decoration: non=
+e; color: #0070f3; font-weight: bold;" target=3D"_blank"
+><span class=3D"txt-color" style=3D"text-decoration: none; color: #0070f3;"=
+>learn more here</span></a>.=20
+<br>=20
+<br>If you want to unlock additional features (including support, team coll=
+aboration, or higher bandwidth &amp; function usage),=20
+<a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zEnck4whDQzKimuc5nIA3aW43r=
+inpTWVrx0y3Vv4W55ro-V6OHUVDOtmjDUvT6i7T-8=3D" style=3D"text-decoration: non=
+e; color: #0070f3; font-weight: bold;" target=3D"_blank"
+><span class=3D"txt-color" style=3D"text-decoration: none; color: #0070f3;"=
+>create a Pro team</span></a>. You can try a Pro team for 14-days for free.=
+=20
+</div>=20
+</div> </td>=20
+</tr>=20
+<tr>=20
+<td height=3D"20" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+</tbody>=20
+</table> </td>=20
+</tr>=20
+</tbody>=20
+</table>
+<table class=3D"mktoModule" id=3D"btnModule" cellpadding=3D"0" align=3D"cen=
+ter" cellspacing=3D"0" style=3D"mso-table-lspace: 0pt !important; mso-table=
+-rspace: 0pt !important; margin:0 auto;width:100%;border-collapse: collapse=
+;border-spacing: 0;" border=3D"0" width=3D"100%">=20
+<tbody>=20
+<tr>=20
+<td class=3D"darkmodebg" bgcolor=3D"#ffffff" valign=3D"top" style=3D"backgr=
+ound-Color:#ffffff;vertical-align: top;">=20
+<table class=3D"inner_table" cellpadding=3D"0" cellspacing=3D"0" align=3D"c=
+enter" style=3D"mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !im=
+portant; margin:0 auto; width:560px;border-collapse: collapse;border-spacin=
+g: 0;" border=3D"0" width=3D"560">=20
+<tbody>=20
+<tr>=20
+<td height=3D"20" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+<tr>=20
+<td>=20
+<div class=3D"mktoText" id=3D"btn">=20
+<div>=20
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" align=3D"center" st=
+yle=3D"mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; =
+">=20
+<tbody>=20
+<tr>=20
+<td class=3D"">=20
+<div>=20
+<!--[if mso]>
+                                                      <v:roundrect xmlns:v=
+=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-microsoft-com:off=
+ice:word" href=3D"https://vercel.com/teams/create" style=3D"height:48px;v-t=
+ext-anchor:middle;width:170px;" arcsize=3D"4%" strokecolor=3D"#0070f3" fill=
+color=3D"#0070f3">
+                                                        <w:anchorlock></w:a=
+nchorlock>
+                                                        <center style=3D"co=
+lor:#ffffff;font-family:arial,sans-serif;font-size:16px;">Create a Pro team=
+</center>
+                                                      </v:roundrect>
+                                                    <![endif]-->=20
+<!--[if !mso]-->=20
+<a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zEnck4whDQzKimuc5nIA3aW43r=
+inpTWVrx0y3Vv4W55ro-V6OHUVDOtmjDUvT6i7T-8=3D" style=3D"background-color:#00=
+70f3;border:1px solid #0070f3;border-radius:4px;color:#ffffff;display:inlin=
+e-block;font-family: 'Inter', sans-serif;font-size:16px;line-height:48px;te=
+xt-align:center;text-decoration:none;width:170px;-webkit-text-size-adjust:n=
+one;mso-hide:all;"
+>Create a Pro team</a>=20
+</div>=20
+<!--[endif]--></td>=20
+</tr>=20
+</tbody>=20
+</table>=20
+</div>=20
+</div> </td>=20
+</tr>=20
+<tr>=20
+<td height=3D"20" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+</tbody>=20
+</table> </td>=20
+</tr>=20
+</tbody>=20
+</table>
+<table class=3D"mktoModule" id=3D"spacer" cellpadding=3D"0" align=3D"center=
+" cellspacing=3D"0" style=3D"mso-table-lspace: 0pt !important; mso-table-rs=
+pace: 0pt !important; margin:0 auto;width:100%;border-collapse: collapse;bo=
+rder-spacing: 0;" border=3D"0" width=3D"100%">=20
+<tbody>=20
+<tr>=20
+<th class=3D"module darkmodebg" align=3D"center" valign=3D"middle" bgcolor=
+=3D"#ffffff" style=3D"font-size: 0px; line-height: 0px; padding: 0; backgro=
+und-Color:#ffffff;">=20
+<table role=3D"presentation" class=3D"main" align=3D"center" cellspacing=3D=
+"0" cellpadding=3D"0" border=3D"0" width=3D"600" style=3D"mso-table-lspace:=
+ 0pt !important; mso-table-rspace: 0pt !important; width: 600px;">=20
+<tbody>=20
+<tr>=20
+<th align=3D"center" width=3D"100%" valign=3D"top" style=3D"font-size: 0px;=
+ line-height: 0px; padding: 0; color: #FFFFFF;">=20
+<table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"=
+0" width=3D"100%" style=3D"mso-table-lspace: 0pt !important; mso-table-rspa=
+ce: 0pt !important; ">=20
+<tbody>=20
+<tr>=20
+<th class=3D"content" style=3D"font-size: 0px; line-height: 0px; padding: 0=
+; color: #FFFFFF; padding-top: 0px; padding-bottom: 0px;">=20
+<table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"=
+0" width=3D"100%" style=3D"mso-table-lspace: 0pt !important; mso-table-rspa=
+ce: 0pt !important; ">=20
+<tbody>=20
+<tr>=20
+<th height=3D"20" style=3D"font-size: 0px; line-height: 0px; padding: 0; co=
+lor: #FFFFFF; height: 20px;">&nbsp; </th>=20
+</tr>=20
+</tbody>=20
+</table> </th>=20
+</tr>=20
+</tbody>=20
+</table> </th>=20
+</tr>=20
+</tbody>=20
+</table> </th>=20
+</tr>=20
+</tbody>=20
+</table>
+<table class=3D"mktoModule" id=3D"footermd" cellpadding=3D"0" align=3D"cent=
+er" cellspacing=3D"0" style=3D"mso-table-lspace: 0pt !important; mso-table-=
+rspace: 0pt !important; margin:0 auto;width:100%;border-collapse: collapse;=
+border-spacing: 0;" border=3D"0" width=3D"100%">=20
+<tbody>=20
+<tr>=20
+<td class=3D"darkmodebg" bgcolor=3D"#ffffff" valign=3D"top" style=3D"backgr=
+ound-Color:#ffffff;vertical-align: top;">=20
+<table class=3D"inner_table" cellpadding=3D"0" cellspacing=3D"0" align=3D"c=
+enter" style=3D"mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !im=
+portant; margin:0 auto; width:560px;border-collapse: collapse;border-spacin=
+g: 0;" border=3D"0" width=3D"560">=20
+<tbody>=20
+<tr>=20
+<td height=3D"20" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+<tr>=20
+<td align=3D"center">=20
+<table width=3D"80" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" st=
+yle=3D"mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; =
+">=20
+<tbody>=20
+<tr>=20
+<td width=3D"30"><a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zG0DOKNBWzdf2iZz29qPZZVwWe=
+RhfW-LxufixQJY2100Zwb6W5ORavCSZJc-4hWpW2E=3D" target=3D"_blank"
+><img class=3D"light-img" alt=3D"Twitter" src=3D"https://go.vercel.com/rs/0=
+01-LRG-194/images/twitter.png" width=3D"30" height=3D"auto" border=3D"0" st=
+yle=3D"height: auto !important; -ms-interpolation-mode: bicubic !important;=
+ ">=20
+<div class=3D"dark-img" style=3D"display:none; overflow:hidden; float:left;=
+ width:0px; max-height:0px; max-width:0px; line-height:0px; visibility:hidd=
+en;" align=3D"center">=20
+<img alt=3D"Twitter" src=3D"https://go.vercel.com/rs/001-LRG-194/images/twi=
+tter_white.png" width=3D"30" height=3D"auto" border=3D"0" style=3D"height: =
+auto !important; -ms-interpolation-mode: bicubic !important; ">=20
+</div> </a> </td>=20
+<td width=3D"20"></td>=20
+<td width=3D"30"><a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zKqx-d0UAGSAuWn501tHkiv8ZJ=
+Ok21OcFH7G8IIsp81EXhymQ2SUVdSA6hYsIMkxFBE=3D" target=3D"_blank"
+><img class=3D"light-img" alt=3D"GiftHub" src=3D"https://go.vercel.com/rs/0=
+01-LRG-194/images/github.png" width=3D"30" height=3D"auto" border=3D"0" sty=
+le=3D"height: auto !important; -ms-interpolation-mode: bicubic !important; =
+">=20
+<div class=3D"dark-img" style=3D"display:none; overflow:hidden; float:left;=
+ width:0px; max-height:0px; max-width:0px; line-height:0px; visibility:hidd=
+en;" align=3D"center">=20
+<img alt=3D"GiftHub" src=3D"https://go.vercel.com/rs/001-LRG-194/images/git=
+hub_white.png" width=3D"30" height=3D"auto" border=3D"0" style=3D"height: a=
+uto !important; -ms-interpolation-mode: bicubic !important; ">=20
+</div> </a></td>=20
+</tr>=20
+</tbody>=20
+</table></td>=20
+</tr>=20
+<tr>=20
+<td height=3D"10" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+<tr>=20
+<td align=3D"center" style=3D"font-family: 'Inter', sans-serif; color: #8c8=
+c8c; font-size: 14px; line-height: 24px; mso-line-height-rule: exactly; tex=
+t-align: center;">=20
+<div class=3D"mktoText" id=3D"fttxt">=20
+<p><a class=3D"dkmode" href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zBO7kNtKxU0STjaCaZAhCIe7yM=
+Gq2nZqeiIS01QCPfxZw_edcai7RWTmdCwJAYzU2Hw=3D" target=3D"_blank" style=3D"co=
+lor: #8c8c8c; text-decoration: none;"
+>Docs</a> | <a class=3D"dkmode" href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zBiD9NHC8vCxZbDbMbaE2jhtyO=
+C9N301TPO_sxYr2HvL-doLfv5G3KytnJBNX5iMXhY=3D" target=3D"_blank" style=3D"co=
+lor: #8c8c8c; text-decoration: none;"
+>Blog</a> | <a class=3D"dkmode" href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zJUvo944gH2z_MX8TNgFoK2r8D=
+bPDA2fHAGzDVdCR6c2hRFatuIs2ugD_z9xgzPfsyE=3D" target=3D"_blank" style=3D"co=
+lor: #8c8c8c; text-decoration: none;"
+>Contact</a> | <a class=3D"dkmode" href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zFQKiqMdQnb-QybvyzNUiD0-4t=
+EXSxjdf4l5l60y-DpwvSk0IJZezO6YogIrPYCMgaE=3D" target=3D"_blank" style=3D"co=
+lor: #8c8c8c; text-decoration: none;"
+>Careers</a> <br> 440 N Barranca Ave #4133 Covina, CA 91723 <br> Copyright =
+=C2=A9 2023 Vercel Inc. All rights reserved. <br>View our <a class=3D"dkmod=
+e" href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2zCilJJlgVymC90no8Begw8LGym=
+mkOPiZfJC8zp4sVvAFimxYAIFQ6hsWywfUMR8jOig=3D" target=3D"_blank" style=3D"co=
+lor: #8c8c8c;"
+>Privacy Policy.</a><br><em>This email contains important information about=
+ your Vercel account and&nbsp;cannot be unsubscribed from.</em></p>=20
+</div></td>=20
+</tr>=20
+<tr>=20
+<td height=3D"20" style=3D"line-height:1px;font-size:1px;">&nbsp;</td>=20
+</tr>=20
+</tbody>=20
+</table> </td>=20
+</tr>=20
+</tbody>=20
+</table></td>=20
+</tr>=20
+</tbody>=20
+</table> </td>=20
+</tr>=20
+</tbody>=20
+</table> =20
+<a href=3D
+"https://info.vercel.com/MDAxLUxSRy0xOTQAAAGOghx2y46IbzjHk14ygRjxVKnZ_okFEn=
+FyFMKMUA-iNfpbyuUMOrMGekAGNIzvYsVZx7_8wxw=3D"
+></a>
+<img src=3D"https://info.vercel.com/trk?t=3D1&mid=3DMDAxLUxSRy0xOTQAAAGOghx=
+2zALe1X7kMfYjdDnSK57sd8mYUn6Pgna0VfvsDfit0iIBosZLOUc-Pje01X5S3gUxkbLrgPVhJr=
+rNvhheiCvelo3bNsKMCn_ZGwekb2F8pgw" width=3D"1" height=3D"1" style=3D"displa=
+y:none !important;" alt=3D"" />
+</body>
+</html>
+------=_Part_2267416_1201651515.1696027887316--

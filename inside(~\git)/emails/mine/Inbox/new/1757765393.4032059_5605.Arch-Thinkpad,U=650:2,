@@ -1,0 +1,775 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:7412:f813:b0:f9:953d:986c with SMTP id ek19csp1026697rdb;
+        Fri, 22 Dec 2023 10:35:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHiToEjlzAX85Hplcx5my3UlDVScwvxrdc3CNt5gJJWhDGB5MpD3u/l5X9dJ/hLwSsGoUGU
+X-Received: by 2002:a05:6214:8f1:b0:67f:adfa:c47 with SMTP id dr17-20020a05621408f100b0067fadfa0c47mr23220qvb.120.1703270104306;
+        Fri, 22 Dec 2023 10:35:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1703270104; cv=none;
+        d=google.com; s=arc-20160816;
+        b=F3CRHksTxvYuGjVHCxfQOUEUrab2Tz21Z2Qz6fIpXCwQX4Kvq0iZGcrehxyUVtHoIp
+         ia0YKSqXPiN2RDL11F5aWfUjE4wgHASHAgcii1qIL2edT7ICTvh/3mzlZphQlXOA4aPU
+         1gZGwl9sGElTMmxodqhw6ZNSDbOX6SJOPtZTnouH8tq/Zhbvu/qYBBgDpASD2R7KmIB5
+         /6rVz55fPeP3jOEdW/gFu5YzXjKJHDNTtrsYw/r/2n446YLcn5xC04L7B+/WsgV3cdO8
+         KxKY7D9RvlniXcdBbY35XuyMrobt0daZBitgO0Zwc6yovHdvum0tdDIXFrFGAep5m3RJ
+         vHGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:content-transfer-encoding:mime-version
+         :subject:to:reply-to:from:dkim-signature:dkim-signature;
+        bh=5e+0z95/qzaGxp6H7bTi/dlO2Az7DkGj20ai7bxbdo0=;
+        fh=iZtWGcn9pNoQ4VStUxSOe7qMOFLYWLh6K9lsyBW/c+Q=;
+        b=ebzyTVwAv2w89GZ0/K8h3pZ5FB8tahMPMhlPfCl3rl1cP21vTK9Xvz3YUkmshgawtg
+         BAppElUIoSgsDr7nsTYGlEK9RkxlwJoNpxfI3T6vNleIW4UL6eJbvJvV2PzzmDsVBbra
+         Z4nmbyX0DbPC7d0B3svHgS6EFZNKX/2NcdFDDhpTeATTsMzuskFntELlzpInyQLn+C4K
+         nyu4MY7qcAzizqwTjA+GPN+jz/wctju61F97S80cuVbfFRH4ZNkkXgeBdzSkbEusEI4k
+         I3CyoLI5K9zeo8Eq1iS9ZZvVSqI5DTKJZ7D5dnqeArU7JaOJXwiyHWsg2DDyfDyrjN/H
+         aoyg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@trakt.tv header.s=73wahvb3wkbln4e6kbygwqhdxiowvbg3 header.b=ECBnVe40;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=CDUbQMtf;
+       spf=pass (google.com: domain of 0100018c92cf3aee-d9871bbf-8d34-4a74-9248-2f0343ca3e6d-000000@amazonses.com designates 54.240.74.166 as permitted sender) smtp.mailfrom=0100018c92cf3aee-d9871bbf-8d34-4a74-9248-2f0343ca3e6d-000000@amazonses.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=trakt.tv
+Return-Path: <0100018c92cf3aee-d9871bbf-8d34-4a74-9248-2f0343ca3e6d-000000@amazonses.com>
+Received: from a74-166.smtp-out.amazonses.com (a74-166.smtp-out.amazonses.com. [54.240.74.166])
+        by mx.google.com with ESMTPS id y3-20020a0cd983000000b0067adbbdbe31si5004060qvj.237.2023.12.22.10.35.04
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Dec 2023 10:35:04 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0100018c92cf3aee-d9871bbf-8d34-4a74-9248-2f0343ca3e6d-000000@amazonses.com designates 54.240.74.166 as permitted sender) client-ip=54.240.74.166;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@trakt.tv header.s=73wahvb3wkbln4e6kbygwqhdxiowvbg3 header.b=ECBnVe40;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=CDUbQMtf;
+       spf=pass (google.com: domain of 0100018c92cf3aee-d9871bbf-8d34-4a74-9248-2f0343ca3e6d-000000@amazonses.com designates 54.240.74.166 as permitted sender) smtp.mailfrom=0100018c92cf3aee-d9871bbf-8d34-4a74-9248-2f0343ca3e6d-000000@amazonses.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=trakt.tv
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=73wahvb3wkbln4e6kbygwqhdxiowvbg3; d=trakt.tv; t=1703270103;
+	h=From:Reply-To:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date;
+	bh=T7Pqd/+4bkMFO6xLfGCEobb0lQh4tM9heKBsFauIRtA=;
+	b=ECBnVe405IWVp9S5cdDX9G6JR10+EfTXTSQl79oDRoqJJNlqxeEb70ZMUOvJ/tRp
+	9WTZHbpO5k/n42TjWw70lWttAJt93B5q5Sc+yZkntWJP1x3RRD43GbPiRiz8HQZLpsc
+	luP8W/mrsMlBL/aqjTW0Ukun/JrqkcYKItdY97nI=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1703270103;
+	h=From:Reply-To:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:Feedback-ID;
+	bh=T7Pqd/+4bkMFO6xLfGCEobb0lQh4tM9heKBsFauIRtA=;
+	b=CDUbQMtfEY6HY4YS1s6q4PkGniV9WPZFeaniu/irKGnnbRGR5+q/W3BfrK5B8tB3
+	UlUzUEbXz2MsQFhXF/KZzzvg4xT4WoNgNdYqFrnDV/kCc4xKGBtcKTSQl32Qek9AxoL
+	iASEUQbSkqMCHPDw6kzJWKF+O07wMQssEGvQnp1E=
+From: Trakt <support@trakt.tv>
+Reply-To: support@trakt.tv
+To: lets.mine004@gmail.com
+Subject: =?UTF-8?Q?=F0=9F=93=BA__Hey_mine,_you_watched_41_?=
+ =?UTF-8?Q?hours_of_TV_&_movies_in_2023!?=
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Message-ID: <0100018c92cf3aee-d9871bbf-8d34-4a74-9248-2f0343ca3e6d-000000@email.amazonses.com>
+Date: Fri, 22 Dec 2023 18:35:03 +0000
+Feedback-ID: 1.us-east-1.R31YEW9Z0HNn8XPV6NEgxUzsFf9n0vUd+WD66DHOpxg=:AmazonSES
+X-SES-Outgoing: 2023.12.22-54.240.74.166
+X-TUID: SzPRHiwasB+P
+
+<!DOCTYPE html>
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+" />
+    <title>2023 Year In Review</title>
+    <style type=3D"text/css">
+    /* latin */
+    @font-face {
+      font-family: 'Teko';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/teko/v20/LYjNdG7kmE0gfaN9pQlCpVo=
+.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,=
+ U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+212=
+2, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Teko';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/teko/v20/LYjNdG7kmE0gfaN9pQlCpVo=
+.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,=
+ U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+212=
+2, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Teko';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/teko/v20/LYjNdG7kmE0gfaN9pQlCpVo=
+.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,=
+ U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+212=
+2, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'proxima_novalight';src: url('https://walter.trakt.tv/ho=
+tlink-ok/emails/fonts/proximanova-light-webfont.eot');src: url('https://wal=
+ter.trakt.tv/hotlink-ok/emails/fonts/proximanova-light-webfont.eot?#iefix')=
+ format('embedded-opentype'),url('https://walter.trakt.tv/hotlink-ok/emails=
+/fonts/proximanova-light-webfont.woff') format('woff'),url('https://walter.=
+trakt.tv/hotlink-ok/emails/fonts/proximanova-light-webfont.ttf') format('tr=
+uetype');font-weight: normal;font-style: normal;}
+
+    @font-face {
+      font-family: 'proxima_nova_rgregular'; src: url('https://walter.trakt=
+.tv/hotlink-ok/emails/fonts/proximanova-regular-webfont.eot');src: url('htt=
+ps://walter.trakt.tv/hotlink-ok/emails/fonts/proximanova-regular-webfont.eo=
+t?#iefix') format('embedded-opentype'),url('https://walter.trakt.tv/hotlink=
+-ok/emails/fonts/proximanova-regular-webfont.woff') format('woff'),url('htt=
+ps://walter.trakt.tv/hotlink-ok/emails/fonts/proximanova-regular-webfont.tt=
+f') format('truetype');font-weight: normal;font-style: normal;}
+
+    @font-face {
+      font-family: 'proxima_novasemibold';src: url('https://walter.trakt.tv=
+/hotlink-ok/emails/fonts/proximanova-semibold-webfont.eot');src: url('https=
+://walter.trakt.tv/hotlink-ok/emails/fonts/proximanova-semibold-webfont.eot=
+?#iefix') format('embedded-opentype'),url('https://walter.trakt.tv/hotlink-=
+ok/emails/fonts/proximanova-semibold-webfont.woff') format('woff'),url('htt=
+ps://walter.trakt.tv/hotlink-ok/emails/fonts/proximanova-semibold-webfont.t=
+tf') format('truetype');font-weight: normal;font-style: normal;}
+
+    @font-face {
+    =09font-family: 'proxima_nova_rgbold';src: url('https://walter.trakt.tv=
+/hotlink-ok/emails/fonts/proximanova-bold-webfont.eot');src: url('https://w=
+alter.trakt.tv/hotlink-ok/emails/fonts/proximanova-bold-webfont.eot?#iefix'=
+) format('embedded-opentype'),url('https://walter.trakt.tv/hotlink-ok/email=
+s/fonts/proximanova-bold-webfont.woff') format('woff'),url('https://walter.=
+trakt.tv/hotlink-ok/emails/fonts/proximanova-bold-webfont.ttf') format('tru=
+etype');font-weight: normal;font-style: normal;}
+
+    @font-face {
+      font-family: 'proxima_novablack';src: url('https://walter.trakt.tv/ho=
+tlink-ok/emails/fonts/proximanova-black-webfont.eot');src: url('https://wal=
+ter.trakt.tv/hotlink-ok/emails/fonts/proximanova-black-webfont.eot?#iefix')=
+ format('embedded-opentype'),url('https://walter.trakt.tv/hotlink-ok/emails=
+/fonts/proximanova-black-webfont.woff') format('woff'),url('https://walter.=
+trakt.tv/hotlink-ok/emails/fonts/proximanova-black-webfont.ttf') format('tr=
+uetype');font-weight: normal;font-style: normal;}
+    </style>
+    <style type=3D"text/css">
+    .content { width: 600px !important; }
+    .center-text { text-align: center !important; }
+    </style>
+    <style type=3D"text/css">
+    .year-logo {
+      max-width: 80%;
+    }
+    @media only screen and (max-width: 600px) {
+      .content { width: 100% !important; }
+    }
+    @media only screen and (min-width: 601px) {
+      .section-title { font-size: 28px !important; padding-top: 5px; paddin=
+g-bottom: 10px; }
+      /*.stats-wrapper { padding-top: 30px; padding-bottom: 30px; }*/
+      /* .stats-number { font-size: 40px !important; line-height: 30px !imp=
+ortant; }
+      .stats-above { font-size: 20px !important; }
+      .stats-per-month { font-size: 20px !important; } */
+
+      .totals-table { width: 450px !important; }
+      .totals-number { font-size: 44px !important; line-height: 28px !impor=
+tant; }
+      .totals-under { font-size: 18px !important; }
+      /*.header-space { height: 175px; }*/
+
+      .upgrade-title { font-size: 42px !important; line-height: 48px !impor=
+tant; }
+      .upgrade-price { font-size: 65px !important; padding-top: 20px; }
+      .upgrade-per-month { font-size: 16px !important; padding-top: 20px !i=
+mportant; }
+      .upgrade-annual { padding-top: 0px !important; }
+    }
+    </style>
+  </head>
+  <body bgcolor=3D"#ffffff" style=3D"background-color: #fff; margin: 0; pad=
+ding: 0; min-width: 100% !important; width: 100%; height: 100%;">
+
+    <!-- header -->
+    <table width=3D"100%" bgcolor=3D"#222325" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0">
+      <tr>
+        <td bgcolor=3D"#222325" style=3D"background-image: url(https://walt=
+er.trakt.tv/hotlink-ok/emails/images/yir/2023/film-grain.jpg); -webkit-back=
+ground-size: cover; background-size: cover; background-color: #222325; back=
+ground-position: 50% 50%; background-repeat: repeat;" >
+          <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" align=3D"center">
+            <tr><td height=3D"10" style=3D"background-color:rgba(0,0,0,.5)"=
+ align=3D"center"></td></tr>
+            <tr>
+              <td style=3D"background-color:rgba(0,0,0,.5)" align=3D"center=
+">
+                <a href=3D"https://trakt.tv?utm_medium=3Demail&utm_campaign=
+=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dheader_logo"><img height=
+=3D"25" width=3D"auto" src=3D"https://walter.trakt.tv/hotlink-ok/emails/ima=
+ges/logos/wide.png" alt=3D"" border=3D"0" mc:edit=3D"m01"></a>
+              </td>
+            </tr>
+            <tr><td height=3D"10" style=3D"background-color:rgba(0,0,0,.5)"=
+ align=3D"center"></td></tr>
+            <tr>
+              <td>
+                <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" align=3D"center">
+                  <tr><td height=3D"30"></td></tr>
+                  <tr>
+                    <td align=3D"center">
+                      <img class=3D"year-logo" width=3D"400" src=3D"https:/=
+/walter.trakt.tv/hotlink-ok/emails/images/yir/2023/year.png" alt=3D"" borde=
+r=3D"0">
+                    </td>
+                  </tr>
+                  <tr><td height=3D"20"></td></tr>
+                </table>
+              </td>
+            </tr>
+            <tr><td height=3D"20" style=3D"background-color:rgba(50,50,50,.=
+5)" align=3D"center"></td></tr>
+            <tr>
+              <td style=3D"background-color:rgba(50,50,50,.5); font-family:=
+ 'proxima_nova_rgregular', Arial, sans-serif; font-size: 24px; line-height:=
+ 30px; color:#fff; text-wrap: balanced; padding: 0 15px;" align=3D"center" =
+class=3D"section-title">
+                <span style=3D"font-family: 'proxima_nova_rgbold', Arial, s=
+ans-serif;">mine</span>,=20
+              you watched <span style=3D"font-family: 'proxima_nova_rgbold'=
+, Arial, sans-serif;">41 hours</span> of TV and <span style=3D"font-family:=
+ 'proxima_nova_rgbold', Arial, sans-serif;;">0 hours</span> of Movies in <s=
+pan style=3D"font-family: 'proxima_nova_rgbold', Arial, sans-serif;">2023</=
+span>!
+            </td>
+
+            </tr>
+            <tr><td height=3D"20" style=3D"background-color:rgba(50,50,50,.=
+5)" align=3D"center"></td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- intro -->
+    <table width=3D"100%" bgcolor=3D"#ffffff" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0">
+      <tr>
+        <td style=3D"padding-left: 20px; padding-right: 20px;">
+          <table class=3D"content" style=3D"max-width: 600px;" align=3D"cen=
+ter" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+            <tr><td height=3D"40"></td></tr>
+            <tr>
+              <!-- FOR VIPS -->
+              <td style=3D"display: none; text-align: center; font-family: =
+'proxima_nova_rgregular', Helvetica, Arial, sans-serif; font-size: 14px; co=
+lor: #666; line-height: 22px;">
+                <!--<div style=3D"font-family: Arial, Helvetica, Arial, san=
+s-serif; font-size: 18px; color: rgb(38, 38, 38); line-height: 22px;" class=
+=3D"section-title" align=3D"center">Your 2023 Year in Review is ready!</div=
+>-->
+                One of the best parts of tracking all the TV shows & movies=
+ you watch is seeing all the stats around it. Your personalized 2023 year i=
+n review is ready!
+                <br><br>
+                <div style=3D"text-align: center">
+                  <a href=3D"https://trakt.tv/users/miner004/year/2023?utm_=
+medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=
+=3Dbtn_view_yir_1" style=3D"color: #fff; font-size: 14px; text-decoration: =
+none; line-height: 20px; background: #ed1c24; font-family: Arial, sans-seri=
+f; padding: 8px 18px; font-weight: bold; display: inline-block; white-space=
+: nowrap; border-radius: 6px;">SEE MY YEAR IN REVIEW =E2=9E=9F</a>
+                </div>
+              </td>
+
+              <!-- FOR NON VIPS -->
+              <td style=3D"display: ; text-align: center; font-family: 'pro=
+xima_nova_rgregular', Helvetica, Arial, sans-serif; font-size: 14px; color:=
+ #666; line-height: 22px;">
+                <!--<div style=3D"font-family: Arial, Helvetica, Arial, san=
+s-serif; font-size: 18px; color: rgb(38, 38, 38); line-height: 22px;" class=
+=3D"section-title" align=3D"center">Your 2023 Year in Review is ready!</div=
+>-->
+                A fun part of tracking all the TV shows & movies you watch =
+is seeing all the stats around it. <a href=3D"https://trakt.tv/vip?utm_medi=
+um=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dl=
+ink_upgrade_1" style=3D"color: #ed1c24; text-decoration: underline;">Upgrad=
+e to Trakt VIP</a> and unlock access to your personalized 2023 year in revi=
+ew page plus all previous years. You can even watch your 2024 stats evolve =
+in real time too.
+                <br><br>
+                <div style=3D"text-align: center">
+                  <a href=3D"https://trakt.tv/users/miner004/year/2023?utm_=
+medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=
+=3Dbtn_view_yir_1" style=3D"color: #fff; font-size: 14px; text-decoration: =
+none; line-height: 20px; background: #ed1c24; font-family: Arial, sans-seri=
+f; padding: 8px 18px; font-weight: bold; display: inline-block; white-space=
+: nowrap; border-radius: 6px;">SEE MY YEAR IN REVIEW =E2=9E=9F</a>
+                </div>
+              <td>
+            </tr>
+            <tr><td height=3D"40"></td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- stats -->
+    <table width=3D"100%" style=3D"background-image: url(https://walter.tra=
+kt.tv/hotlink-ok/emails/images/yir/2023/film-grain.jpg); -webkit-background=
+-size: cover; background-size: cover; background-color: #222325; background=
+-position: 50% 50%; background-repeat: repeat;" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0">
+      <tr>
+        <td>
+          <table class=3D"totals-table content" style=3D"max-width: 600px;"=
+ align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+            <tr><td height=3D"50"></td></tr>
+            <tr>
+              <td style=3D"text-align: center; font-family: 'proxima_nova_r=
+gregular', Helvetica, Arial, sans-serif; font-size: 14px; color: #666; line=
+-height: 22px;">
+                <div style=3D"text-transform: uppercase; display: inline-bl=
+ock; letter-spacing: 1px; background-color: #fff; text-shadow: none; font-f=
+amily: 'proxima_novasemibold', Helvetica, Arial, sans-serif; font-size: 13p=
+x; text-align: center; margin: 0; padding: 4px 10px; color: #000; border-ra=
+dius: 6px;" align=3D"center">YOUR 2023 TOTALS</div>
+                <br><br>
+                <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" b=
+order=3D"0">
+                  <tr><td height=3D"30"></td></tr>
+                  <tr>
+                    <td valign=3D"middle" width=3D"33%" style=3D"text-align=
+: center; font-family: Teko, 'proxima_nova_rgbold', Helvetica, Arial, sans-=
+serif; font-size: 30px; color: #fff; line-height: 18px;" class=3D"totals-nu=
+mber">
+                      56
+                      <div style=3D"font-size: 15px;color:#CECECE;font-fami=
+ly: Teko, 'proxima_novasemibold', Helvetica, Arial, sans-serif;" class=3D"t=
+otals-under">PLAYS</div>
+                    </td>
+                    <td valign=3D"middle" width=3D"33%" style=3D"text-align=
+: center; font-family: Teko, 'proxima_nova_rgbold', Helvetica, Arial, sans-=
+serif; font-size: 30px; color: #fff; line-height: 18px;" class=3D"totals-nu=
+mber">
+                      41
+                      <div style=3D"font-size: 15px;color:#CECECE;font-fami=
+ly: Teko, 'proxima_novasemibold', Helvetica, Arial, sans-serif;" class=3D"t=
+otals-under">HOURS</div>
+                    </td>
+                    <td valign=3D"middle" width=3D"33%" style=3D"text-align=
+: center; font-family: Teko, 'proxima_nova_rgbold', Helvetica, Arial, sans-=
+serif; font-size: 30px; color: #fff; line-height: 18px;" class=3D"totals-nu=
+mber">
+                      0
+                      <div style=3D"font-size: 15px;color:#CECECE;font-fami=
+ly: Teko, 'proxima_novasemibold', Helvetica, Arial, sans-serif;" class=3D"t=
+otals-under">COLLECTED</div>
+                    </td>
+                  </tr>
+                  <tr><td height=3D"30" colspan=3D"3"></td></tr>
+                  <tr>
+                    <td valign=3D"middle" width=3D"33%" style=3D"text-align=
+: center; font-family: Teko, 'proxima_nova_rgbold', Helvetica, Arial, sans-=
+serif; font-size: 30px; color: #fff; line-height: 18px;" class=3D"totals-nu=
+mber">
+                      0
+                      <div style=3D"font-size: 15px;color:#CECECE;font-fami=
+ly: Teko, 'proxima_novasemibold', Helvetica, Arial, sans-serif;" class=3D"t=
+otals-under">RATINGS</div>
+                    </td>
+                    <td valign=3D"middle" width=3D"33%" style=3D"text-align=
+: center; font-family: Teko, 'proxima_nova_rgbold', Helvetica, Arial, sans-=
+serif; font-size: 30px; color: #fff; line-height: 18px;" class=3D"totals-nu=
+mber">
+                      0
+                      <div style=3D"font-size: 15px;color:#CECECE;font-fami=
+ly: Teko, 'proxima_novasemibold', Helvetica, Arial, sans-serif;" class=3D"t=
+otals-under">COMMENTS</div>
+                    </td>
+                    <td valign=3D"middle" width=3D"33%" style=3D"text-align=
+: center; font-family: Teko, 'proxima_nova_rgbold', Helvetica, Arial, sans-=
+serif; font-size: 30px; color: #fff; line-height: 18px;" class=3D"totals-nu=
+mber">
+                      2
+                      <div style=3D"font-size: 15px;color:#CECECE;font-fami=
+ly: Teko, 'proxima_novasemibold', Helvetica, Arial, sans-serif;" class=3D"t=
+otals-under">LISTS</div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr><td height=3D"40"></td></tr>
+            <tr>
+              <td align=3D"center" colspan=3D"2">
+                <a href=3D"https://trakt.tv/users/miner004/year/2023?utm_me=
+dium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=
+=3Dbtn_view_yir_2" style=3D"color: #fff; font-size: 14px; text-decoration: =
+none; line-height: 20px; background: #ed1c24; font-family: Arial, sans-seri=
+f; padding: 8px 18px; font-weight: bold; display: inline-block; white-space=
+: nowrap; border-radius: 6px;">SEE ALL MY STATS =E2=9E=9F</a>
+              </td>
+            </tr>
+            <tr><td height=3D"50"></td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- upgrade -->
+    <!-- <div style=3D"display: none;">
+      <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" align=3D"center" style=3D"background-image: url(https://walter.trakt.tv/h=
+otlink-ok/emails/images/yir/2023/gradient-red.png?1); background-repeat: re=
+peat-x; background-size: contain;">
+        <tr><td height=3D"70">&nbsp;</td></tr>
+      </table>
+    </div> -->
+
+    <!-- upgrade -->
+    <div style=3D"display: ;">
+      <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" align=3D"center" style=3D"background-image: url(https://walter.trakt.tv/h=
+otlink-ok/emails/images/yir/2023/footer-spidey.jpg?1); background-color: #2=
+22325; background-position: 50% 20%; background-repeat: repeat; background-=
+size: cover;">
+        <tr>
+          <td>
+            <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" align=3D"center">
+              <tr><td height=3D"50"></td></tr>
+              <tr>
+                <td>
+                  <div style=3D"font-family: 'proxima_nova_rgbold', Helveti=
+ca, Arial, sans-serif; font-size: 32px; color: white; line-height: 38px;" c=
+lass=3D"upgrade-title" align=3D"center">
+                    Upgrade to<br>VIP Today
+                  </div>
+                  <table width=3D"100%" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" align=3D"center">
+                      <tr><td height=3D"25"></td></tr>
+                      <tr>
+                        <td valign=3D"middle" width=3D"100%" style=3D"text-=
+align: center; font-family: 'proxima_nova_rgbold', Helvetica, Arial, sans-s=
+erif; font-size: 36px; color: white; line-height: 18px;" class=3D"upgrade-p=
+rice">
+                          $30
+                          <div style=3D"font-size: 13px;font-family: Teko, =
+Arial, sans-serif; font-weight: normal;padding-top: 5px; color: #ccc;" clas=
+s=3D"upgrade-per-month">PER YEAR</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align=3D"center">
+                          <br><br>
+                          <a href=3D"https://trakt.tv/vip?utm_medium=3Demai=
+l&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dbtn_upgrad=
+e_2" style=3D"color: #fff; font-size: 14px; text-decoration: none; line-hei=
+ght: 20px; background: #ed1c24; font-family: Arial, sans-serif; padding: 8p=
+x 18px; font-weight: bold; display: inline-block; white-space: nowrap; bord=
+er-radius: 6px;">UPGRADE NOW =E2=9E=9F</a>
+                        </td>
+                      </tr>
+                    </table>
+                </td>
+              </tr>
+              <tr><td height=3D"50"></td></tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!--  we love stats -->
+    <div style=3D"display: ;">
+      <table width=3D"100%" bgcolor=3D"#f8f8f8" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0">
+        <tr>
+          <td style=3D"padding-left: 20px; padding-right: 20px;">
+            <table class=3D"content" style=3D"max-width: 600px;" align=3D"c=
+enter" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+              <tr><td height=3D"40"></td></tr>
+              <tr>
+                <td style=3D"text-align: center; font-family: 'proxima_nova=
+_rgregular', Helvetica, Arial, sans-serif; font-size: 14px; color: #666; li=
+ne-height: 22px;">
+                  <div style=3D"font-family: 'proxima_nova_rgbold', Helveti=
+ca, Arial, sans-serif; font-size: 18px; color: rgb(38, 38, 38); line-height=
+: 22px; font-weight: bold;" class=3D"section-title" align=3D"center">We =E2=
+=9D=A4=EF=B8=8F stats!</div>
+                  <br>
+                  Your <a href=3D"https://trakt.tv/users/miner004/year/2023=
+?utm_medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_co=
+ntent=3Dbtn_view_yir_3" style=3D"color: #ed1c24; text-decoration: underline=
+;">year in review</a> provides a bunch of great stats including totals for =
+the year, first and last play of the year, hourly breakdowns, play breakdow=
+ns, plays per week, plays per month, plays per day of the week, most plays,=
+ genres, TV networks, movie studios, country maps, and highest rated. All t=
+hese stats for your TV shows & movies!
+                  <br><br>
+                  <a href=3D"https://trakt.tv/users/sean/year/2023?utm_medi=
+um=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Db=
+tn_seab_yir" style=3D"color: #fff; font-size: 14px; text-decoration: none; =
+line-height: 16px; background: #ed1c24; font-family: Arial, sans-serif; fon=
+t-weight: bold; display: inline-block; text-align: left; border-radius: 29p=
+x; padding: 5px;margin:4px 7px;"><img width=3D"40" height=3D"40" src=3D"htt=
+ps://walter.trakt.tv/hotlink-ok/emails/images/yir/2023/sean.jpg" alt=3D"" b=
+order=3D"0" align=3D"left" style=3D"border-radius: 50%;"><div style=3D"padd=
+ing: 2px 15px 2px 7px; white-space: nowrap;float: left;">Sean's<br>Year in =
+Review</div></a>
+                  <a href=3D"https://trakt.tv/users/justin/year/2023?utm_me=
+dium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=
+=3Dbtn_justin_yir" style=3D"color: #fff; font-size: 14px; text-decoration: =
+none; line-height: 16px; background: #ed1c24; font-family: Arial, sans-seri=
+f; font-weight: bold; display: inline-block; text-align: left; border-radiu=
+s: 29px; padding: 5px;margin:4px 7px;"><img width=3D"40" height=3D"40" src=
+=3D"https://walter.trakt.tv/hotlink-ok/emails/images/yir/2023/justin.jpg?2"=
+ alt=3D"" border=3D"0" align=3D"left" style=3D"border-radius: 50%;"><div st=
+yle=3D"padding: 2px 15px 2px 7px; white-space: nowrap;float: left;">Justin'=
+s<br>Year in Review</div></a>
+                  <br><br>
+                  In addition to that, VIP support helps maintain and impro=
+ve Trakt by funding a small team dedicated to its development.
+                  This team is constantly working on new features and impro=
+vements to enhance the Trakt experience for all users.
+                  <br><br>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <table width=3D"100%" bgcolor=3D"#f8f8f8" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0">
+      <tr>
+        <td style=3D"padding-left: 20px; padding-right: 20px;">
+          <table class=3D"content" style=3D"max-width: 600px;" align=3D"cen=
+ter" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+            <tr><td height=3D"20"></td></tr>
+            <tr>
+              <td style=3D"text-align: center; font-family: 'proxima_nova_r=
+gregular', Helvetica, Arial, sans-serif; font-size: 14px; color: #666; line=
+-height: 22px;">
+                <div style=3D"font-family: 'proxima_nova_rgbold', Helvetica=
+, Arial, sans-serif; font-size: 18px; color: rgb(38, 38, 38); font-weight: =
+bold;" class=3D"section-title" align=3D"center">Looking back on 2023.</div>
+                <br>
+                We publicly launched our <a href=3D"https://trakt.tv/apps#t=
+rakt-android?utm_medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3D=
+Trakt&utm_content=3Dbtn_android_1" style=3D"color: #ed1c24; text-decoration=
+: underline;">official Android app</a> last May =F0=9F=99=8C, added <a href=
+=3D"https://trakt.tv/b/backups?utm_medium=3Demail&utm_campaign=3Dtrakt_yir_=
+2023&utm_source=3DTrakt&utm_content=3Dbtn_blog_backups" style=3D"color: #ed=
+1c24; text-decoration: underline;">automatic backups</a> =F0=9F=92=BE, adde=
+d episode finale indicators , expanded <a href=3D"https://trakt.tv/b/watchn=
+ow?utm_medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_=
+content=3Dbtn_blog_watchnow" style=3D"color: #ed1c24; text-decoration: unde=
+rline;">watch now streamling links</a> =F0=9F=93=BA to 140 countries, added=
+ Mastadon sharing, and grealy improved our backend infrastructure.
+                <br><br>
+                <a href=3D"https://trakt.tv/b/notes?utm_medium=3Demail&utm_=
+campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dbtn_blog_notes" =
+style=3D"color: #ed1c24; text-decoration: underline;">Personal notes</a> =
+=F0=9F=93=93 got huge upgrades that allow you to add private notes to any m=
+edia item <em>(show, season, episode, movie, person)</em> and your activiti=
+es <em>(history, collection, ratings)</em>.
+                <br/>
+                <br/>
+                We wish you all happy holidays and have a bunch of epic stu=
+ff planned for 2024! <b>Current VIPs already have a sneak peak of our next =
+expiriment =F0=9F=A4=A9</b>
+                <br><br><br><br>
+                <img style=3D"max-width: 80%; width: 350px; box-shadow: 0px=
+ 0px 10px 5px rgba(0, 0, 0, 0.3); transform: rotate(-5deg);" src=3D"https:/=
+/walter.trakt.tv/hotlink-ok/emails/images/yir/2023/team.jpg" alt=3D"" borde=
+r=3D"0" align=3D"middle">
+                <br><br>
+                <b><em>The Trakt Team</em></b>
+                <br/>
+                <em>Justin &bull; Sean &bull; Tyson &bull; Heloisa &bull; K=
+ristin</em>
+              <td>
+            </tr>
+            <tr><td height=3D"50"></td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+
+    <!-- upgrade -->
+    <div style=3D"display: ;">
+      <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" align=3D"center" style=3D"background-image: url(https://walter.trakt.tv/h=
+otlink-ok/emails/images/yir/2023/footer-last-of-us.jpg?1); background-color=
+: #222325; background-position: 50% 20%; background-repeat: repeat; backgro=
+und-size: cover;">
+        <tr>
+          <td>
+            <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" align=3D"center">
+              <tr><td height=3D"50"></td></tr>
+              <tr>
+                <td>
+                  <div style=3D"font-family: 'proxima_nova_rgbold', Helveti=
+ca, Arial, sans-serif; font-size: 32px; color: white; line-height: 38px;" c=
+lass=3D"upgrade-title" align=3D"center">
+                    Upgrade to<br>VIP Today
+                  </div>
+                  <table width=3D"100%" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" align=3D"center">
+                      <tr><td height=3D"25"></td></tr>
+                      <tr>
+                        <td valign=3D"middle" width=3D"100%" style=3D"text-=
+align: center; font-family: 'proxima_nova_rgbold', Helvetica, Arial, sans-s=
+erif; font-size: 36px; color: white; line-height: 18px;" class=3D"upgrade-p=
+rice">
+                          $30
+                          <div style=3D"font-size: 13px;font-family: Teko, =
+Arial, sans-serif; font-weight: normal;padding-top: 5px; color: #ccc;" clas=
+s=3D"upgrade-per-month">PER YEAR</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align=3D"center">
+                          <br><br>
+                          <a href=3D"https://trakt.tv/vip?utm_medium=3Demai=
+l&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dbtn_upgrad=
+e_3" style=3D"color: #fff; font-size: 14px; text-decoration: none; line-hei=
+ght: 20px; background: #ed1c24; font-family: Arial, sans-serif; padding: 8p=
+x 18px; font-weight: bold; display: inline-block; white-space: nowrap; bord=
+er-radius: 6px;">UPGRADE NOW =E2=9E=9F</a>
+                        </td>
+                      </tr>
+                    </table>
+                </td>
+              </tr>
+              <tr><td height=3D"50"></td></tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <table width=3D"100%" bgcolor=3D"#111111" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0">
+  <tr>
+    <td>
+      <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" align=3D"center">
+        <tr><td height=3D"15"></td></tr>
+        <tr>
+          <td>
+            <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=
+=3D"center" style=3D"border-collapse:collapse; mso-table-lspace:0pt; mso-ta=
+ble-rspace:0pt;" class=3D"">
+              <tbody>
+              <tr>
+                <td style=3D"text-align: center; font-family: Helvetica, Ar=
+ial, sans-serif; font-size: 14px; color: rgb(255, 255, 255); line-height: 2=
+1px; vertical-align: middle;"mc:edit=3D"97">
+                <!--[if !mso]><!--><span style=3D"font-family: 'proxima_nov=
+a_rgregular', Helvetica;"><!--<![endif]--><a href=3D"https://trakt.tv?utm_m=
+edium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=
+=3Dfooter_website" style=3D"text-decoration: none; color: rgb(255, 255, 255=
+);"><img src=3D"https://walter.trakt.tv/hotlink-ok/emails/images/logos/mark=
+-white.png" width=3D"16" height=3D"16" style=3D"width: 16px; height: 16px; =
+" alt=3D"Website" border=3D"0"><!--[if !mso]><!--></a></span><!--<![endif]-=
+->
+                </td>
+                <td width=3D"10"></td>
+                <td style=3D"text-align: center; font-family: Helvetica, Ar=
+ial, sans-serif; font-size: 14px; color: rgb(255, 255, 255); line-height: 2=
+1px; vertical-align: middle;"mc:edit=3D"97">
+                <!--[if !mso]><!--><span style=3D"font-family: 'proxima_nov=
+a_rgregular', Helvetica;"><!--<![endif]--><a href=3D"https://blog.trakt.tv?=
+utm_medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_con=
+tent=3Dfooter_blog" style=3D"text-decoration: none; color: rgb(255, 255, 25=
+5);"><img src=3D"https://walter.trakt.tv/hotlink-ok/emails/images/social/bl=
+og.png" width=3D"16" height=3D"16" style=3D"width: 16px; height: 16px; " al=
+t=3D"Blog" border=3D"0"><!--[if !mso]><!--></a></span><!--<![endif]-->
+                </td>
+                <td width=3D"10"></td>
+                <td style=3D"text-align: center; font-family: Helvetica, Ar=
+ial, sans-serif; font-size: 14px; color: rgb(255, 255, 255); line-height: 2=
+1px; vertical-align: middle;"mc:edit=3D"97">
+                <!--[if !mso]><!--><span style=3D"font-family: 'proxima_nov=
+a_rgregular', Helvetica;"><!--<![endif]--><a href=3D"https://twitter.com/tr=
+akt" style=3D"text-decoration: none; color: rgb(255, 255, 255);"><img src=
+=3D"https://walter.trakt.tv/hotlink-ok/emails/images/social/x.png" width=3D=
+"16" height=3D"16" style=3D"width: 16px; height: 16px; " alt=3D"Twitter" bo=
+rder=3D"0"><!--[if !mso]><!--></a></span><!--<![endif]-->
+                </td>
+                <td width=3D"10"></td>
+                <td style=3D"text-align: center; font-family: Helvetica, Ar=
+ial, sans-serif; font-size: 14px; color: rgb(255, 255, 255); line-height: 2=
+1px; vertical-align: middle;"mc:edit=3D"97">
+                <!--[if !mso]><!--><span style=3D"font-family: 'proxima_nov=
+a_rgregular', Helvetica;"><!--<![endif]--><a href=3D"https://ruby.social/@t=
+rakt" style=3D"text-decoration: none; color: rgb(255, 255, 255);"><img src=
+=3D"https://walter.trakt.tv/hotlink-ok/emails/images/social/mastodon.png" w=
+idth=3D"16" height=3D"16" style=3D"width: 16px; height: 16px; " alt=3D"Mast=
+odon" border=3D"0"><!--[if !mso]><!--></a></span><!--<![endif]-->
+                </td>
+              </tr>
+            </tbody></table>
+          </td>
+        </tr>
+        <tr class=3D"footer-download-apps"><td height=3D"10"></td></tr>
+        <tr class=3D"footer-download-apps"><td align=3D"center">
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"=
+center">
+            <tr>
+              <td style=3D"text-align: center;"><a href=3D"https://trakt.tv=
+/a/trakt-android?utm_medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_sourc=
+e=3DTrakt&utm_content=3Dfooter_android"><img src=3D"https://walter.trakt.tv=
+/hotlink-ok/emails/images/apps/android/google-play.png?2" alt=3D"" border=
+=3D"0" align=3D"middle" height=3D"40"></td>
+                <td width=3D"10"></td>
+              <td><a href=3D"https://trakt.tv/a/trakt-ios?utm_medium=3Demai=
+l&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dfooter_ios=
+"><img src=3D"https://walter.trakt.tv/hotlink-ok/emails/images/apps/iphone/=
+app-store.png?2" alt=3D"" border=3D"0" align=3D"middle" height=3D"40"></a><=
+/td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td height=3D"15"></td></tr>
+        <tr>
+          <td style=3D"color: #888; font-size: 11px; font-family: 'proxima_=
+nova_rgregular', Helvetica, Arial, sans-serif;padding-left: 20px; padding-r=
+ight: 20px;" align=3D"center">
+            You received this email because you're a member of <a href=3D"h=
+ttps://trakt.tv?utm_medium=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=
+=3DTrakt&utm_content=3Dfooter_website" style=3D"color: #888;">Trakt</a>
+            <br>
+            <a href=3D"https://trakt.tv/settings/notifications?utm_medium=
+=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dfoo=
+ter_notifications" style=3D"color: #888;">Manage your notifications</a>
+            <span class=3D"unsubscribe-wrapper">
+              &mdash;
+              <a href=3D"https://trakt.tv/unsubscribe?u=3DtiFzAmEWjnD5MDCNv=
+Up/Zielf5VARpo9DkMwiFg1JcgbqVoLuWPe0ABWj/jBxbxNz5K/tKhrScAhJCwz7Bn77BYAw88J=
+FgyF5U4o9o35Hygr--NnAZJM32xN9IzYEG--sKGqC1TwvjTRHTfDhnR5oA=3D=3D&utm_medium=
+=3Demail&utm_campaign=3Dtrakt_yir_2023&utm_source=3DTrakt&utm_content=3Dfoo=
+ter_unsubscribe" style=3D"color: #888;">Unsubscribe</a>
+            </span>
+          </td>
+        </tr>
+        <tr><td height=3D"15"></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+  </body>
+</html>

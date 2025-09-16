@@ -1,0 +1,707 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:7412:d515:b0:d4:637f:ce21 with SMTP id da21csp31637rdb;
+        Mon, 30 Oct 2023 22:06:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHT8XaK3CX60EabYbU6zbZWWtEtI4mUE6Rw/TFeog9Pow01qU9NmIFhnw1M3F6bUHLoWWjP
+X-Received: by 2002:a05:620a:9007:b0:774:1ac2:79be with SMTP id rk7-20020a05620a900700b007741ac279bemr10348106qkn.53.1698728763482;
+        Mon, 30 Oct 2023 22:06:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1698728763; cv=none;
+        d=google.com; s=arc-20160816;
+        b=NAbUraPF0l8aFO0QVXAVxeyckFc6XNnkVfGVuWvwdxwe2Ep78Rr6hjKSmTJalO5fpK
+         KzQdIZ3Cn4jHUQP6vCt3YhN5jlpxDVa3nO0tDxURAol0XOTVoaP8dvN3RS+Be/YyRXr/
+         RPFjF6LOwz56YvdI0suYEPWMj0tkm+1J7//Qqh0xQhr2AUtPVDfc4umxrhLuBvWQGBo2
+         9XjBrjExXPYYisqsauySr3QbG4W12WZ16NmQQVHLrecMDISSsL6OOxQx3FdMCos2jgHI
+         vYKMCMuEW4rHVaC/OQbyTtwNH3aX2pojgK1N3wq6dvddWwynHmQSC++qI73BOsCJfVxm
+         BJgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:mime-version:date:message-id:subject:reply-to:to:from
+         :list-id:dkim-signature:dkim-signature;
+        bh=YAPitteObP9ow6HYGbaW1u8NjFHJxjdwD35bvl9x/N0=;
+        fh=iZtWGcn9pNoQ4VStUxSOe7qMOFLYWLh6K9lsyBW/c+Q=;
+        b=uw1Rsae59Nf4vthM+M2BEOpBktIqIak8sC9nMDaJ7PVVyqYGq1BhbNFdD8blWWv2gS
+         qnBOk1ufVVdeANA1eJhC//q1f9YudFsEZHjNhehsy7EFdrr+lwEn9mOr1YejQyRSN4gN
+         UC7ip7mCL9DLIfeASr1cOHCKDDeW01Da1FYSUlfvbRy4GN/YDH+JK+Ssf/80JnNEy0ng
+         +MozKrsNcwxniE7LcMaXncz41JlFAJP9qmjAWi5WGtiajcb7foZqXFwugI1Q6QHmBA2e
+         sBDDHxuT1+xs69w9QUpZ4E/7KMBjXt5M97z7KeGMWsaUO5nInzrG/mr2A+sz5J+1N1mK
+         jxJw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@asana.com header.s=2ymesnr4lju6qlujkilkjit3fhecdbjt header.b=IACYc76O;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=B+1wteWx;
+       spf=pass (google.com: domain of 0100018b841fde17-03eaf39e-bc3c-46de-ae9a-ba99f4f882b8-000000@sesbounces.asana.com designates 54.240.65.107 as permitted sender) smtp.mailfrom=0100018b841fde17-03eaf39e-bc3c-46de-ae9a-ba99f4f882b8-000000@sesbounces.asana.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=asana.com
+Return-Path: <0100018b841fde17-03eaf39e-bc3c-46de-ae9a-ba99f4f882b8-000000@sesbounces.asana.com>
+Received: from a65-107.smtp-out.amazonses.com (a65-107.smtp-out.amazonses.com. [54.240.65.107])
+        by mx.google.com with ESMTPS id dc7-20020a05620a520700b0076daa46b2a0si418249qkb.87.2023.10.30.22.06.03
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Oct 2023 22:06:03 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 0100018b841fde17-03eaf39e-bc3c-46de-ae9a-ba99f4f882b8-000000@sesbounces.asana.com designates 54.240.65.107 as permitted sender) client-ip=54.240.65.107;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@asana.com header.s=2ymesnr4lju6qlujkilkjit3fhecdbjt header.b=IACYc76O;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=B+1wteWx;
+       spf=pass (google.com: domain of 0100018b841fde17-03eaf39e-bc3c-46de-ae9a-ba99f4f882b8-000000@sesbounces.asana.com designates 54.240.65.107 as permitted sender) smtp.mailfrom=0100018b841fde17-03eaf39e-bc3c-46de-ae9a-ba99f4f882b8-000000@sesbounces.asana.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=asana.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=2ymesnr4lju6qlujkilkjit3fhecdbjt; d=asana.com; t=1698728763;
+	h=Content-Type:List-ID:From:To:Reply-To:Subject:Message-ID:Date:MIME-Version;
+	bh=605JlVZBEJJsZi6Ii7E5psKji0agZnA+gR5vYAwY0BQ=;
+	b=IACYc76O99Khje1sRwk8lEIPQKjCVGrpjz/1Dhqhnimj8PV7vOPSYjE3VJYVkc7w
+	04hQiIgfGT9zxt6wsLhJu/8pZp4YSfgGeXU9BjfkoebAAKsUEmKBQ02c+CCvB6Sur1q
+	xiDA+M9fqGC0Janler+PYsWmSMGmDIBpQD2tOCIE4AWJkNC22iCDfrwoULShyVfJW1/
+	jz+SRw1z1WunNGIWkeydzziImMXCrCfXUCH8ztHKWk+Q4YFE7zB0QYyfeGYRXg+PauZ
+	Kb+SF4Wc0AJDLeuyzMh+/ACYFpYGp7CgHYhS13KXGrjKsCW60QsG8iiisogikheB7AY
+	Bey3jq4TKQ==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1698728763;
+	h=Content-Type:List-ID:From:To:Reply-To:Subject:Message-ID:Date:MIME-Version:Feedback-ID;
+	bh=605JlVZBEJJsZi6Ii7E5psKji0agZnA+gR5vYAwY0BQ=;
+	b=B+1wteWxEYHWBsS+4gLiWgHHO5lTNx1Uw6ObFlCu+r+tzHeV4QYizu7Vau1Ssr5Z
+	oPN5yBp0Y3+EYIV78KRuKT2vtBSQK3weaAsLYBGkipMQsvbrcOw6okrudHxyz8nL5qV
+	ta95nQvYXhmTcFv9iyN710963GlIhrY7B/ZnMq7w=
+Content-Type: multipart/alternative;
+ boundary="--_NmP-d8b54970fe5c2d88-Part_1"
+List-ID: mail.asana.com
+X-Auto-Response-Suppress: All
+X-Email-Type: SummaryEmail
+From: Asana <no-reply@asana.com>
+To: lets.mine004@gmail.com
+Reply-To: no-reply@asana.com
+Subject: Tuesday - tasks due soon: 7 - My workspace
+Message-ID: <0100018b841fde17-03eaf39e-bc3c-46de-ae9a-ba99f4f882b8-000000@email.amazonses.com>
+Date: Tue, 31 Oct 2023 05:06:02 +0000
+MIME-Version: 1.0
+Feedback-ID: 1.us-east-1.DSrpcdAvj7Cjw8hv7hMePKvuuW85vuSguprvjdQMoAg=:AmazonSES
+X-SES-Outgoing: 2023.10.31-54.240.65.107
+X-TUID: ZTi9M3IqfGpn
+
+----_NmP-d8b54970fe5c2d88-Part_1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+This is your daily Asana update for My workspace.
+
+You can click this link =
+to see your tasks: https://app.asana.com/
+
+Tasks due soon
+  * Draft project brief <https://app.asana.com/0/1205815458985398/120581546=
+1790022>
+  * Schedule kickoff meeting <https://app.asana.=
+com/0/1205815458985398/1205815461790024>
+  * 1=EF=B8=8F=E2=83=A3 First: Get=
+ started using My tasks <https://app.asana.com/0/1205815594871029/120581545=
+8985386>
+  * 2=EF=B8=8F=E2=83=A3 Second: Find the layout that's right for =
+you <https://app.asana.com/0/1205815594871029/1205815458985388>
+  * 3=EF=B8=8F=E2=83=A3 Third: Get organized with sections <https://app.=
+asana.com/0/1205815594871029/1205815458985390>
+
+----_NmP-d8b54970fe5c2d88-Part_1
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns=3D"http://www.w3.org/1999/xhtml"><head><meta =
+content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Content-Type"/><meta =
+name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0"/><style type=3D"text/css">
+        .email-content{
+           =20
+            width: 100% !important;
+        }
+        .=
+EmailFooter-text--undecorated a {
+            color: #6d6e6f !important;
+            text-decoration: none !important;
+        }
+       =20
+.EmailTaskRow-hoverableColumn:hover {
+    background-color: rgba(55, 23, 23=
+, 0.03);
+}
+
+@media only screen and (max-device-width: 480px) {
+    .EmailTaskRow-hideableColumn {
+        display: none;
+    }
+}
+       =20
+    </style><div style=3D"display:none;font-size:0;max-height:0;=
+line-height:0;padding:0;mso-hide:all"><script type=3D"application/ld+json" =
+data-scope=3D"gmail-addon">{"@context":"http:\u002F\u002Fschema.org",=
+"@type":"EmailMessage","metadata_version":1,"task_ids":[1205815461790022,=
+1205815461790024,1205815458985386,1205815458985388,1205815458985390,=
+1205815458985392,1205815458985394]}</script></div></head><body =
+style=3D"padding:0 8px"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"mso-table-lspace:0;mso-table-rspace:0;border-collapse:separate;bor=
+der-spacing:0;table-layout:fixed;width:100%"><tr><td =
+style=3D"font-size:0;line-height:1px;height:1px"><img src=3D"https://app.=
+asana.com/-/open?se=3D%7B%22email_creation_time%22%3A1698728762803%2C%22app=
+_name%22%3A%22email%22%2C%22non_user_action_event%22%3Atrue%2C%22name%22%3A=
+%22EmailOpened%22%2C%22action%22%3A%22EmailOpened%22%2C%22sub_action%22%3A%=
+22SummaryEmail%22%2C%22location%22%3A%22EmailNotificationsBackend%22%2C%22l=
+una2%22%3Atrue%2C%22domain%22%3A1205815594871015%2C%22domain_user%22%3A1205=
+815594871025%2C%22user%22%3A1205815594871005%2C%22is_amp_email%22%3Afalse%2=
+C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1b7b72753%2=
+2%7D&amp;hash=3Db45242556477710319451490c4b2a20ceb3f36a152f52f4ef0bfd3b1571=
+5a178" alt=3D"" height=3D"1" width=3D"1"/><span style=3D"display:none"><spa=
+n>Hi idc, here&#x27;s your daily update of Asana tasks: Draft project brief=
+, Schedule kickoff meeting, 1=EF=B8=8F=E2=83=A3 First: Get started using My=
+ tasks=E2=80=A6</span> </span></td></tr><tr><td style=3D"text-align:center"=
+><table class=3D"email-content" style=3D"mso-table-lspace:0;mso-table-rspac=
+e:0;border-collapse:separate;border-spacing:0;margin-bottom:32px;margin-lef=
+t:auto;margin-right:auto;margin-top:8px;table-layout:fixed;text-align:left;=
+width:100%"><tr><td><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td><span style=3D"font-size:20px;font-wei=
+ght:400;line-height:26px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Hi idc, </span></td></tr><tr><td>=
+<span style=3D"font-size:20px;font-weight:600;line-height:26px;color:#1e1f2=
+1;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, =
+Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif">Tuesday -=
+  tasks assigned to you</span></td></tr><tr><td style=3D"line-height:16px;m=
+ax-width:0;min-width:0;height:16px;width:0;font-size:16px">=C2=A0</td></tr>=
+<tr><td><table cellPadding=3D"0" cellSpacing=3D"0" style=3D"table-layout:fi=
+xed;border-collapse:separate;border-spacing:0"><tbody><tr><td =
+style=3D"background-color:#4573d2;border-radius:4px"><a href=3D"https://app=
+.asana.com/app/asana/-/log?dest=3Dhttps%3A%2F%2Fapp.asana.=
+com%2F0%2F1205815594871029%2F1205815594871029&amp;se=3D%7B%22name%22%3A%22A=
+sanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%3A%22Go=
+ToAsana%22%2C%22location%22%3A%22SummaryEmail%22%2C%22luna2%22%3Atrue%2C%22=
+domain%22%3A1205815594871015%2C%22domain_user%22%3A1205815594871025%2C%22us=
+er%22%3A1205815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_actio=
+n_event%22%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb=
+-89e3-a2b1b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3De36d4ad3=
+c077802899ae3e7a1496147314418e6fb066bf31a4f373f3b91249e1" target=3D"_blank"=
+ style=3D"text-decoration:none;border-radius:4px;padding:8px =
+16px;border:1px solid #4573d2;display:inline-block"><span =
+style=3D"font-size:16px;font-weight:600;line-height:24px;color:#ffffff;font=
+-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, =
+&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif">View in =
+Asana</span></a></td></tr></tbody></table></td></tr><tr><td =
+style=3D"line-height:32px;max-width:0;min-width:0;height:32px;width:0;font-=
+size:32px">=C2=A0</td></tr><tr><td colSpan=3D"1" style=3D"border-bottom:1px=
+ solid #edeae9"></td></tr><tr><td style=3D"line-height:32px;max-width:0;min=
+-width:0;height:32px;width:0;font-size:32px">=C2=A0</td></tr></tbody></tabl=
+e><table cellPadding=3D"0" cellSpacing=3D"0" style=3D"width:100%;min-width:=
+100%;table-layout:fixed;border-collapse:separate;border-spacing:0"><tbody><=
+tr><td><table cellPadding=3D"0" cellSpacing=3D"0" style=3D"width:100%;min-w=
+idth:100%;table-layout:fixed;border-collapse:separate;border-spacing:0"><tb=
+ody><tr><td><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"table-layout:fixed;border-collapse:separate;border-spacing:0"><tbo=
+dy><tr><td></td><td><a href=3D"https://app.asana.com/app/asana/-/log?=
+dest=3Dhttps%3A%2F%2Fapp.asana.com%2F-%2Fmy_tasks&amp;se=3D%7B%22name%22%3A=
+%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%3A%=
+22MoreTasks%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3=
+A%22TasksDueSection%22%2C%22luna2%22%3Atrue%2C%22domain%22%3A12058155948710=
+15%2C%22domain_user%22%3A1205815594871025%2C%22user%22%3A1205815594871005%2=
+C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22%3Afalse%2C%22em=
+ail_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1b7b72753%22%2C%2=
+2app_name%22%3A%22email%22%7D&amp;hash=3D643f0529dd27d669046cf1206a26cb757b=
+8d384127a8d9cb53e17ce4faa97547" target=3D"_blank" style=3D"text-decoration:=
+none"><span style=3D"font-size:16px;font-weight:400;line-height:24px;color:=
+#1e1f21;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;=
+, Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif">Due =
+soon</span></a></td></tr></tbody></table></td></tr><tr><td =
+style=3D"line-height:8px;max-width:0;min-width:0;height:8px;width:0;font-si=
+ze:8px">=C2=A0</td></tr><tr><td><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;border-color:#edeae9;border-radius:4px;border-style:so=
+lid;border-width:1px"><tbody><tr><td class=3D"EmailTaskRow-hoverableColumn"=
+ style=3D"width:100%"><a href=3D"https://app.asana.com/app/asana/-/log_view=
+?dest=3Dhttps%3A%2F%2Fapp.asana.com%2F0%2F1205815458985398%2F12058154617900=
+22%2Ff&amp;se=3D%7B%22name%22%3A%22AsanaLoaded%22%2C%22action%22%3A%22Asana=
+Loaded%22%2C%22sub_action%22%3A%22Task%22%2C%22location%22%3A%22SummaryEmai=
+l%22%2C%22sub_location%22%3A%22TasksDueSection%22%2C%22task%22%3A1205815461=
+790022%2C%22luna2%22%3Atrue%2C%22num_tasks_shown_in_section%22%3A7%2C%22dom=
+ain%22%3A1205815594871015%2C%22domain_user%22%3A1205815594871025%2C%22task_=
+rank%22%3A1%2C%22user%22%3A1205815594871005%2C%22from_amp_email%22%3Afalse%=
+2C%22non_user_action_event%22%3Afalse%2C%22email_uuid%22%3A%221698728762647=
+-2c41d3c4-ff57-4efb-89e3-a2b1b7b72753%22%2C%22app_name%22%3A%22email%22%7D&=
+amp;hash=3Dddb3d2c3f6058f7fc821a23cc74b098d112b6645014df78efb2e1b392f02af7b=
+" target=3D"_blank" style=3D"text-decoration:none"><table cellPadding=3D"0"=
+ cellSpacing=3D"0" style=3D"width:100%;min-width:100%;table-layout:fixed;bo=
+rder-collapse:separate;border-spacing:0"><tbody><tr><td =
+style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;width:8px;f=
+ont-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:auto;min-wi=
+dth:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr><tr><td style=3D"max-width:8px;min-width:8px;=
+width:8px">=C2=A0</td><td style=3D"width:100%"><table cellPadding=3D"0" =
+cellSpacing=3D"0" style=3D"width:100%;min-width:100%;table-layout:fixed;bor=
+der-collapse:separate;border-spacing:0"><tbody><tr><td =
+style=3D"height:24px;width:16px;vertical-align:middle"><img =
+src=3D"https://d3ki9tyy5l5ruj.cloudfront.net/obj/17ebaf90443cc42469dfeeaf11=
+302fa63f0a3386/checkmark-icon-32x32.png" style=3D"border:none;display:block=
+;outline:none;text-decoration:none;text-align:center" height=3D"16" =
+width=3D"16"/></td><td style=3D"max-width:8px;min-width:8px;width:8px">=
+=C2=A0</td><td style=3D"overflow:hidden;width:100%;text-overflow:ellipsis;v=
+ertical-align:middle;white-space:nowrap"><a href=3D"https://app.asana.=
+com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp.asana.=
+com%2F0%2F1205815458985398%2F1205815461790022%2Ff&amp;se=3D%7B%22name%22%3A=
+%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%3A%=
+22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%22T=
+asksDueSection%22%2C%22task%22%3A1205815461790022%2C%22luna2%22%3Atrue%2C%2=
+2num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%22d=
+omain_user%22%3A1205815594871025%2C%22task_rank%22%3A1%2C%22user%22%3A12058=
+15594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22%3A=
+false%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1b7b=
+72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3Dddb3d2c3f6058f7fc821a=
+23cc74b098d112b6645014df78efb2e1b392f02af7b" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Draft project =
+brief</span></a></td><td style=3D"max-width:8px;min-width:8px;width:8px">=
+=C2=A0</td><td class=3D"EmailTaskRow-hideableColumn" =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"overflow:hidden;width:48px;text-align:right;text-overflow:ellipsis=
+;vertical-align:middle;white-space:nowrap"><span style=3D"font-size:13px;fo=
+nt-weight:400;line-height:20px;color:#c92f54;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Oct 30</span></td><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:14px;vertical-align:middle"><img src=3D"https://d3ki9tyy5l5r=
+uj.cloudfront.net/obj/44f5654475ec4d9fad41014461c7561e0a5811fa/right_icon-1=
+6x16@2x.png" style=3D"border:none;display:block;outline:none;text-decoratio=
+n:none;text-align:center" height=3D"14" width=3D"14"/></td></tr></tbody></t=
+able></td><td style=3D"max-width:4px;min-width:4px;width:4px">=C2=A0</td></=
+tr><tr><td style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;=
+width:8px;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:=
+auto;min-width:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr></tbody></table></a></td></tr><tr><td =
+colSpan=3D"11" style=3D"border-bottom:1px solid #edeae9"></td></tr><tr><td =
+class=3D"EmailTaskRow-hoverableColumn" style=3D"width:100%"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815458985398%2F1205815461790024%2Ff&amp;se=3D%7B%22nam=
+e%22%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action=
+%22%3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22=
+%3A%22TasksDueSection%22%2C%22task%22%3A1205815461790024%2C%22luna2%22%3Atr=
+ue%2C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015=
+%2C%22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A2%2C%22user%22%=
+3A1205815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_even=
+t%22%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-=
+a2b1b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D68a5c6b25a6b09=
+cf07857eecac3bcfab83a090f5059970f9f51bda6f98a6875e" target=3D"_blank" =
+style=3D"text-decoration:none"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"line-height:8px;max-width:8px=
+;min-width:8px;height:8px;width:8px;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:auto;min-width:auto;height:8px;width:aut=
+o;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:4px;min-=
+width:4px;height:8px;width:4px;font-size:8px">=C2=A0</td></tr><tr><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:100%"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"height:24px;width:16px;vertic=
+al-align:middle"><img src=3D"https://d3ki9tyy5l5ruj.cloudfront.=
+net/obj/17ebaf90443cc42469dfeeaf11302fa63f0a3386/checkmark-icon-32x32.png" =
+style=3D"border:none;display:block;outline:none;text-decoration:none;text-a=
+lign:center" height=3D"16" width=3D"16"/></td><td style=3D"max-width:8px;mi=
+n-width:8px;width:8px">=C2=A0</td><td style=3D"overflow:hidden;width:100%;t=
+ext-overflow:ellipsis;vertical-align:middle;white-space:nowrap"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815458985398%2F1205815461790024%2Ff&amp;se=3D%7B%22nam=
+e%22%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action=
+%22%3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22=
+%3A%22TasksDueSection%22%2C%22task%22%3A1205815461790024%2C%22luna2%22%3Atr=
+ue%2C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015=
+%2C%22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A2%2C%22user%22%=
+3A1205815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_even=
+t%22%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-=
+a2b1b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D68a5c6b25a6b09=
+cf07857eecac3bcfab83a090f5059970f9f51bda6f98a6875e" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Schedule kickoff =
+meeting</span></a></td><td style=3D"max-width:8px;min-width:8px;width:8px">=
+=C2=A0</td><td class=3D"EmailTaskRow-hideableColumn" =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"overflow:hidden;width:48px;text-align:right;text-overflow:ellipsis=
+;vertical-align:middle;white-space:nowrap"><span style=3D"font-size:13px;fo=
+nt-weight:400;line-height:20px;color:#0d7f56;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Today</span></td><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:14px;vertical-align:middle"><img src=3D"https://d3ki9tyy5l5r=
+uj.cloudfront.net/obj/44f5654475ec4d9fad41014461c7561e0a5811fa/right_icon-1=
+6x16@2x.png" style=3D"border:none;display:block;outline:none;text-decoratio=
+n:none;text-align:center" height=3D"14" width=3D"14"/></td></tr></tbody></t=
+able></td><td style=3D"max-width:4px;min-width:4px;width:4px">=C2=A0</td></=
+tr><tr><td style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;=
+width:8px;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:=
+auto;min-width:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr></tbody></table></a></td></tr><tr><td =
+colSpan=3D"11" style=3D"border-bottom:1px solid #edeae9"></td></tr><tr><td =
+class=3D"EmailTaskRow-hoverableColumn" style=3D"width:100%"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985386&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985386%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A3%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D455f80fe284e126579=
+ccdabedea8aef53ead48d172336b58304d80d5ab2e81dd" target=3D"_blank" =
+style=3D"text-decoration:none"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"line-height:8px;max-width:8px=
+;min-width:8px;height:8px;width:8px;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:auto;min-width:auto;height:8px;width:aut=
+o;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:4px;min-=
+width:4px;height:8px;width:4px;font-size:8px">=C2=A0</td></tr><tr><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:100%"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"height:24px;width:16px;vertic=
+al-align:middle"><img src=3D"https://d3ki9tyy5l5ruj.cloudfront.=
+net/obj/17ebaf90443cc42469dfeeaf11302fa63f0a3386/checkmark-icon-32x32.png" =
+style=3D"border:none;display:block;outline:none;text-decoration:none;text-a=
+lign:center" height=3D"16" width=3D"16"/></td><td style=3D"max-width:8px;mi=
+n-width:8px;width:8px">=C2=A0</td><td style=3D"overflow:hidden;width:100%;t=
+ext-overflow:ellipsis;vertical-align:middle;white-space:nowrap"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985386&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985386%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A3%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D455f80fe284e126579=
+ccdabedea8aef53ead48d172336b58304d80d5ab2e81dd" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">1=EF=B8=8F=E2=83=A3 First: Get =
+started using My tasks</span></a></td><td style=3D"max-width:8px;min-width:=
+8px;width:8px">=C2=A0</td><td class=3D"EmailTaskRow-hideableColumn" =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"overflow:hidden;width:48px;text-align:right;text-overflow:ellipsis=
+;vertical-align:middle;white-space:nowrap"><span style=3D"font-size:13px;fo=
+nt-weight:400;line-height:20px;color:#6d6e6f;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Nov 2</span></td><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:14px;vertical-align:middle"><img src=3D"https://d3ki9tyy5l5r=
+uj.cloudfront.net/obj/44f5654475ec4d9fad41014461c7561e0a5811fa/right_icon-1=
+6x16@2x.png" style=3D"border:none;display:block;outline:none;text-decoratio=
+n:none;text-align:center" height=3D"14" width=3D"14"/></td></tr></tbody></t=
+able></td><td style=3D"max-width:4px;min-width:4px;width:4px">=C2=A0</td></=
+tr><tr><td style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;=
+width:8px;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:=
+auto;min-width:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr></tbody></table></a></td></tr><tr><td =
+colSpan=3D"11" style=3D"border-bottom:1px solid #edeae9"></td></tr><tr><td =
+class=3D"EmailTaskRow-hoverableColumn" style=3D"width:100%"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985388&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985388%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A4%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D60fc4c75fc92a125e5=
+77096670ff0e01c61c11b19adf71f60cf99a88abc34a33" target=3D"_blank" =
+style=3D"text-decoration:none"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"line-height:8px;max-width:8px=
+;min-width:8px;height:8px;width:8px;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:auto;min-width:auto;height:8px;width:aut=
+o;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:4px;min-=
+width:4px;height:8px;width:4px;font-size:8px">=C2=A0</td></tr><tr><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:100%"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"height:24px;width:16px;vertic=
+al-align:middle"><img src=3D"https://d3ki9tyy5l5ruj.cloudfront.=
+net/obj/17ebaf90443cc42469dfeeaf11302fa63f0a3386/checkmark-icon-32x32.png" =
+style=3D"border:none;display:block;outline:none;text-decoration:none;text-a=
+lign:center" height=3D"16" width=3D"16"/></td><td style=3D"max-width:8px;mi=
+n-width:8px;width:8px">=C2=A0</td><td style=3D"overflow:hidden;width:100%;t=
+ext-overflow:ellipsis;vertical-align:middle;white-space:nowrap"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985388&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985388%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A4%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D60fc4c75fc92a125e5=
+77096670ff0e01c61c11b19adf71f60cf99a88abc34a33" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">2=EF=B8=8F=E2=83=A3 Second: Find =
+the layout that&#x27;s right for you</span></a></td><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+class=3D"EmailTaskRow-hideableColumn" style=3D"max-width:8px;min-width:8px;=
+width:8px">=C2=A0</td><td style=3D"overflow:hidden;width:48px;text-align:ri=
+ght;text-overflow:ellipsis;vertical-align:middle;white-space:nowrap"><span =
+style=3D"font-size:13px;font-weight:400;line-height:20px;color:#6d6e6f;font=
+-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, =
+&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif">Nov =
+2</span></td><td style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td=
+><td style=3D"width:14px;vertical-align:middle"><img =
+src=3D"https://d3ki9tyy5l5ruj.cloudfront.net/obj/44f5654475ec4d9fad41014461=
+c7561e0a5811fa/right_icon-16x16@2x.png" style=3D"border:none;display:block;=
+outline:none;text-decoration:none;text-align:center" height=3D"14" =
+width=3D"14"/></td></tr></tbody></table></td><td style=3D"max-width:4px;min=
+-width:4px;width:4px">=C2=A0</td></tr><tr><td style=3D"line-height:8px;max-=
+width:8px;min-width:8px;height:8px;width:8px;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:auto;min-width:auto;height:8px;width:aut=
+o;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:4px;min-=
+width:4px;height:8px;width:4px;font-size:8px">=C2=A0</td></tr></tbody></tab=
+le></a></td></tr><tr><td colSpan=3D"11" style=3D"border-bottom:1px solid =
+#edeae9"></td></tr><tr><td class=3D"EmailTaskRow-hoverableColumn" =
+style=3D"width:100%"><a href=3D"https://app.asana.com/app/asana/-/log_view?=
+dest=3Dhttps%3A%2F%2Fapp.asana.com%2F0%2F1205815594871029%2F120581545898539=
+0&amp;se=3D%7B%22name%22%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoade=
+d%22%2C%22sub_action%22%3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%=
+2C%22sub_location%22%3A%22TasksDueSection%22%2C%22task%22%3A120581545898539=
+0%2C%22luna2%22%3Atrue%2C%22num_tasks_shown_in_section%22%3A7%2C%22domain%2=
+2%3A1205815594871015%2C%22domain_user%22%3A1205815594871025%2C%22task_rank%=
+22%3A5%2C%22user%22%3A1205815594871005%2C%22from_amp_email%22%3Afalse%2C%22=
+non_user_action_event%22%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41=
+d3c4-ff57-4efb-89e3-a2b1b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;h=
+ash=3D938ad7fb6a30da6a4bd6cb6b89cd0e4a18f5d11375ebf6bf59a3c54bf055098e" =
+target=3D"_blank" style=3D"text-decoration:none"><table cellPadding=3D"0" =
+cellSpacing=3D"0" style=3D"width:100%;min-width:100%;table-layout:fixed;bor=
+der-collapse:separate;border-spacing:0"><tbody><tr><td =
+style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;width:8px;f=
+ont-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:auto;min-wi=
+dth:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr><tr><td style=3D"max-width:8px;min-width:8px;=
+width:8px">=C2=A0</td><td style=3D"width:100%"><table cellPadding=3D"0" =
+cellSpacing=3D"0" style=3D"width:100%;min-width:100%;table-layout:fixed;bor=
+der-collapse:separate;border-spacing:0"><tbody><tr><td =
+style=3D"height:24px;width:16px;vertical-align:middle"><img =
+src=3D"https://d3ki9tyy5l5ruj.cloudfront.net/obj/17ebaf90443cc42469dfeeaf11=
+302fa63f0a3386/checkmark-icon-32x32.png" style=3D"border:none;display:block=
+;outline:none;text-decoration:none;text-align:center" height=3D"16" =
+width=3D"16"/></td><td style=3D"max-width:8px;min-width:8px;width:8px">=
+=C2=A0</td><td style=3D"overflow:hidden;width:100%;text-overflow:ellipsis;v=
+ertical-align:middle;white-space:nowrap"><a href=3D"https://app.asana.=
+com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp.asana.=
+com%2F0%2F1205815594871029%2F1205815458985390&amp;se=3D%7B%22name%22%3A%22A=
+sanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%3A%22Ta=
+sk%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%22Tasks=
+DueSection%22%2C%22task%22%3A1205815458985390%2C%22luna2%22%3Atrue%2C%22num=
+_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%22domai=
+n_user%22%3A1205815594871025%2C%22task_rank%22%3A5%2C%22user%22%3A120581559=
+4871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22%3Afals=
+e%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1b7b7275=
+3%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D938ad7fb6a30da6a4bd6cb6b8=
+9cd0e4a18f5d11375ebf6bf59a3c54bf055098e" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">3=EF=B8=8F=E2=83=A3 Third: Get =
+organized with sections</span></a></td><td style=3D"max-width:8px;min-width=
+:8px;width:8px">=C2=A0</td><td class=3D"EmailTaskRow-hideableColumn" =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"overflow:hidden;width:48px;text-align:right;text-overflow:ellipsis=
+;vertical-align:middle;white-space:nowrap"><span style=3D"font-size:13px;fo=
+nt-weight:400;line-height:20px;color:#6d6e6f;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Nov 2</span></td><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:14px;vertical-align:middle"><img src=3D"https://d3ki9tyy5l5r=
+uj.cloudfront.net/obj/44f5654475ec4d9fad41014461c7561e0a5811fa/right_icon-1=
+6x16@2x.png" style=3D"border:none;display:block;outline:none;text-decoratio=
+n:none;text-align:center" height=3D"14" width=3D"14"/></td></tr></tbody></t=
+able></td><td style=3D"max-width:4px;min-width:4px;width:4px">=C2=A0</td></=
+tr><tr><td style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;=
+width:8px;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:=
+auto;min-width:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr></tbody></table></a></td></tr><tr><td =
+colSpan=3D"11" style=3D"border-bottom:1px solid #edeae9"></td></tr><tr><td =
+class=3D"EmailTaskRow-hoverableColumn" style=3D"width:100%"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985392&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985392%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A6%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D91c6705b97eaf26830=
+be75617ad2bf589c4168df7b24d6f6e39aef5978ea399c" target=3D"_blank" =
+style=3D"text-decoration:none"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"line-height:8px;max-width:8px=
+;min-width:8px;height:8px;width:8px;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:auto;min-width:auto;height:8px;width:aut=
+o;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:4px;min-=
+width:4px;height:8px;width:4px;font-size:8px">=C2=A0</td></tr><tr><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:100%"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"height:24px;width:16px;vertic=
+al-align:middle"><img src=3D"https://d3ki9tyy5l5ruj.cloudfront.=
+net/obj/17ebaf90443cc42469dfeeaf11302fa63f0a3386/checkmark-icon-32x32.png" =
+style=3D"border:none;display:block;outline:none;text-decoration:none;text-a=
+lign:center" height=3D"16" width=3D"16"/></td><td style=3D"max-width:8px;mi=
+n-width:8px;width:8px">=C2=A0</td><td style=3D"overflow:hidden;width:100%;t=
+ext-overflow:ellipsis;vertical-align:middle;white-space:nowrap"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985392&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985392%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A6%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D91c6705b97eaf26830=
+be75617ad2bf589c4168df7b24d6f6e39aef5978ea399c" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">4=EF=B8=8F=E2=83=A3 Fourth: Stay =
+on top of incoming work</span></a></td><td style=3D"max-width:8px;min-width=
+:8px;width:8px">=C2=A0</td><td class=3D"EmailTaskRow-hideableColumn" =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"overflow:hidden;width:48px;text-align:right;text-overflow:ellipsis=
+;vertical-align:middle;white-space:nowrap"><span style=3D"font-size:13px;fo=
+nt-weight:400;line-height:20px;color:#6d6e6f;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Nov 2</span></td><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:14px;vertical-align:middle"><img src=3D"https://d3ki9tyy5l5r=
+uj.cloudfront.net/obj/44f5654475ec4d9fad41014461c7561e0a5811fa/right_icon-1=
+6x16@2x.png" style=3D"border:none;display:block;outline:none;text-decoratio=
+n:none;text-align:center" height=3D"14" width=3D"14"/></td></tr></tbody></t=
+able></td><td style=3D"max-width:4px;min-width:4px;width:4px">=C2=A0</td></=
+tr><tr><td style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;=
+width:8px;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:=
+auto;min-width:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr></tbody></table></a></td></tr><tr><td =
+colSpan=3D"11" style=3D"border-bottom:1px solid #edeae9"></td></tr><tr><td =
+class=3D"EmailTaskRow-hoverableColumn" style=3D"width:100%"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985394&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985394%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A7%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D713f62ab589723139d=
+b4faa45b600f6f0600fc1b0ab4c06239ce9ba09bad5edc" target=3D"_blank" =
+style=3D"text-decoration:none"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"line-height:8px;max-width:8px=
+;min-width:8px;height:8px;width:8px;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:auto;min-width:auto;height:8px;width:aut=
+o;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:4px;min-=
+width:4px;height:8px;width:4px;font-size:8px">=C2=A0</td></tr><tr><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:100%"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"height:24px;width:16px;vertic=
+al-align:middle"><img src=3D"https://d3ki9tyy5l5ruj.cloudfront.=
+net/obj/17ebaf90443cc42469dfeeaf11302fa63f0a3386/checkmark-icon-32x32.png" =
+style=3D"border:none;display:block;outline:none;text-decoration:none;text-a=
+lign:center" height=3D"16" width=3D"16"/></td><td style=3D"max-width:8px;mi=
+n-width:8px;width:8px">=C2=A0</td><td style=3D"overflow:hidden;width:100%;t=
+ext-overflow:ellipsis;vertical-align:middle;white-space:nowrap"><a =
+href=3D"https://app.asana.com/app/asana/-/log_view?dest=3Dhttps%3A%2F%2Fapp=
+.asana.com%2F0%2F1205815594871029%2F1205815458985394&amp;se=3D%7B%22name%22=
+%3A%22AsanaLoaded%22%2C%22action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%=
+3A%22Task%22%2C%22location%22%3A%22SummaryEmail%22%2C%22sub_location%22%3A%=
+22TasksDueSection%22%2C%22task%22%3A1205815458985394%2C%22luna2%22%3Atrue%2=
+C%22num_tasks_shown_in_section%22%3A7%2C%22domain%22%3A1205815594871015%2C%=
+22domain_user%22%3A1205815594871025%2C%22task_rank%22%3A7%2C%22user%22%3A12=
+05815594871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22=
+%3Afalse%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1=
+b7b72753%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D713f62ab589723139d=
+b4faa45b600f6f0600fc1b0ab4c06239ce9ba09bad5edc" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;color:#1e1f21;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">5=EF=B8=8F=E2=83=A3 Fifth: Save =
+time by collaborating in Asana</span></a></td><td style=3D"max-width:8px;mi=
+n-width:8px;width:8px">=C2=A0</td><td class=3D"EmailTaskRow-hideableColumn"=
+ style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"overflow:hidden;width:48px;text-align:right;text-overflow:ellipsis=
+;vertical-align:middle;white-space:nowrap"><span style=3D"font-size:13px;fo=
+nt-weight:400;line-height:20px;color:#6d6e6f;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">Nov 2</span></td><td =
+style=3D"max-width:8px;min-width:8px;width:8px">=C2=A0</td><td =
+style=3D"width:14px;vertical-align:middle"><img src=3D"https://d3ki9tyy5l5r=
+uj.cloudfront.net/obj/44f5654475ec4d9fad41014461c7561e0a5811fa/right_icon-1=
+6x16@2x.png" style=3D"border:none;display:block;outline:none;text-decoratio=
+n:none;text-align:center" height=3D"14" width=3D"14"/></td></tr></tbody></t=
+able></td><td style=3D"max-width:4px;min-width:4px;width:4px">=C2=A0</td></=
+tr><tr><td style=3D"line-height:8px;max-width:8px;min-width:8px;height:8px;=
+width:8px;font-size:8px">=C2=A0</td><td style=3D"line-height:8px;max-width:=
+auto;min-width:auto;height:8px;width:auto;font-size:8px">=C2=A0</td><td =
+style=3D"line-height:8px;max-width:4px;min-width:4px;height:8px;width:4px;f=
+ont-size:8px">=C2=A0</td></tr></tbody></table></a></td></tr></tbody></table=
+></td></tr></tbody></table></td></tr><tr><td style=3D"line-height:32px;max-=
+width:0;min-width:0;height:32px;width:0;font-size:32px">=C2=A0</td></tr></t=
+body></table></td></tr><tr><td><div style=3D"background-color:#f9f8f8;margi=
+n-bottom:24px"><table cellPadding=3D"0" cellSpacing=3D"0" =
+style=3D"width:100%;min-width:100%;table-layout:fixed;border-collapse:separ=
+ate;border-spacing:0"><tbody><tr><td style=3D"line-height:24px;max-width:24=
+px;min-width:24px;height:24px;width:24px;font-size:24px">=C2=A0</td><td =
+style=3D"line-height:24px;height:24px;font-size:24px">=C2=A0</td><td =
+style=3D"line-height:24px;max-width:24px;min-width:24px;height:24px;width:2=
+4px;font-size:24px">=C2=A0</td></tr><tr><td>=C2=A0</td><td><table =
+cellPadding=3D"0" cellSpacing=3D"0" style=3D"width:100%;min-width:100%;tabl=
+e-layout:fixed;border-collapse:separate;border-spacing:0"><tbody><tr><tr><t=
+d><span style=3D"font-size:13px;font-weight:400;line-height:20px;color:#6d6=
+e6f;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, =
+Roboto, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif"><a =
+href=3D"https://app.asana.com/app/asana/-/log?dest=3Dhttps%3A%2F%2Fapp.=
+asana.com%2F-%2Funsubscribe_from_summary_emails%3Fdomain_user%3D12058155948=
+71025%26email_type%3Dsummary%26hash%3D26d8566b9a55684625cbbcbfb9f058d3f529c=
+41a7f0597e8f8a559130956a540&amp;se=3D%7B%22name%22%3A%22AsanaLoaded%22%2C%2=
+2action%22%3A%22AsanaLoaded%22%2C%22sub_action%22%3A%22Unsubscribe%22%2C%22=
+location%22%3A%22SummaryEmail%22%2C%22luna2%22%3Atrue%2C%22domain%22%3A1205=
+815594871015%2C%22domain_user%22%3A1205815594871025%2C%22user%22%3A12058155=
+94871005%2C%22from_amp_email%22%3Afalse%2C%22non_user_action_event%22%3Afal=
+se%2C%22email_uuid%22%3A%221698728762647-2c41d3c4-ff57-4efb-89e3-a2b1b7b727=
+53%22%2C%22app_name%22%3A%22email%22%7D&amp;hash=3D1d535ec95037ca8bea3951e6=
+5fa0e27c7b16374879d7d56c5f602da2055b914a" target=3D"_blank" =
+style=3D"text-decoration:none"><span style=3D"font-size:13px;font-weight:40=
+0;line-height:20px;border-bottom:1px dotted #6d6e6f;color:#6d6e6f;font-fami=
+ly:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, =
+&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif">Unsubscribe</span=
+></a> from Asana reminders.</span></td></tr></tr></tbody></table></td><td>=
+=C2=A0</td></tr><tr><td style=3D"line-height:24px;max-width:0;min-width:0;h=
+eight:24px;width:0;font-size:24px">=C2=A0</td></tr></tbody></table><table =
+cellPadding=3D"0" cellSpacing=3D"0" style=3D"width:100%;min-width:100%;tabl=
+e-layout:fixed;border-collapse:separate;border-spacing:0"><tbody><tr><td =
+style=3D"max-width:24px;min-width:24px;width:24px">=C2=A0</td><td =
+style=3D"vertical-align:middle"><img alt=3D"Logo of Asana" =
+src=3D"https://d3ki9tyy5l5ruj.cloudfront.net/obj/1c7e0fd745ecc8caaed91c347c=
+16a95bb29dd3ab/asana-logo.png" height=3D"33.6" width=3D"125"/></td><td =
+style=3D"max-width:16px;min-width:16px;width:16px">=C2=A0</td><td =
+style=3D"width:100%;text-align:right;vertical-align:middle"><span =
+class=3D"EmailFooter-text--undecorated" style=3D"font-size:13px;font-weight=
+:400;line-height:20px;color:#6d6e6f;font-family:-apple-system, =
+BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica =
+Neue&quot;, Helvetica, Arial, sans-serif">My workspace</span></td><td =
+style=3D"max-width:24px;min-width:24px;width:24px">=C2=A0</td></tr><tr><td =
+style=3D"line-height:24px;max-width:0;min-width:0;height:24px;width:0;font-=
+size:24px">=C2=A0</td></tr></tbody></table></div></td></tr></table></td></t=
+r></table></body></html>
+----_NmP-d8b54970fe5c2d88-Part_1--

@@ -1,0 +1,365 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6358:ed5:b0:193:d1e6:4deb with SMTP id 21csp1581026rwh;
+        Mon, 13 May 2024 02:33:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGmEqiCALFL6zl28TNTIPYvqApj5Epm5EPA1ac3l54wf1BQYEKW57mP/Hb28C1j2mhPMDpW
+X-Received: by 2002:a05:600c:46ce:b0:41f:f447:e874 with SMTP id 5b1f17b1804b1-41ff447e9ddmr59850275e9.24.1715592833307;
+        Mon, 13 May 2024 02:33:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1715592833; cv=none;
+        d=google.com; s=arc-20160816;
+        b=To8CI/Uhnvc6dHtPCH+a83q6XW1/PdrauROtx5bqULG9Hr+K6XNVCcArST2Vb0nK62
+         dtodq1yRkMyy3wB9E+j9yS6jr1ZsMY8OzoULyRaEImtIa63tSB6dy/CZmV+u857z/hi1
+         iwe7ShpkRvDtumaa3eQk4PezXuBmYPMq7/RSD8DA5NON4G0JnMLw6QEp7dofY+BjYoPf
+         WMipVu248uOkhrPbo4NAJqlXAjpw80mm6gYPetJ980gNErkkj+pnLnOImnL+E3JqAzm3
+         rLNANYCfcbuANlhYPI2DLCMu7fusmdHsHAvu6EOns5ZXjIktsL6pxo/lmKiRNDx7Uq41
+         mepg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature:dkim-signature;
+        bh=MJkM388SCTpOVq/+0Hu7+mSW2RDqEP73eVkHE9hagmk=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=J6qrRa96RjmixYRk0dN0cO5u15FKdjPlnVaYveryBuCjk+5ERDvpJA2xz9emGWbUkP
+         F5Y5Zije51U4oaxpwLnhMT6gqv2Y3ULzVu68Bn5316fWyUFhQyjGcgiDpnheep2OJh55
+         gkOAOigRjK9+7E0c6wpJtsSEAsMu0oc4meq9Jg7TykbEjDAEy6g3e+B6MmpSGha9GZny
+         YRGCOjnSKUnP5tyCoADELGKxtClBCsw8iZaqp4yufStJurPpP2CEwNxAkk3sflPrIin5
+         0CdV0nhlC3BpI8y7doT0qWlHvR3g7vZ8SR2AKR3gBGfhbRGiYf4KxLIUJhbToq3FYWpD
+         zakA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@exercism.org header.s=thmgkq2ogoa3ekfvlnr35ku6mfq7tsl6 header.b=IJ1H4GBA;
+       dkim=pass header.i=@amazonses.com header.s=pgxy5mtxzx6eoyytua4nvvg26jbuf6lj header.b=ctUkDNvA;
+       spf=pass (google.com: domain of 010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000@mail.exercism.org designates 76.223.132.62 as permitted sender) smtp.mailfrom=010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000@mail.exercism.org;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mail.exercism.org
+Return-Path: <010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000@mail.exercism.org>
+Received: from c132-62.smtp-out.eu-west-2.amazonses.com (c132-62.smtp-out.eu-west-2.amazonses.com. [76.223.132.62])
+        by mx.google.com with ESMTPS id 5b1f17b1804b1-42017f515afsi6781995e9.120.2024.05.13.02.33.53
+        for <user.idc004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 May 2024 02:33:53 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000@mail.exercism.org designates 76.223.132.62 as permitted sender) client-ip=76.223.132.62;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@exercism.org header.s=thmgkq2ogoa3ekfvlnr35ku6mfq7tsl6 header.b=IJ1H4GBA;
+       dkim=pass header.i=@amazonses.com header.s=pgxy5mtxzx6eoyytua4nvvg26jbuf6lj header.b=ctUkDNvA;
+       spf=pass (google.com: domain of 010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000@mail.exercism.org designates 76.223.132.62 as permitted sender) smtp.mailfrom=010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000@mail.exercism.org;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mail.exercism.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=thmgkq2ogoa3ekfvlnr35ku6mfq7tsl6; d=exercism.org; t=1715592832;
+	i=@mail.exercism.org;
+	h=Date:From:Reply-To:To:Message-ID:Subject:Mime-Version:Content-Type;
+	bh=LiQhMOK8ZrATp73FOIrkhlGfbI/Erp3wl7JgXwliUBs=;
+	b=IJ1H4GBAc5YEzA6GjL8yJHGwPT7+PcjPlXTICcH1h/D5wr/Ije277qL93YuHpYVZ
+	qtYrtsGNaF8vpDoTJil1P3jIH3os1HRsX/XV9PCqpqVeNGrr66GONYruhKWm8uKDq6r
+	TXL9Umx2cSl4tQibJtMUsFyKrdyV9OQztem2B31ia/+cNmfreocMFCU2E/SequpSXai
+	fWGZNO2pUMvHsmEEM2K4xj7IFaIox+gKkOvT7U8J/vt+d1Q99Ku23yOsAoqMUFj39vF
+	0/a7VspjRqPgPz+qbD6RnPkYaaAAHjlR9clalOS5qjCz7wkjYc1jlGJO8VlpxAwWkku
+	uTEzP9PJmg==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=pgxy5mtxzx6eoyytua4nvvg26jbuf6lj; d=amazonses.com; t=1715592832;
+	h=Date:From:Reply-To:To:Message-ID:Subject:Mime-Version:Content-Type:Feedback-ID;
+	bh=LiQhMOK8ZrATp73FOIrkhlGfbI/Erp3wl7JgXwliUBs=;
+	b=ctUkDNvAARH9C+of6Fd1dR2psDqgesM5Anp3DbTJKCUGgljdlGrd4/CJGbWZIEhD
+	30GwO6c81KUAYnlglAwJ/HptiNIe1bIv8C5D21Lbwnm0oQT5r4Spod/reZ0wKzMrwSp
+	Rm/dWUIoQE36c3hDtIutHIRQK/NJTiI1hQGpOWHU=
+Date: Mon, 13 May 2024 09:33:52 +0000
+From: The Exercism Team <hello@mail.exercism.org>
+Reply-To: jeremy@exercism.org
+To: user.idc004@gmail.com
+Message-ID: <010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000@eu-west-2.amazonses.com>
+Subject: [Exercism] Confirm your account
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_6641de8089cb5_87aa66c607852fe";
+ charset=UTF-8
+Feedback-ID: 1.eu-west-2.xBY3uBc/827H6TXIu6KJzo45mOZUQsUEOnapvWtqATw=:AmazonSES
+X-SES-Outgoing: 2024.05.13-76.223.132.62
+X-TUID: AIJAYFx3ddGK
+
+----==_mimepart_6641de8089cb5_87aa66c607852fe
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Welcome to Exercism!
+
+To check you're a real person and not a bot, we need to confirm this is a real email address.
+Visit the URL below to confirm your account and start using Exercism.
+
+https://exercism.org/users/confirmation?confirmation_token=uvNuP6ZASycnySFxS9-1
+
+---
+
+You received this email because you've signed up to Exercism (https://exercism.org)
+
+Change your notification settings: https://exercism.org/unsubscribe?token=25b6c6e8255046fca77d053e7a3085fd
+
+Sent by Exercism: Unit G3; 81 Bournville Lane, United Kingdom
+
+----==_mimepart_6641de8089cb5_87aa66c607852fe
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+<!DOCTYPE html>
+<html lang=3D"en">
+  <head>
+    <title>An email from Exercism</title>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+" />
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1">
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge" />
+    <style type=3D"text/css">
+        /* CLIENT-SPECIFIC STYLES */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-=
+adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; }
+
+        /* RESET STYLES */
+        img { border: 0; height: auto; line-height: 100%; outline: none; te=
+xt-decoration: none; }
+        table { border-collapse: collapse !important; }
+        body { height: 100% !important; margin: 0 !important; padding: 0 !i=
+mportant; width: 100% !important; }
+
+        /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* GMAIL BLUE LINKS */
+        u + #body a {
+            color: inherit;
+            text-decoration: none;
+            font-size: inherit;
+            font-family: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+
+        /* SAMSUNG MAIL BLUE LINKS */
+        #MessageViewBody a {
+            color: inherit;
+            text-decoration: none;
+            font-size: inherit;
+            font-family: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+
+        /* These rules set the link and hover states, making it clear that =
+links are, in fact, links. */
+        /* Embrace established conventions like underlines on links to keep=
+ emails accessible. */
+        a { color: #604FCD; font-weight: 600; text-decoration: underline; }
+        a.button:hover { background: #3B2A93 !important; text-decoration: n=
+one !important; }
+
+        /* These rules adjust styles for desktop devices, keeping the email=
+ responsive for users. */
+        /* Some email clients don't properly apply media query-based styles=
+, which is why we go mobile-first. */
+        @media screen and (min-width:600px) {
+            h1 { font-size: 48px !important; line-height: 48px !important; =
+}
+            .intro { font-size: 24px !important; line-height: 36px !importa=
+nt; }
+        }
+
+        strong { font-weight: 600 !important; }
+    </style>
+
+  </head>
+  <body style=3D"margin: 0 !important; padding: 0 !important;">
+
+    <!-- Some preview text. -->
+    <div style=3D"display: none; max-height: 0; overflow: hidden;">
+     =20
+    </div>
+    <!-- Get rid of unwanted preview text. -->
+    <div style=3D"display: none; max-height: 0px; overflow: hidden;">
+    &nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;
+    </div>
+
+    <!-- This ghost table is used to constrain the width in Outlook. The ro=
+le attribute is set to presentation to prevent it from being read by screen=
+readers. -->
+    <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing=3D"0" cellpadding=3D"0" border=3D0" width=3D"600" al=
+ign=3D"center" role=3D"presentation"><tr><td>
+    <![endif]-->
+    <!-- The role and aria-label attributes are added to wrap the email con=
+tent as an article for screen readers. Some of them will read out the aria-=
+label as the title of the document, so use something like "An email from Yo=
+ur Brand Name" to make it recognizable. -->
+    <!-- Default styling of text is applied to the wrapper div. Be sure to =
+use text that is large enough and has a high contrast with the background c=
+olor for people with visual impairments. -->
+    <div role=3D"article" aria-label=3D"An email from Your Brand Name" lang=
+=3D"en" style=3D"background-color: white; color: #2b2b2b; font-family: 'Ave=
+nir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica=
+, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbo=
+l'; font-size: 18px; font-weight: 400; line-height: 28px; margin: 0 auto; m=
+ax-width: 600px; padding: 40px 20px 40px 20px;">
+
+          <!-- Logo section and header. Headers are useful landmark element=
+s. -->
+          <header>
+              <!-- Since this is a purely decorative image, we can leave th=
+e alternative text blank. -->
+              <!-- Linking images also helps with Gmail displaying download=
+ links next to them. -->
+              <a href=3D"https://mail-metrics.exercism.org/CL0/https:%2F%2F=
+exercism.org/1/010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000=
+/9w9NMQKkHJqLDnESZUzRc6lta8bIqy1es1XF9ddQ_qY=3D158">
+                  <center><img src=3D"https://exercism-static.s3.eu-west-1.=
+amazonaws.com/static/email-logo.png" alt=3D"" height=3D"80" width=3D"80"></=
+center>
+              </a>
+              <!-- The h1 is the main heading of the document and should co=
+me first. -->
+              <!-- We can override the default styles inline. -->
+              <h1 style=3D"color: #130B43; font-size: 32px; font-weight: 70=
+0; line-height: 32px; margin: 32px 0; text-align: center;">
+                Confirm your new Exercism account
+              </h1>
+          </header>
+
+        <!-- Main content section. Main is a useful landmark element. -->
+        <main>
+            <!-- This div is purely presentational, providing a container f=
+or the message. -->
+            <div style=3D"background-color: ghostwhite; border-radius: 5px;=
+ padding: 24px 32px;">
+                <!-- This ghost table is used solely for padding in Word-ba=
+sed Outlook clients. -->
+                <!--[if (gte mso 9)|(IE)]>
+                <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" wid=
+th=3D"600" align=3D"center" role=3D"presentation"><tr><td style=3D"backgrou=
+nd-color: ghostwhite;font-family: 'Avenir Next', -apple-system, BlinkMacSys=
+temFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emo=
+ji', 'Segoe UI Emoji', 'Segoe UI Symbol'; padding: 24px 48px 24px 48px;">
+                <![endif]-->
+
+                <!-- Body copy -->
+                <p>Welcome to Exercism!</p>
+<p>
+To check you're a real person and not a bot, we need to confirm this is a r=
+eal email address.
+Click the button below to confirm your account and start using Exercism.
+</p>
+    <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+      <tr>
+        <td align=3D"center" style=3D"border-radius: 5px;" bgcolor=3D"#604F=
+CD">
+          <a class=3D"button" href=3D"https://mail-metrics.exercism.org/CL0=
+/https:%2F%2Fexercism.org%2Fusers%2Fconfirmation%3Fconfirmation_token=3DuvN=
+uP6ZASycnySFxS9-1/1/010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-0=
+00000/dm_SiKDQUQaVswNNs7yJXB8FIxpJx1FJeyuHgQbGxKc=3D158" target=3D"_blank" =
+style=3D"font-size: 20px;  color: #ffffff; text-decoration: none; color: #f=
+fffff; text-decoration: none; padding: 15px 25px; border-radius: 5px; borde=
+r: 1px solid #130B43; display: inline-block;">
+            Confirm your account
+          </a>
+        </td>
+      </tr>
+    </table>
+
+
+
+                <!--[if (gte mso 9)|(IE)]>
+                </td></tr></table>
+                <![endif]-->
+            </div>
+        </main>
+
+        <!-- Footer information. Footer is a useful landmark element. -->
+        <footer style=3D"text-align:center">
+            <!-- Since this is a transactional email, you aren't required t=
+o include opt-out language. -->
+            <p style=3D"font-size: 16px; font-weight: 400; line-height: 24p=
+x; margin-top: 48px;">
+                You received this email because you've signed up to
+                <a href=3D"https://mail-metrics.exercism.org/CL0/https:%2F%=
+2Fexercism.org%2F/1/010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-0=
+00000/nzyMZvC_yPvcnspFnb_07GUn1CNdLeP1AwjJJzdh_-4=3D158">Exercism</a>.
+                <br/>
+                You can
+                  <a href=3D"https://mail-metrics.exercism.org/CL0/https:%2=
+F%2Fexercism.org%2Funsubscribe%3Ftoken=3D25b6c6e8255046fca77d053e7a3085fd/1=
+/010b018f714d26a1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000/Js1ldkh0eAeGx=
+YSIBr2mdlLlagd8fCR-yIw2elioupw=3D158">change your notification settings</a>
+            </p>
+
+            <!-- The address element does exactly what it says. By default,=
+ it is block-level and italicizes text. You can override this behavior inli=
+ne. -->
+            <address style=3D"font-size: 16px; font-style: normal; font-wei=
+ght: 400; line-height: 24px;">
+                <strong>Sent by Exercism:</strong> Unit G3; 81 Bournville L=
+ane, United Kingdom
+            </address>
+        </footer>
+    </div>
+    <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
+  <img alt=3D"" src=3D"http://mail-metrics.exercism.org/CI0/010b018f714d26a=
+1-ff9daea5-5937-480c-89bd-511cfee1e2d1-000000/sQDXvKzxEDUMWr6ePtQe2kzpqu2-i=
+mTkOBD6uhNZqBM=3D158" style=3D"display: none; width: 1px; height: 1px;">
+</body>
+</html>
+
+----==_mimepart_6641de8089cb5_87aa66c607852fe--

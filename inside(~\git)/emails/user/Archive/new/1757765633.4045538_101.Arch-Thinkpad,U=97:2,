@@ -1,0 +1,2276 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6358:9f96:b0:19f:54b5:a56f with SMTP id fy22csp367804rwb;
+        Fri, 21 Jun 2024 07:53:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJnjLJWPxujdstHoEp0AIvP56Q1A+7cJ4t3hegczDPAg/2IvH6Vgx5mcDoIWbP9YhWNnNX
+X-Received: by 2002:a05:600c:210b:b0:421:29cd:5c95 with SMTP id 5b1f17b1804b1-424751752bbmr87403835e9.10.1718981617656;
+        Fri, 21 Jun 2024 07:53:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1718981617; cv=none;
+        d=google.com; s=arc-20160816;
+        b=lLVf3mHBwOHl1K97hCrysNR2CdYX6VqAwZ9fNCdjTLg33Uaw99OzmlANzSaT+yaIP5
+         QNJcB4KDnEwDX7X1m6siJp8fM0LE1+gkPnkLlyjaE6dVmiMP8pxIbQrLsUjYGL7abqnk
+         OA5hcpsbMLNH8QkCQPzhvPX+73crJ60MFJKDUlH7GP22q4goq8QRZyS3Nij7zGBJ+CnM
+         nsxQkbtx8zM5RyACMnUyt2pgX0hMGzZIv6FG4Y3x9W0NZOc1V9oN90CnD4Oy7rOo5NP7
+         J3Bmgz6Jc0MKH4FQ1pGfi0Zr/+gJ7XMfMEPlj0NSlUPXSIMNsFoFQdqvkMENM1HbhG1i
+         /yog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:content-transfer-encoding:mime-version
+         :subject:to:from:dkim-signature:dkim-signature;
+        bh=Pb+P9gTLNU0de6nojlto5KQkfTmYvoxgk2LiwWMWjnM=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=vONK3JkgPn7YZutgGgd8YZW2bj7Eutw1xkcoSk0PudvEAjsTHu0X5CqB2/NZ1beNBm
+         gFBVUcREGJpWIP26ZpWG7D4t6wgJItACQX/TysRMDM9OTq/WwPrgzO3r37AJCY3oPdnN
+         GeihXUUX1nHEKvbwmmqnPbKWLfdvtVh99C8P4en0+uJ8Usf0f4hq02P7iaMUWD8A/X9Y
+         HhZpIP6DyPa93P9Ssw9NCrS/bQ2i7Lc4+IUMIg0uBRHy7guYY5eQytQG8pn82AZQwuyr
+         emJJAnM1w11oqcPBB/PqOxLZy7Kmevtgi+SwE3KbFXxxprwm7Qr097WP2e3rixOpVYBE
+         HHLQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@clickup.com header.s=ylegvthzppraoukz6d4hw6afqn5k7awr header.b="p/TcZhJB";
+       dkim=pass header.i=@amazonses.com header.s=uku4taia5b5tsbglxyj6zym32efj7xqv header.b=iOGpHv5A;
+       spf=pass (google.com: domain of 010201903b49e5ca-9c2a1bec-d574-4603-b87b-81e2e87cdec7-000000@eu-west-1.amazonses.com designates 54.240.3.27 as permitted sender) smtp.mailfrom=010201903b49e5ca-9c2a1bec-d574-4603-b87b-81e2e87cdec7-000000@eu-west-1.amazonses.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=clickup.com
+Return-Path: <010201903b49e5ca-9c2a1bec-d574-4603-b87b-81e2e87cdec7-000000@eu-west-1.amazonses.com>
+Received: from a3-27.smtp-out.eu-west-1.amazonses.com (a3-27.smtp-out.eu-west-1.amazonses.com. [54.240.3.27])
+        by mx.google.com with ESMTPS id 5b1f17b1804b1-4248192aae5si10422265e9.230.2024.06.21.07.53.37
+        for <user.idc004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Jun 2024 07:53:37 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 010201903b49e5ca-9c2a1bec-d574-4603-b87b-81e2e87cdec7-000000@eu-west-1.amazonses.com designates 54.240.3.27 as permitted sender) client-ip=54.240.3.27;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@clickup.com header.s=ylegvthzppraoukz6d4hw6afqn5k7awr header.b="p/TcZhJB";
+       dkim=pass header.i=@amazonses.com header.s=uku4taia5b5tsbglxyj6zym32efj7xqv header.b=iOGpHv5A;
+       spf=pass (google.com: domain of 010201903b49e5ca-9c2a1bec-d574-4603-b87b-81e2e87cdec7-000000@eu-west-1.amazonses.com designates 54.240.3.27 as permitted sender) smtp.mailfrom=010201903b49e5ca-9c2a1bec-d574-4603-b87b-81e2e87cdec7-000000@eu-west-1.amazonses.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=clickup.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ylegvthzppraoukz6d4hw6afqn5k7awr; d=clickup.com; t=1718981617;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date;
+	bh=5X41L+2kBoD9HWga3vWTAlp6P6SDDjdyV8bui5EfVoo=;
+	b=p/TcZhJBZqHiEhKbiWohJJPkJtyXLZaZ8fxEAK7zUBBngj/cLjpqkfa5+ZCfW2Su
+	xtN+acqKmb4vW7hOSArLa1HQDCce4GZT071C8wxJ+ZB+4RifrsKMNxOQE916InAjwGB
+	eE1vZwoP+HReYyuvmsg86IGppKKENaaUID91x6ADgNsyR+DoiVNMh5G0Z7yxko16hqN
+	WbO/CxCuA98T8AioBOL95eapOaWdlJXcwrjfCnbJjO6VNM1AQrKd999jBypllm9ym0p
+	uTPa2/v/KucSjIhy/RqyvQ+lg3vDe26PtLeIU9Rbi6RELh9XTWcRKDOUibGOabe6AGX
+	VATVDW9dww==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1718981617;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:Feedback-ID;
+	bh=5X41L+2kBoD9HWga3vWTAlp6P6SDDjdyV8bui5EfVoo=;
+	b=iOGpHv5ASOH8A9ndbLeB8MoZ8+cMsnE2Cff1mMh7cO2u25hXTzsQj+1p0uayO8E7
+	t1sIzxRJpLSrAvvle20eRmHeIxPE5990KykiT0Mukh6hVLuptsGkivD6Z2bl2j3J1fo
+	yqV97oz6BaMvMktXh/rkScDayR7Rclc9VT49Au14=
+From: ClickUp Team <help@clickup.com>
+To: user.idc004@gmail.com
+Subject: Warm chocolate ClickUp cookies
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Message-ID: <010201903b49e5ca-9c2a1bec-d574-4603-b87b-81e2e87cdec7-000000@eu-west-1.amazonses.com>
+Date: Fri, 21 Jun 2024 14:53:37 +0000
+Feedback-ID: ::1.eu-west-1.iCCjK59DSNRF1/TOjtYJC5mZdzx0ibvbZeWczZMJtJk=:AmazonSES
+X-SES-Outgoing: 2024.06.21-54.240.3.27
+X-TUID: 0aG6g8voe4gR
+
+
+<!DOCTYPE html>
+<html lang=3D"en" xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:sch=
+emas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office"=
+>
+<head>
+=09<meta charset=3D"utf-8">
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width">
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+    <meta name=3D"x-apple-disable-message-reformatting">=20
+    <meta name=3D"format-detection" content=3D"telephone=3Dno,address=3Dno,=
+email=3Dno,date=3Dno,url=3Dno">
+    <meta name=3D"color-scheme" content=3D"light dark">
+    <meta name=3D"supported-color-schemes" content=3D"light dark">
+
+</head>
+<style type=3D"text/css">
+    @font-face {
+        font-family: "Axiforma"; src: url("https://clickup.com/emails/fonts=
+/Axiforma-Regular.ttf");
+        font-weight: 400; font-style: normal;
+    }
+
+    @font-face {
+        font-family: "Axiforma"; src: url("https://clickup.com/emails/fonts=
+/Axiforma-Medium.ttf");
+        font-weight: 500; font-style: normal;
+    }
+
+    @font-face {
+        font-family: "Axiforma"; src: url("https://clickup.com/emails/fonts=
+/Axiforma-SemiBold.ttf");
+        font-weight: 600; font-style: normal;
+    }
+
+    @font-face {
+        font-family: "Axiforma"; src: url("https://clickup.com/emails/fonts=
+/Axiforma-ExtraBold.ttf");
+        font-weight: 800; font-style: normal;
+    }
+
+
+    @media (prefers-color-scheme: dark) {
+=09=09.dark-mode_white-text {
+        =09color: #FFFFFF !important;
+            /* mix-blend-mode: screen; */
+        }
+        .dark-mode_white-bg {
+        =09background-image: url('https://clickup.com/emails/images/bg-whit=
+e.png');
+        }
+    }
+
+=09@media screen and (max-width: 780px) {
+
+=09=09.learn-item {
+=09=09=09display: block !important;
+=09=09=09width: 80% !important;
+=09=09=09max-width: 80% !important;
+=09=09=09direction: ltr !important;
+=09=09}
+=09}
+
+=09@media screen and (max-width: 480px) {
+=09=09.learn-item {
+=09=09=09display: block !important;
+=09=09=09width: 100% !important;
+=09=09=09max-width: 100% !important;
+=09=09=09direction: ltr !important;
+=09=09}
+
+=09=09.content-container {
+=09=09=09padding: 0 15px !important;
+=09=09}
+=09}
+</style>
+<!-- [if (gte mso 9)|(IE)]>
+  <style type=3D"text/css"> table {
+    border-collapse: collapse;
+  }</style><![endif]-->
+
+
+<body width=3D"100%" style=3D"margin: 0; padding: 0 !important; mso-line-he=
+ight-rule: exactly;">
+<center role=3D"article" aria-roledescription=3D"email" lang=3D"en" style=
+=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; table-layou=
+t: fixed; width: 100%;">
+
+=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-=
+spacing: 0;" width=3D"100%">
+=09=09<tbody>
+=09=09=09<tr>
+=09=09=09=09<td aria-hidden=3D"true" height=3D"40" style=3D"font-size: 0; l=
+ine-height: 0px;">
+=09=09=09=09  &nbsp;
+=09=09=09=09</td>
+=09=09=09  </tr>
+=09=09</tbody>
+=09</table>
+
+=09<div style=3D"margin: 0 auto; max-width: 800px;">
+
+=09=09<!-- [if (gte mso 9)|(IE)]>
+=09=09<table width=3D"600" align=3D"center">
+=09=09<tr>
+=09=09=09<td><![endif]-->
+
+=09=09<table align=3D"center" style=3D"margin: 0 auto; border-spacing: 0; c=
+olor: #111111; font-family: 'Axiforma',Helvetica,Arial,sans-serif; max-widt=
+h: 800px; width: 100%;">
+=09=09=09<tbody>
+=09=09=09=09<tr>
+=09=09=09=09=09<td style=3D"padding: 0px 20px;">
+
+=09=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09<td align=3D"left" style=3D"padding: 0;" valign=
+=3D"top" width=3D"200">
+=09=09=09=09=09=09=09=09=09=09<a href=3D"https://clickup.com/" rel=3D"noope=
+ner" target=3D"_blank"><img alt=3D"ClickUp" border=3D"0" height=3D"60" src=
+=3D"https://clickup.com/emails/images/brand/v2/logo_background_white.png" s=
+tyle=3D"border: none; display: block; height: 61px !important; margin: 0; p=
+adding: 0; width: 187px !important;" width=3D"187" /></a>
+=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09<td align=3D"right" style=3D"padding-left: 10px;=
+ color: #cccccc;">
+=09=09=09=09=09=09=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"ma=
+rgin: 0; color: #666666; font-family: 'Axiforma',Helvetica,Arial,sans-serif=
+; font-size: 14px; font-weight: 500; line-height: 19px; padding: 0; font-st=
+yle: italic;"><em>Let's make the world more productive, together.</em></p>
+=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09<td aria-hidden=3D"true" height=3D"30" style=3D"=
+font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09</table>
+=09=09=09=09=09</td>
+=09=09=09=09</tr>
+=09=09=09=09<tr>
+=09=09=09=09=09<td style=3D"padding: 0px 20px;">
+
+=09=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"-moz-box-shadow: 0px 7px 35px 0px rgba(123,104,238,0.2); -webkit-bo=
+x-shadow: 0px 7px 35px 0px rgba(123,104,238,0.2); border-collapse: separate=
+ !important; border-radius: 20px; border-spacing: 0; box-shadow: 0px 7px 35=
+px 0px rgba(123,104,238,0.2); color: #111111; font-family: 'Axiforma',Helve=
+tica,Arial,sans-serif; border: 1px solid #e4e2e2;" width=3D"100%">
+=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09<td align=3D"center" style=3D"padding: 0;" valig=
+n=3D"top">
+
+=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" style=3D"-moz-box-shadow: 0px 7px 35px 0px rgba(123,104,238,0.2)=
+; -webkit-box-shadow: 0px 7px 35px 0px rgba(123,104,238,0.2); border-collap=
+se: separate !important; border-radius: 20px; border-spacing: 0; box-shadow=
+: 0px 7px 35px 0px rgba(123,104,238,0.2); color: #111111; font-family: 'Axi=
+forma',Helvetica,Arial,sans-serif; border: 0px solid #e4e2e2;" width=3D"100=
+%">
+=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D"center" style=3D"paddin=
+g: 0;" valign=3D"top">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"presentation" cell=
+spacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" style=3D"margin=
+: auto;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D"text-align: ce=
+nter; background-image: url('https://clickup.com/emails/images/new-user/bg-=
+shape.png'); background-position: top center !important; background-size: 1=
+20% 90% !important; background-repeat: no-repeat !important; -moz-border-ra=
+dius: 20px; -webkit-border-radius: 20px; border-collapse: separate !importa=
+nt; border-spacing: 0; border-radius: 20px;">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"100%"=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hidden=
+=3D"true" height=3D"60" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"presentat=
+ion" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=
+=3D"border-spacing: 0; color: #242128; font-family: 'Axiforma',Helvetica,Ar=
+ial,sans-serif; font-size: 14px; text-align: left; width: 100%; max-width:9=
+0%; margin: auto;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D"ce=
+nter" style=3D"padding: 0 20px;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<p style=3D"=
+margin: 0; color: #ffffff; font-family: 'Axiforma',Helvetica,Arial,sans-ser=
+if; padding: 0; font-weight: bold; font-size: 38px; line-height: 52px;">Wel=
+come to the future of work.</p>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" wi=
+dth=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ aria-hidden=3D"true" height=3D"15" style=3D"font-size: 0; line-height: 0px=
+;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nb=
+sp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<p style=3D"=
+margin: 0; color: #ffffff; font-family: 'Axiforma',Helvetica,Arial,sans-ser=
+if; font-size: 17px; line-height: 19px; padding: 0;">Work on anything, with=
+ anyone.</p>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" wi=
+dth=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ aria-hidden=3D"true" height=3D"25" style=3D"font-size: 0; line-height: 0px=
+;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nb=
+sp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bgcol=
+or=3D"#FFFFFF" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"ba=
+ckground: #FFFFFF; box-shadow: 0px 10px 25px rgba(75, 64, 143, 0.5); border=
+-spacing: 0; color: #8B3AF5 !important; font-family: 'Axiforma',Helvetica,A=
+rial,sans-serif; height: 56px; max-width: 200px; width: 200px !important; b=
+order-radius: 9px;" width=3D"200">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ align=3D"center" height=3D"56" style=3D"color: #8B3AF5 !important; padding=
+: 0;" valign=3D"middle">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"dark-mode_white-bg" href=3D"https://app.clickup.com?login_token=
+=3DeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNiVkFxWkNGdVJBPSJ9.eyJpZCI=
+6NzQ1NDU3NTEsImxvZ2luVG9rZW4iOnRydWUsImlhdCI6MTcxODk4MTYxNiwiZXhwIjoxNzI2Nz=
+U3NjE2fQ.Enie3nRdMbkJYMTlJygk6xJvB5WOAqGF3LyQUN6w67o" rel=3D"noopener" styl=
+e=3D"margin: 0 !important; color: #8B3AF5 !important; display: inline-block=
+; font-family: 'Axiforma',Helvetica,Arial,sans-serif; font-size: 14px; font=
+-weight: 800; line-height: 56px; max-width: 200px; padding: 0; text-decorat=
+ion: none; width: 200px !important; border-radius: 9px;" target=3D"_blank">=
+Play with ClickUp</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"100%"=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hidden=
+=3D"true" height=3D"50" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"100%"=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D"ce=
+nter" style=3D"padding: 0" valign=3D"top" ><img alt=3D"ClickUp Views" borde=
+r=3D"0" src=3D"https://t333.s.clickup-attachments.com/t333/183a84cc-c641-44=
+fb-b87d-b85b115602f4/views2.gif" style=3D"border: none; border-radius: 9px;=
+ display: block; width: 85%; box-shadow: 0px 14px 15px rgba(0, 0, 0, 0.1); =
+max-width: 550px;" width=3D"85%" /></td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>=09=09=09=09=09=09=09=09=
+=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D"padding: 0 =
+35px;" align=3D"center" class=3D"content-container">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"70" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0; color: #1111=
+11; font-family: 'Axiforma',Helvetica,Arial,sans-serif;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" style=3D"padding: 0;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<p style=
+=3D"margin: 0; color: #111111; font-family: 'Axiforma',Helvetica,Arial,sans=
+-serif; font-size: 35px; font-weight: bold; line-height: 35px; padding: 0;"=
+ class=3D"dark-mode_white-text">Learn</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"25" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if mso]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"presen=
+tation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"660">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valign=3D"top" wi=
+dth=3D"330">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div style=3D"display=
+:inline-block; margin: 0 -1px; width:100%; min-width:200px; max-width:330px=
+; vertical-align:top;" class=3D"learn-item">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"pre=
+sentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D=
+"padding: 0 4px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table ro=
+le=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ style=3D"padding: 0 20px; background-color: #00B884; background-image: lin=
+ear-gradient(#00B884,#00B884); border-radius: 15px; box-shadow: 0px 20px 25=
+px 0px rgba(255, 218, 80, 0.2);">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a href=3D"https://university.clickup.com/" rel=3D"noopener" target=3D"_bla=
+nk" style=3D"text-decoration: none;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table style=3D"width: 100%; margin: 0; padding: 0;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"color: #FFFFFF; margin: 0; padding: 0;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 22px; =
+line-height: 32px; font-weight: bold; margin: 0; padding: 0;">ClickUp Unive=
+rsity</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 11px; =
+line-height: 16px; margin: 0; padding: 0;" >Get schooled in mastering Click=
+Up</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"width: 45px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<div style=3D"border-radius: 50%;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09<img alt=3D"ClickUp University" style=3D"width: 45px; hei=
+ght: 45px;" border=3D"0" src=3D"https://clickup.com/emails/images/new-user/=
+learn/clickup-u.png"/>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;"=
+ width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td aria-hidden=3D"true" height=3D"10" style=3D"font-size: 0; line-height: =
+0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  <=
+/tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbod=
+y>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if mso]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valign=3D"top" wi=
+dth=3D"330">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]-->
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div style=3D"display=
+:inline-block; margin: 0 -1px; width:100%; min-width:200px; max-width:330px=
+; vertical-align:top;" class=3D"learn-item">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"pre=
+sentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D=
+"padding: 0 4px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table ro=
+le=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ style=3D"padding: 0 20px; background-color: #FFC800; background-image: lin=
+ear-gradient(#FFC800,#FFC800); border-radius: 15px; box-shadow: 0px 10px 15=
+px rgba(255, 218, 80, 0.2);">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a href=3D"https://www.youtube.com/channel/UCJC7egHqghye211WgTuXMAw/videos"=
+ rel=3D"noopener" target=3D"_blank" style=3D"text-decoration: none;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table style=3D"width: 100%; margin: 0; padding: 0;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"color: #FFFFFF;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 22px; =
+line-height: 32px; font-weight: bold; margin: 0; padding: 0;">Demo</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 11px; =
+line-height: 16px; margin: 0; padding: 0;" >Learn the platform with an inte=
+ractive demo</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"width: 45px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<div style=3D"border-radius: 50%;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09<img alt=3D"ClickUp University" style=3D"width: 45px; hei=
+ght: 45px;" border=3D"0" src=3D"https://clickup.com/emails/images/new-user/=
+learn/videos.png"/>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;"=
+ width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td aria-hidden=3D"true" height=3D"10" style=3D"font-size: 0; line-height: =
+0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  <=
+/tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbod=
+y>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if mso]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]-->
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D"padding: 0 =
+35px;" align=3D"center" class=3D"content-container">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if mso]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"presen=
+tation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"660">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valign=3D"top" wi=
+dth=3D"220">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div style=3D"display=
+:inline-block; margin: 0 -1px; max-width: 220px; min-width:160px; vertical-=
+align:top; width:100%;" class=3D"learn-item">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"pre=
+sentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D=
+"padding: 0 4px;">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table ro=
+le=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ style=3D"padding: 0 20px; background-color: #FD71AF; background-image: lin=
+ear-gradient(#FD71AF,#FD71AF); border-radius: 15px; box-shadow: 0px 10px 15=
+px rgba(252, 114, 175, 0.2);">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a href=3D"https://docs.clickup.com/" rel=3D"noopener" target=3D"_blank" st=
+yle=3D"text-decoration: none;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table style=3D"width: 100%;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"color: #FFFFFF;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 22px; =
+line-height: 32px; font-weight: bold; margin: 0; padding: 0;">Docs</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 11px; =
+line-height: 16px;  margin: 5px 0; padding: 0;" >Find answers to any ClickU=
+p question</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"width: 45px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<div style=3D"border-radius: 50%;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09<img alt=3D"ClickUp University" style=3D"width: 45px; hei=
+ght: 45px;" border=3D"0" src=3D"https://clickup.com/emails/images/new-user/=
+learn/docs.png"/>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;"=
+ width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td aria-hidden=3D"true" height=3D"10" style=3D"font-size: 0; line-height: =
+0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  <=
+/tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbod=
+y>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if mso]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valign=3D"top" wi=
+dth=3D"220">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div style=3D"display=
+:inline-block; margin: 0 -1px; max-width: 220px; min-width:160px; vertical-=
+align:top; width:100%;" class=3D"learn-item">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"pre=
+sentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D=
+"padding: 0 4px;">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table ro=
+le=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ style=3D"padding: 0 20px; background-color: #3874E3; background-image: lin=
+ear-gradient(#3874E3,#3874E3); border-radius: 15px; box-shadow: 0px 10px 15=
+px rgba(56, 116, 227, 0.2);">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a href=3D"https://facebook.com/groups/ClickUppers" rel=3D"noopener" target=
+=3D"_blank" style=3D"text-decoration: none;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table style=3D"width: 100%;" valign=3D"top"><tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td style=3D"color: #FFFFFF;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 22px; lin=
+e-height: 32px; font-weight: bold; margin: 0; padding: 0;">Facebook</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 11px; lin=
+e-height: 16px; margin: 5px 0; padding: 0;" >Join our official Facebook Gro=
+up</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td style=3D"width: 45px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<div style=3D"border-radius: 50%;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<img alt=3D"ClickUp University" style=3D"width: 45px; height=
+: 45px;" border=3D"0" src=3D"https://clickup.com/emails/images/new-user/lea=
+rn/facebook.png"/>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody></table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;"=
+ width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td aria-hidden=3D"true" height=3D"10" style=3D"font-size: 0; line-height: =
+0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  <=
+/tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbod=
+y>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if mso]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valign=3D"top" wi=
+dth=3D"220">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div style=3D"display=
+:inline-block; margin: 0 -1px; max-width: 220px; min-width:160px; vertical-=
+align:top; width:100%;" class=3D"learn-item">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table role=3D"pre=
+sentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D=
+"padding: 0 4px;">
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table ro=
+le=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ style=3D"padding: 0 20px; background-color: #FD7171; background-image: lin=
+ear-gradient(#FD7171,#FD7171); border-radius: 15px; box-shadow: 0px 10px 15=
+px rgba(253, 113, 113, 0.2);">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a href=3D"https://clickup.com/help" rel=3D"noopener" target=3D"_blank" sty=
+le=3D"text-decoration: none;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table style=3D"width: 100%;" valign=3D"top"><tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td style=3D"color: #FFFFFF;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 22px; lin=
+e-height: 32px; font-weight: bold; margin: 0; padding: 0;">Help</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<p class=3D"dark-mode_white-text" style=3D"font-size: 11px; lin=
+e-height: 16px; margin: 5px 0; padding: 0;" >Chat with world-class support =
+24/7</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td style=3D"width: 45px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<div style=3D"border-radius: 50%;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<img alt=3D"ClickUp University" style=3D"width: 45px; height=
+: 45px;" border=3D"0" src=3D"https://clickup.com/emails/images/new-user/lea=
+rn/help.png"/>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody></table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spa=
+cing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<td aria-hidden=3D"true" height=3D"20" style=3D"font-size: 0; line=
+-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;"=
+ width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td aria-hidden=3D"true" height=3D"10" style=3D"font-size: 0; line-height: =
+0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  <=
+/tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbod=
+y>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if mso]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]-->
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hidden=3D"true"=
+ height=3D"70" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D"padding: 0 =
+35px;" align=3D"center" class=3D"content-container">=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0px; font-famil=
+y: 'Axiforma',Helvetica,Arial,sans-serif; position: relative;" width=3D"100=
+%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D=
+"padding: 0; margin: 0; background-color: #FFF1F7; width: 100%; border-radi=
+us: 15px;" align=3D"center">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if m=
+so]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table ro=
+le=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"688">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valig=
+n=3D"top" width=3D"337">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]=
+-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div styl=
+e=3D"display:inline-block; margin: 0 -1px; width:100%; min-width:200px; max=
+-width:337px; vertical-align:top;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table=
+ role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" wid=
+th=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td style=3D"padding: 0 30px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-=
+spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td aria-hidden=3D"true" height=3D"30" style=3D"font-size: 0; l=
+ine-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-=
+spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<img src=3D"https://clickup.com/emails/images/new-user/email=
+.png" style=3D"width: 60px; height:60px; box-shadow: 0px 10px 15px rgba(123=
+, 104, 238, 0.2); border-radius: 14px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"height: 5px; margin: 0; padding: 0; line-height: 1=
+0px;">&nbsp;</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p style=3D"margin: 0; color: #292D34; font-family: 'Axiform=
+a',Helvetica,Arial,sans-serif; font-size: 30px; font-weight: 800; line-heig=
+ht: 1.5; padding: 0;">Give people the gift of time.</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09<td aria-hidden=3D"true" height=3D"10" style=3D"fon=
+t-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p style=3D"color: #7C828D; font-family: 'Axiforma',Helvetic=
+a,Arial,sans-serif; font-size: 13px; font-weight: 400; margin: 0; padding: =
+0;">Invite your team!</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td class=3D"mobile-gap" style=3D"height: 45px; margin: 0; padd=
+ing: 0; line-height: 10px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<a href=3D"https://app.clickup.com/9015765395/settings/notif=
+ications" rel=3D"noopener" style=3D"margin: 0; color: #000000 !important; f=
+ont-family: 'Axiforma',Helvetica,Arial,sans-serif; font-size: 13px; font-we=
+ight: 800; line-height: 1; padding: 0; text-decoration: none;" target=3D"_b=
+lank">Find out more <span style=3D"color: #FD71AF; font-size: 18px; font-we=
+ight: 200; position: relative; left: 8px;">=E2=86=92</span></a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-=
+spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td aria-hidden=3D"true" height=3D"30" style=3D"font-size: 0; l=
+ine-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+r>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tabl=
+e>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if m=
+so]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valig=
+n=3D"bottom" width=3D"350">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]=
+-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div styl=
+e=3D"display:inline-block; margin: 0 -1px; width:100%; min-width:200px; max=
+-width:350px; vertical-align:bottom;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table=
+ role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" wid=
+th=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<a href=3D"https://app.clickup.com/9015765395/settings/notifications" re=
+l=3D"noopener" style=3D"margin: 0; padding: 0; text-decoration: none;" targ=
+et=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<img src=3D"https://t333.s.clickup-attachments.com/t333/43df2be6-8e6c-45=
+36-9426-f09d1800e77e/Settings.png" style=3D"width: 100%; border-radius: 15p=
+x; display: block;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+r>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tabl=
+e>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if m=
+so]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]=
+-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"50" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0px; font-famil=
+y: 'Axiforma',Helvetica,Arial,sans-serif; position: relative;" width=3D"100=
+%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td style=3D=
+"padding: 0; margin: 0; background-color: #F2F0FD; width: 100%; border-radi=
+us: 15px;" align=3D"center">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if m=
+so]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table ro=
+le=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"688">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valig=
+n=3D"top" width=3D"337">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]=
+-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div styl=
+e=3D"display:inline-block; margin: 0 -1px; width:100%; min-width:200px; max=
+-width:337px; vertical-align:top;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table=
+ role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" wid=
+th=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td style=3D"padding: 0 30px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-=
+spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td aria-hidden=3D"true" height=3D"30" style=3D"font-size: 0; l=
+ine-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-=
+spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<img src=3D"https://clickup.com/emails/images/new-user/bell.=
+png" style=3D"width: 60px; height:60px; box-shadow: 0px 10px 15px rgba(123,=
+ 104, 238, 0.2); border-radius: 14px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td style=3D"height: 5px; margin: 0; padding: 0; line-height: 1=
+0px;">&nbsp;</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p style=3D"margin: 0; color: #292D34; font-family: 'Axiform=
+a',Helvetica,Arial,sans-serif; font-size: 30px; font-weight: 800; line-heig=
+ht: 1.5; padding: 0;">Turn on/off notifications.</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09<td aria-hidden=3D"true" height=3D"10" style=3D"fon=
+t-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<p style=3D"color: #7C828D; font-family: 'Axiforma',Helvetic=
+a,Arial,sans-serif; font-size: 13px; font-weight: 400; margin: 0; padding: =
+0;">You're in complete control.</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td class=3D"mobile-gap" style=3D"height: 45px; margin: 0; padd=
+ing: 0; line-height: 10px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09<a href=3D"https://app.clickup.com/9015765395/settings/notif=
+ications" rel=3D"noopener" style=3D"margin: 0; color: #000000 !important; f=
+ont-family: 'Axiforma',Helvetica,Arial,sans-serif; font-size: 13px; font-we=
+ight: 800; line-height: 1; padding: 0; text-decoration: none;" target=3D"_b=
+lank">Find out more <span style=3D"color: #7B68EE; font-size: 18px; font-we=
+ight: 200; position: relative; left: 8px;">=E2=86=92</span></a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-=
+spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09<td aria-hidden=3D"true" height=3D"30" style=3D"font-size: 0; l=
+ine-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+r>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tabl=
+e>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if m=
+so]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td valig=
+n=3D"bottom" width=3D"350">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]=
+-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<div styl=
+e=3D"display:inline-block; margin: 0 -1px; width:100%; min-width:200px; max=
+-width:350px; vertical-align:bottom;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table=
+ role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" wid=
+th=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<a href=3D"https://app.clickup.com/9015765395/settings/notifications" re=
+l=3D"noopener" style=3D"margin: 0; padding: 0; text-decoration: none;" targ=
+et=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09<img src=3D"https://t333.s.clickup-attachments.com/t333/5a80bc83-d962-41=
+c3-bd56-a5722c902bd2/notifications.png" style=3D"width: 100%; border-radius=
+: 15px; display: block;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+r>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tabl=
+e>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</div>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<!--[if m=
+so]>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<![endif]=
+-->
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"90" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0; color: #1111=
+11; font-family: 'Axiforma',Helvetica,Arial,sans-serif;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>=09=09=09=
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" style=3D"padding: 0;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<p style=
+=3D"margin: 0; color: #111111; font-family: 'Axiforma',Helvetica,Arial,sans=
+-serif; font-size: 35px; font-weight: bold; line-height: 1; padding: 0;" cl=
+ass=3D"dark-mode_white-text">Import</p>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;"=
+ width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td aria-hidden=3D"true" height=3D"30" style=3D"font-size: 0; line-height: =
+0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  <=
+/tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbod=
+y>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table><t=
+body>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td=
+ class=3D"mobile-less-width" align=3D"center" style=3D"padding: 0px; text-a=
+lign: center;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/11162=
+06-importing-from-asana" style=3D"display: inline-block; margin: 0px !impor=
+tant; padding: 0; text-decoration: none;background: #FAFBFC; border-radius:=
+ 9px; color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; f=
+ont-size: 12px; font-weight: 600; text-align: center; height: 70px; line-he=
+ight: 70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09Asana
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/12016=
+03-importing-from-trello" style=3D"display: inline-block; margin: 0px !impo=
+rtant; padding: 0; text-decoration: none;background: #FAFBFC; border-radius=
+: 9px; color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; =
+font-size: 12px; font-weight: 600; text-align: center; height: 70px; line-h=
+eight: 70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09Trello
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/14813=
+96-import-from-newest-jira-version" style=3D"display: inline-block; margin:=
+ 0px !important; padding: 0; text-decoration: none;background: #FAFBFC; bor=
+der-radius: 9px; color: #000000; font-family: 'Axiforma',Helvetica,Arial,sa=
+ns-serif; font-size: 12px; font-weight: 600; text-align: center; height: 70=
+px; line-height: 70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09Jira
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/15001=
+54-todoist-import" style=3D"display: inline-block; margin: 0px !important; =
+padding: 0; text-decoration: none;background: #FAFBFC; border-radius: 9px; =
+color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; font-si=
+ze: 12px; font-weight: 600; text-align: center; height: 70px; line-height: =
+70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09Todoist
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/36208=
+90-import-from-monday-com" style=3D"display: inline-block; margin: 0px !imp=
+ortant; padding: 0; text-decoration: none;background: #FAFBFC; border-radiu=
+s: 9px; color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif;=
+ font-size: 12px; font-weight: 600; text-align: center; height: 70px; line-=
+height: 70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09Monday
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/36558=
+10-import-from-basecamp" style=3D"display: inline-block; margin: 0px !impor=
+tant; padding: 0; text-decoration: none;background: #FAFBFC; border-radius:=
+ 9px; color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; f=
+ont-size: 12px; font-weight: 600; text-align: center; height: 70px; line-he=
+ight: 70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09Basecamp
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/37148=
+57-import-from-wrike" style=3D"display: inline-block; margin: 0px !importan=
+t; padding: 0; text-decoration: none;background: #FAFBFC; border-radius: 9p=
+x; color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; font=
+-size: 12px; font-weight: 600; text-align: center; height: 70px; line-heigh=
+t: 70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09Wrike
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<a class=3D"import-item" href=3D"https://docs.clickup.com/en/articles/21189=
+70-import-tasks-from-csv" style=3D"display: inline-block; margin: 0px !impo=
+rtant; padding: 0; text-decoration: none;background: #FAFBFC; border-radius=
+: 9px; color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; =
+font-size: 12px; font-weight: 600; text-align: center; height: 70px; line-h=
+eight: 70px; width: 66px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+=09CSV
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+d>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody><=
+/table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" height=3D"60">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/import" rel=3D"noopener" style=3D"margin: 0; color:=
+ #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; font-size: 13=
+px; font-weight: 600; line-height: 1; padding: 0; text-decoration: none;" t=
+arget=3D"_blank" class=3D"dark-mode_white-text">See all ways to import <spa=
+n style=3D"color: #7B68EE; font-size: 18px; font-weight: 200; position: rel=
+ative; left: 8px;">=E2=86=92</span></a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"80" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09&nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0; color: #1111=
+11; font-family: 'Axiforma',Helvetica,Arial,sans-serif;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" style=3D"padding: 0;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<p style=
+=3D"margin: 0; color: #111111; font-family: 'Axiforma',Helvetica,Arial,sans=
+-serif; font-size: 35px; font-weight: bold; line-height: 1; padding: 0;" cl=
+ass=3D"dark-mode_white-text">Integrate</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"30" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0; color: #1111=
+11; font-family: 'Axiforma',Helvetica,Arial,sans-serif;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" style=3D"padding: 0px" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/integrations/slack" style=3D"display: inline-block;=
+ height: 65px; width: 65px; text-decoration: none; background-image: linear=
+-gradient(#FAFBFC,#FAFBFC); border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Slack" border=3D"0" src=3D"https://clickup.com/emails/images/new-user=
+/integrate/slack-transparent.png" style=3D"border: none; display: inline-bl=
+ock; height: 36px !important; margin: 15px; padding: 0; width: 36px !import=
+ant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/github-integration" style=3D"display: inline-block;=
+ height: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0; text-=
+decoration: none; background-image: linear-gradient(#FAFBFC,#FAFBFC); borde=
+r-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Github" border=3D"0" src=3D"https://clickup.com/emails/images/new-use=
+r/integrate/github-transparent.png" style=3D"border: none; display: inline-=
+block; height: 36px !important; margin: 15px; padding: 0; width: 36px !impo=
+rtant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/integrations/toggl" style=3D"display: inline-block;=
+ height: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0; text-=
+decoration: none; background-image: linear-gradient(#FAFBFC,#FAFBFC); borde=
+r-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Toggl" border=3D"0" src=3D"https://clickup.com/emails/images/new-user=
+/integrate/toggl-transparent.png" style=3D"border: none; display: inline-bl=
+ock; height: 36px !important; margin: 15px; padding: 0; width: 36px !import=
+ant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://zapier.com/app-directory/ClickUp/integrations/webhook/20101/sen=
+d-a-webhook-payload-when-new-tasks-are-created-in-ClickUp" style=3D"display=
+: inline-block; height: 65px; width: 65px; margin: 0 0 0 0px !important; pa=
+dding: 0; text-decoration: none; background-image: linear-gradient(#FAFBFC,=
+#FAFBFC); border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Webhooks" border=3D"0" src=3D"https://clickup.com/emails/images/new-u=
+ser/integrate/webhooks-transparent.png" style=3D"border: none; display: inl=
+ine-block; height: 36px !important; margin: 15px; padding: 0; width: 36px !=
+important;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/dropbox-cloud-storage" style=3D"display: inline-blo=
+ck; height: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0; te=
+xt-decoration: none; background-image: linear-gradient(#FAFBFC,#FAFBFC); bo=
+rder-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Dropbox" border=3D"0" src=3D"https://clickup.com/emails/images/new-us=
+er/integrate/dropbox-transparent.png" style=3D"border: none; display: inlin=
+e-block; height: 36px !important; margin: 15px; padding: 0; width: 36px !im=
+portant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://docs.clickup.com/integrations/harvest-time-tracking" style=3D"d=
+isplay: inline-block; height: 65px; width: 65px; margin: 0 0 0 0px !importa=
+nt; padding: 0; text-decoration: none; background-image: linear-gradient(#F=
+AFBFC,#FAFBFC); border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Harvest" border=3D"0" src=3D"https://clickup.com/emails/images/new-us=
+er/integrate/harvest-transparent.png" style=3D"border: none; display: inlin=
+e-block; height: 36px !important; margin: 15px; padding: 0; width: 36px !im=
+portant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/gitlab-integration" style=3D"display: inline-block;=
+ height: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0; text-=
+decoration: none; background-image: linear-gradient(#FAFBFC,#FAFBFC); borde=
+r-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Gitlab" border=3D"0" src=3D"https://clickup.com/emails/images/new-use=
+r/integrate/gitlab-transparent.png" style=3D"border: none; display: inline-=
+block; height: 36px !important; margin: 15px; padding: 0; width: 36px !impo=
+rtant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://docs.clickup.com/en/articles/4478700-discord-integration" style=
+=3D"display: inline-block; height: 65px; width: 65px; margin: 0 0 0 0px !im=
+portant; padding: 0; text-decoration: none; background-image: linear-gradie=
+nt(#FAFBFC,#FAFBFC); border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Slack" border=3D"0" src=3D"https://clickup.com/emails/images/new-user=
+/integrate/discord-transparent.png" style=3D"border: none; display: inline-=
+block; height: 36px !important; margin: 15px; padding: 0; width: 36px !impo=
+rtant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/bitbucket-integration" style=3D"display: inline-blo=
+ck; height: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0; te=
+xt-decoration: none; background-image: linear-gradient(#FAFBFC,#FAFBFC); bo=
+rder-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Bitbucket" border=3D"0" src=3D"https://clickup.com/emails/images/new-=
+user/integrate/bitbucket-transparent.png" style=3D"border: none; display: i=
+nline-block; height: 36px !important; margin: 15px; padding: 0; width: 36px=
+ !important;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://docs.clickup.com/features/calendar-syncing-with-outlook-apple-c=
+alendar-ical" style=3D"display: inline-block; height: 65px; width: 65px; ma=
+rgin: 0 0 0 0px !important; padding: 0; text-decoration: none; background-i=
+mage: linear-gradient(#FAFBFC,#FAFBFC); border-radius: 8px;" target=3D"_bla=
+nk">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Sync with Calendars" border=3D"0" src=3D"https://clickup.com/emails/i=
+mages/new-user/integrate/calendar-sync-transparent.png" style=3D"border: no=
+ne; display: inline-block; height: 36px !important; margin: 15px; padding: =
+0; width: 36px !important;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/google-calendar-task-sync" style=3D"display: inline=
+-block; height: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0=
+; text-decoration: none; background-image: linear-gradient(#FAFBFC,#FAFBFC)=
+; border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Google Calendar" border=3D"0" src=3D"https://clickup.com/emails/image=
+s/new-user/integrate/google-calendar-transparent.png" style=3D"border: none=
+; display: inline-block; height: 36px !important; margin: 15px; padding: 0;=
+ width: 36px !important;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://docs.clickup.com/en/articles/1761638-cloud-storage-dropbox-goog=
+le-drive" style=3D"display: inline-block; height: 65px; width: 65px; margin=
+: 0 0 0 0px !important; padding: 0; text-decoration: none; background-image=
+: linear-gradient(#FAFBFC,#FAFBFC); border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Google Drive" border=3D"0" src=3D"https://clickup.com/emails/images/n=
+ew-user/integrate/google-drive-transparent.png" style=3D"border: none; disp=
+lay: inline-block; height: 36px !important; margin: 15px; padding: 0; width=
+: 36px !important;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://docs.clickup.com/en/articles/1914554-embedding-in-clickup" styl=
+e=3D"display: inline-block; height: 65px; width: 65px; margin: 0 0 0 0px !i=
+mportant; padding: 0; text-decoration: none; background-image: linear-gradi=
+ent(#FAFBFC,#FAFBFC); border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Google Sheets" border=3D"0" src=3D"https://clickup.com/emails/images/=
+new-user/integrate/google-sheets-transparent.png" style=3D"border: none; di=
+splay: inline-block; height: 36px !important; margin: 15px; padding: 0; wid=
+th: 28px !important;" width=3D"28" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/integrations/timedoctor" style=3D"display: inline-b=
+lock; height: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0; =
+text-decoration: none; background-image: linear-gradient(#FAFBFC,#FAFBFC); =
+border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Timedoctor" border=3D"0" src=3D"https://clickup.com/emails/images/new=
+-user/integrate/timedoctor-transparent.png" style=3D"border: none; display:=
+ inline-block; height: 36px !important; margin: 15px; padding: 0; width: 36=
+px !important;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>=20
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://docs.clickup.com/en/articles/3922396-zoom-integration" style=3D=
+"display: inline-block; height: 65px; width: 65px; margin: 0 0 0 0px !impor=
+tant; padding: 0; text-decoration: none; background-image: linear-gradient(=
+#FAFBFC,#FAFBFC); border-radius: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"Timedoctor" border=3D"0" src=3D"https://clickup.com/emails/images/new=
+-user/integrate/zoom-transparent.png" style=3D"border: none; display: inlin=
+e-block; height: 36px !important; margin: 15px; padding: 0; width: 36px !im=
+portant;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/integrations" style=3D"display: inline-block; heigh=
+t: 65px; width: 65px; margin: 0 0 0 0px !important; padding: 0; text-decora=
+tion: none; background-image: linear-gradient(#FAFBFC,#FAFBFC); border-radi=
+us: 8px;" target=3D"_blank">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img a=
+lt=3D"1000 more integrations ClickUp" border=3D"0" src=3D"https://clickup.c=
+om/emails/images/new-user/integrate/thousand-transparent.png" style=3D"bord=
+er: none; display: inline-block; height: 24px !important; margin: 21px 15px=
+; padding: 0; width: 36px !important;" width=3D"36" height=3D"36" />
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td height=
+=3D"20" style=3D"line-height:10px">&nbsp;</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" style=3D"padding: 0;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://clickup.com/integrations" rel=3D"noopener" style=3D"margin: 0; =
+color: #000000; font-family: 'Axiforma',Helvetica,Arial,sans-serif; font-si=
+ze: 13px; font-weight: 800; line-height: 1; padding: 0; text-decoration: no=
+ne;" target=3D"_blank" class=3D"dark-mode_white-text">See all integrations =
+<span style=3D"color: #7B68EE; font-size: 18px; font-weight: 200; position:=
+ relative; left: 8px;">=E2=86=92</span></a>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"80" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0; color: #1111=
+11; font-family: 'Axiforma',Helvetica,Arial,sans-serif;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" style=3D"padding: 0;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<p style=3D"=
+margin: 0; color: #111111; font-family: 'Axiforma',Helvetica,Arial,sans-ser=
+if; font-size: 35px; font-weight: bold; line-height: 35px; padding: 0;" cla=
+ss=3D"dark-mode_white-text">Download</p>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"30" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0; color: #1111=
+11; font-family: 'Axiforma',Helvetica,Arial,sans-serif;" width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" style=3D"padding: 0 20px 0 30px;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<a href=
+=3D"https://desktop.clickup.com/mac" rel=3D"noopener" style=3D"display: inl=
+ine-block; line-height: 80px; padding: 0; text-decoration: none;" target=3D=
+"_blank"><img alt=3D"Mac ClickUp" border=3D"0" height=3D"80" src=3D"https:/=
+/clickup.com/emails/images/v2/download/mac.png" style=3D"border: none; disp=
+lay: inline-block; height: 80px !important; margin: 0; padding: 0; width: 1=
+50px !important;" width=3D"150" /></a> <a href=3D"https://desktop.clickup.c=
+om/windows" rel=3D"noopener" style=3D"display: inline-block; line-height: 8=
+0px; padding: 0; text-decoration: none;" target=3D"_blank"><img alt=3D"Wind=
+ows ClickUp" border=3D"0" height=3D"80" src=3D"https://clickup.com/emails/i=
+mages/v2/download/windows.png" style=3D"border: none; display: inline-block=
+; height: 80px !important; margin: 0; padding: 0; width: 150px !important;"=
+ width=3D"150" /></a> <a href=3D"https://apps.apple.com/us/app/clickup-mana=
+ge-teams-tasks/id1535098836" rel=3D"noopener" style=3D"display: inline-bloc=
+k; line-height: 80px; padding: 0; text-decoration: none;" target=3D"_blank"=
+><img alt=3D"App Store ClickUp" border=3D"0" height=3D"80" src=3D"https://c=
+lickup.com/emails/images/v2/download/app-store.png" style=3D"border: none; =
+display: inline-block; height: 80px !important; margin: 0; padding: 0; widt=
+h: 150px !important;" width=3D"150" /></a> <a href=3D"https://play.google.c=
+om/store/apps/details?id=3Dco.mangotechnologies.clickup" rel=3D"noopener" s=
+tyle=3D"display: inline-block; line-height: 80px; padding: 0; text-decorati=
+on: none;" target=3D"_blank"><img alt=3D"Google Play ClickUp" border=3D"0" =
+height=3D"80" src=3D"https://clickup.com/emails/images/v2/download/google-p=
+lay.png" style=3D"border: none; display: inline-block; height: 80px !import=
+ant; margin: 0; padding: 0; width: 150px !important;" width=3D"150" /></a> =
+<a href=3D"https://chrome.google.com/webstore/detail/ClickUp/pliibjocnfmkag=
+afnbkfcimonlnlpghj" rel=3D"noopener" style=3D"display: inline-block; line-h=
+eight: 80px; padding: 0; text-decoration: none;" target=3D"_blank"><img alt=
+=3D"Chrome ClickUp" border=3D"0" height=3D"80" src=3D"https://clickup.com/e=
+mails/images/v2/download/chrome.png" style=3D"border: none; display: inline=
+-block; height: 80px !important; margin: 0; padding: 0; width: 150px !impor=
+tant;" width=3D"150" /></a> <a href=3D"https://appsource.microsoft.com/en-u=
+s/product/office/WA104382026?tab=3DOverview" rel=3D"noopener" style=3D"disp=
+lay: inline-block; line-height: 80px; padding: 0; text-decoration: none;" t=
+arget=3D"_blank"><img alt=3D"Outlook ClickUp" border=3D"0" height=3D"80" sr=
+c=3D"https://clickup.com/emails/images/v2/download/outlook.png" style=3D"bo=
+rder: none; display: inline-block; height: 80px !important; margin: 0; padd=
+ing: 0; width: 150px !important;" width=3D"150" /></a> <a href=3D"https://a=
+ssistant.google.com/services/a/uid/000000fc81b2e464?hl=3Den-US" rel=3D"noop=
+ener" style=3D"display: inline-block; line-height: 80px; padding: 0; text-d=
+ecoration: none;" target=3D"_blank"><img alt=3D"Google Assistant ClickUp" b=
+order=3D"0" height=3D"80" src=3D"https://clickup.com/emails/images/v2/downl=
+oad/google-assistant.png" style=3D"border: none; display: inline-block; hei=
+ght: 80px !important; margin: 0; padding: 0; width: 150px !important;" widt=
+h=3D"150" /></a> <a href=3D"https://www.amazon.com/gp/product/B0795DTYJY" r=
+el=3D"noopener" style=3D"display: inline-block; line-height: 80px; padding:=
+ 0; text-decoration: none;" target=3D"_blank"><img alt=3D"Amazon ClickUp" b=
+order=3D"0" height=3D"80" src=3D"https://clickup.com/emails/images/v2/downl=
+oad/alexa.png" style=3D"border: none; display: inline-block; height: 80px !=
+important; margin: 0; padding: 0; width: 150px !important;" width=3D"150" /=
+></a> <a href=3D"https://clickup.com/ClickUp_Linux.zip" rel=3D"noopener" st=
+yle=3D"display: inline-block; line-height: 80px; padding: 0; text-decoratio=
+n: none;" target=3D"_blank"><img alt=3D"Linux ClickUp" border=3D"0" height=
+=3D"80" src=3D"https://clickup.com/emails/images/v2/download/linux.png" sty=
+le=3D"border: none; display: inline-block; height: 80px !important; margin:=
+ 0; padding: 0; width: 150px !important;" width=3D"150" /></a>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;"=
+ width=3D"100%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr=
+>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=
+<td height=3D"40" style=3D"font-size: 40px; line-height: 40px; padding: 0;"=
+>&nbsp;</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</t=
+r>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbod=
+y>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td align=3D=
+"center" valign=3D"middle" style=3D"color: #7C828D; font-family: 'Axiforma'=
+,Helvetica,Arial,sans-serif; font-size: 15px; font-weight: 400; padding: 0p=
+x 10px; text-decoration: none;" valign=3D"top">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<img styl=
+e=3D"width: 25px; height: 25px; position: relative; top: 5px;" src=3D"https=
+://clickup.com/emails/images/new-user/cookie.png"> Feeling hungry? Click he=
+re for the <a href=3D"https://clickup.com/blog/clickup-unicorn-chip-cookies=
+/" rel=3D"noopener" style=3D"margin: 0; color: #7b68ee !important; font-fam=
+ily: 'Axiforma',Helvetica,Arial,sans-serif; font-size: 15px; font-weight: 5=
+00; line-height: 1; padding: 0; text-decoration: none;" target=3D"_blank">b=
+est chocolate chip cookies</a> we've ever had!
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"border-spacing: 0;" width=3D"10=
+0%">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09<td aria-hid=
+den=3D"true" height=3D"40" style=3D"font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09=09=09=09=09</table>
+
+=09=09=09=09=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09=09=09=09=09</table>
+=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09</table>
+=09=09=09=09=09</td>
+=09=09=09=09</tr>
+=09=09=09=09<tr>
+=09=09=09=09=09<td style=3D"padding: 0;">
+=09=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09<td aria-hidden=3D"true" height=3D"40" style=3D"=
+font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09</table>
+=09=09=09=09=09</td>
+=09=09=09=09</tr>
+=09=09=09=09<tr>
+=09=09=09=09=09<td style=3D"padding: 0px 20px;">
+=09=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"border-spacing: 0; color: #111111; font-family: 'Axiforma',Helvetic=
+a,Arial,sans-serif;" width=3D"100%">
+=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09<td align=3D"center" style=3D"color: #cccccc; fo=
+nt-family: 'Axiforma',Helvetica,Arial,sans-serif; font-size: 14px; font-wei=
+ght: 400; padding: 0px 10px; text-decoration: none;" valign=3D"top"><a href=
+=3D"https://clickup.com" rel=3D"noopener" style=3D"margin: 0; color: #ccccc=
+c; font-family: 'Axiforma',Helvetica,Arial,sans-serif; font-size: 14px; fon=
+t-weight: 400; line-height: 1.3; padding: 0; text-decoration: none;" target=
+=3D"_blank">=C2=A9&nbsp;2024&nbsp;ClickUp&nbsp;| San Diego, CA</a></td>
+=09=09=09=09=09=09=09=09</tr>
+=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09</table>
+=09=09=09=09=09</td>
+=09=09=09=09</tr>
+=09=09=09=09<tr>
+=09=09=09=09=09<td style=3D"padding: 0;">
+=09=09=09=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" s=
+tyle=3D"border-spacing: 0;" width=3D"100%">
+=09=09=09=09=09=09=09<tbody>
+=09=09=09=09=09=09=09=09<tr>
+=09=09=09=09=09=09=09=09=09<td aria-hidden=3D"true" height=3D"40" style=3D"=
+font-size: 0; line-height: 0px;">
+=09=09=09=09=09=09=09=09=09  &nbsp;
+=09=09=09=09=09=09=09=09=09</td>
+=09=09=09=09=09=09=09=09  </tr>
+=09=09=09=09=09=09=09</tbody>
+=09=09=09=09=09=09</table>
+=09=09=09=09=09</td>
+=09=09=09=09</tr>
+=09=09=09</tbody>
+=09=09</table>
+=09=09<!-- [if (gte mso 9)|(IE)]> </td></tr></table><![endif]-->
+=09</div>
+</center>
+</body>
+</html>

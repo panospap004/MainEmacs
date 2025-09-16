@@ -1,0 +1,452 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6359:4282:b0:1b8:3577:36c5 with SMTP id kp2csp2060015rwb;
+        Sun, 1 Dec 2024 07:31:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEhKDasq5n60FHUDz3LeEshbPhuLqw50vMs7wI2+5Yx/UYF/biyRn0crWJ3K2r6Le/8OPOb
+X-Received: by 2002:a05:6214:e8c:b0:6d8:a76d:b66c with SMTP id 6a1803df08f44-6d8a76dbabdmr10379846d6.30.1733067078708;
+        Sun, 01 Dec 2024 07:31:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1733067078; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JIy7UrzGih9a/FyPPASxCBQkDpLgbpHOEf7B2QvOK/s1ip/uOjyqNtTqXXEzrBjBFv
+         JLZINbv4Xs15CHfNzvFhYRqqg5x3shjBs/YiQHRvPYSH0EchR3WuuXQk8oGQ8MVD+CRd
+         EEkAuBBAWYvncY20DaNqFRJTWZE4/csDVwHVC/CsTCivPb0WCGubDe/e5z5eY3TpnykQ
+         iz/RVOstQ2dmuirw86FfjoBW+5tgn/VnceGUNTqyXVbJZIn5vD9DArmk29G1hVRJ07G1
+         GUiRq3Ub0m2LKvUNto1PlHe0vwgMCDdcfnq5KdlJo/MPkMcqfrfvc+Twu94WI+OFpJ5d
+         rNVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:mime-version:from:date:dkim-signature
+         :dkim-signature;
+        bh=2Yc1025Zx5g0veGd8ZKN0S+0OA2BFrrV7WlbQrd7QR8=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=ZOGxZwQbB1uQQ0vBnyJoJ1M/J0JUFu4GH5JScbJ46t8dg2qqwY0Vp4ND4eI42a8de8
+         l62BserGb+mdZ1i2LKr2l+TgrSw5e3Xd2cuVcMY7xYAbw+WZ1gBpX9ESUkumvU49zS7e
+         oS7lHCT9skUbrb244pMUC3g6k4aP4jR9utF9cu9c2GeX2p+U18Ew9cHTe0NRgjK8d8aE
+         8iWCK8fX1f+tAZfWKhbbEBjqKrtG8vmJWzbl7Q9LOnHZV4yov+asj4dZBhiaEx7hq0Hw
+         cprB+EqOb7J6hHDHYhb5WAf5YEVKBx2XAKx4UnCUXkqxCOV7n43pf2Pj9Ou9dMGVCtTg
+         F4Nw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@operations.devolutions.net header.s=s1 header.b=MSU7WWqY;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=N2jcp3Cp;
+       spf=pass (google.com: domain of bounces+9574612-6582-user.idc004=gmail.com@r.operations.devolutions.net designates 168.245.39.157 as permitted sender) smtp.mailfrom="bounces+9574612-6582-user.idc004=gmail.com@r.operations.devolutions.net";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=devolutions.net
+Return-Path: <bounces+9574612-6582-user.idc004=gmail.com@r.operations.devolutions.net>
+Received: from o8.operations.devolutions.net (o8.operations.devolutions.net. [168.245.39.157])
+        by mx.google.com with ESMTPS id af79cd13be357-7b6849b3dbbsi925311285a.321.2024.12.01.07.31.18
+        for <user.idc004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Dec 2024 07:31:18 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounces+9574612-6582-user.idc004=gmail.com@r.operations.devolutions.net designates 168.245.39.157 as permitted sender) client-ip=168.245.39.157;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@operations.devolutions.net header.s=s1 header.b=MSU7WWqY;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=N2jcp3Cp;
+       spf=pass (google.com: domain of bounces+9574612-6582-user.idc004=gmail.com@r.operations.devolutions.net designates 168.245.39.157 as permitted sender) smtp.mailfrom="bounces+9574612-6582-user.idc004=gmail.com@r.operations.devolutions.net";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=devolutions.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=operations.devolutions.net;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=s1; bh=2Yc1025Zx5g0veGd8ZKN0S+0OA2BFrrV7WlbQrd7QR8=;
+	b=MSU7WWqYFBgIFl4m/tuxDAWSgWb0FFzP+GXsarncvNk8RcpFbTDGZKbAm7TXQ+FVXKm4
+	9XlEmKc2wpCMbUMKBjsC5eXmdRF2IwPlQ8WPtPrqFsLqvknwo++mqtGbdCL4yCQODYZygY
+	uvZRN5QE90oA6V5HL2AkEyKGRfZDW9S5VqGnE8BthzkTS8TSjudxmP1RLikwjzeIjPICPZ
+	hhAJkTao/Sw+wyiJGH1PcSiVBbxWjIGAu1L1sX8ce60GOnpxyy0/7wEbffXKC/4OZHEwga
+	8hxxvx2RXluu4Q4lFwA46pWRlzwswcAegM7Adbtvilmh7ti9JXcGuK5SQEGUYyRQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=2Yc1025Zx5g0veGd8ZKN0S+0OA2BFrrV7WlbQrd7QR8=;
+	b=N2jcp3CpQWHEyvwqJBkFD8EG0Dxui2u8U0L5NBnr9+Ymia4sVesHKtjO9d6mODGwuFYj
+	09NVV2uOBieUqreScJQyxrqJALYPAEaAbejMln0joBXpBtRo8RjxCdpAa4vK4BeJ3T85hP
+	2k/JrDbiXkFQpwy7kEt+lT41u+q6w0hq8=
+Received: by recvd-5c8ccdbd88-zc62f with SMTP id recvd-5c8ccdbd88-zc62f-1-674C8146-21
+	2024-12-01 15:31:18.335926874 +0000 UTC m=+1447707.328748679
+Received: from OTU3NDYxMg (unknown)
+	by geopod-ismtpd-37 (SG) with HTTP
+	id WYakUO2cQfeBPhKgnDtbIQ
+	Sun, 01 Dec 2024 15:31:18.288 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=a589ce885104117f5b8d775e01d46f012e7030b87dc5194e6e6fe4b7e909
+Date: Sun, 01 Dec 2024 15:31:18 +0000 (UTC)
+From: Devolutions Account <account@operations.devolutions.net>
+Mime-Version: 1.0
+Message-ID: <WYakUO2cQfeBPhKgnDtbIQ@geopod-ismtpd-37>
+Subject: Devolutions Account - Activation
+X-Feedback-ID: 9574612:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EpxS2d=2FCTx4yf673K7PFqUD7Oq=2F96sIgsZvfLaH1qoUR0YaMlwRDmafsyt?=
+ =?us-ascii?Q?mPZgXmwJNoemeP7ku1VlajLBf8ACbpqC3ady45t?=
+ =?us-ascii?Q?8Ld9Eh6UU+DFBAhITo3tX9ou+FKjQ=2FIlVIcgmOg?=
+ =?us-ascii?Q?EwV62=2FDSuNdb4XkneO9Q849QNnAFl8hnr+Zcwvl?=
+ =?us-ascii?Q?KPuMXvdq9gTfifW=2FHIKlm5hSIwsGRyQuDKFEB+M?=
+ =?us-ascii?Q?cFKRrn0zcCdHk7kjV6HEKlBC6Fu0gJUit9PkX1e?=
+ =?us-ascii?Q?blxQo7LZN1RS7s0U2HPU9IA4yA=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BpTL9BgbK5wfSJMJGMsmprCL=2FvGxtAZAcXAtc?=
+ =?us-ascii?Q?lkua6BfKqPAY7HP5wPLr4MQq3Je0GMgxgD9zYiB?=
+ =?us-ascii?Q?SLl+dVBI8UlDsVVLe6Ob2aLLH0qIVmov?=
+To: user.idc004@gmail.com
+X-Entity-ID: u001.k5EZGnxX8ThrAGPAg+GrJw==
+X-TUID: W1di5c71nW0C
+
+--a589ce885104117f5b8d775e01d46f012e7030b87dc5194e6e6fe4b7e909
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0
+
+Hello Lolakias,
+
+We'd like to thank you for registering to Devolutions.
+
+You may now activate your Devolutions account by following the activation l=
+ink below.
+Failing to do so will block authentication to your account, you MUST perfor=
+m this step.
+
+
+User name: user.idc004@gmail.com
+Activation link: https://l.operations.devolutions.net/ls/click?upn=3Du001.y=
+qivJRDiYseG0zZDUG6aICzTY6t2lYRF3c0ixnnGX6ENdQvAYjRKSkuUNLqT2loLZcdC9XHpeeYA=
+5AixiXRBWBXJfb3Uthap8iVWwYky3ig3BQq8hN6vf2hNb4POJuNlGVSjADzWOjJwNKz00FfPleM=
+AVq6xlzvcMrZK41es1BOfeQ5Jy3gRNeS2KGnBImrqo3lK_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2=
+FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuqsezCKvDHWnADlboIStV=
+RS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3z4aLualbtMC4a34LlOK=
+S9rFgPsqYMzhMR6B0PhpeHV6BV9CPJXWUBJrk6PXBOOT4pdxmaHWXftCBHsu07-2Bks9FGJ2Vmn=
+Xk-2F3ffsgzT-2BvxZfQEGDEd5mTGmIC5YQz1lqL960Y7zYd-2FaCJrSjOEunoxwE-3D
+
+
+If you have forgotten your password, you can request a new one here: https:=
+//l.operations.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aICzT=
+Y6t2lYRF3c0ixnnGX6GXKtM6Z5Q0vKUvDN0Y-2B2baqu4UnmNn9YnGlUTp6nAZJg-3D-3D4EJD_=
+qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TI=
+ahALgupUuqsezCKvDHWnADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aY=
+x-2B69P2m3z2p-2F8pY2V7-2FiyLqL6GecaVzb4PUh8aUErImEo8gw4noU7TveScXFjPIS-2Fay=
+18AmITiFfS5w9ncihAnBG0uxOYA9DReOP1WFZiN0W-2FzNpPCTj1TjKm9wbJoqVnzAxeeKbiQ-2=
+FQobUztf5E6eg-2BCj-2BVBsY-3D
+
+Don't hesitate to contact us if you need any assistance.
+
+Best regards,
+
+
+Devolutions Team
+service@devolutions.net
+--a589ce885104117f5b8d775e01d46f012e7030b87dc5194e6e6fe4b7e909
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=us-ascii
+Mime-Version: 1.0
+
+<!DOCTYPE html>
+<html xmlns=3D"http://www.w3.org/1999/xhtml" lang=3D"en" xml:lang=3D"en" xm=
+lns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-co=
+m:office:office">
+<head>
+  <title>Devolutions Account - Account Activation</title>
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1.0">
+  <!--[if gte mso 9]>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  <![endif]-->
+  <!--[if mso]>
+    <xml xmlns:w=3D"urn:schemas-microsoft-com:office:word">
+      <w:WordDocument><w:AutoHyphenation/></w:WordDocument>
+    </xml>
+  <![endif]-->
+</head>
+<body style=3D"margin: 0; padding: 0; background-color: #e4e4e4;">
+  <div style=3D"display: none; font-size: 0; color: #333333; line-height: 0=
+; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">Activate =
+your Devolutions account</div>
+  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+    <tr>
+      <td bgcolor=3D"#e4e4e4">
+        <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"600" style=3D"border-collapse: collapse;">
+          <tr>
+            <td bgcolor=3D"#000000" background=3D"https://webdevolutions.bl=
+ob.core.windows.net/emails/2019.0.0/common/header-black.png" style=3D"backg=
+round-repeat: no-repeat; background-size: 600px 75px;">
+              <!--[if gte mso 9]>
+                <v:rect xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t=
+rue" stroke=3D"false" style=3D"width:600px; height:75px;">
+                <v:fill type=3D"tile" src=3D"https://webdevolutions.blob.co=
+re.windows.net/emails/2019.0.0/common/header-black.png" color=3D"#000000" /=
+>
+              <![endif]-->
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">
+                <tr><td width=3D"100%" height=3D"20"></td></tr>
+                <tr>
+                  <td>
+                    <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ width=3D"100%">
+                      <tr>
+                        <td width=3D"30" height=3D"100%"></td>
+                        <td>
+                          <a href=3D"https://l.operations.devolutions.net/l=
+s/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIHQAdctjkWhmaaLlZqzshlD4j66KSFOc-2Bl=
+Dy4dYUEvh-2B4H0JK4wshux82g4h6U5upAEkYA7sezQxt4ANiBZIcNN-2Bbu0DAfTRuTyiHLrih=
+JNwuWbk2lN11AsT9OkSjim7VA-3D-3DqiOj_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2B=
+VBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuqsezCKvDHWnADlboIStVRS9M5VY5Ox=
+GYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3z8AFvT3NOxMUbrTFNdV-2BIUjNxYX=
+Y-2BgviUxKNckIZphZYRuO2GyKcbcSVvT7w2-2BwMdCVyLcbjkIQzGakGVcKZrqnGsa15hiaD0P=
+gcDTMa4FkBzJ3qvQz2-2BKfgSg6Vgv-2B1ahHq-2FGcLz3lHUWWaYrUPPBs-3D">
+                            <img border=3D"0" src=3D"https://webdevolutions=
+.blob.core.windows.net/emails/2019.0.0/common/devolutions-logo.png" alt=3D"=
+Devolutions Logo" width=3D"96" height=3D"35" style=3D"display: block;">
+                          </a>
+                        </td>
+                        <td align=3D"right">
+                          <font face=3D"Arial" style=3D"color: #999999; fon=
+t-size: 14px;">Important Information</font>
+                        </td>
+                        <td width=3D"30" height=3D"100%"></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr><td width=3D"100%" height=3D"20"></td></tr>
+              </table>
+              <!--[if gte mso 9]>
+                </v:rect>
+              <![endif]-->
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor=3D"#ffffff">
+              <img src=3D"https://webdevolutions.blob.core.windows.net/emai=
+ls/2019.0.0/account/account-activation-en.png" alt=3D"New Account Informati=
+on" width=3D"600" height=3D"200" style=3D"display: block;">
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor=3D"#ffffff" style=3D"padding: 30px 50px 30px 50px;"=
+>
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">
+                <tr>
+                  <td style=3D"padding: 0 0 20px 0; font-size: 7px;">
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">Hello Lolakias,</font><br><br>
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">We'd like to thank you for registering to <a href=3D"https://l.o=
+perations.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIBMLWAIod=
+zFdGOWtjwM39VIew7T0UKsnVAbUU2Pktb-2FAjLBoXp-2ByO1rOEboRBzNapYQ-2F5l2Z4NLQ-2=
+BHrMrJfdR2elVCBEBORI1eIsLFwTXl4dYEstu-2FJ3ajXjeSwyUO65hA-3D-3DmH34_qc-2B5-2=
+FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupU=
+uqsezCKvDHWnADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2=
+m3zwVH3n1vKoOcS3TRAVK5aTsX4nG6fmwmpKXWtHj9EGSbsiPFvsjGML5N-2FY5RVelKDXMeb77=
+bo3dE0IfsNQvEp3wb1EgtfHdrj9lfVg3BAdkezNqM9ev0k21LxKHxwfz0Bbw5oPsEBkkpk-2FRs=
+DnTP7fY-3D" style=3D"color: #0068c3; text-decoration: none;">Devolutions</a=
+>.</font><br><br>
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">You may now activate your Devolutions account by clicking on the=
+ button below. Failing to do so will block authentication to your account, =
+you MUST perform this step.</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td bgcolor=3D"#e4e4e4" style=3D"padding: 20px 40px 20px =
+40px;">
+                    <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ width=3D"100%">
+                      <tr>
+                        <td style=3D"padding-bottom: 20px;">
+                          <font color=3D"#494949" face=3D"Arial" style=3D"f=
+ont-size: 14px;"><b>User name:</b> user.idc004@gmail.com</font>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align=3D"center" bgcolor=3D"#ffffff" style=3D"p=
+adding: 10px 0; background-color: #0068c3">
+                          <a href=3D"https://l.operations.devolutions.net/l=
+s/click?upn=3Du001.yqivJRDiYseG0zZDUG6aICzTY6t2lYRF3c0ixnnGX6ENdQvAYjRKSkuU=
+NLqT2loLZcdC9XHpeeYA5AixiXRBWBXJfb3Uthap8iVWwYky3ig3BQq8hN6vf2hNb4POJuNlGVS=
+jADzWOjJwNKz00FfPleMAVq6xlzvcMrZK41es1BOfeQ5Jy3gRNeS2KGnBImrq-mJr_qc-2B5-2F=
+kKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUu=
+qsezCKvDHWnADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m=
+3z5dr7tLc890Pohp73I7sJUbjhPEs-2BAyNjgLcQlDrdRv7mK78qYP9cSSBayGH8nEpeUbjDC2n=
+jPSTjrMJSORxVQMUCvIIkISBbE86w-2BkL7CVJ0ysrtNjT99DDd3ul7HQgRzCLE918AC31WmADV=
+i8mCTc-3D" style=3D"width: 100%; height: 100%; display: block; color: white=
+; text-decoration: none; font-weight: bold">
+                            <font face=3D"Arial" style=3D"font-size: 16px;"=
+>Activate</font>
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style=3D"padding: 20px 0 0 0; font-size: 8px;">
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">If you have forgotten your password, you can request a new one h=
+ere: <a href=3D"https://l.operations.devolutions.net/ls/click?upn=3Du001.yq=
+ivJRDiYseG0zZDUG6aICzTY6t2lYRF3c0ixnnGX6GXKtM6Z5Q0vKUvDN0Y-2B2bayNVmfEBNYsu=
+lsI-2B376avgFBFmyF5yDG3VJdEPaw0vn1TBhl4vICFibLE02P8L2Mb12gL16m-2FZSs3srlSgM=
+KwpSnFkEygfbRWrf8mFgWbWII-3DVKs2_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBr=
+XbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuqsezCKvDHWnADlboIStVRS9M5VY5OxGYn=
+E-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3z-2F0On4zg94co6dTUKM-2FqFgVDLrnR=
+WOIiTxTOC4d15EwL0AA2wHpkybaB9opDC9AMpDmuuOK1aY-2BbSRchA-2FjD-2FEZDbyiyLJ2hK=
+t0Ugtm9rZ5Mt54AFusLZ6-2Fxk8UJQ9c-2B2LJj-2FhPWODrDN9VRd2B9OqU-3D" style=3D"c=
+olor: #0068c3; text-decoration: none;">https://login.devolutions.com/op/for=
+got-password</a>.</font><br><br>
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">Don't hesitate to contact us if you need any assistance.</font><=
+br><br>
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">Best regards,</font><br><br><br>
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">Devolutions Team</font><br>
+                    <font color=3D"#494949" face=3D"Arial" style=3D"font-si=
+ze: 14px;">
+                      <a href=3D"mailto:service@devolutions.net" style=3D"c=
+olor: #0068c3; text-decoration: none;">service@devolutions.net</a>
+                    </font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor=3D"#000000" style=3D"padding: 20px 50px 20px 50px;"=
+>
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%">
+                <tr>
+                  <td>
+                    <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ width=3D"100%">
+                      <tr>
+                        <td height=3D"36" valign=3D"top">
+                          <font color=3D"#ffffff" face=3D"Arial" style=3D"f=
+ont-size: 12px;">Visit us at <a href=3D"https://l.operations.devolutions.ne=
+t/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIHQAdctjkWhmaaLlZqzshlD4j66KSFOc-=
+2BlDy4dYUEvh-2B4H0JK4wshux82g4h6U5upAEkYA7sezQxt4ANiBZIcNN-2Bbu0DAfTRuTyiHL=
+rihJNwuWbk2lN11AsT9OkSjim7VA-3D-3DYpp0_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh=
+-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuqsezCKvDHWnADlboIStVRS9M5VY=
+5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3z8C6bSaOO8jirVkfQFocEkHGQ4=
+67w93100OygiGyXA5hcKepbe5kicSIq2DFSG-2F-2FB64YbrW0hnSc3-2Fbkyj9GcyQu4g73Eb7=
+LjoQ1gEez7azZf4lETOHlKCqOC522U22ZukFBrya-2BA0Dcr9saEvKyAEU-3D" style=3D"col=
+or: #ffffff; font-weight: bold; text-decoration: none;">devolutions.net</a>=
+</font>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height=3D"36" valign=3D"bottom">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0">
+                            <tr>
+                              <td width=3D"30"><a href=3D"https://l.operati=
+ons.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aICOL-2BPqnt2xWT=
+QG-2B7rKx-2FQlxd5q6mFgDnj-2BhO4ubh17I1AsDpcptrwB7Ga0lND5fUBI3ptgGt-2Fn4sz2g=
+OLrauRklvemEQEFpEJ02AUI8yjgvvksXJVZaArgLvV-2FGJ06N-2Bw-3D-3DHk7j_qc-2B5-2Fk=
+KSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuq=
+sezCKvDHWnADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3=
+z11J9vzl3vlX6GAEVcMRY9ZF5qOWEp0I3yDhdxcB6WZEwj0mGzlMJ4k-2FU2b2a3S7Y-2FMzItn=
+ewWAYFul1yHSeRz-2Bv6mOJOCI0-2BxJzbjRvzwPNXycl3RsMkCrOUDPOqEQ7QdIkZi0z2sGJjv=
+2kaLEX4l4-3D"><img border=3D"0" src=3D"https://webdevolutions.blob.core.win=
+dows.net/emails/2019.0.0/common/social-spiceworks.png" alt=3D"Spiceworks" w=
+idth=3D"16" height=3D"16" style=3D"display: block;"></a></td>
+                              <td width=3D"30"><a href=3D"https://l.operati=
+ons.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIO-2FY8uJdYkZoq=
+3GBRr1LE6vxEetXKipW8NEcvTJrZe2kP6ZePoi5myw3QQXXigte9agy5IWIg4ICpgw6LjSVDhvI=
+PajugaKixm4Ywyk2jKpi8W9IxleUI-2B260349JQaTbA-3D-3D9ZBa_qc-2B5-2FkKSl1hS4gzz=
+zRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuqsezCKvDHWn=
+ADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3z8dsANmpnl=
+cLl1c-2FKh0ovZq-2FSToHNgxdpzwrdTXOEMdW7fJibeWucTqCq79tU8ky0J5lHXYzRWO2Gnb8f=
+3ip8Ww1jNLuxfT-2F4BjCbqR6HImBI-2B1vm3RQYkaYDxO8lhtx3M85xIFzFx-2FXbwQpKVGZHz=
+I-3D"><img border=3D"0" src=3D"https://webdevolutions.blob.core.windows.net=
+/emails/2019.0.0/common/social-reddit.png" alt=3D"Reddit" width=3D"16" heig=
+ht=3D"16" style=3D"display: block;"></a></td>
+                              <td width=3D"30"><a href=3D"https://l.operati=
+ons.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIN9hzw0mQJ3-2FD=
+mMnIHUqZromuyYOVHLlDvKwFeAgVkt07FgfEGM44h1L9VD2jsnNXKWEY7-2FMyWxJokoDzfhsGW=
+gmDdOcqiE5pxgW01ec9ve3sg5mq2ElQQ2BqinqOYhysA-3D-3DEPBW_qc-2B5-2FkKSl1hS4gzz=
+zRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuqsezCKvDHWn=
+ADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3z2wQr86Is4=
+kL6U8wbttUGFpzRjRSS-2F3m7tyc3DF3XZonSmsnmQBwbiYV8ZGnyjpimxBsV2BhZ7NcWZflD-2=
+F6xnbtygr-2FJLdQRuAPuNgsjIw0WZ8-2BLseeEZ4-2FeewkTGqCUWJpU1OVk4FDNKo7T3NxVBT=
+c-3D"><img border=3D"0" src=3D"https://webdevolutions.blob.core.windows.net=
+/emails/2019.0.0/common/social-youtube.png" alt=3D"YouTube" width=3D"16" he=
+ight=3D"16" style=3D"display: block;"></a></td>
+                              <td width=3D"30"><a href=3D"https://l.operati=
+ons.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIAH16j08kDGIt5K=
+wccrswf1-2FCGiych67Wp8a5jaY9uwBv1yj43SjtAoaGfbDbfSueOLpnr0GfOCTylk-2BS9Oi2U=
+Wk7pNE5rHKOgXkZIXXzl0mBZb4wydyiGg0Rd6-2BvNIeeA-3D-3D1i9A_qc-2B5-2FkKSl1hS4g=
+zzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIahALgupUuqsezCKvDH=
+WnADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-2B69P2m3z-2F2HcA=
+QXAdTV9Yl5jg0AjN08d0RBHXgtFES-2BjX0-2F64Gbsf7mPc-2BrgpynMQC9zR-2BRag-2BnnHj=
+KTFr9Z8QFQYiY8aDi8C5m-2ByZs3aXpz8qv7bVCvjOPoVrfvtmARwudP6NS9YtAa8Vtk-2BHLqx=
+nqwWJjSdI-3D"><img border=3D"0" src=3D"https://webdevolutions.blob.core.win=
+dows.net/emails/2019.0.0/common/social-twitter.png" alt=3D"Twitter" width=
+=3D"16" height=3D"16" style=3D"display: block;"></a></td>
+                              <td width=3D"30"><a href=3D"https://l.operati=
+ons.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIKaiewjQV-2FvCc=
+FPjhL091yU-2BcTsGdWgWUVVJ80cS8hL1DET3l-2F4AbDYS4B-2FKK-2Fg3RkZMW5PlsPe5JSAM=
+eZ3GhbO3mW66Mrcdi8YcB2SV2kAxyZICgGr5fu25rUXTJr4nu-2B8jbs6Rz7Ak72K1BgbtVGg-3=
+DfzGV_qc-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6=
+meo4TIahALgupUuqsezCKvDHWnADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV7=
+5mQ7aYx-2B69P2m3z0dMy703SHIPaORn5n7cb8R8pABoZl5n8eZV4E7eICnG5-2FMLE90VHmB0L=
+ihaRLHeY6zl-2B-2BSZEppyQl042Dz37sOCq2kusNb5CqedcgFhKdGeRtwkeZAtggWGYI0GUAPH=
+-2FhLHERisllcLPYNQvfAJD0I-3D"><img border=3D"0" src=3D"https://webdevolutio=
+ns.blob.core.windows.net/emails/2019.0.0/common/social-linkedin.png" alt=3D=
+"LinkedIn" width=3D"16" height=3D"16" style=3D"display: block;"></a></td>
+                              <td width=3D"30"><a href=3D"https://l.operati=
+ons.devolutions.net/ls/click?upn=3Du001.yqivJRDiYseG0zZDUG6aIILkQH7eWurMoPq=
+yJieKAFTA-2FyCQ5tCQdppHP8P9Q5ECAeUQHIC4AZWR6dTdMZixiynj58LwJI0OQE7mfMsN0O7u=
+LDis-2BEQ9j5D0PICNmbXferrV7iryCxIX82zwmAWi1iZWVL4oKa443vGNFxinVRg-3DY5NJ_qc=
+-2B5-2FkKSl1hS4gzzzRXAtiY-2FSRKPWh-2BVBrXbqhMtEBW2hJcO3bYrD23LgxlY6meo4TIah=
+ALgupUuqsezCKvDHWnADlboIStVRS9M5VY5OxGYnE-2FKLsmLOWPnBf9kw28NF4kqV75mQ7aYx-=
+2B69P2m3z1Vgqa-2BQ-2FH-2FwYo7f5VjLVOltFviqHu1qDmK0am3-2BwXcmlcDm6Ylz048OfcI=
+Bw4cD9iAtA1MzOSPqunxgaMuyr8bz-2BRg9LOdkfHChWb-2BhRaXrBPGJZgSMCoZ45u4-2FXhRR=
+Bj6JSUgzWr0OpIrZN7QfOec-3D"><img border=3D"0" src=3D"https://webdevolutions=
+.blob.core.windows.net/emails/2019.0.0/common/social-facebook.png" alt=3D"F=
+acebook" width=3D"16" height=3D"16" style=3D"display: block;"></a></td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td align=3D"right">
+                    <font color=3D"#ffffff" face=3D"Arial" style=3D"font-si=
+ze: 12px;"><b>Devolutions</b></font><br>
+                    <font color=3D"#ffffff" face=3D"Arial" style=3D"font-si=
+ze: 12px;">1000 Notre-Dame, Lavaltrie</font><br>
+                    <font color=3D"#ffffff" face=3D"Arial" style=3D"font-si=
+ze: 12px;">QC J5T 1M1</font><br>
+                    <font color=3D"#ffffff" face=3D"Arial" style=3D"font-si=
+ze: 12px;">Canada</font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align=3D"center" bgcolor=3D"#e4e4e4" style=3D"padding: 20px=
+ 120px 20px 120px; font-size: 10px; line-height: 13px;">
+              <font color=3D"#494949" face=3D"Arial">Devolutions is a leadi=
+ng provider of remote connection, password and credential management tools =
+for sysadmins and IT pros.</font>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+<img src=3D"https://l.operations.devolutions.net/wf/open?upn=3Du001.l5a-2F2=
+adOWlMcxeiVQtRHormuVdgoxHXTTM4E0byNYiIDZI1uQL-2BvXN-2BxcbJ5GaQtgvidvszNcowh=
+xIAsoshqnOcqsytIWMD4a21f22Mk56JwgQ6eyicwpeUInpc8itlvqp2iKsuWjC45o6o9jjKnKAO=
+lGHLysdv08NH0yKDVLrczYgzqkOv6iNvD3wefKT8uRFrk0mgeU5bykTb3dAZ4bGjWeapgYwSGdh=
+uw7587H9YjNSb-2Fg7XB00zOEIbED8NN48S-2FIGmBtLlechzRIKtT8GL59Xvou9sVhW38JlbqB=
+s4-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !=
+important;width:1px !important;border-width:0 !important;margin-top:0 !impo=
+rtant;margin-bottom:0 !important;margin-right:0 !important;margin-left:0 !i=
+mportant;padding-top:0 !important;padding-bottom:0 !important;padding-right=
+:0 !important;padding-left:0 !important;"/></body>
+</html>
+--a589ce885104117f5b8d775e01d46f012e7030b87dc5194e6e6fe4b7e909--

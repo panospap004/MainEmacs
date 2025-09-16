@@ -1,0 +1,564 @@
+Delivered-To: euro.money004@gmail.com
+Received: by 2002:a05:6358:e91:b0:194:9a9f:10a7 with SMTP id 17csp2902152rwg;
+        Mon, 20 May 2024 03:00:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7eI17a5qAG4Hu84nNuGJ1alp/xpl/51V09ghHN/VbMKpzWBGFDQVVv4LBGX2C6DT39PZj
+X-Received: by 2002:a05:6902:2191:b0:dee:85ca:5ee4 with SMTP id 3f1490d57ef6-dee85ca6138mr23115072276.63.1716199232904;
+        Mon, 20 May 2024 03:00:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1716199232; cv=none;
+        d=google.com; s=arc-20160816;
+        b=oo899sx+7pKGpDonnH+O8WppLdIejY6WPddrEc6atzjjJ7KZ0SQ0WmRv7yL3NDFsYa
+         BkAG7mHgZGYHK1bzx6ZDv4FfTmemM3Cud2N4biSLIM+WUm3ovxrTF9Llk7exPwZ0dctb
+         sLaDvqrt+/m34/APYx2N0RKFL7Sjy3VwlFxBGlI4yfKD87g9mUFR+PPSX10bqd36XdKD
+         9GTjMBwDNDc9I6zQyImX5+iPU+fquuMTDgDLdKfY3oe1+tB1nnrr9zZABkJxPblWvtWB
+         rnXI/nKkqT6/TkDhSxwmwyqIpteMkWxY4GsahtwbIKOqRTaRn8/bFAM7n1u+xitxEuPa
+         qA7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:feedback-id:precedence:list-unsubscribe:subject:message-id
+         :mime-version:from:date:dkim-signature:dkim-signature;
+        bh=UGm90Hp5Zw5hSxs0EvajE/vz/nxHxFEMo80Ox11lhbY=;
+        fh=3PcMscEIqNLivxUMhot+47818qMF7ljpeX3o4b9c80k=;
+        b=kfQmHTrcv4qwy6HobBf7fPOsqZil+11x8P0wXlhs8eZc92cl0BJStzfpBUp/6pDpeR
+         KyjqZ7oOlYRX+r5ym5oBkV7bIHaqpDKY+Icq5ye50Ija1bMU5qTYzLY/FUCEE0o/UMdb
+         fmvYR4HzsZk6ZF5n7krwbcQEP/CsTjzqE/+PUUyrCryrYPpY8zMOFO/bYBXX6bLOqXXI
+         dxBCf/whT+mV0vxnkFzY2eBK6sa2J5fAZ+4oFjxGvGvy3tlzalN1SrQcycbqgliMbwI1
+         uNqzArnoBSZhmDej/JnX1G9Ay41CGfCpGjcLMPseRxPEhPTCgzCt8OasyUVScu5Rtn0u
+         O7og==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@johnmavrick.com header.s=cka header.b=bWSsxG60;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=mHJ+JFvI;
+       spf=pass (google.com: domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com designates 149.72.61.159 as permitted sender) smtp.mailfrom="bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=johnmavrick.com
+Return-Path: <bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com>
+Received: from o46.ck.n.convertkit.com (o46.ck.n.convertkit.com. [149.72.61.159])
+        by mx.google.com with ESMTPS id 3f1490d57ef6-debd38ab77esi10017246276.728.2024.05.20.03.00.32
+        for <euro.money004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 May 2024 03:00:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com designates 149.72.61.159 as permitted sender) client-ip=149.72.61.159;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@johnmavrick.com header.s=cka header.b=bWSsxG60;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=mHJ+JFvI;
+       spf=pass (google.com: domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com designates 149.72.61.159 as permitted sender) smtp.mailfrom="bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=johnmavrick.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=johnmavrick.com;
+	h=content-type:from:mime-version:subject:list-unsubscribe:x-feedback-id:
+	to:cc:content-type:from:subject:to;
+	s=cka; bh=UGm90Hp5Zw5hSxs0EvajE/vz/nxHxFEMo80Ox11lhbY=;
+	b=bWSsxG60PLQ6qUlNUQXVK5pVkMQRPzXPo1jNyC/MgA20tcJbVYZoF49GR+J4B/lyycqx
+	ak39Hd5OZgSuDkxNNDNOuBqCSBvQbIvFq4xK75Ddmkx5KMZmTUTovK3aTTAgupdfxO5dYA
+	t+qFYddVZ1va/wrvQVT6CzcNnSA7DTESg=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:list-unsubscribe:x-feedback-id:
+	to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=UGm90Hp5Zw5hSxs0EvajE/vz/nxHxFEMo80Ox11lhbY=;
+	b=mHJ+JFvIhtp2+XWAhmCs6/dxgqUCRRw+2b9yT1pUHgwKmD82E3cBFSHhWo9YX8ySK0sb
+	j1yXrKS9D2ygE/Ch302QbVuIuJ/DpbeTd+SZJD0ruSDmbp5tkcGUDn4aSB7hRpSjcrgCrg
+	7gHChQRItF6152YlJqQqVpfHqaA/IjDaE=
+Received: by recvd-785ff4475c-kdkb7 with SMTP id recvd-785ff4475c-kdkb7-1-664B1F3F-35
+	2024-05-20 10:00:31.772317154 +0000 UTC m=+1678075.680486392
+Received: from MzEyMDUzMDg (unknown)
+	by geopod-ismtpd-33 (SG) with HTTP
+	id OJkqVv-TRryNvv9dZuToig
+	Mon, 20 May 2024 10:00:31.723 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=34f166feece8e56b2078a1fb0e9a8fde87fa0a0a7037abeb541007d58677
+Date: Mon, 20 May 2024 10:00:32 +0000 (UTC)
+From: John Mavrick <john@johnmavrick.com>
+Mime-Version: 1.0
+Message-ID: <mvuzdgrq73b5hg6keo8hmhevxdqqqb3@convertkit-mail2.com>
+Subject: Creating a powerful zettelkasten setup with Obsidian
+ =?UTF-8?B?4pqh77iP?=
+List-Unsubscribe: 
+ <https://unsubscribe.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3>
+X-Report-Spam: <abuse@convertkit.com>
+X-Report-Abuse: <abuse@convertkit.com>
+Precedence: bulk
+Feedback-ID: 13941104:1200076:broadcast:CK
+X-Feedback-ID: 31205308:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2E=2FCfb+pxAy=2FRJNK7ofKSFmXD1KTNLTQPbAJWCWlkIg=2FZQ0bIkrOHZ=2FlYO2?=
+ =?us-ascii?Q?NQAmxJDxzLHeBlI6HR6AUguCS8=2FmDXW8TrSlDvn?=
+ =?us-ascii?Q?09P2HxHXJwVG2JaO+KO2THN8IMNf6+Si=2FrgfdN6?=
+ =?us-ascii?Q?VdpLziD7PgJreZ8OGy7t63TVB0y57YLfT0xWfz+?=
+ =?us-ascii?Q?SjOTl8oNQCIShTmG5BfPjCiLZnlkjN5gR0dJLSY?=
+ =?us-ascii?Q?wAwc8xskOAmwiwOoOwB3HCMCPpgBtDA+sNrD7uv?= =?us-ascii?Q?wNAl?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BpTL9BgbK5wfSJMJGMsmprBTLquV1ImzFIrgT?=
+ =?us-ascii?Q?SaJ3+RZI4rFiVWo+2tivT9bZ58FiSw5e1MQtuoZ?=
+ =?us-ascii?Q?SkvBNdBPigfGKbVymvInlG6DfPsBwcDXrcR0v1y?=
+ =?us-ascii?Q?LSvlPC9ovvafv9rHM4KmjTTz507mB4P2E9tS1GZ?=
+ =?us-ascii?Q?elWi40z2tiInOimMhq6w4tilCCmW+Ny1OP=2FKVM7?=
+ =?us-ascii?Q?w2Ztt2zfwIg+mI0sJ5PrJTg0AMi+9XQRu+O9Q4O?=
+ =?us-ascii?Q?gHU+k28tcl5wjtf2t9cBWjIWvuH8yvduBsXo2F+?=
+ =?us-ascii?Q?KV070zrZF2GZwlGLf4TgYw7u9MnrMU4IpW6hh16?=
+ =?us-ascii?Q?TWXXhoQJMytlp8uMZugP3=2FsXlAIrwGPRfDQQPiK?=
+ =?us-ascii?Q?JSqCeVfc5xG8Y2jt3VWHckfIeYRZ4VNIHc7+8+6?=
+ =?us-ascii?Q?2PzdhY6F8HMvIF6RVxg=3D?=
+To: lolakias <euro.money004@gmail.com>
+X-Entity-ID: u001.XJJsRcNDejawx9h5pDD1tg==
+X-TUID: 1xev/0X0onPC
+
+--34f166feece8e56b2078a1fb0e9a8fde87fa0a0a7037abeb541007d58677
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Welcome to my weekly wonderings, a reflective space where I share
+my recent creations and ideas related to Digital
+Self-Actualization:
+
+realizing our meaningful potential through the synthesis of
+digital tools, life management systems, and humanistic
+philosophies
+I hope my 3-week hiatus here can be justified with some cool
+sneak peeks on what I've been working on =F0=9F=99=87=E2=80=8D=E2=99=80=EF=
+=B8=8F
+
+--------------------------------------
+A galactic overview of this edition =F0=9F=8C=8C:
+--------------------------------------
+
+* Creating a powerful zettelkasten setup with Obsidian =E2=9A=A1=EF=B8=8F
+* A free, highly customizable place for sharing your second brain
+=F0=9F=A7=A0
+* Reflections from joining my first Linking Your Thinking
+Workshop =E2=9C=8D=EF=B8=8F
+* Bringing my 3D virtual self to life =F0=9F=A4=A9
+* Appreciating the social beacon of authenticity =F0=9F=9A=A8
+* My new shining stars =F0=9F=8C=9F
+* (Recording) How I process fleeting notes =F0=9F=8D=83
+
+You can read the full edition with links to all the related notes
+in my published notes here (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/e0hph7h0=
+mzglwds7/aHR0cHM6Ly9ub3Rlcy5qb2hubWF2cmljay5jb20vMjAyNC1XMTk=3D
+).
+
+-->Read the full edition (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/e0hph7h0=
+mzglwds7/aHR0cHM6Ly9ub3Rlcy5qb2hubWF2cmljay5jb20vMjAyNC1XMTk=3D
+)
+Read the full edition ( https://notes.johnmavrick.com/2024-W19 )
+
+Got questions? Hit "reply" and say hi! I will go through fire and
+trials to read and respond!! =F0=9F=98=8A
+
+Until next time,
+
+John Mavrick
+=F0=9F=91=8B Say hi on YouTube (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/7qh7h8ho=
+de76peu9/aHR0cHM6Ly93d3cueW91dHViZS5jb20vQGl0c2pvaG5tYXZyaWNr
+) or Twitter (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/owhkhqhr=
+xev6lziq/aHR0cHM6Ly90d2l0dGVyLmNvbS9qb2hubWF2cmlja195dA=3D=3D
+) or in the community (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/z2hghnh3=
+5zvk89fz/ZGlzY29yZC5jb20vaW52aXRlL2FRZ2J5ajUyMmU=3D
+)=E2=80=8B
+
+Want a complete life operating system for life clarity,
+productivity, and learning? Start building your second brain (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/p8heh9hz=
+re02l3cr/aHR0cHM6Ly9zaG9wLmpvaG5tYXZyaWNrLmNvbS91c3Y=3D
+) =F0=9F=A7=A0
+
+=F0=9F=8C=8C Explore my digital galaxy (socials and free resources) (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/x0hph6hw=
+km6plpbg/aHR0cHM6Ly9iZWFjb25zLmFpL2pvaG5tYXZyaWNr
+)
+
+P.S. Is your mailbox trying to keep my content away from you? =F0=9F=92=94
+
+What can you do about it? =F0=9F=98=B1
+
+Mark this email as =E2=80=98not spam=E2=80=99...
+
+or move it from your promotions to the primary folder =F0=9F=91=89=F0=9F=8F=
+=BB It=E2=80=99s
+very easy (
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/6qheh8h7=
+x4g5dwh9/aHR0cHM6Ly9zdWJzdGFjay5jb20vcmVkaXJlY3QvMDJkM2E5MGYtMWMxNy00NzM2LT=
+hlYTctM2I3YjkyY2I5YzY3P3I9MWp1Z3A5
+)!
+
+=E2=80=8BUpdate your email preferences (
+https://preferences.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3
+) | Unsubscribe from all emails (
+https://unsubscribe.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3
+)
+
+(
+https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/kkhmh6hl=
+zpq532tk/aHR0cHM6Ly9jb252ZXJ0a2l0LmNvbS9mZWF0dXJlcy9lbWFpbC1tYXJrZXRpbmc_bG=
+1yZWY9NnJxaWpnJnV0bV9jYW1wYWlnbj1wb3dlcmVkYnkmdXRtX2NvbnRlbnQ9ZW1haWwmdXRtX=
+21lZGl1bT1yZWZlcnJhbCZ1dG1fc291cmNlPWR5bmFtaWM=3D
+)
+--34f166feece8e56b2078a1fb0e9a8fde87fa0a0a7037abeb541007d58677
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>@media only screen {* { word-break: break-word; }}
+@media screen and (max-width: 384px) { .mail-message-content { width: 414px=
+ !important; } }
+@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }
+@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }
+@media only screen {* { word-break: break-word; }}
+@media screen and (max-width: 384px) { .mail-message-content { width: 414px=
+ !important; } }
+@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }</style>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+</head>
+<body style=3D"margin:0;padding:0;-webkit-font-smoothing:antialiased;-ms-te=
+xt-size-adjust:100%;-webkit-text-size-adjust:100%">
+<div id=3D"preview-text">
+          <span style=3D"display: none; max-height: 0; overflow: hidden;">
+            Weekly Wondering 2024-W19 - Publishing your notes online, exper=
+iencing Linking Your Thinking, authenticity as a social beacon
+          </span>
+
+          <span style=3D"display: none; max-height: 0; overflow: hidden;">
+            =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C
+          </span>
+        </div>
+<div class=3D"email" style=3D"margin-left:18px;margin-right:18px">
+<!--[if mso]><style>.button-table { padding: 12px 0 }</style><![endif]--><t=
+able cellpadding=3D"0" cellspacing=3D"0" style=3D"border-collapse:separate;=
+mso-table-lspace:0pt;mso-table-rspace:0pt;width:100%;margin:0 auto"><tbody>=
+<tr><td style=3D"vertical-align:top">
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Welcome to my weekly wo=
+nderings, a reflective space where I share my recent creations and ideas re=
+lated to Digital Self-Actualization:</p>
+<div style=3D"font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Robot=
+o,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color:#2d2d2f;fo=
+nt-size:16px;line-height:1.5;padding:10px 20px;margin:0 0 20px;border-left-=
+style:solid;border-left-width:5px;border-left-color:#e1e1e1" class=3D"block=
+quotes"><div class=3D"blockquotes-line">realizing our meaningful potential =
+through the synthesis of digital tools, life management systems, and humani=
+stic philosophies</div></div>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">I hope my 3-week hiatus=
+ here can be justified with some cool sneak peeks on what I've been working=
+ on =F0=9F=99=87=E2=80=8D=E2=99=80=EF=B8=8F</p>
+<h2 class=3D"" style=3D"font-weight:bold;font-style:normal;font-size:1em;ma=
+rgin:0;font-size:1.5em;margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#000000;line-height:1.5">A galactic overview of this edition =
+=F0=9F=8C=8C:</h2>
+<ul class=3D"unordered_list" style=3D"margin:1em 0;margin-left:1em;padding:=
+0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-San=
+s,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color:#2d2d2f;font-size:16px=
+;line-height:1.5;list-style-position:outside !important;list-style-position=
+:inside">
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Creating a powerful zettelkasten setup with Obsidian =E2=9A=A1=EF=
+=B8=8F</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>A free, highly customizable place for sharing your second brain =F0=
+=9F=A7=A0</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Reflections from joining my first Linking Your Thinking Workshop =
+=E2=9C=8D=EF=B8=8F</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Bringing my 3D virtual self to life =F0=9F=A4=A9</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>Appreciating the social beacon of authenticity =F0=9F=9A=A8</span><=
+/li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>My new shining stars =F0=9F=8C=9F</span></li>
+<li class=3D"list_item" style=3D"padding:0 0 0 1em;margin:0;margin-left:1em=
+"><span>(Recording) How I process fleeting notes =F0=9F=8D=83</span></li>
+</ul>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><strong>You can read th=
+e full edition</strong> with links to all the related notes in my published=
+ notes <a href=3D"https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmh=
+evxdqqqb3/e0hph7h0mzglwds7/aHR0cHM6Ly9ub3Rlcy5qb2hubWF2cmljay5jb20vMjAyNC1X=
+MTk=3D" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c=
+1" url-id=3D"1639873269">here</a>.</p>
+<!--[if !mso]>--><table width=3D"100%" style=3D"border-collapse:separate;ms=
+o-table-lspace:0pt;mso-table-rspace:0pt"><tbody><tr><td align=3D"center" st=
+yle=3D"vertical-align:top"><a class=3D"email-button" href=3D"https://click.=
+convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/e0hph7h0mzglwds7/aHR0c=
+HM6Ly9ub3Rlcy5qb2hubWF2cmljay5jb20vMjAyNC1XMTk=3D" target=3D"_blank" rel=3D=
+"noopener noreferrer" style=3D"color:#0875c1;border:0 none;margin-bottom:0.=
+5em;font-size:16px;line-height:1.5;background-color:#0875c1;color:#ffffff;b=
+order-radius:4px;border-color:#8f00ff;background-color:#8f00ff;box-sizing:b=
+order-box;border-style:solid;color:#ffffff;display:inline-block;text-align:=
+center;text-decoration:none;padding:12px 20px;margin-top:8px;margin-bottom:=
+8px;font-size:16px;border-radius:4px 4px 4px 4px" url-id=3D"1639873269">Rea=
+d the full edition</a></td></tr></tbody></table>
+<!--<![endif]--><!--[if mso]><table class=3D"button-table" width=3D"100%" b=
+order=3D"0" cellSpacing=3D"0" cellPadding=3D"0" style=3D"margin-top:8px;mar=
+gin-bottom:8px"><tr><td align=3D"center"><table border=3D"0" cellSpacing=3D=
+"0" cellPadding=3D"0"><tr><td align=3D"center" bgcolor=3D"#8f00ff" style=3D=
+"background-color:#8f00ff;overflow:hidden;padding:12px 20px"><a class=3D"em=
+ail-button" href=3D"https://notes.johnmavrick.com/2024-W19" target=3D"_blan=
+k" rel=3D"noopener noreferrer" style=3D"background-color:inherit;display:in=
+line-block;text-decoration:none;border-style:solid;margin:0;color:#ffffff;f=
+ont-size:16px" data-ck-element=3D"button">Read the full edition</a></td></t=
+r></table></td></tr></table><![endif]-->
+</td></tr></tbody></table>
+<div class=3D"email-footer"><table cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;wid=
+th:100%;margin:0 auto"><tbody><tr><td style=3D"vertical-align:top">
+<hr>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Got questions? Hit "rep=
+ly" and say hi! I will go through fire and trials to read and respond!! =F0=
+=9F=98=8A</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><span style=3D"font-siz=
+e:18px">Until next time,</span></p>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:10px;margin-bottom:10px;margin-left:0;margin-right:0;ma=
+x-width:136px;width:100%"><div style=3D"display:block"><img src=3D"https://=
+embed.filekitcdn.com/e/8pq4GcvkQ3tJi3tDL2wki8/6A74vxzfU1CMMiYNKhpHHs" width=
+=3D"136" height=3D"auto" style=3D"border:0 none;display:block;height:auto;l=
+ine-height:100%;outline:none;-webkit-text-decoration:none;text-decoration:n=
+one;max-width:100%;border-radius:9999px 9999px 9999px 9999px;width:136px;he=
+ight:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:block"><strong><span style=3D"font-size:18px">John Mavrick</span></str=
+ong></figcaption></figure></td></tr></tbody></table>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><stro=
+ng><span style=3D"font-size:18px">=F0=9F=91=8B Say hi on </span></strong><a=
+ href=3D"https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3=
+/7qh7h8hode76peu9/aHR0cHM6Ly93d3cueW91dHViZS5jb20vQGl0c2pvaG5tYXZyaWNr" tar=
+get=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=
+=3D"1639873270"><strong><span style=3D"font-size:18px">YouTube</span></stro=
+ng></a><strong><span style=3D"font-size:18px"> or </span></strong><a href=
+=3D"https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/owhk=
+hqhrxev6lziq/aHR0cHM6Ly90d2l0dGVyLmNvbS9qb2hubWF2cmlja195dA=3D=3D" target=
+=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=3D"1=
+639873271"><strong><span style=3D"font-size:18px">Twitter</span></strong></=
+a> <strong>or in </strong><a href=3D"https://click.convertkit-mail2.com/mvu=
+zdgrq73b5hg6keo8hmhevxdqqqb3/z2hghnh35zvk89fz/ZGlzY29yZC5jb20vaW52aXRlL2FRZ=
+2J5ajUyMmU=3D" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color=
+:#0875c1" url-id=3D"1639873272"><strong>the community</strong></a>=E2=80=8B=
+</p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><span=
+ style=3D"font-size:18px">Want a complete life operating system for life cl=
+arity, productivity, and learning? Start building your </span><a href=3D"ht=
+tps://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/p8heh9hzre=
+02l3cr/aHR0cHM6Ly9zaG9wLmpvaG5tYXZyaWNrLmNvbS91c3Y=3D" target=3D"_blank" re=
+l=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=3D"1639873273"><sp=
+an style=3D"font-size:18px">second brain</span></a><span style=3D"font-size=
+:18px"> =F0=9F=A7=A0</span></p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><span=
+ style=3D"font-size:18px">=F0=9F=8C=8C </span><a href=3D"https://click.conv=
+ertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/x0hph6hwkm6plpbg/aHR0cHM6L=
+y9iZWFjb25zLmFpL2pvaG5tYXZyaWNr" target=3D"_blank" rel=3D"noopener noreferr=
+er" style=3D"color:#0875c1" url-id=3D"1639873274"><span style=3D"font-size:=
+18px">Explore my digital galaxy (socials and free resources)</span></a> </p=
+>
+<hr style=3D"margin-top:48px;margin-bottom:48px">
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>P.S. Is your mailbo=
+x trying to keep my content away from you? =F0=9F=92=94</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>What can you do abo=
+ut it? =F0=9F=98=B1</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>Mark this email as =
+=E2=80=98not spam=E2=80=99...</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>or move it from you=
+r promotions to the primary folder =F0=9F=91=89=F0=9F=8F=BB </em><a href=3D=
+"https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3/6qheh8h=
+7x4g5dwh9/aHR0cHM6Ly9zdWJzdGFjay5jb20vcmVkaXJlY3QvMDJkM2E5MGYtMWMxNy00NzM2L=
+ThlYTctM2I3YjkyY2I5YzY3P3I9MWp1Z3A5" target=3D"_blank" rel=3D"noopener nore=
+ferrer" style=3D"color:#0875c1" url-id=3D"1639873275"><em>It=E2=80=99s very=
+ easy</em></a><em>!</em></p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:left" class=3D"">=E2=80=
+=8B<a href=3D"https://preferences.convertkit-mail2.com/mvuzdgrq73b5hg6keo8h=
+mhevxdqqqb3" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#=
+0875c1"><span style=3D"font-size:12">Update your email preferences</span></=
+a><span style=3D"font-size:12"> </span>| <a href=3D"https://unsubscribe.con=
+vertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqqb3" target=3D"_blank" rel=3D=
+"noopener noreferrer" style=3D"color:#0875c1"><span style=3D"font-size:12">=
+Unsubscribe from all emails</span></a><span style=3D"font-size:12"> </span>=
+</p>
+</td></tr></tbody></table></div>
+<div class=3D"built-with" style=3D"display:block;text-align:left;margin-top=
+:30px"><a href=3D"https://click.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmh=
+evxdqqqb3/kkhmh6hlzpq532tk/aHR0cHM6Ly9jb252ZXJ0a2l0LmNvbS9mZWF0dXJlcy9lbWFp=
+bC1tYXJrZXRpbmc_bG1yZWY9NnJxaWpnJnV0bV9jYW1wYWlnbj1wb3dlcmVkYnkmdXRtX2NvbnR=
+lbnQ9ZW1haWwmdXRtX21lZGl1bT1yZWZlcnJhbCZ1dG1fc291cmNlPWR5bmFtaWM=3D" target=
+=3D"_blank" rel=3D"noopener" style=3D"color:#0875c1;display:inline-block;te=
+xt-decoration:none" url-id=3D"1639873276"><img src=3D"https://cdn.convertki=
+t.com/assets/light-built-with-badge.png" alt=3D"Built with ConvertKit" styl=
+e=3D"display:block;height:auto;line-height:100%;outline:none;-webkit-text-d=
+ecoration:none;text-decoration:none;max-width:100%;border:0 none;width:190p=
+x;height:36px" width=3D"190" height=3D"36"></a></div>
+</div>
+<!-- -->
+<img src=3D"https://open.convertkit-mail2.com/mvuzdgrq73b5hg6keo8hmhevxdqqq=
+b3" alt=3D"" style=3D"border:0 none;display:block;height:auto;line-height:1=
+00%;outline:none;-webkit-text-decoration:none;text-decoration:none;max-widt=
+h:100%">
+</body>
+</html>
+
+--34f166feece8e56b2078a1fb0e9a8fde87fa0a0a7037abeb541007d58677--

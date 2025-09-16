@@ -1,0 +1,392 @@
+Delivered-To: euro.money004@gmail.com
+Received: by 2002:a05:6840:467:b0:1707:f38b:d0fa with SMTP id f7csp758574nlf;
+        Fri, 19 Jan 2024 09:04:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH0UwHKjmk5kMfh+JBYWTW7ZizWGTwFaJ6hCEb5noFzuKC51zHgUg1CMbPbjK+ogJokfiC4
+X-Received: by 2002:a05:6214:1c4b:b0:681:80b1:f31e with SMTP id if11-20020a0562141c4b00b0068180b1f31emr159421qvb.95.1705683881487;
+        Fri, 19 Jan 2024 09:04:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1705683881; cv=none;
+        d=google.com; s=arc-20160816;
+        b=uxdRSBBfISHIbdniM08Otf9bWzOeIu+wG+OoMgiYkpmSZLEqTgdP4HuxUR3RFQ/POz
+         eqrpFmONvxULnDOksZn+7H4VI2Yff6UUN2nOso7EzvfuP0lHmD+x4Xm3z1gdUCqHCsvf
+         sB7ykdSS6q6TxjMAtvDWJimHztkApfZ9GCBHwHAi+ro33X9J0OANDT0cPL3h0yfvwApQ
+         Ix7CMQ0SPaff4VVDhjfzjys8YP7RBYXWXneoYtgQ1d1EYzth1rvZ9H9G0qbfQN0X4Yqj
+         1bVMsRNgNuW5SZTeKhEtCixJ7R6bJ8ijY79qsJB3YGfW3IuBxSdAu2La3lzlPWyq0/GS
+         wnyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:list-unsubscribe:feedback-id:precedence:subject:message-id
+         :mime-version:from:date:dkim-signature:dkim-signature;
+        bh=wYhhqdkuepFEwJBNjTO0t4JsnvtGbbT+ii3JkfjO9fA=;
+        fh=3PcMscEIqNLivxUMhot+47818qMF7ljpeX3o4b9c80k=;
+        b=Wc5JMpRgizrBlXOrLdwuWswPk7eIx/YdKnLieS9KEqHIOb1W7oNo4RINGhKmpZVmSI
+         oQNfLrjcuWdYjoZFoFiLF6efv2GMIsEnJbz+ym3D3vlNCFJyYOks3HQwhfUrr/Ys/grW
+         Be7R9lV+3yO16Z2wyRUpRgVp/ZyZ/TpTMQzf/80ibaAxJ2Uw7PsXXsrs6A8v22/ZuYak
+         txv+OkxixGC5fnpwB3mkfMZfyHDmg4k4f1vI5JQ8s7MEyCYgbWxdiybumca6bTPi7giv
+         gFmKYVUVJj/8DEqciwFe3CmOElqVezGusOVHfqtDCReRuyB2DEm3PJBfUgAg2yyGaetR
+         /F2A==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@johnmavrick.com header.s=cka header.b="oFEnp/33";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=YwqRnHRq;
+       spf=pass (google.com: domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com designates 149.72.193.89 as permitted sender) smtp.mailfrom="bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=johnmavrick.com
+Return-Path: <bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com>
+Received: from o48.ck.n.convertkit.com (o48.ck.n.convertkit.com. [149.72.193.89])
+        by mx.google.com with ESMTPS id u4-20020a0cf1c4000000b0067f3089e006si7194902qvl.546.2024.01.19.09.04.40
+        for <euro.money004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Jan 2024 09:04:41 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com designates 149.72.193.89 as permitted sender) client-ip=149.72.193.89;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@johnmavrick.com header.s=cka header.b="oFEnp/33";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=YwqRnHRq;
+       spf=pass (google.com: domain of bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com designates 149.72.193.89 as permitted sender) smtp.mailfrom="bounces+31205308-8fec-euro.money004=gmail.com@ckespa.johnmavrick.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=johnmavrick.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=johnmavrick.com;
+	h=content-type:from:mime-version:subject:list-unsubscribe:x-feedback-id:
+	to:cc:content-type:from:subject:to;
+	s=cka; bh=wYhhqdkuepFEwJBNjTO0t4JsnvtGbbT+ii3JkfjO9fA=;
+	b=oFEnp/33wOfDQQbLmRMyQ2tFqS4GbjdsP2s9u9cq9XSe8Iiwbyq/NFnPgE82tnqSlQdU
+	4WNnzHQhZg7itrH1ZLiIW7SaItVwlfGjRVx7FFJxfkS28Vv7PAyfUUMdh/r2VAlOhVkuiK
+	eyDepaGpiB1Bf8EbD8YrTI2vk1ZNunvgg=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:list-unsubscribe:x-feedback-id:
+	to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=wYhhqdkuepFEwJBNjTO0t4JsnvtGbbT+ii3JkfjO9fA=;
+	b=YwqRnHRq2jwsSdt71amm840ywgpmsYbAs/6FZOYw/bvtxgNefReaY7TpnCMLWr435Gl/
+	7AOIxJUzMqlzwbw76UQ4owVKJtWOlSXRdFRkL8t2aKw8xVOa8euZPe8YYbHNmVvfjuavKv
+	GFOSNw4JdY4c4vvMMgjUtoRer5+SiqA+U=
+Received: by filterdrecv-655bd866f5-5xz2l with SMTP id filterdrecv-655bd866f5-5xz2l-1-65AAABA7-47
+        2024-01-19 17:04:39.623085375 +0000 UTC m=+704863.109227008
+Received: from MzEyMDUzMDg (unknown)
+	by geopod-ismtpd-38 (SG) with HTTP
+	id HAPYbE0oRtma6NAZBILq5g
+	Fri, 19 Jan 2024 17:04:39.581 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=73c81b94ba02141d406a86945f9631168ef336416c1bcc3765ba9fc05c8b
+Date: Fri, 19 Jan 2024 17:04:39 +0000 (UTC)
+From: John Mavrick <john@johnmavrick.com>
+Mime-Version: 1.0
+Message-ID: <p9u6opz3e5i9h3m0k50cqhmk3v733@convertkit-mail2.com>
+Subject: I Made This Recording Just For You
+X-Report-Spam: <abuse@convertkit.com>
+X-Report-Abuse: <abuse@convertkit.com>
+Precedence: bulk
+Feedback-ID: 12842609:1200076:broadcast:CK
+List-Unsubscribe: 
+ <https://unsubscribe.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733>
+X-Feedback-ID: 31205308:SG
+X-SG-EID: 
+ =?us-ascii?Q?h+LZo4tR473eP3wdj1M8wYZqxN=2Fj73fVQSKFOo9xM=2FhElbLkMj9pU9W95vFzFq?=
+ =?us-ascii?Q?c3Vyeci2hQwVDWF5JhEr3MDJDgsgJzZDChJRe7H?=
+ =?us-ascii?Q?=2FFKYIqo3SwkTlsbMdV=2FDqLFHNQK=2FIa1xHea7mw0?=
+ =?us-ascii?Q?rS4xEW25le1a3ihivgbJl8tc4EvEBokfgf5w1Ef?=
+ =?us-ascii?Q?eCxKZDmhOmtFeiQltdTXKZK8LBLEW91Qwz5cSwl?=
+ =?us-ascii?Q?GxUqqmP8koO6jSyvCWfsaJKBJMo=2FQgTaqRhkhc?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsb8raWjw0ZPf1VmjsCkspi=2FJHjDFAea1uZocvZojyqe?=
+ =?us-ascii?Q?ADn4P93El9R5Y2dKRJTrrZWXMi1dqp5l1Yt=2F2Qj?=
+ =?us-ascii?Q?upV4ifkXWI2xO28M5RBvpK4sNOlHyL89oiGCJ93?=
+ =?us-ascii?Q?qBvWT=2FrlEmaXO=2F5DrTFlJbD5COalJGxkrdU2t6j?=
+ =?us-ascii?Q?IYXFELelZgdR6JQkxIrJCw3JHbnr+1at=2FhGEKmi?=
+ =?us-ascii?Q?YDdyWtJdHb6f1loa9A62l6VHUXBs5uwrSD9EYJA?=
+ =?us-ascii?Q?r2dsj31yKt4p2pso+5HlxzB4hJsBoQvNJhFM3vu?=
+ =?us-ascii?Q?SGuuhcWCCH1lyalymn9MOtYNrhSzdM4JUBRpVYN?=
+ =?us-ascii?Q?aeiRrZjM4lsANfZIWGjKlYLi0hB0HHk8CjcrIWl?=
+ =?us-ascii?Q?LlQ3mXgOSJ?=
+To: lolakias <euro.money004@gmail.com>
+X-Entity-ID: zOLh1/CFQOmB3by5edXXOg==
+X-TUID: xFYYUFRnPGi4
+
+--73c81b94ba02141d406a86945f9631168ef336416c1bcc3765ba9fc05c8b
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+=E2=80=8B
+=E2=80=8B (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/qvh8h7hrdz=
+dx87al/aHR0cHM6Ly95b3V0dS5iZS91X1Bwemo5NTdsbw=3D=3D
+)
+
+----------------------------
+=E2=AD=90100% Satisfaction Guarantee
+----------------------------
+
+We will give you a full refund within 30 days of buying the
+course if you aren't satisfied.
+
+This is the last day you can get Obsidian University for $25 off
+using the code PIZAZZ at checkout.
+
+-->Get Instant Access To The Course! (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/p8h6xr4oh9=
+hz4m4v95aq/aHR0cHM6Ly9jYXJ0LmpvaG5tYXZyaWNrLmNvbS9vYnNpZGlhbi11bml2ZXJzaXR5=
+Lw=3D=3D
+)
+Get Instant Access To The Course! (
+https://cart.johnmavrick.com/obsidian-university/ )Or get a taste
+of the course for FREE by signing up for 3 Days To Lecture
+Notetaking Mastery. (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/wnh2hghwqn=
+qzrrs7/aHR0cHM6Ly9jb3Vyc2UuYWlkYW5oZWxmYW50LmNvbS8zZGF5c3RvbGVjdHVyZW5vdGV0=
+YWtpbmdtYXN0ZXJ5
+)=E2=80=8B
+
+Got questions? Hit "reply"! I read (and try to respond to) every
+email ! =F0=9F=98=8A
+
+Until next time,
+
+John Mavrick =F0=9F=8C=8C
+=F0=9F=91=8B Say hi on YouTube (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/08hwh9hd2v=
+28m2ul/aHR0cHM6Ly93d3cueW91dHViZS5jb20vQGl0c2pvaG5tYXZyaWNr
+) or Twitter (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/l2hehmh3le=
+lgowh6/aHR0cHM6Ly90d2l0dGVyLmNvbS9qb2hubWF2cmlja195dA=3D=3D
+)=E2=80=8B
+
+Want a life operating system for high performance? Start building
+your own second brain (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/m2h7h5h83v=
+3ro2fm/aHR0cHM6Ly9zaG9wLmpvaG5tYXZyaWNrLmNvbS91c3Y=3D
+) =F0=9F=A7=A0
+
+=F0=9F=8C=8C Explore my universe (socials and resources) (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/e0hph7h076=
+7xkvh8/aHR0cHM6Ly9iZWFjb25zLmFpL2pvaG5tYXZyaWNr
+)
+
+P.S. Is your mailbox trying to keep my content away from you? =F0=9F=92=94
+
+What can you do about it? =F0=9F=98=B1
+
+Mark this email as =E2=80=98not spam=E2=80=99...
+
+or move it from your promotions to the primary folder =F0=9F=91=89=F0=9F=8F=
+=BB It=E2=80=99s
+very easy (
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/z2hghnh3en=
+ego2sp/aHR0cHM6Ly9zdWJzdGFjay5jb20vcmVkaXJlY3QvMDJkM2E5MGYtMWMxNy00NzM2LThl=
+YTctM2I3YjkyY2I5YzY3P3I9MWp1Z3A5
+)!
+
+=E2=80=8BUpdate your email preferences (
+https://preferences.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733
+) | Unsubscribe from all emails (
+https://unsubscribe.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733
+)
+
+(
+https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/x0hph6hweo=
+egnqu5/aHR0cHM6Ly9jb252ZXJ0a2l0LmNvbS9mZWF0dXJlcy9lbWFpbC1tYXJrZXRpbmc_dXRt=
+X2NhbXBhaWduPXBvd2VyZWRieSZ1dG1fY29udGVudD1lbWFpbCZ1dG1fbWVkaXVtPXJlZmVycmF=
+sJnV0bV9zb3VyY2U9ZHluYW1pYw=3D=3D
+)
+--73c81b94ba02141d406a86945f9631168ef336416c1bcc3765ba9fc05c8b
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }
+@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }
+@media only screen and (max-width:600px) {
+        .ck-mobile-font-size {
+          font-size: 50px !important;
+        }
+     }</style>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+</head>
+<body style=3D"margin:0;padding:0;-webkit-font-smoothing:antialiased;-ms-te=
+xt-size-adjust:100%;-webkit-text-size-adjust:100%">
+<div class=3D"email" style=3D"margin-left:18px;margin-right:18px">
+<!--[if mso]><style>.button-table { padding: 12px 0 }</style><![endif]--><d=
+iv>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:12px;margin-bottom:12px;margin-left:0;margin-right:0;ma=
+x-width:100%;width:100%"><div style=3D"display:block"><img src=3D"https://e=
+mbed.filekitcdn.com/e/ipyk1kAZUAWQreQYS6UoFE/dR5qQLkE63NYpVM1FhMMnC" alt=3D=
+"" width=3D"100%" height=3D"auto" style=3D"border:0 none;display:block;heig=
+ht:auto;line-height:100%;outline:none;-webkit-text-decoration:none;text-dec=
+oration:none;max-width:100%;border-radius:4px 4px 4px 4px;width:100%;height=
+:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:none">=E2=80=8B</figcaption></figure></td></tr></tbody></table>
+<!--[if mso]><table><tr><td width=3D"800"><![endif]--><a href=3D"https://cl=
+ick.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/qvh8h7hrdzdx87al/aHR=
+0cHM6Ly95b3V0dS5iZS91X1Bwemo5NTdsbw=3D=3D" style=3D"color:#0875c1;display:b=
+lock;width:100%;max-width:664px;margin:0 auto;border:0;text-decoration:none=
+" url-id=3D"1605270121"><img alt=3D"video preview" src=3D"https://functions=
+-js.convertkit.com/playbutton?play=3D%23324C85&amp;accent=3D%23ffffff&amp;t=
+humbnailof=3Dhttps%3A%2F%2Fyoutu.be%2Fu_Ppzj957lo&amp;width=3D480&amp;heigh=
+t=3D270&amp;fit=3Dcontain" width=3D"664" height=3D"373.5" style=3D"display:=
+block;height:auto;line-height:100%;outline:none;-webkit-text-decoration:non=
+e;text-decoration:none;max-width:100%;border:0 none;display:block;border-ra=
+dius:4px">=E2=80=8B</a><!--[if mso]></td></tr></table><![endif]--><h2 class=
+=3D"" style=3D"font-weight:bold;font-style:normal;font-size:1em;margin:0;fo=
+nt-size:1.5em;margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Se=
+goe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;col=
+or:#000000;line-height:1.5">=E2=AD=90100% Satisfaction Guarantee </h2>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">We will give you a full=
+ refund within 30 days of buying the course if you aren't satisfied.</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><strong>This is the las=
+t day you can get Obsidian University for $25 off using the code PIZAZZ at =
+checkout.</strong></p>
+<!--[if !mso]>--><table width=3D"100%" style=3D"border-collapse:separate;ms=
+o-table-lspace:0pt;mso-table-rspace:0pt"><tbody><tr><td align=3D"center" st=
+yle=3D"vertical-align:top"><a class=3D"email-button" href=3D"https://click.=
+convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/p8h6xr4oh9hz4m4v95aq/aHR=
+0cHM6Ly9jYXJ0LmpvaG5tYXZyaWNrLmNvbS9vYnNpZGlhbi11bml2ZXJzaXR5Lw=3D=3D" targ=
+et=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c1;border:0 n=
+one;margin-bottom:0.5em;font-size:16px;line-height:1.5;background-color:#08=
+75c1;color:#ffffff;border-radius:4px;border-color:#6b08c1;background-color:=
+#6b08c1;box-sizing:border-box;border-style:solid;color:#ffffff;display:inli=
+ne-block;text-align:center;text-decoration:none;padding:18px 32px;margin-to=
+p:12px;margin-bottom:12px;font-size:24px;border-radius:10px 10px 10px 10px"=
+ trigger-id=3D"4236989" url-id=3D"1605270124">Get Instant Access To The Cou=
+rse!</a></td></tr></tbody></table>
+<!--<![endif]--><!--[if mso]><table class=3D"button-table" width=3D"100%" b=
+order=3D"0" cellSpacing=3D"0" cellPadding=3D"0" style=3D"margin-top:12px;ma=
+rgin-bottom:12px"><tr><td align=3D"center"><table border=3D"0" cellSpacing=
+=3D"0" cellPadding=3D"0"><tr><td align=3D"center" bgcolor=3D"#6b08c1" style=
+=3D"background-color:#6b08c1;overflow:hidden;padding:18px 32px"><a class=3D=
+"email-button" href=3D"https://cart.johnmavrick.com/obsidian-university/" t=
+arget=3D"_blank" rel=3D"noopener noreferrer" style=3D"background-color:inhe=
+rit;display:inline-block;text-decoration:none;border-style:solid;margin:0;c=
+olor:#ffffff;font-size:24px" trigger-id=3D"4236989" data-ck-element=3D"butt=
+on">Get Instant Access To The Course!</a></td></tr></table></td></tr></tabl=
+e><![endif]--><p class=3D"" style=3D"margin:1em 0;font-family:-apple-system=
+,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helveti=
+ca Neue',sans-serif;color:#2d2d2f;font-size:16px;line-height:1.5">Or get a =
+taste of the course for FREE by signing up for <a href=3D"https://click.con=
+vertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/wnh2hghwqnqzrrs7/aHR0cHM6Ly=
+9jb3Vyc2UuYWlkYW5oZWxmYW50LmNvbS8zZGF5c3RvbGVjdHVyZW5vdGV0YWtpbmdtYXN0ZXJ5"=
+ target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-=
+id=3D"1605270127">3 Days To Lecture Notetaking Mastery.</a>=E2=80=8B</p>
+</div>
+<div class=3D"email-footer"><div>
+<hr>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5">Got questions? Hit "rep=
+ly"! I read (and try to respond to) every email ! =F0=9F=98=8A</p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><span style=3D"font-siz=
+e:18px">Until next time,</span></p>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:separate;mso-table-lspace:0pt;mso-table-rspace:0pt;tex=
+t-align:center;table-layout:fixed;float:none" class=3D"email-image"><tbody>=
+<tr><td align=3D"center" style=3D"vertical-align:top"><figure style=3D"marg=
+in:1em 0;margin-top:10px;margin-bottom:10px;margin-left:0;margin-right:0;di=
+splay:inline-block;max-width:136px;width:100%"><div style=3D"display:block"=
+><img src=3D"https://embed.filekitcdn.com/e/8pq4GcvkQ3tJi3tDL2wki8/6A74vxzf=
+U1CMMiYNKhpHHs" width=3D"136" height=3D"auto" style=3D"border:0 none;displa=
+y:block;height:auto;line-height:100%;outline:none;-webkit-text-decoration:n=
+one;text-decoration:none;max-width:100%;border-top-left-radius:9999px;borde=
+r-top-right-radius:9999px;border-bottom-left-radius:9999px;border-bottom-ri=
+ght-radius:9999px;width:136px;height:auto;object-fit:contain"></div>
+<figcaption style=3D"margin-top:0.4em;font-size:0.8em;text-align:center;dis=
+play:block"><strong><span style=3D"font-size:18px">John Mavrick =F0=9F=8C=
+=8C</span></strong></figcaption></figure></td></tr></tbody></table>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><stro=
+ng><span style=3D"font-size:18px">=F0=9F=91=8B Say hi on </span></strong><a=
+ href=3D"https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/0=
+8hwh9hd2v28m2ul/aHR0cHM6Ly93d3cueW91dHViZS5jb20vQGl0c2pvaG5tYXZyaWNr" targe=
+t=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=3D"=
+1605270129"><strong><span style=3D"font-size:18px">YouTube</span></strong><=
+/a><strong><span style=3D"font-size:18px"> or </span></strong><a href=3D"ht=
+tps://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/l2hehmh3lelg=
+owh6/aHR0cHM6Ly90d2l0dGVyLmNvbS9qb2hubWF2cmlja195dA=3D=3D" target=3D"_blank=
+" rel=3D"noopener noreferrer" style=3D"color:#0875c1" url-id=3D"1605270132"=
+><strong><span style=3D"font-size:18px">Twitter</span></strong></a>=E2=80=
+=8B</p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><span=
+ style=3D"font-size:18px">Want a life operating system for high performance=
+? Start building your own </span><a href=3D"https://click.convertkit-mail2.=
+com/p9u6opz3e5i9h3m0k50cqhmk3v733/m2h7h5h83v3ro2fm/aHR0cHM6Ly9zaG9wLmpvaG5t=
+YXZyaWNrLmNvbS91c3Y=3D" target=3D"_blank" rel=3D"noopener noreferrer" style=
+=3D"color:#0875c1" url-id=3D"1605270133"><span style=3D"font-size:18px">sec=
+ond brain</span></a><span style=3D"font-size:18px"> =F0=9F=A7=A0</span></p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:center" class=3D""><span=
+ style=3D"font-size:18px">=F0=9F=8C=8C </span><a href=3D"https://click.conv=
+ertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/e0hph7h0767xkvh8/aHR0cHM6Ly9=
+iZWFjb25zLmFpL2pvaG5tYXZyaWNr" target=3D"_blank" rel=3D"noopener noreferrer=
+" style=3D"color:#0875c1" url-id=3D"1605270135"><span style=3D"font-size:18=
+px">Explore my universe (socials and resources)</span></a> </p>
+<hr style=3D"margin-top:48px;margin-bottom:48px">
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>P.S. Is your mailbo=
+x trying to keep my content away from you? =F0=9F=92=94</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>What can you do abo=
+ut it? =F0=9F=98=B1</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>Mark this email as =
+=E2=80=98not spam=E2=80=99...</em></p>
+<p class=3D"" style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSyste=
+mFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-=
+serif;color:#2d2d2f;font-size:16px;line-height:1.5"><em>or move it from you=
+r promotions to the primary folder =F0=9F=91=89=F0=9F=8F=BB </em><a href=3D=
+"https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733/z2hghnh3e=
+nego2sp/aHR0cHM6Ly9zdWJzdGFjay5jb20vcmVkaXJlY3QvMDJkM2E5MGYtMWMxNy00NzM2LTh=
+lYTctM2I3YjkyY2I5YzY3P3I9MWp1Z3A5" target=3D"_blank" rel=3D"noopener norefe=
+rrer" style=3D"color:#0875c1" url-id=3D"1605270138"><em>It=E2=80=99s very e=
+asy</em></a><em>!</em></p>
+<p style=3D"margin:1em 0;font-family:-apple-system,BlinkMacSystemFont,'Sego=
+e UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;color=
+:#2d2d2f;font-size:16px;line-height:1.5;text-align:left" class=3D"">=E2=80=
+=8B<a href=3D"https://preferences.convertkit-mail2.com/p9u6opz3e5i9h3m0k50c=
+qhmk3v733" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#08=
+75c1"><span style=3D"font-size:12">Update your email preferences</span></a>=
+<span style=3D"font-size:12"> </span>| <a href=3D"https://unsubscribe.conve=
+rtkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733" target=3D"_blank" rel=3D"noo=
+pener noreferrer" style=3D"color:#0875c1"><span style=3D"font-size:12">Unsu=
+bscribe from all emails</span></a><span style=3D"font-size:12"> </span></p>
+</div></div>
+<div class=3D"built-with" style=3D"display:block;text-align:left;margin-top=
+:30px"><a href=3D"https://click.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqh=
+mk3v733/x0hph6hweoegnqu5/aHR0cHM6Ly9jb252ZXJ0a2l0LmNvbS9mZWF0dXJlcy9lbWFpbC=
+1tYXJrZXRpbmc_dXRtX2NhbXBhaWduPXBvd2VyZWRieSZ1dG1fY29udGVudD1lbWFpbCZ1dG1fb=
+WVkaXVtPXJlZmVycmFsJnV0bV9zb3VyY2U9ZHluYW1pYw=3D=3D" target=3D"_blank" rel=
+=3D"noopener" style=3D"color:#0875c1;display:inline-block;text-decoration:n=
+one" url-id=3D"1605270140"><img src=3D"https://cdn.convertkit.com/assets/li=
+ght-built-with-badge.png" alt=3D"Built with ConvertKit" style=3D"display:bl=
+ock;height:auto;line-height:100%;outline:none;-webkit-text-decoration:none;=
+text-decoration:none;max-width:100%;border:0 none;width:190px;height:36px" =
+width=3D"190" height=3D"36"></a></div>
+</div>
+<!-- -->
+<img src=3D"https://open.convertkit-mail2.com/p9u6opz3e5i9h3m0k50cqhmk3v733=
+" alt=3D"" style=3D"border:0 none;display:block;height:auto;line-height:100=
+%;outline:none;-webkit-text-decoration:none;text-decoration:none;max-width:=
+100%">
+</body>
+</html>
+
+--73c81b94ba02141d406a86945f9631168ef336416c1bcc3765ba9fc05c8b--

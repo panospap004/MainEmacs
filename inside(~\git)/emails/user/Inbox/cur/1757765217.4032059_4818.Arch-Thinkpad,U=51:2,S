@@ -1,0 +1,454 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6358:1988:b0:125:7fef:e76 with SMTP id v8csp3124398rwn;
+        Mon, 27 Nov 2023 07:38:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrFREd+GuqMosSWcDqF0bEgXIt7CsPsgMuDWdLhb/+U86u0KvM5WccbuP3P03WBWseRDQM
+X-Received: by 2002:a05:6a00:e0f:b0:6cb:d2cb:5234 with SMTP id bq15-20020a056a000e0f00b006cbd2cb5234mr14183683pfb.32.1701099529961;
+        Mon, 27 Nov 2023 07:38:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1701099529; cv=none;
+        d=google.com; s=arc-20160816;
+        b=zNfAKCKGqdXk2cxujSGtnp1KYeu78eC5wDqqgIRWSpdeW7Vgj9LoxKXax4Hwu8RTBL
+         nDjK4rICeq7KKCB47P7qXzsmL63VZ9Hu1xLywfS3/LV1pbBmhBl456YD15NPeeCK8rNG
+         8k4RO7CjkrRdWt5grWOmCSBLxQu4UM4dJRfI/4Mb368jCEJvoHZRzMoh9998adnKFrww
+         trf0TU5s5l61ZQNEzFZptMOXAsvwJJolCQekaJkKnRZ5W3sdP7/rQab78EonQ0c6GHA0
+         WiBmnO41Sro4G9Ov9PJUg3FHaXChbdxs9kRMwf7GBxAuvRhM1Vl8X1T/NC5ovaFkwkz+
+         mDhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:subject:message-id:mime-version:from:date:dkim-signature
+         :dkim-signature;
+        bh=rG8v26UWPVElh0VjglamIgkzZiJyFfNdTGZPITsPjYg=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=M5z+kYoMrGf9pm/OFTyQUPF/EaHZBeQxrhPR+MxZQuExewHC5VTHDmtpGI1o+/Wm9h
+         +6FI261NB02+WY6AaVZ/uQIfTK8YbnSitblhYzDWXaBhARHMOWZvr5ZXmemrS6lc4oLQ
+         vEDovbq1LJpBlgDNJnHzVdLQgSV1ONxC8O9fIazmq/pdzJVGHrYSHz9TdYMtpLzQuCTP
+         0UIaPbZ9Le2HqwAPj8qU0ynTEtlVcHz1cr2v6OB6y7y2F511EuLGoJh76J4ggHdCOZN4
+         0jF7+F8F2W8aJSKiHhliDY9IlpaDKxJf+xhXWlboD0Ax7EjCvjBs+MXdq1tTE3snpgHo
+         LJDw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@morgen.so header.s=s1 header.b=ZdZ9Z1wL;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=augs17Ts;
+       spf=pass (google.com: domain of bounces+23335901-8a59-user.idc004=gmail.com@em8720.morgen.so designates 168.245.15.113 as permitted sender) smtp.mailfrom="bounces+23335901-8a59-user.idc004=gmail.com@em8720.morgen.so";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=morgen.so
+Return-Path: <bounces+23335901-8a59-user.idc004=gmail.com@em8720.morgen.so>
+Received: from o1.ptr8072.morgen.so (o1.ptr8072.morgen.so. [168.245.15.113])
+        by mx.google.com with ESMTPS id k16-20020a056a00135000b006cbd40b46basi9916900pfu.133.2023.11.27.07.38.49
+        for <user.idc004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Nov 2023 07:38:49 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounces+23335901-8a59-user.idc004=gmail.com@em8720.morgen.so designates 168.245.15.113 as permitted sender) client-ip=168.245.15.113;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@morgen.so header.s=s1 header.b=ZdZ9Z1wL;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=augs17Ts;
+       spf=pass (google.com: domain of bounces+23335901-8a59-user.idc004=gmail.com@em8720.morgen.so designates 168.245.15.113 as permitted sender) smtp.mailfrom="bounces+23335901-8a59-user.idc004=gmail.com@em8720.morgen.so";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=morgen.so
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=morgen.so;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=s1; bh=rG8v26UWPVElh0VjglamIgkzZiJyFfNdTGZPITsPjYg=;
+	b=ZdZ9Z1wL9ybErGU4ES7YiYJf9tuj0G6VfRhrK8XGRJzvJYwhM86mran2KYM4oH4Oe1F8
+	I3c/+U7HqZvQD2yL/7Xmbfva+qruP9banDmLCwollPaewcR2WTuJnyVxbyGQU8kjgqaQWG
+	UgbJad89EGIVNKKvQkaLoLluGEzod3O1bp/iu5bNHjKZoaN8OY/wgGbPwWNue+GDHekFCv
+	6DEv72R1lK2sWa7TnfckQDVsVFlGRp7izEi10UmFqgwxStcZV83/LCqh+2BOtl6L+KzDGJ
+	F1mxv3i2vQaJQrt0lBzK/WuJxfEfPn+Xch7jcL+nh0hWVQtk+uRvXnPWeqIjLSog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=rG8v26UWPVElh0VjglamIgkzZiJyFfNdTGZPITsPjYg=;
+	b=augs17TsMFSsMsLvhh4/gtSF4Cp+BdVYsSptpIqRgYGBwkvV6oJ1ZKABR5uscfFP+okZ
+	3XxoEsVoxBxu3mMOrGZ++Y/WMeGYE3jYvAdJ7NdSuqJj0zZ40Wu1D469A39T1P6P6d8yl5
+	WCJxTOM62FMNrn0ZOgIPiKKbK7a+DkY8o=
+Received: by filterdrecv-b85775b64-6m2bh with SMTP id filterdrecv-b85775b64-6m2bh-1-6564B807-4A
+        2023-11-27 15:38:48.162109041 +0000 UTC m=+3531475.560274645
+Received: from MjMzMzU5MDE (unknown)
+	by geopod-ismtpd-1 (SG) with HTTP
+	id TiRoZd0_Q1yrqKO5qnQprQ
+	Mon, 27 Nov 2023 15:38:47.882 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=2356ab02a12b8fde0f0a43e22ba39276be707da7d39ef446d30e15d5ab86
+Date: Mon, 27 Nov 2023 15:38:48 +0000 (UTC)
+From: Morgen <connect@morgen.so>
+Mime-Version: 1.0
+Message-ID: <TiRoZd0_Q1yrqKO5qnQprQ@geopod-ismtpd-1>
+Subject: Your activation code
+X-Feedback-ID: 23335901:SG
+X-SG-EID: 
+ =?us-ascii?Q?fwutQkiMZC4sTkUFLJDEkpQ5hALjKhVK1WyfiltxyRUZ8OrDYXbDXiVVDC5ljG?=
+ =?us-ascii?Q?M=2FC8s6+CF+i+hHYOowf18HMKXehcySdnRpKWu7d?=
+ =?us-ascii?Q?U9sKRDLvuGXgD9slf6cXpWExi6zgGzmhx1DBWn5?=
+ =?us-ascii?Q?hRX7I2MP5PVfETucMUgZPSXUBPOvzYM+0joYZ5L?=
+ =?us-ascii?Q?+O7Pe20LpWMPKSEPB6jwCI9lXOCUvvNY3ZKPJYC?=
+ =?us-ascii?Q?AUGn6MQ94ZE9MlCj9WsARRWwXozeUr8x5Yi5Bk?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsb=2FAytmj7E3E9TTaQlf9XvFuN42wmCNWA=2FsFhOxylmz?=
+ =?us-ascii?Q?4MsVoh5h=2FqFFYVnImWMV3THDv5T0ankcLS69cxx?=
+ =?us-ascii?Q?CxYSjm68cRN6MstJMmZGz+wn5ec4V5hJGP4jTGi?=
+ =?us-ascii?Q?wk2416CScASQ6X=2Fc8dpnbHGxB+ZYsVbYZlz+8N0?=
+ =?us-ascii?Q?ag2irpX+eA1VM?=
+To: user.idc004@gmail.com
+X-Entity-ID: 4LaCL6hMt+O3N8nF/4A2Wg==
+X-TUID: jeDXp3o0Hzwh
+
+--2356ab02a12b8fde0f0a43e22ba39276be707da7d39ef446d30e15d5ab86
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Here's is your Morgen activation code.
+
+*Confirm your email address*
+
+Your confirmation code is below =E2=80=94 enter it in your login form and w=
+e'll help you get signed in.
+
+JDRXE5
+
+This code has limited validity and can only be used once.
+If you didn=E2=80=99t request this email, there=E2=80=99s nothing to worry =
+about =E2=80=94 you can safely ignore it.
+
+If you need help, do not hesitate to reach out by replying to this email.
+
+Morgen AG
+F=C3=B6rrlibuckstrasse 223, Zurich, Switzerland
+--2356ab02a12b8fde0f0a43e22ba39276be707da7d39ef446d30e15d5ab86
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html data-editor-version=3D"2" class=3D"sg-campaigns" xmlns=3D"http://www.=
+w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1, minimum-scale=3D1, maximum-scale=3D1">
+      <!--[if !mso]><!-->
+      <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type=3D"text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #333333;
+    }
+    body a {
+      color: #1188E6;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start--><!--End Head user entered-->
+    </head>
+    <body>
+      <center class=3D"wrapper" data-link-color=3D"#1188E6" data-body-style=
+=3D"font-size:14px; font-family:arial,helvetica,sans-serif; color:#333333; =
+background-color:#FFFFFF;">
+        <div class=3D"webkit">
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"=
+100%" class=3D"wrapper" bgcolor=3D"#FFFFFF">
+            <tr>
+              <td valign=3D"top" bgcolor=3D"#FFFFFF" width=3D"100%">
+                <table width=3D"100%" role=3D"content-container" class=3D"o=
+uter" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                  <tr>
+                    <td width=3D"100%">
+                      <table width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width=3D"600">
+  <![endif]-->
+                                    <table width=3D"100%" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" style=3D"width:100%; max-width:600px;" alig=
+n=3D"center">
+                                      <tr>
+                                        <td role=3D"modules-container" styl=
+e=3D"padding:0px 0px 0px 0px; color:#333333; text-align:left;" bgcolor=3D"#=
+FFFFFF" width=3D"100%" align=3D"left"><table class=3D"module preheader preh=
+eader-hide" role=3D"module" data-type=3D"preheader" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display: none !important;=
+ mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height:=
+ 0; width: 0;">
+    <tr>
+      <td role=3D"module-content">
+        <p>Here's is your Morgen activation code.</p>
+      </td>
+    </tr>
+  </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"ec5162ab-0b2a-482e-b5a9-88e67468e2e8">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 30px 0px;" role=3D"module-content" bgc=
+olor=3D"">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"b2dcf9e0-476f-4298-a036-4d4163f57ccb">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"left">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block; col=
+or:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif;=
+ font-size:16px; max-width:30% !important; width:30%; height:auto !importan=
+t;" width=3D"180" alt=3D"" data-proportionally-constrained=3D"true" data-re=
+sponsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net/f=
+51309dcd2dc4f4a/d0e7549d-d0bf-4ee2-91f1-ec3a36706b53/911x240.png">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"723617f9-2bf8-4fa3-ad0b-72a32b5d755b">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 30px 0px;" role=3D"module-content" bgc=
+olor=3D"">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"b570f6b1-b20b-4945-a0d1-49e087002342" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-cont=
+ent"><div><div style=3D"font-family: inherit; text-align: inherit"><span st=
+yle=3D"font-family: helvetica, sans-serif; font-size: 30px; color: #333333"=
+><strong>Confirm your email address</strong></span></div><div></div></div><=
+/td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"7d4d3633-9c3d-4f04-a740-954a1dcc4c8f" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-cont=
+ent"><div><div style=3D"font-family: inherit; text-align: inherit"><span st=
+yle=3D"font-family: helvetica, sans-serif; font-size: 18px; color: #333333"=
+>Your confirmation code is below =E2=80=94 enter it in your login form and =
+we'll help you get signed in.</span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"f4e2acba-e552-491b-8c11-76f9c29d8c99">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 30px 0px;" role=3D"module-content" bgc=
+olor=3D"">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"e69cc342-c7e9-4ec5-8faf-b7b37b9d322f" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit; background-color:#f2f2f2;" height=3D"100%" valign=3D"top" bgcolo=
+r=3D"#f2f2f2" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><span style=3D"font-size: 36px; font-family: courie=
+r, monospace; color: #393939">JDRXE5</span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"3dbb810f-6de2-4f29-8e43-dd00e2bb7dbd">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 30px 0px;" role=3D"module-content" bgc=
+olor=3D"">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"dc60fe50-85e2-4a12-b732-4ebac397a003" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-cont=
+ent"><div><div style=3D"font-family: inherit; text-align: inherit"><span st=
+yle=3D"font-family: helvetica, sans-serif; font-size: 18px; color: #333333"=
+>This code has limited validity and can only be used once.&nbsp;</span></di=
+v>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: helvetica, sans-serif; font-size: 18px; color: #333333">If you di=
+dn=E2=80=99t request this email, there=E2=80=99s nothing to worry about =E2=
+=80=94 you can safely ignore it.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: helvetica, sans-serif; font-size: 18px; color: #333333">If you ne=
+ed help, do not hesitate to reach out by replying to this email.</span></di=
+v><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"spacer" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"c0a1a62b-cf03-4aa7-b646-8b58b1004d43">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 60px 0px;" role=3D"module-content" bgc=
+olor=3D"">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"f768936b-787b-40a9-ada2-6fe501152929" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-cont=
+ent"><div><div style=3D"font-family: inherit; text-align: center"><span sty=
+le=3D"font-family: helvetica, sans-serif; color: #777777">Morgen AG</span><=
+/div>
+<div style=3D"font-family: inherit; text-align: center"><span style=3D"font=
+-family: helvetica, sans-serif; color: #777777">F=C3=B6rrlibuckstrasse 223,=
+ Zurich, Switzerland</span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    <img src=3D"http://url375.morgen.so/wf/open?upn=3DYnOovAg6kID4ikZGW6PoN=
+cpPh-2BAxzJlj6qaY6hKEotpGD1WV-2FXgtW4dQVqbNzqyL5ypDMutPzkbkyjZB9BOmPy5jfL4M=
+nYQULCtksvP5R1-2B5KoiWzgOw8Lo0CvkuD7U3WaGXz7gINoq8grcNvp8INOBL8M6rbjcXULd0u=
+cDRGn-2B-2B-2BixhBr3wUqHTLfoLQPCvSIT3b5c-2Bw5Jxt146jewPADdkH2ul7sTxU66FAwkd=
+DvFLi8zqrdHi1nlrudtbdUMMHgWYC5ik05lBusLkRIdp6KGtbrU85Z53-2B576qh7qUaw81j-2F=
+IXHwBQ8UhYqr9EXtFdauFNHy86-2B7OwTV9uL6sXwX89X7yLlpRY59m-2BwZpo6TCPQMfcg8Hv6=
+G-2B8rxecPoEuDwGVTmVDsB7V-2Fp0uCDlsA-3D-3D" alt=3D"" width=3D"1" height=3D"=
+1" border=3D"0" style=3D"height:1px !important;width:1px !important;border-=
+width:0 !important;margin-top:0 !important;margin-bottom:0 !important;margi=
+n-right:0 !important;margin-left:0 !important;padding-top:0 !important;padd=
+ing-bottom:0 !important;padding-right:0 !important;padding-left:0 !importan=
+t;"/></body>
+  </html>
+--2356ab02a12b8fde0f0a43e22ba39276be707da7d39ef446d30e15d5ab86--

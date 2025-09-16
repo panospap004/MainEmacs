@@ -1,0 +1,776 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:7412:319e:b0:108:1b3b:b058 with SMTP id et30csp1105345rdb;
+        Thu, 2 May 2024 05:18:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8VsbR+FP8aVIgH3cElBZzCYKK/yKumeaBXajLcd5n26HQ10Js+8IUVSuQH0Jb/unoWgka
+X-Received: by 2002:aca:2b1a:0:b0:3c8:2a60:fc3f with SMTP id i26-20020aca2b1a000000b003c82a60fc3fmr6174787oik.25.1714652293229;
+        Thu, 02 May 2024 05:18:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1714652293; cv=none;
+        d=google.com; s=arc-20160816;
+        b=j8h0rFa4dCGe62cqBIeU+xHW46sPmjpYZZB3FCVsRKBFjV8ckkhauPfHsGYGWa/xdM
+         0jI283qdqqXVeF0w/1j24EA6SCUG3WEabGHya9979EDLeSiJjV/uyW7fhlnmeZWYANLI
+         bw82yKdd19uCo0aJpVaFS0kytmRgNy7NR1UIQ+9RPfmxWME2UVRW3jeFwupE+l/ibYxR
+         7XUlnyG5OHE8R+AgWzD1nCTt6CemDFmRnfhscJuIaBpUpdGQJmIRdF1K2R6nnJZmx9bZ
+         WhSv0YDmDAg28f4xvxGk33Is9uCVr182BR+cUqfZJfaRzAOrT7Wfp6uCcSx8sF6fiu2n
+         Kuog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=to:sid:list-unsubscribe:feedback-id:reply-to:subject:message-id
+         :mime-version:from:date:dkim-signature:dkim-signature;
+        bh=XaqwI+BKaScd9SxxciVIrcEa2zFI50GokyvsLqPODfQ=;
+        fh=+kQGzMifYYyPwctqSkU51cxFGB749RUGsfn8I9ZPlBo=;
+        b=FbrKwnbry6KxWAGJdoD1Wc6cYMkOPQuoz+kwcgR6cifeTOFjtu0xiom4lvK8p6x9mm
+         QeZd1paSICxU5lcyrKK5aeQJWWbkorfnBg713rWswXundM8kNBb9ZgnVeUiEEJgIrnu8
+         dLleLw4ifo2gvZJUwT/8Uu7zhyBCVgw5klvYvaWBIh79seH5G9bpvgU9RPUX91dn4AsR
+         o2qF1MWHIEC3lcbFlY7/512fFNZrqznNcpB5ghhMHsI/unqtWsBpoFVqcppO/NTNVoAQ
+         OjR7VJcX1nHvNqxrdgUadNPdcsEdJ1Ad3kIpUHW4A2zay5jHstZyk80cg84TpjdBRXms
+         rc9g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@flocus.com header.s=5d6 header.b=ma0Uc9X9;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=SkrC7YIh;
+       spf=pass (google.com: domain of bounces+31736377-5066-lets.mine004=gmail.com@em4776.flocus.com designates 159.183.141.187 as permitted sender) smtp.mailfrom="bounces+31736377-5066-lets.mine004=gmail.com@em4776.flocus.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=flocus.com
+Return-Path: <bounces+31736377-5066-lets.mine004=gmail.com@em4776.flocus.com>
+Received: from o15.ptr5735.mail.beehiiv.com (o15.ptr5735.mail.beehiiv.com. [159.183.141.187])
+        by mx.google.com with ESMTPS id iw11-20020a0562140f2b00b006a0c59857bdsi808796qvb.508.2024.05.02.05.18.12
+        for <lets.mine004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 May 2024 05:18:12 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces+31736377-5066-lets.mine004=gmail.com@em4776.flocus.com designates 159.183.141.187 as permitted sender) client-ip=159.183.141.187;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@flocus.com header.s=5d6 header.b=ma0Uc9X9;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=SkrC7YIh;
+       spf=pass (google.com: domain of bounces+31736377-5066-lets.mine004=gmail.com@em4776.flocus.com designates 159.183.141.187 as permitted sender) smtp.mailfrom="bounces+31736377-5066-lets.mine004=gmail.com@em4776.flocus.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=flocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flocus.com;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe:
+	x-feedback-id:to:cc:content-type:from:subject:to;
+	s=5d6; bh=XaqwI+BKaScd9SxxciVIrcEa2zFI50GokyvsLqPODfQ=;
+	b=ma0Uc9X9UI9quOnh05QZXmMcNT/l2ZPwgP+5eZGZKW6/4v3YCTr7wkBAv2sH4OQbPCW+
+	G3ZCmXZYU4sWxjDAHc/EEoRchdPUowsypVWINHkXpPICZniO8ztTgp28RJb2i6EC+PcZrR
+	IY6PNMEgn3H3NenTQqKNlBcPTFkJkbitVlLDjD9bAip+ajVnDR5b/8E+RX1xRCHtcaG/uc
+	UkynViUbYNoxLRdXssPvtZISWz2xuTNM6HP2X7f4o7YXr1+N+g5AEExkHbwsjEhC06Abyy
+	mKg/fS8MdxNwaUt7RsrLm3E1jmfbY+pVocJVDLsRXBe4He6SYw1ow232P4TA5bhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe:
+	x-feedback-id:to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=XaqwI+BKaScd9SxxciVIrcEa2zFI50GokyvsLqPODfQ=;
+	b=SkrC7YIht4pB8pJQN755BtHbYB0LfBZ/kWGJWNSMeqZ2YqKNlhtbttwxET+UrkCqdNqJ
+	tyXDKIUusbIj/goebRFMAJX1FgA5bE9JzBHEP+oBO42fZeM6TdcZuHQNjwBxA2juVY4GE7
+	alP2TQ3AyDnsqStgETnkgE8gKROBGwQp0=
+Received: by filterdrecv-79946f9649-cx2rs with SMTP id filterdrecv-79946f9649-cx2rs-1-66338484-A5
+        2024-05-02 12:18:12.567779419 +0000 UTC m=+221824.048017819
+Received: from MzE3MzYzNzc (unknown)
+	by geopod-ismtpd-13 (SG) with HTTP
+	id kR80sWd_Ry-fQRRe_ThvRA
+	Thu, 02 May 2024 12:18:12.547 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=24ed111976044acc7bd34e6f43e26f41b247c70c396a4f7f364ed3f1e74a
+Date: Thu, 02 May 2024 12:18:12 +0000 (UTC)
+From: The Flow by Flocus <theflow@flocus.com>
+Mime-Version: 1.0
+Message-ID: <kR80sWd_Ry-fQRRe_ThvRA@geopod-ismtpd-13>
+Subject: =?UTF-8?B?8J+Riw==?= Welcome to The Flow
+Reply-To: The Flow by Flocus <hello@flocus.com>
+x-newsletter-signup: https://theflow.beehiiv.com/subscribe
+Feedback-ID: 
+ welcome_email:3626c338-dadd-485c-bf7f-b20947069021:a623082206e4b2a
+x-beehiiv-ids: 
+ =?us-ascii?Q?{=22account=5Fname=22=3A=22https=3A=2F=2Ftheflow=2Ebeehiiv=2Ecom=2F=22=2C=22category=22=3A=22wel?=
+ =?us-ascii?Q?come=5Femail=22=2C=22email=5Fgenerated=5Fat=22=3A171465?=
+ =?us-ascii?Q?2292=2C=22user=5Fid=22=3A=223626c338-dadd-485c-bf7f?=
+ =?us-ascii?Q?-b20947069021=22}?=
+x-list-id: 3626c338-dadd-485c-bf7f-b20947069021
+x-newsletter-id: https://theflow.beehiiv.com/
+List-Unsubscribe: 
+ =?us-ascii?Q?=3Cmailto=3A3626c338-dadd-485c-bf7f-b20947069021+0d39ce21-fdf5-444?=
+ =?us-ascii?Q?4-9873-23aa29e9e864=40unsub=2Ebeehiiv=2Ecom=3E=2C?=
+ =?us-ascii?Q?_=3Chttps=3A=2F=2Ftheflow=2Ebeehiiv=2Ecom=2Fsubscribe=2F0d39ce21-fdf5-4444-9873?=
+ =?us-ascii?Q?-23aa29e9e864=2Fmanage=3E?=
+x-beehiiv-type: welcome_email
+sId: 3626c338-dadd-485c-bf7f-b20947069021
+x-list-owner: <mailto:hello@flocus.com>
+X-Feedback-ID: 31736377:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2Ev71ubCZWuHo1DTvuNLckzSNhm1nqKrwe4jr7G6Nm4cpFHNJ40mgWVtrIA?=
+ =?us-ascii?Q?vDFaT1djLNds1FeSQGYyy1DrJ7Ms4yO5qqZwbI9?=
+ =?us-ascii?Q?qLXKldQxagPcAsztO1wA0hasv7GbLAYRFmTazI9?=
+ =?us-ascii?Q?vwUfiNFWtcz=2FA7ie1w5kn5jWR+9GQHhTrLYaoya?=
+ =?us-ascii?Q?9Bg9yy0BPtX=2FbXZH5wKNMXSaMLiLwwIr41rtPIM?=
+ =?us-ascii?Q?yHFq83G77Z5XU1NGK44KJyUK3Giw7zihGcXwced?= =?us-ascii?Q?cnnF?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BpTL9BgbK5wfSJMJGMsmprBgbBeQK=2Fv=2FUCazh?=
+ =?us-ascii?Q?m7BxiXY3eTT8z9O1MKLVXzIene+fliIzGO=2FU7ly?=
+ =?us-ascii?Q?4S0QeEeoDShz+VLwDB1JXBDC=2FtQhG8us3=2FG5Db=2F?=
+ =?us-ascii?Q?1JnOOHYHAJZqpR=2FCjHg9RTvMbd8S2bTE8RoGJHA?=
+ =?us-ascii?Q?xs9z3TmWImcbQ1AtQO8qCQOZ0lJHg4jBAODOwKe?=
+ =?us-ascii?Q?BuZCoxOfkKEZbsyZtvYKHzom5AKEzljmw7ARM+f?=
+ =?us-ascii?Q?0s=2Fm8sNSk=2FqVghKOUym06B8t0CK+eLNwnQ=2F2prE?=
+ =?us-ascii?Q?UawexKOH+NZd9ajd4EAKXWyjJFRpFjEzEFdWvnP?=
+ =?us-ascii?Q?EQzMLTsyg+d=2FbeOT8E8JLoeKMa=2Fn9WlHXUwis6p?=
+ =?us-ascii?Q?F7fl0uicnnEKmbaL3gysInOhy80mUVUB=2FWp1gpv?=
+ =?us-ascii?Q?eb126DvmCkKzznGuP1RKYZGu0GeD8q2vvruVl1Y?= =?us-ascii?Q?z?=
+To: "lets.mine004@gmail.com" <lets.mine004@gmail.com>
+X-Entity-ID: u001.CkNCsHHz7OagdMiGB0Ga4w==
+X-TUID: vJyOtG3zzhpF
+
+--24ed111976044acc7bd34e6f43e26f41b247c70c396a4f7f364ed3f1e74a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+View image: (https://link.mail.beehiiv.com/ss/c/u001.qcZ0PYVSuHa0roSjO84QmR=
+Ye5Sez0wg-kMMu37rqQ-ETbpKu5JhlyFuQwR8VSMU0QIugOS174eoVSs1m-l3dax1c_NqLwo6gz=
+66vsFXMXj1wYZfXu6Ntn0RRLosCB7NIN2wHMZCVywCjejAnF0QD7oJl3XtfdAHWL_n0eW4UIwkf=
+FASXB13zOytNvG0eKxwbIMKK0hoYLTfOOh__ZCeNJlvGmpz75FaQIJy_dLA5MGdApb8lErFO9YD=
+qM_vQ0Ag5CeN0tJJ_AS8WvkCLMKRfAQ/460/nVCm7bbORO-018aFLukYTQ/t0/h001.-x3JMHUA=
+G8benBgV7T4U2i6hkhU6DYbQqDBTqyAPtQ8
+Caption:=20
+
+## Welcome to The Flow by Flocus Pappanos =F0=9F=91=8B=20
+
+#### **Your value-packed focus and recharge digest =E2=80=94=C2=A0loved by =
+over 70,000 productivity-obsessed humans.**
+
+We believe in a balanced approach to productivity, and we can=E2=80=99t wai=
+t to share our best tips, insights, and resources with you to achieve just =
+that.
+
+Each Sunday, we'll deliver a concise, power-packed email to your inbox =E2=
+=80=94 all wrapped up in a scannable, easy-to-digest format.
+
+No fluff, just handy focus hacks, recharging tips, and curated recommendati=
+ons that=E2=80=99ll be worth your open.=20
+
+_(Feel free to fill out this __[30-second survey](https://link.mail.beehiiv=
+.com/ss/c/u001.I1zpEcKISX24FCMw8AuYq9vEOak10-dJcye4GSflhJBd0vCv-BCfwi7iZ6Xt=
+nd3L1ZJTFhlAR9LAadxTdMyUqw/460/nVCm7bbORO-018aFLukYTQ/t1/h001.nl-NkpVjY6UkL=
+nEPL4btF2I1WucMqbAh70bmRUfeojA to let us know what content resonates with y=
+ou!)_
+
+Looking forward to connecting every Sunday!
+
+Flocus Team
+
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=
+=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94
+
+Btw, let's make sure these emails reach your main inbox:
+
+* **Gmail (Web):** Exit this email to inbox =E2=80=94 then drag and drop th=
+is email on the "Primary" tab at the top of your inbox
+
+* **Gmail (App):** Tap =E2=8B=AF in the top right corner =E2=86=92 Hit "Mov=
+e to" =E2=86=92 Select "Primary". If you don't see "Primary" - you're good =
+to go!
+
+* **Apple Mail: **Click our email address at the top of this email (next to=
+ "From:") =E2=86=92 Tap "Add to VIP"
+
+
+
+
+
+--24ed111976044acc7bd34e6f43e26f41b247c70c396a4f7f364ed3f1e74a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html><html lang=3D"en" xmlns=3D"http://www.w3.org/1999/xhtml" xml=
+ns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com=
+:office:office" style=3D"font-size:16px;"><head><meta charset=3D"utf-8"/><!=
+--[if !mso]><!--><meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"=
+/><!--<![endif]--><meta name=3D"viewport" content=3D"width=3Ddevice-width,i=
+nitial-scale=3D1"/><meta name=3D"x-apple-disable-message-reformatting"/><me=
+ta name=3D"format-detection" content=3D"telephone=3Dno,address=3Dno,email=
+=3Dno,date=3Dno,url=3Dno"/><meta name=3D"color-scheme" content=3D"light"/><=
+meta name=3D"supported-color-schemes" content=3D"light"/><title>=F0=9F=91=
+=8B Welcome to The Flow</title><!--[if mso]><xml><o:OfficeDocumentSettings>=
+<o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSetting=
+s></xml><![endif]--><style>
+  :root { color-scheme: light; supported-color-schemes: light; }
+  body { margin: 0; padding: 0; min-width: 100%!important; -ms-text-size-ad=
+just: 100% !important; -webkit-transform: scale(1) !important; -webkit-text=
+-size-adjust: 100% !important; -webkit-font-smoothing: antialiased !importa=
+nt; }
+  .body { word-wrap: normal; word-spacing:normal; }
+  table.mso { width: 100%; border-collapse: collapse; padding: 0; table-lay=
+out: fixed; }
+  img { border: 0; outline: none; }
+  table {  mso-table-lspace: 0px; mso-table-rspace: 0px; }
+  td, a, span {  mso-line-height-rule: exactly; }
+  #root [x-apple-data-detectors=3Dtrue],
+  a[x-apple-data-detectors=3Dtrue],
+  #MessageViewBody a { color: inherit !important; text-decoration: inherit =
+!important; font-size: inherit !important; font-family: inherit !important;=
+ font-weight: inherit !important; line-height: inherit !important; }
+  span.MsoHyperlink { color: inherit !important; mso-style-priority: 99 !im=
+portant; }
+  span.MsoHyperlinkFollowed { color: inherit !important; mso-style-priority=
+: 99 !important; }
+  .a { background-color:#FFFFFF; }
+  .b { background-color:#26143d; }
+  .c  { background-color:#FFFFFF; }
+  .d { background-color:#ffffff; }
+  .d2 { background-color:#FFFFFF; }
+  .d3 { background-color:#FFFFFF; }
+  h1 { color:#2A2A2A; }
+  h2 { color:#2A2A2A; }
+  h3 { color:#2A2A2A; }
+  h4 { color:#2A2A2A; }
+  h5 { color:#2A2A2A; }
+  h6 { color:#2A2A2A; }
+  h1 a { text-decoration:none;color:#2A2A2A !important; }
+  h2 a { text-decoration:none;color:#2A2A2A !important; }
+  h3 a { text-decoration:none;color:#2A2A2A !important; }
+  h4 a { text-decoration:none;color:#2A2A2A !important; }
+  h5 a { text-decoration:none;color:#2A2A2A !important; }
+  h6 a { text-decoration:none;color:#2A2A2A !important; }
+  h1, h1 a, h2, h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a, ul, li, ol, p=
+, p a { margin: 0;padding: 0; }
+  h1 { font-family:'Helvetica',Arial,sans-serif;font-weight:Bold;font-size:=
+28px;line-height:42px;padding-bottom:4px;padding-top:16px;mso-margin-top-al=
+t:16px;mso-margin-bottom-alt:4px }
+  h2 { font-family:'Helvetica',Arial,sans-serif;font-weight:Bold;font-size:=
+24px;line-height:36px;padding-bottom:4px;padding-top:16px;mso-margin-top-al=
+t:16px;mso-margin-bottom-alt:4px }
+  h3 { font-family:'Helvetica',Arial,sans-serif;font-weight:Bold;font-size:=
+20px;line-height:30px;padding-bottom:4px;padding-top:16px;mso-margin-top-al=
+t:16px;mso-margin-bottom-alt:4px }
+  h4 { font-family:'Helvetica',Arial,sans-serif;font-weight:normal;font-siz=
+e:18px;line-height:27px;padding-bottom:4px;padding-top:16px;mso-margin-top-=
+alt:16px;mso-margin-bottom-alt:4px }
+  h5 { font-family:'Helvetica',Arial,sans-serif;font-weight:normal;font-siz=
+e:16px;line-height:24px;padding-bottom:4px;padding-top:16px;mso-margin-top-=
+alt:16px;mso-margin-bottom-alt:4px }
+  h6 { font-family:'Helvetica',Arial,sans-serif;font-weight:normal;font-siz=
+e:14px;line-height:21px;padding-bottom:4px;padding-top:16px;mso-margin-top-=
+alt:16px;mso-margin-bottom-alt:4px }
+  p { font-family:'Helvetica',Arial,sans-serif;color:#2D2D2D;font-size:16px=
+;line-height:24px;padding-bottom:8px;padding-top:8px;mso-margin-top-alt:8px=
+;mso-margin-bottom-alt:8px; }
+  p a, .e a, ul a, li a  { word-break:break-word;color:#7432ff !important;t=
+ext-decoration:none; }
+  p a span, .e a span, ul a span, li a span { color: inherit }
+  p .bold { font-weight:bold;color:#2D2D2D; }
+  p span[style*=3D"font-size"] { line-height: 1.6; }
+  .f p { font-size:12px;line-height:15px;color:#2D2D2D;padding:0; }
+  .f p a { text-decoration:underline;color:#2D2D2D !important; }
+  .g p { font-family:'Helvetica',Arial,sans-serif;font-size:14px;line-heigh=
+t:20px;font-weight:normal;margin:0; }
+  .g p a  { text-decoration: underline; }
+  .i p { font-family:'Helvetica',Arial,sans-serif;line-height:23px;font-siz=
+e:15px;color:#000000; }
+  .i p a { text-decoration:underline;color:#000000 !important; }
+  .i2 p { font-family:'Helvetica',Arial,sans-serif;line-height:23px;font-si=
+ze:15px;color:#2D2D2D; }
+  .i2 p a { text-decoration:underline;color:#2D2D2D !important; }
+  .i3 p { font-family:'Helvetica',Arial,sans-serif;line-height:43px;font-si=
+ze:24px;color:#2D2D2D; }
+  .i3 p a { text-decoration:underline;color:#2D2D2D !important; }
+  .h p a { text-decoration:underline;color:#595959 !important; }
+  .h2 p a { text-decoration:underline;color:#7432ff !important; }
+  .h3 p a { text-decoration:underline;color:#595959 !important; }
+  .j { border-top:1px Solid #d6d6d6; }
+  .k p { padding-left:15px;padding-bottom:0px;padding-top:6px;mso-margin-to=
+p-alt:6px;mso-margin-bottom-alt:0px;mso-margin-left-alt:15px; }
+  .o { background-color:#ffffff;border:3px solid #F1F1F1;border-radius:10px=
+; }
+  .o p { font-family:'Helvetica',Arial,sans-serif;padding:0px;margin:0px; }
+  .l p,
+  .l p a { font-size:14px;line-height:20px;font-weight: bold;color:#2D2D2D;=
+padding-bottom:6px;mso-margin-bottom-alt:6px;text-decoration:none; }
+  .m p,
+  .m p a { font-size:13px;line-height:18px;font-weight:400;color:#2D2D2D;pa=
+dding-bottom:6px;mso-margin-bottom-alt:6px;text-decoration:none; }
+  .n p,
+  .n p a { font-size:12px;line-height:17px;font-weight:400;color:#2D2D2D;pa=
+dding-bottom:6px;mso-margin-bottom-alt:6px;text-decoration:none; }
+  .p { background-color:#FFFFFF;max-width:520px;border:1px solid #E1E8ED;bo=
+rder:1px solid rgba(80, 80, 80, 0.3);border-radius:5px; }
+  .q { font-size:16px;font-family:Helvetica,Roboto,Calibri,sans-serif !impo=
+rtant;border:1px solid #e1e8ed;border:1px solid rgba(80, 80, 80, 0.3);borde=
+r-radius:5px;background-color:#FFFFFF; }
+  .q p { font-size:16px;font-family:Helvetica,Roboto,Calibri,sans-serif !im=
+portant;color:#222222; }
+  .r { border:1px solid #E1E8ED !important;border-radius:5px; }
+  .s p { font-size: 14px; line-height: 17px; font-weight: 400; color: #6978=
+82; text-decoration: none; }
+  .t p { font-family:'Helvetica',Arial,sans-serif;font-size:12px;line-heigh=
+t:18px;font-weight:400;color:#000000;font-style:italic;padding:4px 0px 0px;=
+}
+  .v { border-radius:10px;border:solid 0px #DFD150;background-color:#7432ff=
+;font-family:'Helvetica',Arial,sans-serif;color:#FFFFFF; }
+  .v a { text-decoration:none;display:block;color:#FFFFFF; }
+  .w p { font-size:12px;line-height:15px;font-weight:400;color:#FFFFFF; }
+  .w p a { text-decoration: underline !important;color:#FFFFFF !important; =
+}
+  ul { font-family:'Helvetica',Arial,sans-serif;margin:0px 0px 0px 25px !im=
+portant;padding:0px !important;color:#2D2D2D;line-height:24px;list-style:di=
+sc;font-size:16px; }
+  ul li { font-family:'Helvetica',Arial,sans-serif;margin:12px 0px 0px 0px =
+!important;padding: 0px 0px 0px 0px !important; color: #2D2D2D; list-style:=
+disc; }
+  ol { font-family:'Helvetica',Arial,sans-serif;margin: 0px 0px 0px 25px !i=
+mportant;padding:0px !important;color:#2D2D2D;line-height:24px;list-style:d=
+ecimal;font-size:16px; }
+  ol li { font-family:'Helvetica',Arial,sans-serif;margin:12px 0px 0px 0px =
+!important;padding: 0px 0px 0px 0px !important; color: #2D2D2D; list-style:=
+decimal; }
+  .e h3,
+  .e p,
+  .e span { padding-bottom:0px;padding-top:0px;mso-margin-top-alt:0px;mso-m=
+argin-bottom-alt:0px; }
+  .e span,
+  .e li { font-family:'Helvetica',Arial,sans-serif;font-size:16px;color:#2D=
+2D2D;line-height:24px; }
+  .rec { font-family:  ui-sans-serif, system-ui, -apple-system, BlinkMacSys=
+temFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-ser=
+if, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color E=
+moji" !important; }
+  .rec__button:hover { background-color: #f9fafb !important; }
+  .copyright a {color: inherit !important; text-decoration: none !important=
+; font-size: inherit !important; font-family: inherit !important; font-weig=
+ht: inherit !important; line-height: inherit !important;}
+  .txt_social p { padding: 0; }
+  .table, .table-c, .table-h { border: 1px solid #C0C0C0; }
+  .table-c { padding:5px; background-color:#FFFFFF; }
+  .table-c p { color: #2D2D2D; font-family:'Helvetica',Arial,sans-serif !im=
+portant;overflow-wrap: break-word; }
+  .table-h { padding:5px; background-color:#F1F1F1; }
+  .table-h p { color: #2A2A2A; font-family:'Trebuchet MS','Lucida Grande',T=
+ahoma,sans-serif !important;overflow-wrap: break-word; }
+  @media only screen and (max-width:667px) {
+    .aa { width: 100% !important; }
+    .bb img { width: 100% !important; height: auto !important; max-width: n=
+one !important; }
+    .cc { padding: 0px 8px !important; }
+    .ee { padding-top:10px !important;padding-bottom:10px !important; }
+    .ff ul, .ff ol { margin: 0px 0px 0px 10px !important;padding: 0px !impo=
+rtant; }
+    .ff li { margin:12px 0px 0px 10px !important; }
+    .r {height:140px !important;}
+    .s p { font-size:13px !important;line-height:15px !important; }
+    .mob-hide {display:none !important;}
+    .mob-stack {display:block !important;width:100% !important;}
+    .mob-w-full {width:100% !important;}
+    .mob-block {display:block !important;}
+    .embed-img {padding:0px 0px 12px 0px !important;}
+    .socialShare {padding-top:15px !important;}
+    .rec { padding-left:15px!important;padding-right:15px!important; }
+    .bodyWrapper { padding:10px 4px 10px 4px !important; }
+  }
+  @media screen and (max-width: 480px) {
+    u + .a .gg { width: 100% !important; width: 100vw !important; }
+    .tok-heart { padding-top:75% !important; }
+    .tok-play { padding-top: 250px !important; }
+  }
+  @media screen and (max-width: 320px) {
+    .tok-heart { padding-top:65% !important; }
+  }
+  .u { border: 1px solid #CACACA !important; border-radius: 2px !important;=
+ background-color: #ffffff !important; padding: 0px 13px 0px 13px !importan=
+t; font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Se=
+goe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif !important;fon=
+t-size: 12px !important; color: #767676 !important; }
+  .u a { text-decoration: none; display: block !important; color: #767676 !=
+important; margin: 0px !important; }
+  .u span, .u img { color: #767676 !important;margin:0px !important; max-he=
+ight:32px !important;background-color:#ffffff !important; }
+</style><!--[if mso]><style type=3D"text/css">
+    sup { font-size: 100% !important;vertical-align: .5em !important;mso-te=
+xt-raise: -1.5% !important;line-height: 0 !important; }
+    ul { margin-left:0px !important; margin-right:10px !important; margin-t=
+op:20px !important; margin-bottom:20px !important; }
+    ul li { margin-left: 0px !important; mso-special-format: decimal; }
+    ol { margin-left:0px !important; margin-right:10px !important; margin-t=
+op:20px !important; margin-bottom:20px !important; }
+    ol li { margin-left: 0px !important; mso-special-format: decimal; }
+    li.listItem { margin-left:15px !important; margin-top:0px !important; }
+    .paddingDesktop { padding: 10px 0 !important; }
+    .edm_outlooklist { margin-left: -20px !important; }
+    .embedImage { display:none !important; }
+  </style><![endif]--></head><head><meta charset=3D"utf-8"/><!--[if !mso]><=
+!--><meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"/><!--<![endi=
+f]--><meta name=3D"viewport" content=3D"width=3Ddevice-width,initial-scale=
+=3D1"/><meta name=3D"x-apple-disable-message-reformatting"/><meta name=3D"f=
+ormat-detection" content=3D"telephone=3Dno,address=3Dno,email=3Dno,date=3Dn=
+o,url=3Dno"/><meta name=3D"color-scheme" content=3D"light"/><meta name=3D"s=
+upported-color-schemes" content=3D"light"/><title>=F0=9F=91=8B Welcome to T=
+he Flow</title><!--[if mso]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:=
+PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif=
+]--><style>
+  :root { color-scheme: light; supported-color-schemes: light; }
+  body { margin: 0; padding: 0; min-width: 100%!important; -ms-text-size-ad=
+just: 100% !important; -webkit-transform: scale(1) !important; -webkit-text=
+-size-adjust: 100% !important; -webkit-font-smoothing: antialiased !importa=
+nt; }
+  .body { word-wrap: normal; word-spacing:normal; }
+  table.mso { width: 100%; border-collapse: collapse; padding: 0; table-lay=
+out: fixed; }
+  img { border: 0; outline: none; }
+  table {  mso-table-lspace: 0px; mso-table-rspace: 0px; }
+  td, a, span {  mso-line-height-rule: exactly; }
+  #root [x-apple-data-detectors=3Dtrue],
+  a[x-apple-data-detectors=3Dtrue],
+  #MessageViewBody a { color: inherit !important; text-decoration: inherit =
+!important; font-size: inherit !important; font-family: inherit !important;=
+ font-weight: inherit !important; line-height: inherit !important; }
+  span.MsoHyperlink { color: inherit !important; mso-style-priority: 99 !im=
+portant; }
+  span.MsoHyperlinkFollowed { color: inherit !important; mso-style-priority=
+: 99 !important; }
+  .a { background-color:#FFFFFF; }
+  .b { background-color:#26143d; }
+  .c  { background-color:#FFFFFF; }
+  .d { background-color:#ffffff; }
+  .d2 { background-color:#FFFFFF; }
+  .d3 { background-color:#FFFFFF; }
+  h1 { color:#2A2A2A; }
+  h2 { color:#2A2A2A; }
+  h3 { color:#2A2A2A; }
+  h4 { color:#2A2A2A; }
+  h5 { color:#2A2A2A; }
+  h6 { color:#2A2A2A; }
+  h1 a { text-decoration:none;color:#2A2A2A !important; }
+  h2 a { text-decoration:none;color:#2A2A2A !important; }
+  h3 a { text-decoration:none;color:#2A2A2A !important; }
+  h4 a { text-decoration:none;color:#2A2A2A !important; }
+  h5 a { text-decoration:none;color:#2A2A2A !important; }
+  h6 a { text-decoration:none;color:#2A2A2A !important; }
+  h1, h1 a, h2, h2 a, h3, h3 a, h4, h4 a, h5, h5 a, h6, h6 a, ul, li, ol, p=
+, p a { margin: 0;padding: 0; }
+  h1 { font-family:'Helvetica',Arial,sans-serif;font-weight:Bold;font-size:=
+28px;line-height:42px;padding-bottom:4px;padding-top:16px;mso-margin-top-al=
+t:16px;mso-margin-bottom-alt:4px }
+  h2 { font-family:'Helvetica',Arial,sans-serif;font-weight:Bold;font-size:=
+24px;line-height:36px;padding-bottom:4px;padding-top:16px;mso-margin-top-al=
+t:16px;mso-margin-bottom-alt:4px }
+  h3 { font-family:'Helvetica',Arial,sans-serif;font-weight:Bold;font-size:=
+20px;line-height:30px;padding-bottom:4px;padding-top:16px;mso-margin-top-al=
+t:16px;mso-margin-bottom-alt:4px }
+  h4 { font-family:'Helvetica',Arial,sans-serif;font-weight:normal;font-siz=
+e:18px;line-height:27px;padding-bottom:4px;padding-top:16px;mso-margin-top-=
+alt:16px;mso-margin-bottom-alt:4px }
+  h5 { font-family:'Helvetica',Arial,sans-serif;font-weight:normal;font-siz=
+e:16px;line-height:24px;padding-bottom:4px;padding-top:16px;mso-margin-top-=
+alt:16px;mso-margin-bottom-alt:4px }
+  h6 { font-family:'Helvetica',Arial,sans-serif;font-weight:normal;font-siz=
+e:14px;line-height:21px;padding-bottom:4px;padding-top:16px;mso-margin-top-=
+alt:16px;mso-margin-bottom-alt:4px }
+  p { font-family:'Helvetica',Arial,sans-serif;color:#2D2D2D;font-size:16px=
+;line-height:24px;padding-bottom:8px;padding-top:8px;mso-margin-top-alt:8px=
+;mso-margin-bottom-alt:8px; }
+  p a, .e a, ul a, li a  { word-break:break-word;color:#7432ff !important;t=
+ext-decoration:none; }
+  p a span, .e a span, ul a span, li a span { color: inherit }
+  p .bold { font-weight:bold;color:#2D2D2D; }
+  p span[style*=3D"font-size"] { line-height: 1.6; }
+  .f p { font-size:12px;line-height:15px;color:#2D2D2D;padding:0; }
+  .f p a { text-decoration:underline;color:#2D2D2D !important; }
+  .g p { font-family:'Helvetica',Arial,sans-serif;font-size:14px;line-heigh=
+t:20px;font-weight:normal;margin:0; }
+  .g p a  { text-decoration: underline; }
+  .i p { font-family:'Helvetica',Arial,sans-serif;line-height:23px;font-siz=
+e:15px;color:#000000; }
+  .i p a { text-decoration:underline;color:#000000 !important; }
+  .i2 p { font-family:'Helvetica',Arial,sans-serif;line-height:23px;font-si=
+ze:15px;color:#2D2D2D; }
+  .i2 p a { text-decoration:underline;color:#2D2D2D !important; }
+  .i3 p { font-family:'Helvetica',Arial,sans-serif;line-height:43px;font-si=
+ze:24px;color:#2D2D2D; }
+  .i3 p a { text-decoration:underline;color:#2D2D2D !important; }
+  .h p a { text-decoration:underline;color:#595959 !important; }
+  .h2 p a { text-decoration:underline;color:#7432ff !important; }
+  .h3 p a { text-decoration:underline;color:#595959 !important; }
+  .j { border-top:1px Solid #d6d6d6; }
+  .k p { padding-left:15px;padding-bottom:0px;padding-top:6px;mso-margin-to=
+p-alt:6px;mso-margin-bottom-alt:0px;mso-margin-left-alt:15px; }
+  .o { background-color:#ffffff;border:3px solid #F1F1F1;border-radius:10px=
+; }
+  .o p { font-family:'Helvetica',Arial,sans-serif;padding:0px;margin:0px; }
+  .l p,
+  .l p a { font-size:14px;line-height:20px;font-weight: bold;color:#2D2D2D;=
+padding-bottom:6px;mso-margin-bottom-alt:6px;text-decoration:none; }
+  .m p,
+  .m p a { font-size:13px;line-height:18px;font-weight:400;color:#2D2D2D;pa=
+dding-bottom:6px;mso-margin-bottom-alt:6px;text-decoration:none; }
+  .n p,
+  .n p a { font-size:12px;line-height:17px;font-weight:400;color:#2D2D2D;pa=
+dding-bottom:6px;mso-margin-bottom-alt:6px;text-decoration:none; }
+  .p { background-color:#FFFFFF;max-width:520px;border:1px solid #E1E8ED;bo=
+rder:1px solid rgba(80, 80, 80, 0.3);border-radius:5px; }
+  .q { font-size:16px;font-family:Helvetica,Roboto,Calibri,sans-serif !impo=
+rtant;border:1px solid #e1e8ed;border:1px solid rgba(80, 80, 80, 0.3);borde=
+r-radius:5px;background-color:#FFFFFF; }
+  .q p { font-size:16px;font-family:Helvetica,Roboto,Calibri,sans-serif !im=
+portant;color:#222222; }
+  .r { border:1px solid #E1E8ED !important;border-radius:5px; }
+  .s p { font-size: 14px; line-height: 17px; font-weight: 400; color: #6978=
+82; text-decoration: none; }
+  .t p { font-family:'Helvetica',Arial,sans-serif;font-size:12px;line-heigh=
+t:18px;font-weight:400;color:#000000;font-style:italic;padding:4px 0px 0px;=
+}
+  .v { border-radius:10px;border:solid 0px #DFD150;background-color:#7432ff=
+;font-family:'Helvetica',Arial,sans-serif;color:#FFFFFF; }
+  .v a { text-decoration:none;display:block;color:#FFFFFF; }
+  .w p { font-size:12px;line-height:15px;font-weight:400;color:#FFFFFF; }
+  .w p a { text-decoration: underline !important;color:#FFFFFF !important; =
+}
+  ul { font-family:'Helvetica',Arial,sans-serif;margin:0px 0px 0px 25px !im=
+portant;padding:0px !important;color:#2D2D2D;line-height:24px;list-style:di=
+sc;font-size:16px; }
+  ul li { font-family:'Helvetica',Arial,sans-serif;margin:12px 0px 0px 0px =
+!important;padding: 0px 0px 0px 0px !important; color: #2D2D2D; list-style:=
+disc; }
+  ol { font-family:'Helvetica',Arial,sans-serif;margin: 0px 0px 0px 25px !i=
+mportant;padding:0px !important;color:#2D2D2D;line-height:24px;list-style:d=
+ecimal;font-size:16px; }
+  ol li { font-family:'Helvetica',Arial,sans-serif;margin:12px 0px 0px 0px =
+!important;padding: 0px 0px 0px 0px !important; color: #2D2D2D; list-style:=
+decimal; }
+  .e h3,
+  .e p,
+  .e span { padding-bottom:0px;padding-top:0px;mso-margin-top-alt:0px;mso-m=
+argin-bottom-alt:0px; }
+  .e span,
+  .e li { font-family:'Helvetica',Arial,sans-serif;font-size:16px;color:#2D=
+2D2D;line-height:24px; }
+  .rec { font-family:  ui-sans-serif, system-ui, -apple-system, BlinkMacSys=
+temFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-ser=
+if, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color E=
+moji" !important; }
+  .rec__button:hover { background-color: #f9fafb !important; }
+  .copyright a {color: inherit !important; text-decoration: none !important=
+; font-size: inherit !important; font-family: inherit !important; font-weig=
+ht: inherit !important; line-height: inherit !important;}
+  .txt_social p { padding: 0; }
+  .table, .table-c, .table-h { border: 1px solid #C0C0C0; }
+  .table-c { padding:5px; background-color:#FFFFFF; }
+  .table-c p { color: #2D2D2D; font-family:'Helvetica',Arial,sans-serif !im=
+portant;overflow-wrap: break-word; }
+  .table-h { padding:5px; background-color:#F1F1F1; }
+  .table-h p { color: #2A2A2A; font-family:'Trebuchet MS','Lucida Grande',T=
+ahoma,sans-serif !important;overflow-wrap: break-word; }
+  @media only screen and (max-width:667px) {
+    .aa { width: 100% !important; }
+    .bb img { width: 100% !important; height: auto !important; max-width: n=
+one !important; }
+    .cc { padding: 0px 8px !important; }
+    .ee { padding-top:10px !important;padding-bottom:10px !important; }
+    .ff ul, .ff ol { margin: 0px 0px 0px 10px !important;padding: 0px !impo=
+rtant; }
+    .ff li { margin:12px 0px 0px 10px !important; }
+    .r {height:140px !important;}
+    .s p { font-size:13px !important;line-height:15px !important; }
+    .mob-hide {display:none !important;}
+    .mob-stack {display:block !important;width:100% !important;}
+    .mob-w-full {width:100% !important;}
+    .mob-block {display:block !important;}
+    .embed-img {padding:0px 0px 12px 0px !important;}
+    .socialShare {padding-top:15px !important;}
+    .rec { padding-left:15px!important;padding-right:15px!important; }
+    .bodyWrapper { padding:10px 4px 10px 4px !important; }
+  }
+  @media screen and (max-width: 480px) {
+    u + .a .gg { width: 100% !important; width: 100vw !important; }
+    .tok-heart { padding-top:75% !important; }
+    .tok-play { padding-top: 250px !important; }
+  }
+  @media screen and (max-width: 320px) {
+    .tok-heart { padding-top:65% !important; }
+  }
+  .u { border: 1px solid #CACACA !important; border-radius: 2px !important;=
+ background-color: #ffffff !important; padding: 0px 13px 0px 13px !importan=
+t; font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Se=
+goe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif !important;fon=
+t-size: 12px !important; color: #767676 !important; }
+  .u a { text-decoration: none; display: block !important; color: #767676 !=
+important; margin: 0px !important; }
+  .u span, .u img { color: #767676 !important;margin:0px !important; max-he=
+ight:32px !important;background-color:#ffffff !important; }
+</style><!--[if mso]><style type=3D"text/css">
+    sup { font-size: 100% !important;vertical-align: .5em !important;mso-te=
+xt-raise: -1.5% !important;line-height: 0 !important; }
+    ul { margin-left:0px !important; margin-right:10px !important; margin-t=
+op:20px !important; margin-bottom:20px !important; }
+    ul li { margin-left: 0px !important; mso-special-format: decimal; }
+    ol { margin-left:0px !important; margin-right:10px !important; margin-t=
+op:20px !important; margin-bottom:20px !important; }
+    ol li { margin-left: 0px !important; mso-special-format: decimal; }
+    li.listItem { margin-left:15px !important; margin-top:0px !important; }
+    .paddingDesktop { padding: 10px 0 !important; }
+    .edm_outlooklist { margin-left: -20px !important; }
+    .embedImage { display:none !important; }
+  </style><![endif]--></head><body class=3D"a" style=3D"margin:0px auto;pad=
+ding:0px;word-wrap:normal;word-spacing:normal;background-color:#FFFFFF;"><d=
+iv role=3D"article" aria-roledescription=3D"email" aria-label=3D"email_name=
+" lang=3Den style=3D"font-size:1rem"><div style=3D"display:none"> Get ready=
+ for supercharged productivity tips! &#160;&#8204;&#160;&#8204;&#160;&#8204=
+;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8=
+204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;=
+&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#1=
+60;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;=
+&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#82=
+04;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&=
+#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#16=
+0;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&=
+#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#820=
+4;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#=
+8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160=
+;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#=
+160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204=
+;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8=
+204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;=
+&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#1=
+60;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;=
+&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#82=
+04;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&=
+#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#16=
+0;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&=
+#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#820=
+4;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#=
+8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160=
+;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#=
+160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204=
+;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8=
+204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;=
+&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#1=
+60;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;=
+&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#82=
+04;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&=
+#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#16=
+0;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&#160;&#8204;&=
+#160;&#8204; </div><table role=3D"none" width=3D"100%" border=3D"0" cellspa=
+cing=3D"0" align=3D"center" cellpadding=3D"0" class=3D"gg"><tr><td align=3D=
+"center" valign=3D"top"><table role=3D"none" width=3D"670" border=3D"0" cel=
+lspacing=3D"0" cellpadding=3D"0" class=3D"aa" style=3D"width:670px;table-la=
+yout:fixed;"><tr><td align=3D"center" valign=3D"top" style=3D"padding:10px =
+5px 10px 5px;"><table role=3D"none" width=3D"100%" border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" align=3D"center"><tr><td align=3D"center" valign=
+=3D"top" style=3D"border:0px solid #FFFFFF;border-radius:10px;background-co=
+lor:#FFFFFF;" class=3D"c"><table role=3D"none" width=3D"100%" border=3D"0" =
+cellspacing=3D"0" cellpadding=3D"0" align=3D"center"><tr><td style=3D"heigh=
+t:0px;width:0px;"><div data-open-tracking=3D"true"> <img src=3D"https://lin=
+k.mail.beehiiv.com/ss/o/u001.aPxQxlPDqVPBFucmWEymCw/460/nVCm7bbORO-018aFLuk=
+YTQ/ho.gif" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:=
+1px !important;width:1px !important;border-width:0 !important;margin-top:0 =
+!important;margin-bottom:0 !important;margin-right:0 !important;margin-left=
+:0 !important;padding-top:0 !important;padding-bottom:0 !important;padding-=
+right:0 !important;padding-left:0 !important;"/> </div></td></tr><tr id=3D"=
+content-blocks"><td align=3D"center" valign=3D"top" style=3D"padding:15px 0=
+px;"><table role=3D"none" width=3D"100%" border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"0" align=3D"center"><tr><td align=3D"center" valign=3D"top" sty=
+le=3D"padding: 20px 15px 20px; " class=3D"dd"><table role=3D"none" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"margin:0 auto 0 auto;">=
+<tr><td align=3D"center" valign=3D"top" style=3D"width:630px;"><img src=3D"=
+https://media.beehiiv.com/cdn-cgi/image/fit=3Dscale-down,format=3Dauto,oner=
+ror=3Dredirect,quality=3D80/uploads/asset/file/02265324-7076-4447-b521-232c=
+2e5b230c/Flocus_TheFlow_Header_V1_Comp.jpg" alt=3D"" height=3D"auto" width=
+=3D"630" style=3D"display:block;width:100%;" border=3D"0"/></td></tr></tabl=
+e></td></tr><tr><td id=3D"welcome-to-the-flow-by-flocus-first" class=3D"dd"=
+ align=3D"left" valign=3D"top" style=3D"padding:0px 15px;text-align:left;">=
+<h2>Welcome to The Flow by Flocus Pappanos =F0=9F=91=8B=C2=A0</h2></td></tr=
+><tr><td id=3D"your-valuepacked-focus-and-recharge" class=3D"dd" align=3D"l=
+eft" valign=3D"top" style=3D"padding:0px 15px;text-align:left;"><h4><b>Your=
+ value-packed focus and recharge digest =E2=80=94=C2=A0loved by over 70,000=
+ productivity-obsessed humans.</b></h4></td></tr><tr><td class=3D"dd" align=
+=3D"left" style=3D"padding:0px 15px;text-align:left;word-break:break-word;"=
+><p> We believe in a balanced approach to productivity, and we can=E2=80=99=
+t wait to share our best tips, insights, and resources with you to achieve =
+just that. </p></td></tr><tr><td class=3D"dd" align=3D"start" style=3D"padd=
+ing:0px 15px;text-align:start;word-break:break-word;"><p> Each Sunday, we&#=
+39;ll deliver a concise, power-packed email to your inbox =E2=80=94 all wra=
+pped up in a scannable, easy-to-digest format. </p></td></tr><tr><td class=
+=3D"dd" align=3D"start" style=3D"padding:0px 15px;text-align:start;word-bre=
+ak:break-word;"><p> No fluff, just handy focus hacks, recharging tips, and =
+curated recommendations that=E2=80=99ll be worth your open. </p></td></tr><=
+tr><td class=3D"dd" align=3D"start" style=3D"padding:0px 15px;text-align:st=
+art;word-break:break-word;"><p><i>(Feel free to fill out this </i><i><a cla=
+ss=3D"link" href=3D"https://link.mail.beehiiv.com/ss/c/u001.I1zpEcKISX24FCM=
+w8AuYq9vEOak10-dJcye4GSflhJBd0vCv-BCfwi7iZ6Xtnd3L5zVF4UL2wgo1foC0G0G40wrrkY=
+KZM5NGAodUekgpo08yy6zvD_OCav1AWR6VeiTBfcSTvnBZPil5vqapH0-QLLNXj2agsB__4P2me=
+Trp0j5dXr0XpnLWbwelsMAzeDSm/460/nVCm7bbORO-018aFLukYTQ/h2/h001.9e9aKS-AIlfl=
+Heqjlmwp0ubJMK33PsIVRXsb587XRt0" target=3D"_blank" rel=3D"noopener noreferr=
+er nofollow"><span>30-second survey</span></a></i><i> to let us know what c=
+ontent resonates with you!)</i></p></td></tr><tr><td class=3D"dd" align=3D"=
+start" style=3D"padding:0px 15px;text-align:start;word-break:break-word;"><=
+p> Looking forward to connecting every Sunday! </p></td></tr><tr><td class=
+=3D"dd" align=3D"start" style=3D"padding:0px 15px;text-align:start;word-bre=
+ak:break-word;"><p> Flocus Team </p></td></tr><tr><td align=3D"center" vali=
+gn=3D"top" style=3D"font-size:0px;line-height:0px;padding:38px 0px;" class=
+=3D"dd"><table class=3D"j" role=3D"none" width=3D"96%%" border=3D"0" cellsp=
+acing=3D"0" cellpadding=3D"0" align=3D"center"><tr><td> &nbsp; </td></tr></=
+table></td></tr><tr><td class=3D"dd" align=3D"start" style=3D"padding:0px 1=
+5px;text-align:start;word-break:break-word;"><p> Btw, let&#39;s make sure t=
+hese emails reach your main inbox: </p></td></tr><tr><td style=3D"padding-b=
+ottom:25px;padding-left:27px;padding-right:27px;padding-top:0px;" class=3D"=
+ee"><div style=3D"margin-left:0px;" class=3D"edm_outlooklist"><ul style=3D"=
+list-style-type:disc;margin:0px 0px;padding:0px 0px 0px 0px;"><li class=3D"=
+listItem ultext"><p style=3D"padding:0px;text-align:start;word-break:break-=
+word;"><b>Gmail (Web):</b> Exit this email to inbox =E2=80=94 then drag and=
+ drop this email on the &quot;Primary&quot; tab at the top of your inbox </=
+p></li><li class=3D"listItem ultext"><p style=3D"padding:0px;text-align:sta=
+rt;word-break:break-word;"><b>Gmail (App):</b> Tap =E2=8B=AF in the top rig=
+ht corner =E2=86=92 Hit &quot;Move to&quot; =E2=86=92 Select &quot;Primary&=
+quot;. If you don&#39;t see &quot;Primary&quot; - you&#39;re good to go! </=
+p></li><li class=3D"listItem ultext"><p style=3D"padding:0px;text-align:sta=
+rt;word-break:break-word;"><b>Apple Mail: </b>Click our email address at th=
+e top of this email (next to &quot;From:&quot;) =E2=86=92 Tap &quot;Add to =
+VIP&quot; </p></li></ul></div></td></tr><tr><td class=3D"dd" align=3D"left"=
+ style=3D"padding:0px 15px;text-align:left;word-break:break-word;"><p></p><=
+/td></tr></table></td></tr><tr><td class=3D"b" align=3D"center" valign=3D"t=
+op" bgcolor=3D"#26143d" style=3D"padding:0px;border-bottom-left-radius:10px=
+;border-bottom-right-radius:10px;"><table role=3D"none" width=3D"100%" bord=
+er=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"center"><tr><td><tabl=
+e role=3D"none" width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D""><tr><td bgcolor=3D"transparent" style=3D"background-color=
+:transparent;padding:35px 35px 35px 35px;"><table role=3D"none" width=3D"10=
+0%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0"><tr><td class=3D"dd" a=
+lign=3D"center" style=3D"padding:0px 15px;text-align:center;word-break:brea=
+k-word;"><p><span style=3D"color:#FFFFFF;font-size:0.8rem;">You&#39;re rece=
+iving this email because you created an account on Flocus or StudyWithMe, o=
+r opted in another way. We appreciate your trust in us and are here to supp=
+ort your journey towards success!</span></p></td></tr></table></td></tr></t=
+able></td></tr><tr><td height=3D"10" style=3D"line-height:1px;font-size:1px=
+;height:10px;"> &nbsp; </td></tr><tr><td class=3D"w" align=3D"center" valig=
+n=3D"top" style=3D"padding:15px;"><table role=3D"none" width=3D"100%" borde=
+r=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"center"><tr><td align=
+=3D"center" valign=3D"top"><p style=3D"font-family:'Helvetica',Arial,sans-s=
+erif;color:#FFFFFF!important;"> Update your email preferences or unsubscrib=
+e <a class=3D"link" href=3D"https://link.mail.beehiiv.com/ss/c/u001._s5D_NV=
+KfNMcAnheoXHfMjiVX3SGIsRlFU0R_Um96WZgBy1-A2wtcouXlR_8TRV3y9evOTFXF7rv3LRoH5=
+pEHtUtO31Ra5XbYjkWg-OuyfTdbR1gw2ra8KveruotNsgW4yrs6XDpoOyx5vNLJYYueNHy1uv3K=
+7VUDPWAars46wmWH6zweWWtJAqjjKcRiW-7EQNKLcGf2iiAznpFIQnJvGXLqpvorz0doO6CZuoe=
+8IfFMT5JDgREElpIYGZlYgA3sz1EqDE4O69FYphRKO3K4Wi2bfhO5TG5Iopn2fxAtc-TrJXuLN9=
+SD8dMKYyk78RsC5P4NeXZi4yyyoYfoTWkIhbRLWjXJzOP3sYesvWPaTFA4HGtmcWSYnniMovYg9=
+yZqjfj5YxfbayMu0N3RVHpFacpU0yOXLtnEQUj1VkvWLNesmrB17DviLPLhVj9qyOUGiU3urlnn=
+LSHTE7NPdjdB50izETtYNsyDMhcVTIlSMmRlAMELvKwC79C3YBx2iDFemXVxtNGI1yFVQW6bEhM=
+iVPm2Gj1ywSTmvcW-SKcAsMi5pA3sUhcVX6Wjlb_bg_fZB1eystvCUBUeCgwh0hbHUfX1VTJedP=
+XWA2AbqIR3LeZfA2tnjiBNkmkMV6LA-J07--ttP0xTFASKN0by4jDQg/460/nVCm7bbORO-018a=
+FLukYTQ/h3/h001.nPtDXJ0mf7IbyAHmAOo4qMPoEX1YheIa8GJ0g9VaInw" style=3D"text-=
+decoration:underline;text-decoration-color:#FFFFFF!important;color:#FFFFFF!=
+important;"> here</a></p><p class=3D"copyright" style=3D"font-family:'Helve=
+tica',Arial,sans-serif;color:#FFFFFF!important;"> &copy; 2024 Gridfiti Inc.=
+ All Rights Reserved </p><p style=3D"font-family:'Helvetica',Arial,sans-ser=
+if;color:#FFFFFF!important;"> 1 King Street West, Suite 4800<br>Toronto, On=
+tario M5H1A1, Canada </p></td></tr><tr style=3D"display: table-row !importa=
+nt;"><td align=3D"center" valign=3D"top" style=3D"padding-top:20px;" style=
+=3D"display:table-cell !important;"><table role=3D"none" border=3D"0" cells=
+pacing=3D"0" cellpadding=3D"0" align=3D"center" style=3D"display:table !imp=
+ortant;"><tr style=3D"display:table-row !important;"><td class=3D"u" align=
+=3D"center" valign=3D"middle" height=3D"32" style=3D"height:32px;display:ta=
+ble-cell !important; max-height: 32px !important;margin:0px !important;"><a=
+ style=3D"line-height:32px !important;text-decoration:none;display:block !i=
+mportant;" href=3D"https://link.mail.beehiiv.com/ss/c/u001.dkU_Ly2UAA5fx22c=
+jIlawrqVl1cFsrX-DxoBCaahjN5obhIA1Y-ZUey9VjS8mzRkP44loTsHSCuN6LUF5dqiK9BdQhM=
+ULQSIW8m75PDfCYVHjUJWLpyf-x-oaeug6mKr5A4V3M3CicPyRxRca1Ms1OPwKTyKKOod3rPNl7=
+NeFjI/460/nVCm7bbORO-018aFLukYTQ/h4/h001.nbAAj_pdsTtYaY1Px8qrQdpefM5BoTePba=
+0GTHOPZNc"><img src=3D"https://media.beehiiv.com/output-onlinepngtools.png"=
+ width=3D"16" alt=3D"beehiiv logo" style=3D"display:inline-block !important=
+;max-width:16px !important; vertical-align:-3px !important;width: 16px !imp=
+ortant;" border=3D"0"/><span style=3D"padding-left:11px !important;display:=
+ inline-block !important;">Powered by beehiiv</span></a></td></tr></table><=
+/td></tr></table></td></tr></table></td></tr></table></td></tr></table></td=
+></tr></table></td></tr></table></div></body></html>
+--24ed111976044acc7bd34e6f43e26f41b247c70c396a4f7f364ed3f1e74a--

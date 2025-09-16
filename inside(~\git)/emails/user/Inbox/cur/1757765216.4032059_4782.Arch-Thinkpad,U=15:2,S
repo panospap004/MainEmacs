@@ -1,0 +1,367 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6359:720e:b0:125:7fef:e76 with SMTP id uu14csp177386rwb;
+        Sat, 23 Sep 2023 07:40:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPpVa9abGLJDSRGgo4dVLba0EFjPrheEqXbu1Wxv9fqtXNBbWH6StcFNf0NqRqfzgU2Rii
+X-Received: by 2002:aa7:d3ca:0:b0:522:4dd0:de72 with SMTP id o10-20020aa7d3ca000000b005224dd0de72mr1951416edr.27.1695480027564;
+        Sat, 23 Sep 2023 07:40:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1695480027; cv=none;
+        d=google.com; s=arc-20160816;
+        b=amUDQNYVVP98AIta/z/fhXV5hAAe2yuUUWMjWYcKeq9quskYXKwN7aHIpEX/cibRa+
+         1I4r+3eGLTTaoz76Gxym8Gwgqbm+7KqSpN9haVObyE4Gawd99yC5x/Qhg1BSq75Ymby7
+         Qj3/W/dL0uPYckBOOVMp6qf66G+7yPX/LTfBxTcNZTca7mp6PdCbQZt90LGVfmor8vVo
+         UvTtvKobiMPopnednKPsHklZHxKDcrQRmNsqqvwBjBWXX9yUKW9zaEsOttMGXWDDv5Yl
+         BGc5NT+sG7UBGyd3vxCT0H7I3WfmxatoK7r5kLzCZ6t2PvZxa6H3OPPVEw2DVgffET8B
+         lYMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:list-archive:list-id:precedence:auto-submitted
+         :list-unsubscribe:content-transfer-encoding:mime-version:subject
+         :message-id:to:reply-to:from:date:dkim-signature;
+        bh=XNQS/dg89A2qH5il2PN8vc0wXy4AAaVrw1t1oibOTgM=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=JerxAjRf/66+I0uJt9sKGYOteKhXNs3tM42A2xF8FPYqBiN7C30ZrSLm+gpniGeiXx
+         OtjNkK62yV/iF0VhJj8d6ZH0oP/YZyOPg8rSWXS0U+vNOTyBwOCVtyFTmwp/pFf+5pmb
+         l1Gp6fvGOVWabkoEpuYvUmgobVJ9OpiyQ+abNkmisrp0WGH2jEhm9Dx7qCOzuXWWOEnT
+         EMXx6WoBIQMpdmkUbM3BgBGUve27iBF6XUisoDIPtTkp6J6rOhABefTXShzG/8UEd5Gc
+         TBWGlhDDpmQwh5s1ot55EAT1HtbAuygpAq1cWjKKY4n5SUPGIXrFL/VmL1AwDCxFcaQn
+         dEjg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@discoursemail.com header.s=sea2 header.b=OXev4H5+;
+       spf=pass (google.com: domain of incoming+verp-022c55c92eb7c44007a8f3cff13fa3f8@asana.discoursemail.com designates 184.105.99.90 as permitted sender) smtp.mailfrom=incoming+verp-022c55c92eb7c44007a8f3cff13fa3f8@asana.discoursemail.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=discoursemail.com
+Return-Path: <incoming+verp-022c55c92eb7c44007a8f3cff13fa3f8@asana.discoursemail.com>
+Received: from mx-out-01b.sea2.discourse.cloud (mx-out-01b.sea2.discourse.cloud. [184.105.99.90])
+        by mx.google.com with ESMTPS id c15-20020a056402120f00b0053313140102si5549102edw.634.2023.09.23.07.40.27
+        for <user.idc004@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Sep 2023 07:40:27 -0700 (PDT)
+Received-SPF: pass (google.com: domain of incoming+verp-022c55c92eb7c44007a8f3cff13fa3f8@asana.discoursemail.com designates 184.105.99.90 as permitted sender) client-ip=184.105.99.90;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@discoursemail.com header.s=sea2 header.b=OXev4H5+;
+       spf=pass (google.com: domain of incoming+verp-022c55c92eb7c44007a8f3cff13fa3f8@asana.discoursemail.com designates 184.105.99.90 as permitted sender) smtp.mailfrom=incoming+verp-022c55c92eb7c44007a8f3cff13fa3f8@asana.discoursemail.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=discoursemail.com
+Received: from localhost.localdomain (unknown [IPv6:2602:fd3f:3:207:0:242:ac11:24])
+	by mx-out-01b.sea2.discourse.cloud (Postfix) with ESMTP id 0A19A1000D6
+	for <user.idc004@gmail.com>; Sat, 23 Sep 2023 14:40:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=discoursemail.com;
+	s=sea2; t=1695480026;
+	bh=U0FwS76rYn+L07oKELzR+QeK9y0514aOjqrA0W+Os8k=;
+	h=Date:From:Reply-To:To:Subject:List-Unsubscribe:List-ID:
+	 List-Archive;
+	b=OXev4H5+TMYcSQupqnX2e6ohRb3bG33gN/ycg3PfJmC3ruUhiqcbdfsdugIIOfJne
+	 SRfmHuMTnt1t8M1QIDgU9cC1Rn3OdVh18NA9BqSFh4266czflSTcy0Zo2vJMkdUsug
+	 q5+TPmJyX0QMAhixpxA6hHHh/CkADzp21+6WW2q91YWoadO3E5Lx30VaFZOLyfuILQ
+	 lmTyD2cumGjgI047nzeo+Uu6PxDVqN8YQbncOp+xSFM/Bp/M53buYta5FMBWolAE1C
+	 RRnZ8poowgGhekeWIf/1Pz3mh3Hk54szioLgGS1pSFooHnyjfoJuxC7Y4DUld5Vsz0
+	 6FzuvmQ5gJ+rQ==
+Date: Sat, 23 Sep 2023 14:40:26 +0000
+From: discobot via Asana Forum <notifications@asana.discoursemail.com>
+Reply-To: discobot via Asana Forum <incoming+fa16f5e288760d70be260f1acd8445eb@asana.discoursemail.com>
+To: user.idc004@gmail.com
+Message-ID: <discourse/post/1103394@forum.asana.com>
+Subject: [Asana Forum] [PM] Welcome to the Asana Community!
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_650ef8d9e0b2b_d42a39b3411191e";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+List-Unsubscribe: <https://forum.asana.com/email/unsubscribe/9b2380efac601d0aac71d24a3c3df5ae4ed540fb79ae269d030b42dbe3afad83>
+X-Discourse-Post-Id: 1103394
+X-Discourse-Topic-Id: 546818
+X-Auto-Response-Suppress: All
+Auto-Submitted: auto-generated
+Precedence: list
+List-ID: Asana Forum <forum.asana.com>
+List-Archive: https://forum.asana.com/t/welcome-to-the-asana-community/546818
+Feedback-ID: asana:user_private_message:discoursemail
+X-TUID: y+5zCHHBCGwk
+
+
+----==_mimepart_650ef8d9e0b2b_d42a39b3411191e
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+Hi there =F0=9F=91=8B
+
+Welcome to the Asana Community Forum! I=E2=80=99m Emily, one of the Asana=
+ Community Managers, and on behalf of the Community team I want to say we=
+=E2=80=99re so happy to have you =F0=9F=8E=89
+
+To help with getting started, I wanted to share some tips and resources. =
+
+
+Our Forum is structured with categories and conversation topics. You can =
+explore categories such as Tips and Tricks and Use Cases to ask questions=
+ and learn how others use Asana in topics. You can also follow the News c=
+ategory by clicking the =F0=9F=94=94 icon in the top right to be notified=
+ of new feature releases! You might see other Forum users, Asana Ambassad=
+ors or Forum Leaders lending a hand in the comments. Our Forum is a commu=
+nity and this is reflected in the users' willingness to help each other. =
+
+
+Finally, I recommend looking at these resource threads for some more tips=
+:
+
+- Asana Community Guidelines: https://forum.asana.com/guidelines
+- =F0=9F=93=9AHow to search the Asana Community Forum?: https://forum.asa=
+na.com/t/how-to-search-the-asana-community-forum/162860
+- =F0=9F=93=9AHow to share your product feedback: https://forum.asana.com=
+/t/how-to-share-your-product-feedback/153311
+- How to become an Asana Ambassador: https://forum.asana.com/pub/unlock-y=
+our-access-to-the-asana-together-category
+
+I look forward to seeing you around the Forum! If there's anything I can =
+do to help, just let me know =F0=9F=99=82 =
+
+
+Thanks,
+Emily
+
+
+
+
+
+---
+[Visit Message](https://forum.asana.com/t/welcome-to-the-asana-community/=
+546818/1) or reply to this email to respond to .
+
+To unsubscribe from these emails, [click here](https://forum.asana.com/em=
+ail/unsubscribe/9b2380efac601d0aac71d24a3c3df5ae4ed540fb79ae269d030b42dbe=
+3afad83).
+
+----==_mimepart_650ef8d9e0b2b_d42a39b3411191e
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html xmlns=3D"http://www.w3.org/1999/xhtml" lang=3D"en-GB=
+" xml:lang=3D"en-GB"><head>
+    <meta http-equiv=3D"Content-type" name=3D"viewport" content=3D"initia=
+l-scale=3D1.0, maximum-scale=3D1.0, user-scalable=3Dno, width=3Ddevice-wi=
+dth">
+    =
+
+    <meta name=3D"color-scheme" content=3D"light dark">
+    <meta name=3D"supported-color-schemes" content=3D"light dark">
+    =
+
+    <!-- prevent ios zooming + autoscaling -->
+    <meta name=3D"x-apple-disable-message-reformatting">
+    <title></title>
+  </head>
+
+  <body style=3D"line-height: 1.4; text-align:left;" dir=3D"ltr">
+    <!--[if mso]>
+      <style type=3D"text/css">
+        body,
+        table,
+        td,
+        th,
+        h1,
+        h2,
+        h3 {
+          font-family: Arial, sans-serif !important;
+        }
+      </style>
+    <![endif]-->
+
+    =
+
+    =
+
+    <div>
+
+  <div></div>
+
+    <div style=3D"margin-bottom:25px;">
+  <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0">
+    <tbody><tr>
+      <td style=3D"vertical-align:top;width:55px;">
+        <img src=3D"https://sea2.discourse-cdn.com/asana/user_avatar/foru=
+m.asana.com/discobot/45/3005_2.png" title=3D"discobot" width=3D"45" heigh=
+t=3D"45">
+      </td>
+      <td>
+          <a href=3D"https://forum.asana.com/u/discobot" target=3D"_blank=
+" style=3D"color:#56528e;; font-size:13px;font-family:'lucida grande',tah=
+oma,verdana,arial,sans-serif;text-decoration:none;font-weight:bold; text-=
+decoration: none; font-weight: bold; color: #56528e;">discobot</a>
+        <br>
+        <span style=3D"text-align:right;color:#999999;padding-right:5px;f=
+ont-family:'lucida grande',tahoma,verdana,arial,sans-serif;font-size:11px=
+">23 September</span>
+      </td>
+    </tr>
+  </tbody></table>
+  <div style=3D"padding-top:5px;" dm=3D"body"><p style=3D"margin-top:0; b=
+order: 0;">Hi there <img src=3D"https://emoji.discourse-cdn.com/twitter/w=
+ave.png?v=3D12" title=3D":wave:" alt=3D":wave:" loading=3D"lazy" width=3D=
+"20" height=3D"20"></p>
+<p style=3D"margin-top:0; border: 0;">Welcome to the Asana Community Foru=
+m! I=E2=80=99m Emily, one of the Asana Community Managers, and on behalf =
+of the Community team I want to say we=E2=80=99re so happy to have you <i=
+mg src=3D"https://emoji.discourse-cdn.com/twitter/tada.png?v=3D12" title=3D=
+":tada:" alt=3D":tada:" loading=3D"lazy" width=3D"20" height=3D"20"></p>
+<p style=3D"margin-top:0; border: 0;">To help with getting started, I wan=
+ted to share some tips and resources.</p>
+<p style=3D"margin-top:0; border: 0;">Our Forum is structured with catego=
+ries and conversation topics. You can explore categories such as Tips and=
+ Tricks and Use Cases to ask questions and learn how others use Asana in =
+topics. You can also follow the News category by clicking the <img src=3D=
+"https://emoji.discourse-cdn.com/twitter/bell.png?v=3D12" title=3D":bell:=
+" alt=3D":bell:" loading=3D"lazy" width=3D"20" height=3D"20"> icon in the=
+ top right to be notified of new feature releases! You might see other Fo=
+rum users, Asana Ambassadors or Forum Leaders lending a hand in the comme=
+nts. Our Forum is a community and this is reflected in the users=E2=80=99=
+ willingness to help each other.</p>
+<p style=3D"margin-top:0; border: 0;">Finally, I recommend looking at the=
+se resource threads for some more tips:</p>
+<ul style=3D"margin: 0 0 0 10px; padding: 0 0 0 20px;">
+<li style=3D"padding-bottom: 10px">Asana Community Guidelines: <a href=3D=
+"https://forum.asana.com/guidelines" style=3D"text-decoration: none; font=
+-weight: bold; color: #56528e;">FAQ - Asana Forum</a></li>
+<li style=3D"padding-bottom: 10px"><img src=3D"https://emoji.discourse-cd=
+n.com/twitter/books.png?v=3D12" title=3D":books:" alt=3D":books:" loading=
+=3D"lazy" width=3D"20" height=3D"20">How to search the Asana Community Fo=
+rum?: <a href=3D"https://forum.asana.com/t/how-to-search-the-asana-commun=
+ity-forum/162860" style=3D"text-decoration: none; font-weight: bold; colo=
+r: #56528e;">=F0=9F=93=9A How to search the Asana Forum?</a></li>
+<li style=3D"padding-bottom: 10px"><img src=3D"https://emoji.discourse-cd=
+n.com/twitter/books.png?v=3D12" title=3D":books:" alt=3D":books:" loading=
+=3D"lazy" width=3D"20" height=3D"20">How to share your product feedback: =
+<a href=3D"https://forum.asana.com/t/how-to-share-your-product-feedback/1=
+53311" style=3D"text-decoration: none; font-weight: bold; color: #56528e;=
+">=F0=9F=93=9A How to share your product feedback</a></li>
+<li style=3D"padding-bottom: 10px">How to become an Asana Ambassador: <a =
+href=3D"https://forum.asana.com/pub/unlock-your-access-to-the-asana-toget=
+her-category" style=3D"text-decoration: none; font-weight: bold; color: #=
+56528e;">Unlock your access to the Asana Ambassador Forum - Asana Forum</=
+a></li>
+</ul>
+<p style=3D"margin-top:0; border: 0;">I look forward to seeing you around=
+ the Forum! If there=E2=80=99s anything I can do to help, just let me kno=
+w <img src=3D"https://emoji.discourse-cdn.com/twitter/slightly_smiling_fa=
+ce.png?v=3D12" title=3D":slightly_smiling_face:" alt=3D":slightly_smiling=
+_face:" loading=3D"lazy" width=3D"20" height=3D"20"></p>
+<p style=3D"margin-top:0; border: 0;">Thanks,<br>
+Emily</p></div>
+</div>
+
+
+
+
+
+
+  <div style=3D"color:#666;"><hr style=3D"background-color: #ddd; height:=
+ 1px; border: 1px;; background-color: #ddd; height: 1px; border: 1px;">
+<p><a href=3D"https://forum.asana.com/t/welcome-to-the-asana-community/54=
+6818/1" style=3D"font-weight: normal;; text-decoration: none; font-weight=
+: bold; color: #56528e;; background-color: #938ce1; color: #ffffff; borde=
+r-top: 4px solid #938ce1; border-right: 6px solid #938ce1; border-bottom:=
+ 4px solid #938ce1; border-left: 6px solid #938ce1; display: inline-block=
+; font-weight: bold;">Visit Message</a> or reply to this email to respond=
+ to .</p></div>
+  <div style=3D"color:#666;"><p>To unsubscribe from these emails, <a href=
+=3D"https://forum.asana.com/email/unsubscribe/9b2380efac601d0aac71d24a3c3=
+df5ae4ed540fb79ae269d030b42dbe3afad83" style=3D"text-decoration: none; fo=
+nt-weight: bold; color: #56528e;; color:#666;">click here</a>.</p></div>
+
+</div>
+
+<div itemscope=3D"" itemtype=3D"http://schema.org/EmailMessage" style=3D"=
+display:none">
+  <div itemprop=3D"action" itemscope=3D"" itemtype=3D"http://schema.org/V=
+iewAction">
+    <link itemprop=3D"url" href=3D"https://forum.asana.com/t/welcome-to-t=
+he-asana-community/546818/1">
+    <meta itemprop=3D"name" content=3D"Read full topic">
+  </div>
+</div>
+
+
+
+    <!-- prevent Gmail on iOS font size manipulation -->
+    <div style=3D"
+        display: none;
+        white-space: nowrap;
+        font: 15px courier;
+        line-height: 0;
+      ">
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p;
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p;
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p;
+    </div>
+    =
+
+    <style>
+      @media (prefers-color-scheme: dark) {
+        html {
+          background: #151515 !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span,
+        td {
+          color: inherit !important;
+        }
+
+        [data-stripped-secure-media] {
+          border-color: #454545 !important;
+        }
+
+        [data-stripped-secure-upload] {
+          border-color: #454545 !important;
+        }
+
+        [dm=3D'text-color'] {
+          color: #dddddd;
+        }
+
+        [dm=3D'header'] {
+          background: #151515 !important;
+        }
+
+        [dm=3D'topic-body'] {
+          background: #151515 !important;
+          border-bottom: 1px solid #454545 !important;
+        }
+
+        [dm=3D'triangle'] {
+          border-top-color: #151515 !important;
+        }
+
+        [dm=3D'body'] {
+          background: #222222 !important;
+          color: #dddddd !important;
+        }
+
+        [dm=3D'body_primary'] {
+          background: #062e3d !important;
+          color: #dddddd !important;
+        }
+
+        [dm=3D'bg'] {
+          background: #323232 !important;
+          border-color: #454545 !important;
+        }
+      }
+    </style>
+    =
+
+  =
+
+
+</body></html>=
+
+----==_mimepart_650ef8d9e0b2b_d42a39b3411191e--

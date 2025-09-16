@@ -1,0 +1,435 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:7300:cd88:b0:12d:9a58:4a5e with SMTP id mw8csp462002dyb;
+        Fri, 21 Jun 2024 09:49:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG68L69LqH2dXFggT4j/03lcWyugNnCRVseXZdTXOteyndcsa40mUq3IgN6GeDFUuxkuKU5
+X-Received: by 2002:a05:6214:21ca:b0:6ad:84aa:2956 with SMTP id 6a1803df08f44-6b52b7b9958mr5682726d6.13.1718988572688;
+        Fri, 21 Jun 2024 09:49:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1718988572; cv=none;
+        d=google.com; s=arc-20160816;
+        b=plbGcNSIBAjE530FdA7EnlVGlEx7BIls2m4gLXmmOo26KfJYUUODNpD0rZl6KxNerp
+         kBtDpSrS0U7SbKWw2J2S7Sg4YBgiiQuBW0yOlaoPJ+eK1Tn/CPAZJX/ZtrQfjI7I3LAm
+         c5EYO8XoCx+oyRmoaUbKCxEKu4vY6oGmnyZS2ISF0XOAbanU25/kSlG6lYi03SDXIRN1
+         yO+x5iRHaDIBHn7gYEoHCVLGH2KSxDc2diKQ20lDkObirrZhXY/mYbHce8t2OfHmhLCk
+         rylTr+P4B/yJYZ7wI3OrjHlKIeIoSQgwUsS4MxygmeWGL7Ah1l6yJ/JCtWpQSDR+j5xP
+         kUNw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature:dkim-signature;
+        bh=fxlewbwb9BueGVUUVa+o4EkWnQNNipBPFkHnRuc81wI=;
+        fh=iZtWGcn9pNoQ4VStUxSOe7qMOFLYWLh6K9lsyBW/c+Q=;
+        b=J9PqTezvuvOQYdd4gsYUcoO8yCFeotEWN5MTFc1896Q0P4ysyqBUYPurnPwSSbb3Tr
+         cRHaFFQ/QRIHqPvj8M/8OumL2kqwaFIjZhfSe+8coWSRkm19jZdxtH669nLUH52zJfWi
+         wEDamVUNBbx3joR2zJt4fhHeqbnnQICL0rMaz/m85ryTJa4jFomVHVuei/YGxHG3llgo
+         LtgKJ95AaNN7gk87pNo6s/cGxewSmwY8JVR9eqilW1+zlXNIeqTTbfgfW49HCivn5RzR
+         KfvBYkTNKgEqKmNY+cJ3/m5kycKskdbrhHN2fyVBR2pJIGi5xWYb+gzy+NNRgsOrLq+r
+         66XA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@codingame.com header.s=w3sxs7aipfc4rkhfgd2v75zyomn3oidt header.b=CSf8oPet;
+       dkim=pass header.i=@amazonses.com header.s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug header.b=K1ASK+mB;
+       spf=pass (google.com: domain of 010001903bb405cd-31c00e56-ab05-4b0b-be42-93b7c254c07c-000000@emailing.codingame.com designates 54.240.11.86 as permitted sender) smtp.mailfrom=010001903bb405cd-31c00e56-ab05-4b0b-be42-93b7c254c07c-000000@emailing.codingame.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=codingame.com
+Return-Path: <010001903bb405cd-31c00e56-ab05-4b0b-be42-93b7c254c07c-000000@emailing.codingame.com>
+Received: from a11-86.smtp-out.amazonses.com (a11-86.smtp-out.amazonses.com. [54.240.11.86])
+        by mx.google.com with ESMTPS id 6a1803df08f44-6b51ef16d51si20187426d6.433.2024.06.21.09.49.32
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Jun 2024 09:49:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 010001903bb405cd-31c00e56-ab05-4b0b-be42-93b7c254c07c-000000@emailing.codingame.com designates 54.240.11.86 as permitted sender) client-ip=54.240.11.86;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@codingame.com header.s=w3sxs7aipfc4rkhfgd2v75zyomn3oidt header.b=CSf8oPet;
+       dkim=pass header.i=@amazonses.com header.s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug header.b=K1ASK+mB;
+       spf=pass (google.com: domain of 010001903bb405cd-31c00e56-ab05-4b0b-be42-93b7c254c07c-000000@emailing.codingame.com designates 54.240.11.86 as permitted sender) smtp.mailfrom=010001903bb405cd-31c00e56-ab05-4b0b-be42-93b7c254c07c-000000@emailing.codingame.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=codingame.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=w3sxs7aipfc4rkhfgd2v75zyomn3oidt; d=codingame.com; t=1718988572;
+	h=Date:From:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type;
+	bh=WicmccerwGRHiR4P8vofoEfHWjLUdbHPq3GLKWRjJuU=;
+	b=CSf8oPet9UJL3X8UZTYHmxAvJ9CcYJB9FJt0GMkE1DgNuFAoB8ptiidMF+DXbTHF
+	Xyb4U/y15fYcPaUr8kpCpnsQJRvq3ZqZDQj+JqMS3qlKIrnFgp9JkIAdv171FuXupGB
+	5WKUfjUNkjOySFEVH8qKz5y8D8fy7WHrL7WGR/yI=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug; d=amazonses.com; t=1718988572;
+	h=Date:From:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type:Feedback-ID;
+	bh=WicmccerwGRHiR4P8vofoEfHWjLUdbHPq3GLKWRjJuU=;
+	b=K1ASK+mBLTCfuMn1tL7zg0tNhuNb3qwAEriNk5MLjmSPecnqWu+urKkkTGUqBkSx
+	9fGJq1Qnh9qWabggmOsSV/tFWspGfQzrtXrG4S6lDm9V0Fv9S52v+m+6xdi14T4bYXs
+	FvZIvKTFk68WI4r9nsI7DOh2N2a6nwoW1/xTXAuo=
+Date: Fri, 21 Jun 2024 16:49:32 +0000
+From: CodinGame <no-reply@codingame.com>
+Reply-To: no-reply@codingame.com
+To: lets.mine004@gmail.com
+Message-ID: <010001903bb405cd-31c00e56-ab05-4b0b-be42-93b7c254c07c-000000@email.amazonses.com>
+Subject: =?UTF-8?Q?=F0=9F=8E=81_CodinGame_Summer_Challen?=
+ =?UTF-8?Q?ge_2024_with_Fiverr_-_Prizes?=
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1707831_1711600825.1718975537183"
+Feedback-ID: ::1.us-east-1.p7wQsMMJKDUXwGnrHN7YOmvsdgoP3aDJajrvK4B5DHw=:AmazonSES
+X-SES-Outgoing: 2024.06.21-54.240.11.86
+X-TUID: ipEe8bDnszx3
+
+------=_Part_1707831_1711600825.1718975537183
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1707832_1247441714.1718975537183"
+
+------=_Part_1707832_1247441714.1718975537183
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D0&link=3Dhttps%3A%2F%2Fwww.codingame.com%3Futm_source%3Dcommunity%26amp%=
+3Butm_medium%3Demail%26amp%3Butm_content%3Dinvitation%26amp%3Butm_campaign%=
+3Dlogo>
+ SUMMER CHALLENGE 2024=20
+ June 11-25=20
+=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D1&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fcontests%2Fsummer-challenge-2=
+024-olymbits>
+ Hello lolakias,=20
+
+ Just a few more days to participate in the Summer Challenge 2024 with Five=
+rr !
+
+ =F0=9F=8E=81 Everyone can win prizes thanks to Fiverr=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D2&link=3Dhttps%3A%2F%2Fgo.fiverr.com%2Fvisit%2F%3Fbta%3D956187%26amp%3Bb=
+rand%3Dfiverrcpa%26amp%3Butm_campaign%3Dcodingame%26amp%3Butm_content%3Dcod=
+ingame-summer-email-registration%26amp%3Butm_term%3Dlink%26amp%3Bafp%3Dstat=
+ic-codingame-summer-email-registration-generic-en%26amp%3Bafp1%3D%26amp%3Ba=
+fp2%3D%26amp%3BlandingPage%3Dhttps%253A%252F%252Fwww.fiverr.com%252F>
+ : some of the prizes will be given by drawing lots among all participants.=
+=20
+Sign up for a chance to win!
+
+ Among the prizes, you could win one of the individual coaching sessions wi=
+th=20
+the best CodinGamers. Here are a few examples:=20
+ *  Code a real-time 2D/3D app with VonDerManzen=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D3&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fprofile%2F9864759b8732e5f364b=
+dd1c8a94e07a77704334>
+ *  Improve your bots with the current leader of the Challenge MSmits=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D4&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fprofile%2F04d6badfff034762c87=
+be88072d7d6840902252>
+ *  Prepare for Google job interviews with MathisHammel=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D5&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fprofile%2F9bfc1fe82a41c7b80c8=
+ae78ee7f617507281801>
+ To be eligible, simply add a Fiverr profile to your CodinGameprofile=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D6&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fsettings>
+ .
+
+ Good luck for the final sprint! Keep coding,=20
+ The CodinGame Team=20
+REGISTER TODAY=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D8&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fcontests%2Fsummer-challenge-2=
+024-olymbits>
+
+=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D9&link=3Dhttps%3A%2F%2Ftwitter.com%2Fcodingame>
+=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D10&link=3Dhttps%3A%2F%2Fwww.instagram.com%2Fcodingame_official%2F>
+=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D11&link=3Dhttps%3A%2F%2Fgithub.com%2FCodinGame>
+=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D12&link=3Dhttps%3A%2F%2Fwww.twitch.tv%2Fcodingame>
+=C2=A9 CodinGame 2024=20
+ Don't want to receive these emails any longer? Unsubscribe here=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D13&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fservlet%2Funsubscribe%2Fbe7f=
+08febd51d735a4e8a82d66e9281f6268484%2Fb17cd5825e699c291da8dd4767b1dc86583d6=
+02d%2Finstant%2Fcontest>
+ or manage notifications=20
+<https://www.codingame.com/servlet/mlinkservlet?lmid=3D18374481303CtcE&ltpl=
+=3D14&link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fservlet%2Funsubscribe%2Fbe7f=
+08febd51d735a4e8a82d66e9281f6268484%2Fb17cd5825e699c291da8dd4767b1dc86583d6=
+02d>
+ .
+------=_Part_1707832_1247441714.1718975537183
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html>
+<html>
+ <head>
+  <meta charset=3D"UTF-8">
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+  <style type=3D"text/CSS">
+        body {
+=09=09=09margin:0;
+=09=09=09padding:0;
+=09=09=09-webkit-text-size-adjust:100%;=20
+=09=09=09-ms-text-size-adjust:100%;
+=09=09
+            background-color: #efefef;=20
+            color: #ffffff;=20
+            font-family: Arial, Helvetica, sans-serif;=20
+            font-size: 12px;
+=09=09}
+=09=09.youtube {
+          color: #f9b700;
+        }
+   =09=09.youtube a {
+          color: #f9b700;
+        }=20
+=09=09table {
+=09=09=09padding:0;
+=09=09=09margin:0;
+=09=09}
+
+=09=09td {
+=09=09=09padding:0;
+=09=09=09margin:0;
+=09=09}
+       =20
+=09=09img {
+=09=09=09margin: 0;
+=09=09=09padding: 0;
+=09=09=09/*display:block;*/
+=09=09=09-ms-interpolation-mode: bicubic;
+=09=09=09border:none;
+=09=09=09outline:none;
+=09=09}
+
+=09=09a, a:link, a:visited {
+=09=09=09text-decoration: none;
+=09=09=09border-style:none;
+=09=09=09border:0;
+=09=09=09padding:0;
+=09=09=09margin:0;
+=09=09=09color: #f9b700;
+=09=09}
+=09=09
+        .ExternalClass {width: 100%;}
+        p {margin:0; padding:0; margin-bottom:0;}
+=09=09a:link.linkfollow, a:visited.linkfollow {color: #f9b700;}
+=09=09a:link.linkview, a:visited.linkview {color: #f9b700;}
+  </style>
+ </head>
+ <body bgcolor=3D"#efefef" style=3D"margin: 0;padding: 0;-webkit-text-size-=
+adjust: 100%;-ms-text-size-adjust: 100%;">
+  <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" bg=
+color=3D"#efefef" align=3D"center" style=3D"font-family: Arial, Helvetica, =
+sans-serif;color: #ffffff;">
+   <tbody>
+    <tr>
+     <td>&nbsp;</td>
+    </tr>
+    <tr align=3D"center">
+     <td align=3D"center">
+      <!-- Main table: fixed width of 600px; -->
+      <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600"=
+ style=3D"text-align: center; margin: auto;font-size: 14px;color: #ffffff" =
+bgcolor=3D"#192126">
+       <!-- //////// Header -->
+       <tbody>
+        <tr>
+         <td>
+          <table style=3D"color: #ffffff" width=3D"600">
+           <tbody>
+            <tr align=3D"left">
+             <td style=3D"padding: 30px; font-size: 25px;width: 220px" widt=
+h=3D"220">
+              <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmi=
+d=3D18374481303CtcE&amp;ltpl=3D0&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com=
+%3Futm_source%3Dcommunity%26amp%3Butm_medium%3Demail%26amp%3Butm_content%3D=
+invitation%26amp%3Butm_campaign%3Dlogo">
+               <img src=3D"https://www.codingame.com/servlet/mfileservlet?i=
+d=3D99104309654463&amp;lmid=3D18374481303CtcE" width=3D"196" style=3D"margi=
+n: 0;padding: 0;display: block;-ms-interpolation-mode: bicubic;border: none=
+;outline: none;">
+              </a>
+             </td>
+             <td style=3D"padding: 40px; padding-top: 40px;font-size:14px; =
+line-height: 17px;text-align: right;" align=3D"right">
+              <strong> SUMMER CHALLENGE 2024</strong>
+              <br>
+              <span style=3D"font-size: 14px;"> June 11-25</span>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </td>
+        </tr>
+        <tr>
+         <td bgcolor=3D"#192126" style=3D"background-color: #192126;font-si=
+ze: 0px;line-height: 0px;vertical-align: top;">
+          <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D=
+18374481303CtcE&amp;ltpl=3D1&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fc=
+ontests%2Fsummer-challenge-2024-olymbits">
+           <img src=3D"https://codingame.com/servlet/fileservlet?id=3D12450=
+5424665862&amp;format=3Dcropped" width=3D"600" style=3D"width: 600px; borde=
+r: 0; outline: 0">
+          </a>
+         </td>
+        </tr>
+        <!-- //////// Main article -->
+        <tr>
+         <td style=3D"text-align: justify; padding-left: 40px;padding-right=
+: 40px;padding-top: 30px;padding-bottom: 34px;font-size: 17px;line-height: =
+24px;">
+          Hello lolakias,
+          <br>
+          <br>
+           Just a few more days to participate in the=20
+          <b>Summer Challenge 2024 with Fiverr</b>
+          !=20
+          <br>
+          <br>
+           =F0=9F=8E=81=20
+          <b>Everyone</b>
+           can win prizes thanks to=20
+          <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D=
+18374481303CtcE&amp;ltpl=3D2&amp;link=3Dhttps%3A%2F%2Fgo.fiverr.com%2Fvisit=
+%2F%3Fbta%3D956187%26amp%3Bbrand%3Dfiverrcpa%26amp%3Butm_campaign%3Dcodinga=
+me%26amp%3Butm_content%3Dcodingame-summer-email-registration%26amp%3Butm_te=
+rm%3Dlink%26amp%3Bafp%3Dstatic-codingame-summer-email-registration-generic-=
+en%26amp%3Bafp1%3D%26amp%3Bafp2%3D%26amp%3BlandingPage%3Dhttps%253A%252F%25=
+2Fwww.fiverr.com%252F">Fiverr</a>
+          : some of the prizes will be given by drawing lots among all part=
+icipants. Sign up for a chance to win!=20
+          <br>
+          <br>
+           Among the prizes, you could win one of the=20
+          <b>individual coaching sessions</b>
+           with the best CodinGamers. Here are a few examples:=20
+          <ul>
+           <li>
+            Code a real-time 2D/3D app with=20
+            <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=
+=3D18374481303CtcE&amp;ltpl=3D3&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%=
+2Fprofile%2F9864759b8732e5f364bdd1c8a94e07a77704334">VonDerManzen</a>
+           </li>
+           <li>
+            Improve your bots with the current leader of the Challenge=20
+            <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=
+=3D18374481303CtcE&amp;ltpl=3D4&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%=
+2Fprofile%2F04d6badfff034762c87be88072d7d6840902252">MSmits</a>
+           </li>
+           <li>
+            Prepare for Google job interviews with=20
+            <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=
+=3D18374481303CtcE&amp;ltpl=3D5&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%=
+2Fprofile%2F9bfc1fe82a41c7b80c8ae78ee7f617507281801">MathisHammel</a>
+           </li>
+          </ul>
+           To be eligible, simply add a Fiverr profile to your CodinGame=20
+          <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D=
+18374481303CtcE&amp;ltpl=3D6&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fs=
+ettings">profile</a>
+          .=20
+          <br>
+          <br>
+           Good luck for the final sprint! Keep coding,
+          <br>
+           The CodinGame Team
+         </td>
+        </tr>
+        <tr>
+         <td style=3D"background-color: #192126; text-align: center;">
+          <div style=3D"display: inline-block;">
+           <!--[if mso]>
+  <v:rect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-=
+microsoft-com:office:word" href=3D"https://www.codingame.com/servlet/mlinks=
+ervlet?lmid=3D18374481303CtcE&amp;ltpl=3D7&amp;link=3Dhttps%3A%2F%2Fwww.cod=
+ingame.com%2Fcontests%2Fsummer-challenge-2024-olymbits" style=3D"height:50p=
+x;v-text-anchor:middle;width:520px;" stroke=3D"f" fillcolor=3D"#f9b700">
+    <w:anchorlock/>
+    <center>
+  <![endif]-->
+           <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=
+=3D18374481303CtcE&amp;ltpl=3D8&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%=
+2Fcontests%2Fsummer-challenge-2024-olymbits" style=3D"background-color:#f9b=
+700;color:#20252a;display:inline-block;font-family:Arial, Helvetica, sans-s=
+erif;font-size:15px;font-weight:bold;line-height:50px;text-align:center;tex=
+t-decoration:none;width:520px;-webkit-text-size-adjust:none;">REGISTER TODA=
+Y</a>
+           <!--[if mso]>
+    </center>
+  </v:rect>
+<![endif]-->
+          </div>
+         </td>
+        </tr>
+        <tr>
+         <td colspan=3D"2" height=3D"41" style=3D"height:41px;border-bottom=
+: 1px dashed black">&nbsp;</td>
+        </tr>
+        <tr>
+         <td style=3D"padding:40px; padding-bottom: 37px; border-top: 1px s=
+olid black; text-align: center;font-size:19px" align=3D"center">
+          <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D=
+18374481303CtcE&amp;ltpl=3D9&amp;link=3Dhttps%3A%2F%2Ftwitter.com%2Fcodinga=
+me">
+           <img src=3D"https://files.codingame.com/codingame/mail/twitter_n=
+ew.png" style=3D"border: 0;" width=3D"40" height=3D"40">
+          </a>
+          &nbsp;=20
+          <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D=
+18374481303CtcE&amp;ltpl=3D10&amp;link=3Dhttps%3A%2F%2Fwww.instagram.com%2F=
+codingame_official%2F">
+           <img src=3D"https://files.codingame.com/codingame/mail/instagram=
+_new.png" style=3D"border: 0;" width=3D"40" height=3D"40">
+          </a>
+          &nbsp;=20
+          <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D=
+18374481303CtcE&amp;ltpl=3D11&amp;link=3Dhttps%3A%2F%2Fgithub.com%2FCodinGa=
+me">
+           <img src=3D"https://www.codingame.com/servlet/mfileservlet?id=3D=
+25895742527347" style=3D"border: 0;" width=3D"40" height=3D"40">
+          </a>
+          &nbsp;=20
+          <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D=
+18374481303CtcE&amp;ltpl=3D12&amp;link=3Dhttps%3A%2F%2Fwww.twitch.tv%2Fcodi=
+ngame">
+           <img src=3D"https://www.codingame.com/servlet/mfileservlet?id=3D=
+25895737535035" style=3D"border: 0;" width=3D"40" height=3D"40">
+          </a>
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </td>
+    </tr>
+    <tr>
+     <td style=3D"color: black; text-align: center; padding-top: 23px;font-=
+size: 15px;font-weight: 300">=C2=A9 CodinGame 2024</td>
+    </tr>
+    <tr>
+     <td style=3D"color: black; text-align: center; padding: 10px;padding-b=
+ottom: 35px;font-size: 12px;">
+      Don't want to receive these emails any longer?
+      <strong>
+       <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D183=
+74481303CtcE&amp;ltpl=3D13&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fser=
+vlet%2Funsubscribe%2Fbe7f08febd51d735a4e8a82d66e9281f6268484%2Fb17cd5825e69=
+9c291da8dd4767b1dc86583d602d%2Finstant%2Fcontest" style=3D"color: #192126; =
+text-decoration: none">Unsubscribe here</a>
+      </strong>
+       or=20
+      <strong>
+       <a href=3D"https://www.codingame.com/servlet/mlinkservlet?lmid=3D183=
+74481303CtcE&amp;ltpl=3D14&amp;link=3Dhttps%3A%2F%2Fwww.codingame.com%2Fser=
+vlet%2Funsubscribe%2Fbe7f08febd51d735a4e8a82d66e9281f6268484%2Fb17cd5825e69=
+9c291da8dd4767b1dc86583d602d" style=3D"color: #192126; text-decoration: non=
+e">manage notifications</a>
+      </strong>
+      .
+     </td>
+    </tr>
+   </tbody>
+  </table>
+ </body>
+</html>
+------=_Part_1707832_1247441714.1718975537183--
+
+------=_Part_1707831_1711600825.1718975537183--

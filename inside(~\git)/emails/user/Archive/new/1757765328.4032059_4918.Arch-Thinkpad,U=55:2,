@@ -1,0 +1,928 @@
+Delivered-To: user.idc004@gmail.com
+Received: by 2002:a05:6358:1988:b0:125:7fef:e76 with SMTP id v8csp1877616rwn;
+        Sat, 25 Nov 2023 07:24:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHYLkZ1cIkhayXm+BocCDnonQBeEkyLtbEviTaX019W3wOk4AyWQr1frdjra/LSxV2bNpJm
+X-Received: by 2002:a05:622a:13d1:b0:423:7843:2b4a with SMTP id p17-20020a05622a13d100b0042378432b4amr6780519qtk.50.1700925879076;
+        Sat, 25 Nov 2023 07:24:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1700925879; cv=none;
+        d=google.com; s=arc-20160816;
+        b=mSPZvcKYoZNc15mHPIwQ7RJeRxGXQGxnlA1zSbTtw6YDmW+WU+q7EQZ+u2kTqVf7dV
+         6P+BBNR/AQf0WWHgT7TIYktKxa9DUYHGdMAint2NzBSvohgrafl3weIZYqamQaqZo2HN
+         g7qcDHKu481Ug2TUgGdjPpC6J9WH4xdZXAqmbKbUS2YuQAwM8pejcb/z5DqjkbHZ0Fn8
+         MYRUecK7KfKHrOPevNojzI4JC94b0B+VzXSofg6paUAmJlBKgX8QpjyzqGu31F6jNOnx
+         gJ92Urfz4yFdCpH2QreiDRgUoSNfZ5f3GXIVVUHYysNhLA9Tiynlhp8YTfe8o32oIBjc
+         OCQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:auto-submitted:mime-version:message-id:subject:to
+         :reply-to:from:dkim-signature:dkim-signature;
+        bh=mYUwT3abcM58o82hStcXtwO5JFHOvnlIlbT3DV5YkC8=;
+        fh=cS1oIallHTQQk1BazQn5pPS0Gxuo4cIULqBdrzKuPT4=;
+        b=EPaPD7M2CeRI+ao2BNiFFdLdAoW8RX9efw5KQHAUXTjh8Akv1yokvOAnWmCdPaQk/F
+         ePdHRdanLIIhmFd9j0r06zPsdQvpbJblh1haRzrLtjNIBXl4dBSs4S4KixHFcO+pns61
+         8rGerXBNUUsqpoDFXUpuTPPmBF5B+xNk/XeYTXP65zpPv5kvhxkVFkfLH1azcDgyVAW0
+         u/80mHLhurvnfisGW05pj1GNZj+iIJTjxSHG1bYHEqgl8994h9ht6tbK6gboKU3AXyZC
+         m4xfZI/lzWve3ZRA4kZZxpQt/nVjDtYwtAy04//kHOsU4TBQ/lbtNLNnM3UeaZAZuloK
+         oc4w==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@slack.com header.s=s4xolb5s7tnx6yxtrm4adems7glgsuyf header.b=F59PJD3e;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=U6EtC0xR;
+       spf=pass (google.com: domain of 0100018c0715300a-dac789b1-b8e3-442e-9db0-082ff86593c3-000000@mail.slack.com designates 54.240.35.30 as permitted sender) smtp.mailfrom=0100018c0715300a-dac789b1-b8e3-442e-9db0-082ff86593c3-000000@mail.slack.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=slack.com
+Return-Path: <0100018c0715300a-dac789b1-b8e3-442e-9db0-082ff86593c3-000000@mail.slack.com>
+Received: from a35-30.smtp-out.amazonses.com (a35-30.smtp-out.amazonses.com. [54.240.35.30])
+        by mx.google.com with ESMTPS id b13-20020a05622a020d00b0042376b87e12si5514861qtx.294.2023.11.25.07.24.38
+        for <user.idc004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 25 Nov 2023 07:24:39 -0800 (PST)
+Received-SPF: pass (google.com: domain of 0100018c0715300a-dac789b1-b8e3-442e-9db0-082ff86593c3-000000@mail.slack.com designates 54.240.35.30 as permitted sender) client-ip=54.240.35.30;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@slack.com header.s=s4xolb5s7tnx6yxtrm4adems7glgsuyf header.b=F59PJD3e;
+       dkim=pass header.i=@amazonses.com header.s=224i4yxa5dv7c2xz3womw6peuasteono header.b=U6EtC0xR;
+       spf=pass (google.com: domain of 0100018c0715300a-dac789b1-b8e3-442e-9db0-082ff86593c3-000000@mail.slack.com designates 54.240.35.30 as permitted sender) smtp.mailfrom=0100018c0715300a-dac789b1-b8e3-442e-9db0-082ff86593c3-000000@mail.slack.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=slack.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=s4xolb5s7tnx6yxtrm4adems7glgsuyf; d=slack.com; t=1700925878;
+	h=From:Reply-To:To:Subject:Message-ID:Content-Type:MIME-Version:Date;
+	bh=8EUcvlpZ5/bR3R7oj/kQw8OWPCvQnq0O8HP/XnL8Xsc=;
+	b=F59PJD3eRVWWfVCVl4O4EyKN3bHOh6ifkDALtJk5VODojECDafwAzTFe6o+IUrlU
+	PAt6kcT6iGR/1pCQ9BNwJnN+lfBEi/WRO5yeJM6UrtcPmNzCwlIjhAhsSIJct7OTZ4f
+	2PMW3xSqCeYajxcVLJOrStRT1vV4yyUlIILGqeIw=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=224i4yxa5dv7c2xz3womw6peuasteono; d=amazonses.com; t=1700925878;
+	h=From:Reply-To:To:Subject:Message-ID:Content-Type:MIME-Version:Date:Feedback-ID;
+	bh=8EUcvlpZ5/bR3R7oj/kQw8OWPCvQnq0O8HP/XnL8Xsc=;
+	b=U6EtC0xRCPFwZOO7LbcvZCm6sJ+jLswegs6Wzp31lG1V7hN9yC3Pg9kUD9AKPmuF
+	Di1kQgooihwCosekWt9pN4m2EzXLqOu/Zg9YLCY8GkxPCh/fdx8viQgrrnY6zCl+fl2
+	leV+8RiLhwe4pFQz6HP8GujbYPkkD2f1gepp0+Gc=
+From: Slack <no-reply-0829GvxpFy70twOdVIngGwyy@slack.com>
+Reply-To: no-reply@slack.com
+To: user.idc004@gmail.com
+Subject: Malakes on Slack: New Account Details
+Message-ID: <0100018c0715300a-dac789b1-b8e3-442e-9db0-082ff86593c3-000000@email.amazonses.com>
+Content-Type: multipart/alternative;
+ boundary="=_2ff5225a-9bfc-45f2-9f92-16796d61a4f1"
+MIME-Version: 1.0
+X-Slack-Team-ID: T067N4F8FKK
+Auto-Submitted: auto-generated
+X-Slack-Message-ID: ob-aaaalmmoc77xcf74uifp6acmae
+Date: Sat, 25 Nov 2023 15:24:38 +0000
+Feedback-ID: 1.us-east-1.kwXgUBITdY2w2KyDhc4cKlXKai8tXy8Sx50cu3XZbqE=:AmazonSES
+X-SES-Outgoing: 2023.11.25-54.240.35.30
+X-TUID: Fs5vMmJdccfi
+
+--=_2ff5225a-9bfc-45f2-9f92-16796d61a4f1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Welcome to Slack
+
+Here are the details for your new Slack workspace, along with some tips to =
+help you get started.
+
+Workspace name: Malakes
+
+M
+
+malakesworkspace.slack.com []
+
+Open Slack [https://malakesworkspace.slack.com/x-p6260151287665-62408771045=
+18-6233053388631/messages/C067BUFLXGU]
+Tips for getting started
+
+Invite teammates
+
+Slack is made for teams. Invite people [https://malakesworkspace.slack.com/=
+x-p6260151287665-6240877104518-6233053388631/welcome/invite_members?utm_med=
+ium=3Demail&utm_source=3Dconfirmation-new-creator] you frequently work or c=
+ommunicate with.
+
+Create channels
+
+Keep work organized in channels [https://malakesworkspace.slack.com/x-p6260=
+151287665-6240877104518-6233053388631/features/channels?utm_medium=3Demail&=
+utm_source=3Dconfirmation-new-creator] =E2=80=94 organized spaces for every=
+thing related to a project, topic, or team.
+
+Download Slack
+
+For the best experience with Slack, download our apps [https://malakesworks=
+pace.slack.com/x-p6260151287665-6240877104518-6233053388631/downloads?utm_m=
+edium=3Demail&utm_source=3Dconfirmation-new-creator&t=3DT067N4F8FKK] for de=
+sktop and mobile.
+
+See more tips [https://malakesworkspace.slack.com/x-p6260151287665-62408771=
+04518-6233053388631/resources/using-slack/top-5-tips-for-getting-started-in=
+-slack?utm_medium=3Demail&utm_source=3Dconfirmation-new-creator]
+
+If you have any questions as you=E2=80=99re getting started, drop us a note=
+ at help@slack.com. We=E2=80=99re glad you=E2=80=99re here!
+--=_2ff5225a-9bfc-45f2-9f92-16796d61a4f1
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns=3D"http://www.w3.org/1999/xht=
+ml"><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"><meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-=
+scale=3D1.0"><link href=3D"https://fonts.googleapis.com/css?family=3DLato:4=
+00,700,900" rel=3D"stylesheet"><title>Malakes on Slack: New Account Details=
+</title><style type=3D"text/css">/* Global Resets */
+	body, .background_main, p, table, td, div { font-family: 'Lato', 'Helvetic=
+a Neue', Helvetica, Arial, sans-serif; }
+
+	img {
+		border: none;
+		-ms-interpolation-mode: bicubic;
+		max-width: 100%;
+	}
+
+	p {padding-bottom: 2px;}
+
+	body {
+		background: #fff;
+		font-size: 17px;
+		line-height: 24px;
+		margin: 0;
+		padding: 0;
+		-ms-text-size-adjust: 100%;
+		-webkit-text-size-adjust: 100%;
+	}
+
+	table {
+		border-collapse: collapse;
+		mso-table-lspace: 0pt;
+		mso-table-rspace: 0pt;
+		width: 100%;
+	}
+
+	td {
+		font-size: 17px;
+		line-height: 24px;
+		vertical-align: top;
+	}
+
+	/* Footer */
+	.email_footer td, .email_footer p, .email_footer span {
+		font-size: 15px;
+		text-align: center;
+		color: #1d1c1d;
+	}
+
+	.email_footer a {
+		text-decoration: underline;
+	}
+
+	.email_footer td {padding-top: 20px;}
+
+	.footer_logo {
+		width: 40px;
+		height: 40px;
+		padding-bottom: 20px;
+	}
+
+	.footer_title {
+		font-weight: 900;
+	}
+
+	.preheader {
+		display: none;
+		mso-hide: all;
+	}
+
+	/* Typography */
+	h1, h2, h3, h4 {
+		color: #1d1c1d;
+		font-weight: 700;
+		margin: 0;
+		margin-bottom: 12px;
+	}
+
+	h1 {
+		font-size: 36px;
+		line-height: 42px;
+		letter-spacing: -.25px;
+		margin-bottom: 28px;
+		text-align: left;
+		word-break: break-word;
+	}
+
+	h2 {
+		font-size: 24px;
+		line-height: 32px;
+		letter-spacing: -0.75px;
+		margin-bottom: 28px;
+		text-align: left;
+	}
+
+	h3 {
+		font-size: 18px;
+		line-height: 24px;
+		letter-spacing: 0px;
+		margin-bottom: 0px;
+	}
+
+	p, ul, ol {
+		font-size: 17px;
+		line-height: 24px;
+		font-weight: normal;
+		margin: 0;
+		margin-bottom: 15px;
+	}
+
+	ul, ol {
+		padding-left: 40px;
+	}
+
+	p li, ul li, ol li {
+		list-style-position: outside;
+		margin-left: 5px;
+	}
+
+	p {
+		font-size: 16px;
+		letter-spacing: -0.2px;
+	}
+
+	a {
+		color: #1264a3;
+		text-decoration: underline!important;
+	}
+
+	a:hover {text-decoration: underline;}
+
+	.button_link::after {
+		position: absolute;
+		content: '';
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		border-radius: 4px;
+	}
+
+	.button_link:hover::after {
+		box-shadow: inset 0 -2px #237c4a;
+	}
+
+	.button_link.is_secondary:hover::after {
+		box-shadow: none;
+	}
+
+	.button_link.plum:hover {
+		background-color: #4a154b !important;
+		border-color: #4a154b !important;
+	}
+
+	.button_link_wrapper.plum:hover {
+		background-color: #4a154b !important;
+	}
+
+	.button_link.plum:hover::after {
+		box-shadow: none;
+	}
+
+	.preview_text {
+		color: transparent;
+		display: none;
+		height: 0;
+		max-height: 0;
+		max-width: 0;
+		opacity: 0;
+		overflow: hidden;
+		mso-hide: all;
+		visibility: hidden;
+		width: 0;
+		font-size: 1px;
+		line-height:1px;
+	}
+
+	.preview_text a {
+		color: #3AA3E3 !important;
+		font-weight: bold;
+	}
+
+	.sm_visible {
+		display: none;
+	}
+
+	.footer_padding {
+		padding: 0 50px;
+	}
+
+	table[class=3D"background_main"] .social_icon_margin {
+		margin-left: 32px !important;
+	}
+
+	/* Responsive and Mobile Friendly Styles */
+	/* Yahoo Mail has a history of rendering all media query styles with class=
+ selectors unless class is used as an attribute */
+	@media only screen and (max-width: 600px) {
+		table[class=3D"background_main"] .sm_full_width {
+			width: 100% !important;
+		}
+
+		table[class=3D"background_main"] .sm_90_percent_width {
+			width: 90% !important;
+			padding: 16px !important;
+			text-align: center !important;
+			float: none !important;
+		}
+
+		table[class=3D"background_main"] .sm_side_padding {
+			padding-right: 8px !important;
+			padding-left: 8px !important;
+			float: none !important;
+		}
+
+		table[class=3D"background_main"] .sm_small_top_padding {
+			padding-top: 8px !important;
+		}
+
+		table[class=3D"background_main"] .sm_top_padding {
+			padding-top: 16px !important;
+		}
+
+		table[class=3D"background_main"] .sm_auto_width {
+			width: auto !important;
+		}
+
+		table[class=3D"background_main"] .sm_auto_height {
+			height: auto !important;
+		}
+
+		table[class=3D"background_main"] .sm_border_box {
+			box-sizing: border-box !important;
+		}
+
+		table[class=3D"background_main"] .sm_block {
+			display: block !important;
+		}
+
+		table[class=3D"background_main"] .sm_inline_block {
+			display: inline-block !important;
+		}
+
+		table[class=3D"background_main"] .sm_table {
+			display: table !important;
+		}
+
+		table[class=3D"background_main"] .sm_no_side_padding {
+			padding-right: 0 !important;
+			padding-left: 0 !important;
+		}
+
+		table[class=3D"background_main"] .sm_no_border_radius {
+			border-radius: 0 !important;
+		}
+
+		table[class=3D"background_main"] .sm_no_padding {
+			padding-right: 0 !important;
+			padding-left: 0 !important;
+		}
+
+		table[class=3D"background_main"] .sm_os_icons_height {
+			/* this is to make the parent element the same height as the inline-bloc=
+k img inside */
+			height: 44px;
+		}
+
+		table[class=3D"background_main"] .small_icon {
+			width: 20px !important;
+			height: 20px !important;
+		}
+
+		table[class=3D"background_main"] .social_icon_margin {
+			margin-left: 20px !important;
+		}
+
+		table[class=3D"background_main"] .slack_logo_small_icon {
+			width: 80px !important;
+		}
+
+		table[class=3D"background_main"] .slack_logo_small_icon img {
+			 height: 24px !important;
+		}
+
+		.social_img_bottom_margin {
+			/*this class is for social_user_outreach email only*/
+			margin-bottom: 20px !important;
+		}
+
+		.social_p_bottom_margin {
+			/*this class is for social_user_outreach email only*/
+			margin-bottom: 40px !important;
+		}
+
+		/* Common responsive styles for new email design templates #feat-activati=
+on-email-audit */
+		.sm_hidden {
+			display: none!important;
+		}
+
+		.sm_visible {
+			display: inline-block!important;
+		}
+		h1 {
+			font-size: 24px!important;
+			line-height: 30px!important;
+			margin-bottom: 20px!important;
+			word-break: break-word;
+		}
+		h2 {
+			font-size: 16px!important;
+			line-height: 23px!important;
+			margin-bottom: 10px!important;
+		}
+		h3 {
+			font-size: 14px!important;
+			line-height: 20px!important;
+		}
+
+		.hero_paragraph, .bulleted_list {
+			font-size: 14px!important;
+			line-height: 19px!important;
+			margin-bottom: 20px!important;
+			word-break: break-word;
+		}
+
+		.status_paragraph {
+			font-size: 14px!important;
+			line-height: 19px!important;
+			word-break: break-word;
+		}
+		.content_paragraph {
+			font-size: 12px!important;
+			line-height: 18px!important;
+			margin-bottom: 10px!important;
+		}
+		.list_paragraph {
+			font-size: 12px!important;
+			line-height: 18px!important;
+		}
+
+		.restyle_button {
+			font-size: 12px!important;
+			border-top: 10px solid!important;
+			border-bottom: 10px solid!important;
+			border-color: #611f69!important;
+			line-height: 12px!important;
+		}
+
+		.margin_top {
+			margin-top: 20px!important;
+		}
+
+		.lg_margin_left_right {
+			margin-left: 26px!important;
+			margin-right: 26px!important;
+		}
+
+		.xl_margin_bottom {
+			margin-bottom: 30px!important;
+		}
+
+		.xl_margin_top {
+			margin-top: 30px!important;
+		}
+		.hero_block_container {
+			margin-left: 26px!important;
+		}
+
+		.hero_block_left {
+			width: 50%!important;
+		}
+
+		.slack_logo_style {
+			margin-top: -6px!important;
+			margin-bottom: -12px!important;
+		}
+
+		.larger_bottom_margin {
+			margin-bottom: 30px!important;
+		}
+
+		.list_header {
+			font-size: 16px!important;
+		}
+
+		.list_icon_wrapper {
+			width: 55px!important;
+		}
+
+		.list_icon_style {
+			width: 40px!important;
+			height: 40px!important;
+		}
+
+		.list_icon_style_large {
+			width: auto!important;
+			height: 50px!important;
+		}
+
+		.line_height_24 {
+			line-height: 24px!important;
+		}
+
+		.brand_logo_wrapper {
+			width: 78px!important;
+		}
+
+		.brand_logo_style {
+			width: 68px!important;
+			height: 68px!important;
+		}
+
+		.brand_heading {
+			font-size: 14px!important;
+			line-height: 20px!important;
+		}
+
+		.brand_link {
+			font-size: 13px!important;
+			line-height: 18px!important;
+		}
+
+		.grey_box_container {
+			padding: 20px 9px!important;
+		}
+
+		.account_info_wrapper {
+			margin-bottom: 18px!important;
+		}
+
+		.account_info_item {
+			padding: 0px 5px!important;
+		}
+
+		.account_info_avatar {
+			width: 55px!important;
+			height: 55px!important;
+			margin-bottom: 5px!important;
+		}
+		table[class=3D"background_main"] .footer_padding {
+			padding: 0 26px!important;
+		}
+		.footer_padding {
+			padding: 0 26px !important;
+		}
+		.small_font {
+			font-size: 14px!important;
+		}
+
+	}
+
+	/* More client-specific styles */
+	@media all {
+		.ExternalClass {
+			width: 100%;
+		}
+
+		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass fon=
+t, .ExternalClass td, .ExternalClass div {
+			line-height: 100%;
+		}
+
+		.footer_link {
+			color: #1d1c1d !important;
+			font-family: inherit !important;
+			font-size: inherit !important;
+			font-weight: inherit !important;
+			line-height: inherit !important;
+		}
+	}
+	a:hover {
+		text-decoration: underline !important;
+	}
+
+	pre, code {
+		--saf-0: rgba(var(--sk_foreground_low, 29, 28, 29), 0.13);
+		border: 1px solid var(--saf-0);
+		background: rgba(var(--sk_foreground_min, 29, 28, 29), 0.04);
+		font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace !imp=
+ortant;
+		font-size: 12px;
+		line-height: 1.50001;
+		font-variant-ligatures: none;
+		white-space: pre;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+		word-break: normal;
+		-webkit-tab-size: 4;
+		-moz-tab-size: 4;
+		-o-tab-size: 4;
+		tab-size: 4;
+	}
+
+	code {
+		color: #e01e5a;
+		padding: 2px 3px 1px;
+		border-radius: 3px;
+	}
+
+	pre {
+		margin-bottom: 16px;
+		padding: 8px;
+		border-radius: 4px;
+	}
+
+	blockquote {
+		position: relative;
+		margin-bottom: 16px;
+		padding-left: 16px;
+		border-left: rgba(var(--sk_foreground_low_solid, 221, 221, 221), 1);
+		border-left-width: 4px;
+		border-left-style: solid;
+	}
+</style></head><body><div class=3D"preheader plaintext_ignore" style=3D"fon=
+t-size: 1px; display: none !important;"> Here are your account details, alo=
+ng with some tips to help you get started. </div><div class=3D"plaintext_ig=
+nore" style=3D"display: none; max-height: 0px; overflow: hidden;"> =C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0 =C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0 </=
+div><!--[if mso]><style type=3D"text/css">.background_main, table, table td=
+, p, div, h1, h2, h3, h4, h5, h6 {
+								font-family: Arial, sans-serif !important;
+							}</style><![endif]--><table style=3D"background-color: #ffffff; padd=
+ing-top: 20px;color: #434245;width: 100%;-webkit-font-smoothing:antialiased=
+; -moz-osx-font-smoothing:grayscale;   border: 0; text-align: center; borde=
+r-collapse: collapse;" class=3D"background_main"><tr><td style=3D"vertical-=
+align: top; padding: 0"><center><table id=3D"body" class=3D"card" style=3D"=
+border: 0; border-collapse: collapse; margin: 0 auto; background: white; bo=
+rder-radius: 8px; margin-bottom: 16px;"><tr><td style=3D"width: 546px; vert=
+ical-align: top; padding-top: 32px"><div style=3D"max-width: 600px; margin:=
+ 0 auto;"><!--[if mso]>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"padding: 0=
+; margin: 0; width: 100%;">
+    <tr>
+        <td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; =
+height: 20px;" height=3D"20">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style=3D"padding: 0; margin: 0;">&nbsp;</td>
+        <td style=3D"padding: 0; margin: 0;" width=3D"540">
+<![endif]--><div style=3D"margin-left: 50px; margin-right: 50px; margin-bot=
+tom: 72px;" class=3D"lg_margin_left_right xl_margin_bottom"><div style=3D"m=
+argin-top: 18px;" class=3D"slack_logo_style"><img width=3D"120" height=3D"3=
+6" style=3D"margin-top: 0; margin-right: 0; margin-bottom: 32px; margin-lef=
+t: 0px;" src=3D"https://malakesworkspace.slack.com/x-p6260151287665-6240877=
+104518-6233053388631/img/slack_logo_240.png" alt=3D"slack logo"></div><h1>W=
+elcome to Slack</h1><p style=3D"font-size: 20px; line-height: 28px; letter-=
+spacing: -0.2px; margin-bottom: 28px; word-break: break-word;" class=3D"her=
+o_paragraph">Here are the details for your new Slack workspace, along with =
+some tips to help you get started.</p></div><div style=3D"margin-left: 50px=
+; margin-right: 50px; margin-bottom: 72px;" class=3D"lg_margin_left_right x=
+l_margin_bottom"><!--[if mso]>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"padding: 0=
+; margin: 0; width: 100%;">
+    <tr>
+        <td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; =
+height: 20px;" height=3D"20">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style=3D"padding: 0; margin: 0;">&nbsp;</td>
+        <td style=3D"padding: 0; margin: 0;" width=3D"540">
+<![endif]--><div style=3D"background: #F5F4F5; box-shadow: 0px 0px 15px rgb=
+a(0, 0, 0, 0.1); border-radius: 4px; padding: 43px 23px; margin-bottom: 72p=
+x;" class=3D" xl_margin_bottom grey_box_container"><h4 class=3D"plaintext_o=
+nly" style=3D"display: none">Workspace name: Malakes</h4><table style=3D"te=
+xt-align: center;"><tr><td style=3D"vertical-align: middle;"><!--[if mso]>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"padding: 0=
+; margin: 0; width: 100%;">
+    <tr>
+        <td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; =
+height: 20px;" height=3D"20">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style=3D"padding: 0; margin: 0;">&nbsp;</td>
+        <td style=3D"padding: 0; margin: 0;" width=3D"38">
+<![endif]--><div style=3D"margin: auto; height: 38px; width: 38px; min-widt=
+h: 38px; border-radius: 4px; color: #FFFFFF; font-size: 18px; line-height: =
+38px; mso-line-height-rule: exactly; mso-text-raise: 10px; vertical-align: =
+middle; text-align: center; background-color: #0576b9;border-radius: 20px;"=
+>M</div><!--[if mso]>
+		</td>
+		<td style=3D"padding: 0; margin: 0; font-size: 20px; height: 20px;">&nbsp=
+;</td>
+	</tr>
+	<tr>
+		<td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; height=
+: 20px; height: 20px;">&nbsp;</td>
+	</tr>
+</table>
+<![endif]--><!--[if mso]>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"padding: 0=
+; margin: 0; width: 100%;">
+    <tr>
+        <td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; =
+height: 20px;" height=3D"20">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style=3D"padding: 0; margin: 0;">&nbsp;</td>
+        <td style=3D"padding: 0; margin: 0;" width=3D"420">
+<![endif]--><h3 class=3D"plaintext_ignore" style=3D"font-weight: 900; paddi=
+ng-top: 10px; margin-bottom: 7px; font-size: 21px; font-size: 21px; margin-=
+bottom: 2px; width: 70%; margin: auto; text-align: center;margin-top: 0;">M=
+alakes</h3><!--[if mso]>
+		</td>
+		<td style=3D"padding: 0; margin: 0; font-size: 20px; height: 20px;">&nbsp=
+;</td>
+	</tr>
+	<tr>
+		<td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; height=
+: 20px; height: 20px;">&nbsp;</td>
+	</tr>
+</table>
+<![endif]--><h4 style=3D"margin-bottom: 2px;font-size: 17px; margin-bottom:=
+ 25px;" class=3D"small_font"><a style=3D"white-space: nowrap; color: #71727=
+4; text-decoration: none !important;">malakesworkspace.slack.com</a></h4><t=
+able style=3D"width: 100%; text-align: center;" class=3D"sm_table"><tr styl=
+e=3D"width: 100%;"><td style=3D"width: 100%;"><span style=3D"display: inlin=
+e-block; position:relative; border-radius:4px; background-color:#611f69; " =
+class=3D"button_link_wrapper plum"><a class=3D"button_link  plum restyle_bu=
+tton" href=3D"https://malakesworkspace.slack.com/x-p6260151287665-624087710=
+4518-6233053388631/messages/C067BUFLXGU" style=3D"border-top:13px solid; bo=
+rder-bottom:13px solid; border-right:24px solid; border-left:24px solid; bo=
+rder-color:#611f69; border-radius:4px; background-color:#611f69; color:#fff=
+fff; font-size:16px; line-height:18px; word-break:break-word;  font-weight:=
+ bold; font-size: 14px; border-top:20px solid; border-bottom:20px solid; bo=
+rder-color:#611f69; line-height: 14px; letter-spacing: 0.8px; text-transfor=
+m: uppercase; box-sizing: border-box; display: inline-block; text-align: ce=
+nter; font-weight: 900; text-decoration: none !important;">Open Slack</a></=
+span></td></tr></table></td></tr></table></div><!--[if mso]>
+		</td>
+		<td style=3D"padding: 0; margin: 0; font-size: 20px; height: 20px;">&nbsp=
+;</td>
+	</tr>
+	<tr>
+		<td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; height=
+: 20px; height: 20px;">&nbsp;</td>
+	</tr>
+</table>
+<![endif]--></div><div style=3D"margin-left: 50px; margin-right: 50px; marg=
+in-bottom: 72px;" class=3D"lg_margin_left_right xl_margin_bottom"><div styl=
+e=3D"font-weight: bold; font-size: 24px; line-height: 30px; letter-spacing:=
+ -0.75px; color: #1D1C1D; margin-bottom: 40px;" class=3D"list_header larger=
+_bottom_margin">Tips for getting started</div><div style=3D"margin-bottom: =
+40px;" class=3D"larger_bottom_margin"><table><tr style=3D""><td style=3D"wi=
+dth: 76px; vertical-align: middle; line-height: 0px;" class=3D"list_icon_wr=
+apper"><img style=3D"width: 50px; height: 50px" class=3D"list_icon_style" s=
+rc=3D"https://a.slack-edge.com/d51da/img/email/team_white_background@2x.png=
+"></td><td style=3D"vertical-align: middle;"><h3>Invite teammates</h3><p st=
+yle=3D"font-size: 16px; line-height: 24px; letter-spacing: -0.2px; margin-b=
+ottom: 0px; padding-bottom: 0px;" class=3D"list_paragraph">Slack is made fo=
+r teams. <a style=3D"color: #0576b9; text-decoration: underline !important;=
+" href=3D"https://malakesworkspace.slack.com/x-p6260151287665-6240877104518=
+-6233053388631/welcome/invite_members?utm_medium=3Demail&utm_source=3Dconfi=
+rmation-new-creator">Invite people</a> you frequently work or communicate w=
+ith.</p></td></tr></table></div><div style=3D"margin-bottom: 40px;" class=
+=3D"larger_bottom_margin"><table><tr style=3D""><td style=3D"width: 76px; v=
+ertical-align: middle; line-height: 0px;" class=3D"list_icon_wrapper"><img =
+style=3D"width: 50px; height: 50px" class=3D"list_icon_style" src=3D"https:=
+//a.slack-edge.com/d51da/img/email/channel_white_background@2x.png"></td><t=
+d style=3D"vertical-align: middle;"><h3>Create channels</h3><p style=3D"fon=
+t-size: 16px; line-height: 24px; letter-spacing: -0.2px; margin-bottom: 0px=
+; padding-bottom: 0px;" class=3D"list_paragraph"><a style=3D"color: #0576b9=
+; text-decoration: underline !important;" href=3D"https://malakesworkspace.=
+slack.com/x-p6260151287665-6240877104518-6233053388631/features/channels?ut=
+m_medium=3Demail&utm_source=3Dconfirmation-new-creator">Keep work organized=
+ in channels</a> =E2=80=94 organized spaces for everything related to a pro=
+ject, topic, or team.</p></td></tr></table></div><div style=3D"margin-botto=
+m: 40px;" class=3D"larger_bottom_margin"><table><tr style=3D""><td style=
+=3D"width: 76px; vertical-align: middle; line-height: 0px;" class=3D"list_i=
+con_wrapper"><img style=3D"width: 50px; height: 50px" class=3D"list_icon_st=
+yle" src=3D"https://a.slack-edge.com/d51da/img/email/download_white_backgro=
+und@2x.png"></td><td style=3D"vertical-align: middle;"><h3>Download Slack</=
+h3><p style=3D"font-size: 16px; line-height: 24px; letter-spacing: -0.2px; =
+margin-bottom: 0px; padding-bottom: 0px;" class=3D"list_paragraph">For the =
+best experience with Slack, <a style=3D"color: #0576b9; text-decoration: un=
+derline !important;" href=3D"https://malakesworkspace.slack.com/x-p62601512=
+87665-6240877104518-6233053388631/downloads?utm_medium=3Demail&utm_source=
+=3Dconfirmation-new-creator&t=3DT067N4F8FKK">download our apps</a> for desk=
+top and mobile.</p></td></tr></table></div><table style=3D"width: 100%; tex=
+t-align: center;" class=3D"sm_table"><tr style=3D"width: 100%;"><td style=
+=3D"width: 100%;"><span style=3D"display: inline-block; position:relative; =
+border-radius:4px; background-color:#611f69; width:100%; text-align:center;=
+" class=3D"button_link_wrapper plum"><a class=3D"button_link  plum restyle_=
+button" href=3D"https://malakesworkspace.slack.com/x-p6260151287665-6240877=
+104518-6233053388631/resources/using-slack/top-5-tips-for-getting-started-i=
+n-slack?utm_medium=3Demail&amp;utm_source=3Dconfirmation-new-creator" style=
+=3D"border-top:13px solid; border-bottom:13px solid; border-right:24px soli=
+d; border-left:24px solid; border-color:#611f69; border-radius:4px; backgro=
+und-color:#611f69; color:#ffffff; font-size:16px; line-height:18px; word-br=
+eak:break-word;  font-weight: bold; font-size: 14px; border-top:20px solid;=
+ border-bottom:20px solid; border-color:#611f69; line-height: 14px; letter-=
+spacing: 0.8px; text-transform: uppercase; box-sizing: border-box;width:100=
+%; text-align:center; display: inline-block; text-align: center; font-weigh=
+t: 900; text-decoration: none !important;">See more tips</a></span></td></t=
+r></table></div><div style=3D"margin-left: 50px; margin-right: 50px; margin=
+-bottom: 72px;" class=3D"lg_margin_left_right xl_margin_bottom"><p style=
+=3D"font-size: 16px; line-height: 24px; letter-spacing: -0.2px; margin-bott=
+om: 28px;" class=3D"content_paragraph line_height_24">If you have any quest=
+ions as you=E2=80=99re getting started, drop us a note at <a href=3D"mailto=
+:help@slack.com">help@slack.com</a>. We=E2=80=99re glad you=E2=80=99re here=
+!</p></div><!--[if mso]>
+		</td>
+		<td style=3D"padding: 0; margin: 0; font-size: 20px; height: 20px;">&nbsp=
+;</td>
+	</tr>
+	<tr>
+		<td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; height=
+: 20px; height: 20px;">&nbsp;</td>
+	</tr>
+</table>
+<![endif]--></div></td></tr></table></center></td></tr><tr><td class=3D"ema=
+il_footer" style=3D"font-size: 15px;color: #717274;text-align: center;width=
+: 100%;"><!--[if mso]>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"padding: 0=
+; margin: 0; width: 100%;">
+    <tr>
+        <td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; =
+height: 20px;" height=3D"20">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style=3D"padding: 0; margin: 0;">&nbsp;</td>
+        <td style=3D"padding: 0; margin: 0;" width=3D"540">
+<![endif]--><center><table style=3D"margin: 20px auto 0; background-color: =
+white; border: 0; text-align: center; border-collapse: collapse;"><tr><td s=
+tyle=3D"width: 546px; vertical-align: top; padding: 0px;"><div style=3D"max=
+-width: 600px; margin: 0 auto;"><div class=3D"footer_padding"><table><tr><t=
+d class=3D"slack_logo_small_icon" style=3D"vertical-align: top; text-align:=
+ left;"><img width=3D"120" height=3D"36" style=3D"margin-top: 0; margin-rig=
+ht: 0; margin-bottom: 32px; margin-left: 0px;" src=3D"https://a.slack-edge.=
+com/80588/img/slack_logo_240_vogue.png" alt=3D"slack logo"></td><td style=
+=3D"vertical-align: top; text-align: right;"><a href=3D"https://twitter.com=
+/slackhq" data-qa=3D"twitter_link" class=3D"social_icon_margin" style=3D"ma=
+rgin-left: 20px;"><img class=3D"small_icon" src=3D"https://a.slack-edge.com=
+/b8be608/marketing/img/icons/icon_colored_twitter.png" width=3D"32" height=
+=3D"32" title=3D"Twitter"></a><a href=3D"https://facebook.com/slackhq" data=
+-qa=3D"fb_link" class=3D"social_icon_margin" style=3D"margin-left: 20px;"><=
+img class=3D"small_icon" src=3D"https://a.slack-edge.com/b8be608/marketing/=
+img/icons/icon_colored_facebook.png" width=3D"32" height=3D"32" title=3D"Fa=
+cebook"></a><a href=3D"https://www.linkedin.com/company/tiny-spec-inc/" dat=
+a-qa=3D"linkedin_link" class=3D"social_icon_margin" style=3D"margin-left: 2=
+0px;"><img class=3D"small_icon" src=3D"https://a.slack-edge.com/b8be608/mar=
+keting/img/icons/icon_colored_linkedin.png" width=3D"32" height=3D"32" titl=
+e=3D"LinkedIn"></a></td></tr></table><div style=3D"font-size:12px; opacity:=
+0.5; color:#696969; text-align:left; line-height:15px; margin-bottom:50px; =
+text-align: left;"><a class=3D"footer_link" href=3D"https://slackhq.com" da=
+ta-qa=3D"slack_blog" style=3D"color: #696969 !important;">Our Blog</a>&nbsp=
+;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a class=3D"footer_link" style=3D"color: #6=
+96969 !important;" href=3D"https://malakesworkspace.slack.com/x-p6260151287=
+665-6240877104518-6233053388631/account/notifications">Email Preferences</a=
+>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a class=3D"footer_link" href=3D"http=
+s://slack.com/legal" data-qa=3D"slack_legal" style=3D"color: #696969 !impor=
+tant;">Policies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href=3D"https://=
+slack.com/help" class=3D"footer_link" data-qa=3D"slack_help" style=3D"color=
+: #696969 !important;">Help Center</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;=
+<a href=3D"https://slack.com/community" class=3D"footer_link" data-qa=3D"sl=
+ack_commmunity" style=3D"color: #696969 !important;">Slack Community</a><br=
+><br><div>&copy;2023 Slack Technologies, LLC, a Salesforce company.<br>415 =
+Mission Street, San Francisco, CA 94105</div><br>All rights reserved.</div>=
+</div></div></td></tr></table></center><!--[if mso]>
+		</td>
+		<td style=3D"padding: 0; margin: 0; font-size: 20px; height: 20px;">&nbsp=
+;</td>
+	</tr>
+	<tr>
+		<td colspan=3D"3" style=3D"padding: 0; margin: 0; font-size: 20px; height=
+: 20px; height: 20px;">&nbsp;</td>
+	</tr>
+</table>
+<![endif]--></td></tr></table></body></html>
+--=_2ff5225a-9bfc-45f2-9f92-16796d61a4f1--

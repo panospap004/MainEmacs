@@ -1,0 +1,830 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:7412:319e:b0:108:1b3b:b058 with SMTP id et30csp1165734rdb;
+        Thu, 2 May 2024 06:58:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMg0Hu8iCFIIn0uPpHP/MBb9FhJ2TtEk91eCfWA0eTlyEFUwRqfPHP+wGYeq3UwkLTAW5z
+X-Received: by 2002:a05:6808:10:b0:3c3:ddef:cbfb with SMTP id u16-20020a056808001000b003c3ddefcbfbmr5755836oic.44.1714658302401;
+        Thu, 02 May 2024 06:58:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1714658302; cv=none;
+        d=google.com; s=arc-20160816;
+        b=S0/9zsDBCQwlBjVjEd6drC9eYfht5vsgMH8t71J1TMYEEhPG1tOMTsgsdSu8KOa6ud
+         7BhD8M4HrvbcQQUeepKkovAuluGNgpTiTKFtb7diX1h8VgQCv15ctVP05YcXfdTwk2E4
+         3O0yv4IT6rxHaiAuqhxMtk7Vgl0ZtUUdXvTWT/AdFWVHKzVZS/B9vTKmtTWTZzXCySOf
+         DOkiOnXEp/gEBTjxMv9ef8NplN7ERScOiey/IC8oMllA/p8ls4zYOL09cjkc9o8K+/Qz
+         LviDNCvFYTjeE3dbGsjPeLI6BAWhhP4AU4aehimZQBfUU7R9S8mAVRFDUj0RGWC6wct3
+         RK6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:from:mime-version:subject:to
+         :dkim-signature:dkim-signature;
+        bh=2K+Uoc3UqJf6rw1BeBc+2ywHMNPxUJWNcx7tZ1KFCL0=;
+        fh=iZtWGcn9pNoQ4VStUxSOe7qMOFLYWLh6K9lsyBW/c+Q=;
+        b=NZg93jxOwU8NfDoFwJBRER3dZKHVALSttIsmRi06z+tLhG8LOm8mwdN9L2knHKhO2Q
+         oBMkhLZnb7tcd7HuNek8CfXQ2+GT1ZHcv8ZEcI8RANZwrrrj0bUA2wbdVG8eCVd7gmaE
+         12M2KoT5pnHQQd5QyVOU4OUTx7Ww5KHJCcC1d5KnwuACu7pjs6kgfcgWSSZXZrw/tQCW
+         aJcMPA1r4pPqh04L9XmECCFzp+GVQCgUI9kSuYn9arxft6RK+Csy/WzB+fIXKmKrbtg3
+         j7OsbGLRKywgx88iqhqUsYwDAgc54QTT5ELNZ4b0EEiPbi5fz2vy+6siLVTwZO1w/O3F
+         2S3A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@wavebox.io header.s=nwnkbmo7kmspduoqju2u6szbpyrnkd2a header.b=SyVUT0q4;
+       dkim=pass header.i=@amazonses.com header.s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug header.b=NU+74UQm;
+       spf=pass (google.com: domain of 0100018f39995780-444888bc-bcd5-4c6a-960b-508b05e88fec-000000@mail.wavebox.io designates 54.240.14.40 as permitted sender) smtp.mailfrom=0100018f39995780-444888bc-bcd5-4c6a-960b-508b05e88fec-000000@mail.wavebox.io;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=wavebox.io
+Return-Path: <0100018f39995780-444888bc-bcd5-4c6a-960b-508b05e88fec-000000@mail.wavebox.io>
+Received: from a14-40.smtp-out.amazonses.com (a14-40.smtp-out.amazonses.com. [54.240.14.40])
+        by mx.google.com with ESMTPS id a6-20020ad45c46000000b006a08e153ea5si1054845qva.55.2024.05.02.06.58.22
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 May 2024 06:58:22 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 0100018f39995780-444888bc-bcd5-4c6a-960b-508b05e88fec-000000@mail.wavebox.io designates 54.240.14.40 as permitted sender) client-ip=54.240.14.40;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@wavebox.io header.s=nwnkbmo7kmspduoqju2u6szbpyrnkd2a header.b=SyVUT0q4;
+       dkim=pass header.i=@amazonses.com header.s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug header.b=NU+74UQm;
+       spf=pass (google.com: domain of 0100018f39995780-444888bc-bcd5-4c6a-960b-508b05e88fec-000000@mail.wavebox.io designates 54.240.14.40 as permitted sender) smtp.mailfrom=0100018f39995780-444888bc-bcd5-4c6a-960b-508b05e88fec-000000@mail.wavebox.io;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=wavebox.io
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=nwnkbmo7kmspduoqju2u6szbpyrnkd2a; d=wavebox.io; t=1714658302;
+	h=To:Subject:Mime-Version:From:Content-Type:Message-ID:Date;
+	bh=Y50CPtcKTA5mIk7gwJA/oEITQLv3GjZwDvB750k7+hI=;
+	b=SyVUT0q45nahpKN9RHb45X0lGPwUVX0hfvCYu1QPQ1YFUfuK/hX4UpY32cZrtLlQ
+	pSBX9LpS0duaTYzBc5H2a/acJxkmDAF0T06TDnWyjWGieArlWmzeo0E7KDaXrI4p7VY
+	Kh8R42kI2DU7Fw6wtWGTTdu70Ng/95VUsxEJCQUM=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug; d=amazonses.com; t=1714658302;
+	h=To:Subject:Mime-Version:From:Content-Type:Message-ID:Date:Feedback-ID;
+	bh=Y50CPtcKTA5mIk7gwJA/oEITQLv3GjZwDvB750k7+hI=;
+	b=NU+74UQmA25KjIJH7nWP08nVLzZeRergrbs1wxSWFkQmDNYb/Hpf9SEAMW5spvCe
+	N5t3QgIkIW8zERtIDTOpPzLkcKtlJ02YcUu4+Z+PQO8y2jM360gTQIAVkXnaKmmJ54/
+	t1Y1sJBnvlW/vd9M8ogesG7D+omiuhom5d3eenRU=
+To: lets.mine004@gmail.com
+Subject: =?utf-8?B?8J+kkyBHZXQgT3JnYW5pemVkIHdpdGggR3JvdXBzICYgQXBwcw==?=
+Mime-Version: 1.0
+From: "Susan (Wavebox)" <support@wavebox.io>
+Content-Type: multipart/alternative; boundary="3F1446709CF522A945A43D36"
+Message-ID: <0100018f39995780-444888bc-bcd5-4c6a-960b-508b05e88fec-000000@email.amazonses.com>
+Date: Thu, 2 May 2024 13:58:21 +0000
+Feedback-ID: 1.us-east-1.t/syr3pG58QrW2y1cxjT6lGluGcpvdRT+YrFMAso5Bc=:AmazonSES
+X-SES-Outgoing: 2024.05.02-54.240.14.40
+X-TUID: lchNa4KP0kXG
+
+--3F1446709CF522A945A43D36
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>=0A=0A<html lang=3D"en" xmlns:o=3D"urn:schemas-microsoft-com=
+:office:office" xmlns:v=3D"urn:schemas-microsoft-com:vml">=0A<head>=0A<titl=
+e></title>=0A<meta content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Con=
+tent-Type"/>=0A<meta content=3D"width=3Ddevice-width, initial-scale=3D1.0" =
+name=3D"viewport"/>=0A<!--[if mso]><xml><o:OfficeDocumentSettings><o:Pixels=
+PerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><=
+![endif]-->=0A<!--[if !mso]><!-->=0A<link href=3D"https://fonts.googleapis.=
+com/css?family=3DLato" rel=3D"stylesheet" type=3D"text/css"/>=0A<!--<![endi=
+f]-->=0A<style>=0A		* {=0A			box-sizing: border-box;=0A		}=0A=0A		body {=0A=
+			margin: 0;=0A			padding: 0;=0A		}=0A=0A		a[x-apple-data-detectors] {=0A	=
+		color: inherit !important;=0A			text-decoration: inherit !important;=0A		=
+}=0A=0A		#MessageViewBody a {=0A			color: inherit;=0A			text-decoration: no=
+ne;=0A		}=0A=0A		p {=0A			line-height: inherit=0A		}=0A=0A		.desktop_hide,=
+=0A		.desktop_hide table {=0A			mso-hide: all;=0A			display: none;=0A			max=
+-height: 0px;=0A			overflow: hidden;=0A		}=0A=0A		.image_block img+div {=0A=
+			display: none;=0A		}=0A=0A		@media (max-width:620px) {=0A			.social_bloc=
+k.desktop_hide .social-table {=0A				display: inline-block !important;=0A		=
+	}=0A=0A			.image_block img.big,=0A			.row-content {=0A				width: 100% !imp=
+ortant;=0A			}=0A=0A			.mobile_hide {=0A				display: none;=0A			}=0A=0A			.=
+stack .column {=0A				width: 100%;=0A				display: block;=0A			}=0A=0A			.mo=
+bile_hide {=0A				min-height: 0;=0A				max-height: 0;=0A				max-width: 0;=
+=0A				overflow: hidden;=0A				font-size: 0px;=0A			}=0A=0A			.desktop_hide=
+,=0A			.desktop_hide table {=0A				display: table !important;=0A				max-hei=
+ght: none !important;=0A			}=0A=0A			.row-6 .column-1 .block-1.button_block=
+ a span,=0A			.row-6 .column-1 .block-1.button_block div,=0A			.row-6 .colu=
+mn-1 .block-1.button_block div span,=0A			.row-6 .column-2 .block-1.button_=
+block a span,=0A			.row-6 .column-2 .block-1.button_block div,=0A			.row-6 =
+.column-2 .block-1.button_block div span {=0A				font-size: 14px !important=
+;=0A				line-height: 1.2 !important;=0A			}=0A=0A			.row-10 .column-1 {=0A	=
+			padding: 5px 0 !important;=0A			}=0A		}=0A	</style>=0A</head>=0A<body st=
+yle=3D"background-color: #edecec; margin: 0; padding: 0; -webkit-text-size-=
+adjust: none; text-size-adjust: none;">=0A<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"nl-container" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #edecec=
+;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-1" role=3D"pres=
+entation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"=
+100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" class=3D"row-content stack" role=3D"presenta=
+tion" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-col=
+or: #fffff; border-radius: 0; color: #000000; width: 600px;" width=3D"600">=
+=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-b=
+ottom: 5px; padding-top: 20px; vertical-align: top; border-top: 0px; border=
+-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"100%">=0A<tabl=
+e border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"image_block blo=
+ck-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspac=
+e: 0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom=
+:10px;padding-top:15px;width:100%;padding-right:0px;padding-left:0px;">=0A<=
+div align=3D"center" class=3D"alignment" style=3D"line-height:10px"><a href=
+=3D"https://wavebox.io" style=3D"outline:none" tabindex=3D"-1" target=3D"_s=
+elf"><img alt=3D"Visit the Wavebox website" src=3D"https://wavebox.io/websi=
+te/emailimages/wavebox_strapline2x.png" style=3D"display: block; height: au=
+to; border: 0; width: 120px; max-width: 100%;" title=3D"Visit the Wavebox w=
+ebsite" width=3D"120"/></a></div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr=
+>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row =
+row-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center"=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content stac=
+k" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; background-color: #8a3b8f; color: #000000; width: 600px;" width=3D"600=
+">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-table-lspa=
+ce: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertica=
+l-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; borde=
+r-left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" class=3D"image_block block-1" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td =
+class=3D"pad" style=3D"width:100%;padding-right:0px;padding-left:0px;">=0A<=
+div align=3D"center" class=3D"alignment" style=3D"line-height:10px"><a href=
+=3D"https://wavebox.io/blog/groups-vs-apps-vs-tabs/" style=3D"outline:none"=
+ tabindex=3D"-1" target=3D"_self"><img alt=3D"Get organized! Learn more abo=
+ut Groups, Apps, Tabs and Workspaces" class=3D"big" src=3D"https://wavebox.=
+io/website/emailimages/drip-groups-apps.png" style=3D"display: block; heigh=
+t: auto; border: 0; width: 600px; max-width: 100%;" title=3D"Get organized!=
+ Learn more about Groups, Apps, Tabs and Workspaces" width=3D"600"/></a></d=
+iv>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td=
+>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"center" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"row row-3" role=3D"presentation" s=
+tyle=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<t=
+body>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"row-content stack" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff=
+; color: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td clas=
+s=3D"column column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; font-weight: 400; text-align: left; padding-bottom: 2px; padding-top: 2px=
+; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0=
+px; border-left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" class=3D"text_block block-1 desktop_hide" role=3D"pre=
+sentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide:=
+ all; display: none; max-height: 0; overflow: hidden; word-break: break-wor=
+d;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px=
+;padding-left:5px;padding-right:5px;padding-top:40px;">=0A<div style=3D"fon=
+t-family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-fam=
+ily: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 18px; c=
+olor: #555555; line-height: 1.5;">=0A<p style=3D"margin: 0; font-size: 14px=
+; text-align: center; mso-line-height-alt: 15px;"><span style=3D"font-size:=
+10px;color:#8a8a8a;"><strong><span style=3D"">PRO TIPS 1 of 4</span></stron=
+g></span></p>=0A<p style=3D"margin: 0; font-size: 14px; text-align: center;=
+ mso-line-height-alt: 30px;"><span style=3D"font-size:20px;color:#393939;">=
+<strong><span style=3D"">Groups, Apps & Tabs</span></strong></span></p>=0A<=
+/div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"text_block block-2 mobile_hide" role=3D"p=
+resentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-br=
+eak: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"paddi=
+ng-bottom:10px;padding-top:40px;">=0A<div style=3D"font-family: sans-serif"=
+>=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Ve=
+rdana, Segoe, sans-serif; mso-line-height-alt: 18px; color: #555555; line-h=
+eight: 1.5;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: center;=
+ mso-line-height-alt: 18px;"><span style=3D"font-size:12px;color:#8a8a8a;">=
+<strong><span style=3D"">PRO TIPS 1 of 4</span></strong></span></p>=0A<p st=
+yle=3D"margin: 0; font-size: 14px; text-align: center; mso-line-height-alt:=
+ 45px;"><span style=3D"font-size:30px;"><strong><span style=3D"">Groups, Ap=
+ps & Tabs</span></strong></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</=
+table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A<=
+/table>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" class=3D"row row-4" role=3D"presentation" style=3D"mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<t=
+able align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"row-content stack" role=3D"presentation" style=3D"mso-table-lspace: 0p=
+t; mso-table-rspace: 0pt; background-color: #ffffff; color: #000000; width:=
+ 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" st=
+yle=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text=
+-align: left; padding-bottom: 2px; padding-top: 2px; vertical-align: top; b=
+order-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" w=
+idth=3D"100%">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" cl=
+ass=3D"text_block block-1 desktop_hide" role=3D"presentation" style=3D"mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; display: none; max=
+-height: 0; overflow: hidden; word-break: break-word;" width=3D"100%">=0A<t=
+r>=0A<td class=3D"pad" style=3D"padding-bottom:15px;padding-left:20px;paddi=
+ng-right:20px;padding-top:10px;">=0A<div style=3D"font-family: sans-serif">=
+=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Ver=
+dana, Segoe, sans-serif; mso-line-height-alt: 18px; color: #555555; line-he=
+ight: 1.5;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: center; =
+mso-line-height-alt: 18px;"><span style=3D"font-size:12px;">Wavebox's<stron=
+g>=C2=A0unique navigation system=C2=A0</strong>lets you organize and work q=
+uickly across all your web apps. Click + in the webdock to=C2=A0<strong>cre=
+ate a group</strong>=C2=A0for any task, such as=C2=A0<em>Customer Support</=
+em>. Then add all the web apps and websites you need to complete that task =
+to the group, like ZenDesk, Salesforce, Todoist, and Gmail.</span></p>=0A</=
+div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"text_block block-2 mobile_hide" role=3D"p=
+resentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-br=
+eak: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"paddi=
+ng-bottom:15px;padding-left:40px;padding-right:40px;padding-top:10px;">=0A<=
+div style=3D"font-family: sans-serif">=0A<div class=3D"" style=3D"font-size=
+: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-hei=
+ght-alt: 18px; color: #555555; line-height: 1.5;">=0A<p style=3D"margin: 0;=
+ font-size: 14px; text-align: center; mso-line-height-alt: 24px;"><span sty=
+le=3D"font-size:16px;">Wavebox's<strong>=C2=A0unique navigation system=C2=
+=A0</strong>lets you organize and work quickly across all your web apps. Cl=
+ick + in the webdock to=C2=A0<strong>create a group</strong>=C2=A0for any t=
+ask, such as=C2=A0<em>Customer Support</em>. Then add all the web apps and =
+websites you need to complete that task to the group, like ZenDesk, Salesfo=
+rce, Todoist, and Gmail.</span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</t=
+able>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</=
+table>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"row row-5 mobile_hide" role=3D"presentation" style=3D"mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=
+=0A<td>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" class=3D"row-content" role=3D"presentation" style=3D"mso-table-lspa=
+ce: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; border-radius: 0=
+; color: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td clas=
+s=3D"column column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; font-weight: 400; text-align: left; padding-bottom: 20px; padding-top: 5p=
+x; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: =
+0px; border-left: 0px;" width=3D"50%">=0A<table border=3D"0" cellpadding=3D=
+"10" cellspacing=3D"0" class=3D"button_block block-1" role=3D"presentation"=
+ style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A=
+<tr>=0A<td class=3D"pad">=0A<div align=3D"right" class=3D"alignment">=0A<!-=
+-[if mso]><v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D=
+"urn:schemas-microsoft-com:office:word" href=3D"https://wavebox.io/blog/gro=
+ups-vs-apps-vs-tabs/" style=3D"height:43px;width:152px;v-text-anchor:middle=
+;" arcsize=3D"59%" stroke=3D"false" fillcolor=3D"#00aeef"><w:anchorlock/><v=
+:textbox inset=3D"0px,0px,0px,0px"><center style=3D"color:#ffffff; font-fam=
+ily:Tahoma, Verdana, sans-serif; font-size:16px"><![endif]--><a href=3D"htt=
+ps://wavebox.io/blog/groups-vs-apps-vs-tabs/" style=3D"text-decoration:none=
+;display:inline-block;color:#ffffff;background-color:#00aeef;border-radius:=
+25px;width:auto;border-top:0px solid #00AEEF;font-weight:400;border-right:0=
+px solid #00AEEF;border-bottom:0px solid #00AEEF;border-left:0px solid #00A=
+EEF;padding-top:12px;padding-bottom:12px;font-family:Lato, Tahoma, Verdana,=
+ Segoe, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;wor=
+d-break:keep-all;" target=3D"_self"><span style=3D"padding-left:25px;paddin=
+g-right:25px;font-size:16px;display:inline-block;letter-spacing:normal;"><s=
+pan dir=3D"ltr" style=3D"word-break: break-word; line-height: 19.2px;">Get =
+Organized</span></span></a>=0A<!--[if mso]></center></v:textbox></v:roundre=
+ct><![endif]-->=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A<td class=3D"=
+column column-2" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; fon=
+t-weight: 400; text-align: left; padding-bottom: 20px; padding-top: 5px; ve=
+rtical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; =
+border-left: 0px;" width=3D"50%">=0A<table border=3D"0" cellpadding=3D"10" =
+cellspacing=3D"0" class=3D"button_block block-1" role=3D"presentation" styl=
+e=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=
+=0A<td class=3D"pad">=0A<div align=3D"left" class=3D"alignment">=0A<!--[if =
+mso]><v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:=
+schemas-microsoft-com:office:word" href=3D"https://wavebox.io/buynow/0e7390=
+a7d7dd44c0bdefd445dd57e389/9cced10d5c36cfb94aeea47151ecf97251f587eb60961614=
+e98cda945cd3a9fb" style=3D"height:46px;width:132px;v-text-anchor:middle;" a=
+rcsize=3D"55%" strokeweight=3D"1.5pt" strokecolor=3D"#00AEEF" fillcolor=3D"=
+#ffffff"><w:anchorlock/><v:textbox inset=3D"0px,0px,0px,0px"><center style=
+=3D"color:#00aeef; font-family:Tahoma, Verdana, sans-serif; font-size:16px"=
+><![endif]--><a href=3D"https://wavebox.io/buynow/0e7390a7d7dd44c0bdefd445d=
+d57e389/9cced10d5c36cfb94aeea47151ecf97251f587eb60961614e98cda945cd3a9fb" s=
+tyle=3D"text-decoration:none;display:inline-block;color:#00aeef;background-=
+color:#ffffff;border-radius:25px;width:auto;border-top:2px solid #00AEEF;fo=
+nt-weight:400;border-right:2px solid #00AEEF;border-bottom:2px solid #00AEE=
+F;border-left:2px solid #00AEEF;padding-top:12px;padding-bottom:12px;font-f=
+amily:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:16px;text-align:ce=
+nter;mso-border-alt:none;word-break:keep-all;" target=3D"_self"><span style=
+=3D"padding-left:25px;padding-right:25px;font-size:16px;display:inline-bloc=
+k;letter-spacing:normal;"><span dir=3D"ltr" style=3D"word-break: break-word=
+; line-height: 19.2px;">=E2=AD=90=EF=B8=8F Buy Pro</span></span></a>=0A<!--=
+[if mso]></center></v:textbox></v:roundrect><![endif]-->=0A</div>=0A</td>=
+=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=
+=0A</tbody>=0A</table>=0A<table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"row row-6 desktop_hide" role=3D"presentat=
+ion" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; =
+display: none; max-height: 0; overflow: hidden;" width=3D"100%">=0A<tbody>=
+=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" class=3D"row-content" role=3D"presentation" style=3D"mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; display: none; max-he=
+ight: 0; overflow: hidden; background-color: #ffffff; border-radius: 0; col=
+or: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"=
+column column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; fon=
+t-weight: 400; text-align: left; padding-bottom: 20px; padding-top: 5px; ve=
+rtical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; =
+border-left: 0px;" width=3D"50%">=0A<table border=3D"0" cellpadding=3D"10" =
+cellspacing=3D"0" class=3D"button_block block-1" role=3D"presentation" styl=
+e=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; display: =
+none; max-height: 0; overflow: hidden;" width=3D"100%">=0A<tr>=0A<td class=
+=3D"pad">=0A<div align=3D"right" class=3D"alignment">=0A<!--[if mso]><v:rou=
+ndrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-mic=
+rosoft-com:office:word" href=3D"https://wavebox.io/blog/groups-vs-apps-vs-t=
+abs/" style=3D"height:43px;width:152px;v-text-anchor:middle;" arcsize=3D"59=
+%" stroke=3D"false" fillcolor=3D"#00aeef"><w:anchorlock/><v:textbox inset=
+=3D"0px,0px,0px,0px"><center style=3D"color:#ffffff; font-family:Tahoma, Ve=
+rdana, sans-serif; font-size:16px"><![endif]--><a href=3D"https://wavebox.i=
+o/blog/groups-vs-apps-vs-tabs/" style=3D"text-decoration:none;display:inlin=
+e-block;color:#ffffff;background-color:#00aeef;border-radius:25px;width:aut=
+o;border-top:0px solid #00AEEF;font-weight:400;border-right:0px solid #00AE=
+EF;border-bottom:0px solid #00AEEF;border-left:0px solid #00AEEF;padding-to=
+p:12px;padding-bottom:12px;font-family:Lato, Tahoma, Verdana, Segoe, sans-s=
+erif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-a=
+ll;" target=3D"_self"><span style=3D"padding-left:25px;padding-right:25px;f=
+ont-size:16px;display:inline-block;letter-spacing:normal;"><span dir=3D"ltr=
+" style=3D"word-break: break-word; line-height: 19.2px;">Get Organized</spa=
+n></span></a>=0A<!--[if mso]></center></v:textbox></v:roundrect><![endif]--=
+>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A<td class=3D"column column-=
+2" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400;=
+ text-align: left; padding-bottom: 20px; padding-top: 5px; vertical-align: =
+top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0=
+px;" width=3D"50%">=0A<table border=3D"0" cellpadding=3D"10" cellspacing=3D=
+"0" class=3D"button_block block-1" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; display: none; max-heig=
+ht: 0; overflow: hidden;" width=3D"100%">=0A<tr>=0A<td class=3D"pad">=0A<di=
+v align=3D"left" class=3D"alignment">=0A<!--[if mso]><v:roundrect xmlns:v=
+=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-microsoft-com:off=
+ice:word" href=3D"https://wavebox.io/buynow/0e7390a7d7dd44c0bdefd445dd57e38=
+9/9cced10d5c36cfb94aeea47151ecf97251f587eb60961614e98cda945cd3a9fb" style=
+=3D"height:46px;width:132px;v-text-anchor:middle;" arcsize=3D"55%" strokewe=
+ight=3D"1.5pt" strokecolor=3D"#00AEEF" fillcolor=3D"#ffffff"><w:anchorlock/=
+><v:textbox inset=3D"0px,0px,0px,0px"><center style=3D"color:#00aeef; font-=
+family:Tahoma, Verdana, sans-serif; font-size:16px"><![endif]--><a href=3D"=
+https://wavebox.io/buynow/0e7390a7d7dd44c0bdefd445dd57e389/9cced10d5c36cfb9=
+4aeea47151ecf97251f587eb60961614e98cda945cd3a9fb" style=3D"text-decoration:=
+none;display:inline-block;color:#00aeef;background-color:#ffffff;border-rad=
+ius:25px;width:auto;border-top:2px solid #00AEEF;font-weight:400;border-rig=
+ht:2px solid #00AEEF;border-bottom:2px solid #00AEEF;border-left:2px solid =
+#00AEEF;padding-top:12px;padding-bottom:12px;font-family:Lato, Tahoma, Verd=
+ana, Segoe, sans-serif;font-size:16px;text-align:center;mso-border-alt:none=
+;word-break:keep-all;" target=3D"_self"><span style=3D"padding-left:25px;pa=
+dding-right:25px;font-size:16px;display:inline-block;letter-spacing:normal;=
+"><span dir=3D"ltr" style=3D"word-break: break-word; line-height: 19.2px;">=
+=E2=AD=90=EF=B8=8F Buy Pro</span></span></a>=0A<!--[if mso]></center></v:te=
+xtbox></v:roundrect><![endif]-->=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td=
+>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<ta=
+ble align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"row row-7" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-ta=
+ble-rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D=
+"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-cont=
+ent stack" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt; background-color: #ffffff; color: #000000; width: 600px;" widt=
+h=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left;=
+ padding-bottom: 20px; padding-top: 5px; vertical-align: middle; border-top=
+: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"5=
+0%">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"ima=
+ge_block block-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso=
+-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"pa=
+dding-left:20px;padding-right:15px;padding-top:20px;width:100%;">=0A<div al=
+ign=3D"left" class=3D"alignment" style=3D"line-height:10px"><img alt=3D"Cli=
+ck on the + in the sidebar to add a group" src=3D"https://wavebox.io/websit=
+e/emailimages/4085055f-1a5a-4ae6-a5e5-06dc870d45b0.png" style=3D"display: b=
+lock; height: auto; border: 0; width: 265px; max-width: 100%;" title=3D"Cli=
+ck on the + in the sidebar to add a group" width=3D"265"/></div>=0A</td>=0A=
+</tr>=0A</table>=0A</td>=0A<td class=3D"column column-2" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; pa=
+dding-bottom: 5px; padding-top: 5px; vertical-align: middle; border-top: 0p=
+x; border-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"50%">=
+=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_bl=
+ock block-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=
+=3D"pad" style=3D"padding-bottom:5px;padding-left:10px;padding-right:40px;p=
+adding-top:5px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D=
+"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, san=
+s-serif; mso-line-height-alt: 18px; color: #0aa7ef; line-height: 1.5;">=0A<=
+p style=3D"margin: 0; font-size: 14px; text-align: left; mso-line-height-al=
+t: 25.5px;"><span style=3D"font-size:17px;"><strong><span style=3D"">What a=
+re Groups?</span></strong></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A<=
+/table>=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+text_block block-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td=
+ class=3D"pad" style=3D"padding-bottom:10px;padding-left:10px;padding-right=
+:50px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" style=
+=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif;=
+ mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.=
+2;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: left; mso-line-h=
+eight-alt: 16.8px;"><span style=3D"font-size:12px;">Groups are=C2=A0<strong=
+>spaces</strong>=C2=A0in the webdock (sidebar) where you can combine apps a=
+nd tabs to complete daily tasks.</span></p>=0A</div>=0A</div>=0A</td>=0A</t=
+r>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" cla=
+ss=3D"paragraph_block block-3" role=3D"presentation" style=3D"mso-table-lsp=
+ace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"100%">=
+=0A<tr>=0A<td class=3D"pad" style=3D"padding-left:10px;padding-right:10px;p=
+adding-top:10px;">=0A<div style=3D"color:#c8c7c7;direction:ltr;font-family:=
+Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:12px;font-weight:400;let=
+ter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:14.399=
+999999999999px;">=0A<p style=3D"margin: 0;"><span style=3D"color: #8a8a8a;"=
+>Examples: Tasks, Campaigns, Projects, Clients, other Businesses, Research,=
+=C2=A0 etc.</span></p>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=
+=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row r=
+ow-8" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspac=
+e: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content stack=
+" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; background-color: #ffffff; color: #000000; width: 600px;" width=3D"600"=
+>=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-table-lspac=
+e: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-=
+bottom: 20px; padding-top: 5px; vertical-align: middle; border-top: 0px; bo=
+rder-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"50%">=0A<t=
+able border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"image_block =
+block-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rs=
+pace: 0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-lef=
+t:20px;padding-right:15px;padding-top:20px;width:100%;">=0A<div align=3D"le=
+ft" class=3D"alignment" style=3D"line-height:10px"><img alt=3D"Click on the=
+ + in the top toolbar to add an app" src=3D"https://wavebox.io/website/emai=
+limages/23189dda-2f31-4d6d-9bb3-46d0d162012b.png" style=3D"display: block; =
+height: auto; border: 0; width: 265px; max-width: 100%;" title=3D"Click on =
+the + in the top toolbar to add an app" width=3D"265"/></div>=0A</td>=0A</t=
+r>=0A</table>=0A</td>=0A<td class=3D"column column-2" style=3D"mso-table-ls=
+pace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; paddi=
+ng-bottom: 5px; padding-top: 5px; vertical-align: middle; border-top: 0px; =
+border-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"50%">=0A=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block=
+ block-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"=
+pad" style=3D"padding-bottom:5px;padding-left:10px;padding-right:40px;paddi=
+ng-top:5px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" s=
+tyle=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-se=
+rif; mso-line-height-alt: 18px; color: #0aa7ef; line-height: 1.5;">=0A<p st=
+yle=3D"margin: 0; font-size: 14px; text-align: left; mso-line-height-alt: 2=
+5.5px;"><span style=3D"font-size:17px;"><strong><span style=3D"">What are A=
+pps?</span></strong></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table=
+>=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_b=
+lock block-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-tab=
+le-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=
+=3D"pad" style=3D"padding-bottom:10px;padding-left:10px;padding-right:50px;=
+">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" style=3D"fon=
+t-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-li=
+ne-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">=0A=
+<p style=3D"margin: 0; font-size: 14px; text-align: left; mso-line-height-a=
+lt: 16.8px;"><span style=3D"font-size:12px;">Apps are the=C2=A0<strong>esse=
+ntial tools</strong>=C2=A0you use each day. They usually require a login an=
+d must be updated with real-time notifications.</span></p>=0A</div>=0A</div=
+>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"paragraph_block block-3" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" =
+width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-left:10px;paddi=
+ng-right:10px;padding-top:10px;">=0A<div style=3D"color:#c8c7c7;direction:l=
+tr;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:12px;font=
+-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-he=
+ight-alt:14.399999999999999px;">=0A<p style=3D"margin: 0;"><span style=3D"c=
+olor: #8a8a8a;">Examples: Slack, Trello, Asana, Monday, AirTable, WhatsApp,=
+ Zoom, Gmail, Zendesk, Hubspot, etc.</span></p>=0A</div>=0A</td>=0A</tr>=0A=
+</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=
+=0A</table>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"row row-9" role=3D"presentation" style=3D"mso-table-ls=
+pace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=
+=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ class=3D"row-content stack" role=3D"presentation" style=3D"mso-table-lspac=
+e: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; color: #000000; w=
+idth: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column-=
+1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400;=
+ text-align: left; padding-bottom: 20px; padding-top: 5px; vertical-align: =
+middle; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left=
+: 0px;" width=3D"50%">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"image_block block-1" role=3D"presentation" style=3D"mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td class=
+=3D"pad" style=3D"padding-left:20px;padding-right:15px;padding-top:20px;wid=
+th:100%;">=0A<div align=3D"left" class=3D"alignment" style=3D"line-height:1=
+0px"><img alt=3D"In Wavebox tabs are always used in context" src=3D"https:/=
+/wavebox.io/website/emailimages/523d2daa-c7d6-4814-a1f9-ff6ae6e78e11.png" s=
+tyle=3D"display: block; height: auto; border: 0; width: 265px; max-width: 1=
+00%;" title=3D"In Wavebox tabs are always used in context" width=3D"265"/><=
+/div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A<td class=3D"column column-2" st=
+yle=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text=
+-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: middle=
+; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;=
+" width=3D"50%">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+class=3D"text_block block-1" role=3D"presentation" style=3D"mso-table-lspac=
+e: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<=
+tr>=0A<td class=3D"pad" style=3D"padding-bottom:5px;padding-left:10px;paddi=
+ng-right:40px;padding-top:5px;">=0A<div style=3D"font-family: sans-serif">=
+=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Ver=
+dana, Segoe, sans-serif; mso-line-height-alt: 18px; color: #0aa7ef; line-he=
+ight: 1.5;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: left; ms=
+o-line-height-alt: 25.5px;"><span style=3D"font-size:17px;"><strong><span s=
+tyle=3D"">What are Tabs?</span></strong></span></p>=0A</div>=0A</div>=0A</t=
+d>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"text_block block-2" role=3D"presentation" style=3D"mso-tabl=
+e-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"100=
+%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px;padding-left:10=
+px;padding-right:50px;">=0A<div style=3D"font-family: sans-serif">=0A<div c=
+lass=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Seg=
+oe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; =
+line-height: 1.2;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: l=
+eft; mso-line-height-alt: 16.8px;"><span style=3D"font-size:12px;">Use tabs=
+ within the group tabstrip to stay in=C2=A0<strong>context</strong>=C2=A0wh=
+ile you work. Quick Search (Alt+S, Ctrl+S) lets you find tabs quickly.</spa=
+n></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" class=3D"paragraph_block block-3" role=
+=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; wo=
+rd-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"=
+padding-left:10px;padding-right:10px;padding-top:10px;">=0A<div style=3D"co=
+lor:#c8c7c7;direction:ltr;font-family:Lato, Tahoma, Verdana, Segoe, sans-se=
+rif;font-size:12px;font-weight:400;letter-spacing:0px;line-height:120%;text=
+-align:left;mso-line-height-alt:14.399999999999999px;">=0A<p style=3D"margi=
+n: 0;"><span style=3D"color: #8a8a8a;">Tip: Right-click on a tab to pin, sa=
+ve, rename and move it to another app/group. You can drag to move them too!=
+</span></p>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=
+=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"center"=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-10" role=
+=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" w=
+idth=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content stack" role=3D"=
+presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; backgr=
+ound-color: #ffffff; color: #000000; width: 600px;" width=3D"600">=0A<tbody=
+>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-table-lspace: 0pt; ms=
+o-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 40=
+px; padding-top: 5px; vertical-align: middle; border-top: 0px; border-right=
+: 0px; border-bottom: 0px; border-left: 0px;" width=3D"50%">=0A<table borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"image_block block-1" r=
+ole=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;=
+" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-left:20px;pad=
+ding-right:15px;padding-top:20px;width:100%;">=0A<div align=3D"left" class=
+=3D"alignment" style=3D"line-height:10px"><img alt=3D"Workspaces are places=
+ to organize cloud resources for a project, campaign or team." src=3D"https=
+://wavebox.io/website/emailimages/fafbd9e4-4228-474b-869e-feb7bbd9b054.png"=
+ style=3D"display: block; height: auto; border: 0; width: 265px; max-width:=
+ 100%;" title=3D"Workspaces are places to organize cloud resources for a pr=
+oject, campaign or team." width=3D"265"/></div>=0A</td>=0A</tr>=0A</table>=
+=0A</td>=0A<td class=3D"column column-2" style=3D"mso-table-lspace: 0pt; ms=
+o-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5p=
+x; padding-top: 5px; vertical-align: middle; border-top: 0px; border-right:=
+ 0px; border-bottom: 0px; border-left: 0px;" width=3D"50%">=0A<table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block block-1" rol=
+e=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; w=
+ord-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D=
+"padding-bottom:5px;padding-left:10px;padding-right:40px;padding-top:5px;">=
+=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" style=3D"font-=
+size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line=
+-height-alt: 18px; color: #0aa7ef; line-height: 1.5;">=0A<p style=3D"margin=
+: 0; font-size: 14px; text-align: left; mso-line-height-alt: 25.5px;"><span=
+ style=3D"font-size:17px;"><strong><span style=3D"">What are Workspaces?</s=
+pan></strong></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block bl=
+ock-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad=
+" style=3D"padding-bottom:10px;padding-left:10px;padding-right:50px;">=0A<d=
+iv style=3D"font-family: sans-serif">=0A<div class=3D"" style=3D"font-size:=
+ 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-heig=
+ht-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">=0A<p styl=
+e=3D"margin: 0; font-size: 14px; text-align: left; mso-line-height-alt: 16.=
+8px;"><span style=3D"font-size:12px;">With Workspaces, you can=C2=A0<strong=
+>consolidate cloud resources</strong>=C2=A0in one place for a project or cl=
+ient. You can keep workspaces private or share them with a team.</span></p>=
+=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" class=3D"paragraph_block block-3" role=3D"pres=
+entation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break=
+: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-=
+left:10px;padding-right:10px;padding-top:10px;">=0A<div style=3D"color:#c8c=
+7c7;direction:ltr;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font=
+-size:12px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:l=
+eft;mso-line-height-alt:14.399999999999999px;">=0A<p style=3D"margin: 0;"><=
+span style=3D"color: #8a8a8a;">Examples: Campaigns, Monthly Reports, Projec=
+ts, Team Resources, Department Resources, Team Onboarding, etc.</span></p>=
+=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=
+=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"center" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-11 desktop_hide" ro=
+le=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; =
+mso-hide: all; display: none; max-height: 0; overflow: hidden;" width=3D"10=
+0%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" class=3D"row-content" role=3D"presentation" st=
+yle=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; display=
+: none; max-height: 0; overflow: hidden; background-color: #ffffff; border-=
+radius: 0; color: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=
+=0A<td class=3D"column column-1" style=3D"mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padd=
+ing-top: 15px; vertical-align: top; border-top: 0px; border-right: 0px; bor=
+der-bottom: 0px; border-left: 0px;" width=3D"50%">=0A<table border=3D"0" ce=
+llpadding=3D"10" cellspacing=3D"0" class=3D"button_block block-1" role=3D"p=
+resentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hid=
+e: all; display: none; max-height: 0; overflow: hidden;" width=3D"100%">=0A=
+<tr>=0A<td class=3D"pad">=0A<div align=3D"right" class=3D"alignment">=0A<!-=
+-[if mso]><v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D=
+"urn:schemas-microsoft-com:office:word" href=3D"https://wavebox.io/blog/gro=
+ups-vs-apps-vs-tabs/" style=3D"height:40px;width:132px;v-text-anchor:middle=
+;" arcsize=3D"63%" stroke=3D"false" fillcolor=3D"#00aeef"><w:anchorlock/><v=
+:textbox inset=3D"0px,0px,0px,0px"><center style=3D"color:#ffffff; font-fam=
+ily:Tahoma, Verdana, sans-serif; font-size:14px"><![endif]--><a href=3D"htt=
+ps://wavebox.io/blog/groups-vs-apps-vs-tabs/" style=3D"text-decoration:none=
+;display:inline-block;color:#ffffff;background-color:#00aeef;border-radius:=
+25px;width:auto;border-top:0px solid #00AEEF;font-weight:400;border-right:0=
+px solid #00AEEF;border-bottom:0px solid #00AEEF;border-left:0px solid #00A=
+EEF;padding-top:12px;padding-bottom:12px;font-family:Lato, Tahoma, Verdana,=
+ Segoe, sans-serif;font-size:14px;text-align:center;mso-border-alt:none;wor=
+d-break:keep-all;" target=3D"_self"><span style=3D"padding-left:20px;paddin=
+g-right:20px;font-size:14px;display:inline-block;letter-spacing:normal;"><s=
+pan dir=3D"ltr" style=3D"word-break:break-word;">Get Organized<strong><span=
+ data-mce-style=3D"" dir=3D"ltr" style=3D"line-height: 16.8px;">=C2=A0</spa=
+n></strong></span></span></a>=0A<!--[if mso]></center></v:textbox></v:round=
+rect><![endif]-->=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A<td class=
+=3D"column column-2" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;=
+ font-weight: 400; text-align: left; padding-bottom: 20px; padding-top: 15p=
+x; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: =
+0px; border-left: 0px;" width=3D"50%">=0A<table border=3D"0" cellpadding=3D=
+"10" cellspacing=3D"0" class=3D"button_block block-1" role=3D"presentation"=
+ style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; disp=
+lay: none; max-height: 0; overflow: hidden;" width=3D"100%">=0A<tr>=0A<td c=
+lass=3D"pad">=0A<div align=3D"left" class=3D"alignment">=0A<!--[if mso]><v:=
+roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-=
+microsoft-com:office:word" href=3D"https://wavebox.io/buynow/0e7390a7d7dd44=
+c0bdefd445dd57e389/9cced10d5c36cfb94aeea47151ecf97251f587eb60961614e98cda94=
+5cd3a9fb" style=3D"height:44px;width:112px;v-text-anchor:middle;" arcsize=
+=3D"57%" strokeweight=3D"1.5pt" strokecolor=3D"#00AEEF" fillcolor=3D"#fffff=
+f"><w:anchorlock/><v:textbox inset=3D"0px,0px,0px,0px"><center style=3D"col=
+or:#00aeef; font-family:Tahoma, Verdana, sans-serif; font-size:14px"><![end=
+if]--><a href=3D"https://wavebox.io/buynow/0e7390a7d7dd44c0bdefd445dd57e389=
+/9cced10d5c36cfb94aeea47151ecf97251f587eb60961614e98cda945cd3a9fb" style=3D=
+"text-decoration:none;display:inline-block;color:#00aeef;background-color:#=
+ffffff;border-radius:25px;width:auto;border-top:2px solid #00AEEF;font-weig=
+ht:400;border-right:2px solid #00AEEF;border-bottom:2px solid #00AEEF;borde=
+r-left:2px solid #00AEEF;padding-top:12px;padding-bottom:12px;font-family:L=
+ato, Tahoma, Verdana, Segoe, sans-serif;font-size:14px;text-align:center;ms=
+o-border-alt:none;word-break:keep-all;" target=3D"_self"><span style=3D"pad=
+ding-left:20px;padding-right:20px;font-size:14px;display:inline-block;lette=
+r-spacing:normal;"><span dir=3D"ltr" style=3D"word-break: break-word; line-=
+height: 16.8px;">=E2=AD=90=EF=B8=8F Buy Pro</span></span></a>=0A<!--[if mso=
+]></center></v:textbox></v:roundrect><![endif]-->=0A</div>=0A</td>=0A</tr>=
+=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody=
+>=0A</table>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" class=3D"row row-12 mobile_hide" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tbody=
+>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" class=3D"row-content stack" role=3D"presentation" style=3D"=
+mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; bo=
+rder-radius: 0; color: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<=
+tr>=0A<td class=3D"column column-1" style=3D"mso-table-lspace: 0pt; mso-tab=
+le-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; pa=
+dding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; bo=
+rder-bottom: 0px; border-left: 0px;" width=3D"50%">=0A<table border=3D"0" c=
+ellpadding=3D"10" cellspacing=3D"0" class=3D"button_block block-1" role=3D"=
+presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=
+=3D"100%">=0A<tr>=0A<td class=3D"pad">=0A<div align=3D"right" class=3D"alig=
+nment">=0A<!--[if mso]><v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vm=
+l" xmlns:w=3D"urn:schemas-microsoft-com:office:word" href=3D"https://wavebo=
+x.io/blog/groups-vs-apps-vs-tabs/" style=3D"height:50px;width:181px;v-text-=
+anchor:middle;" arcsize=3D"50%" stroke=3D"false" fillcolor=3D"#00aeef"><w:a=
+nchorlock/><v:textbox inset=3D"0px,0px,0px,0px"><center style=3D"color:#fff=
+fff; font-family:Tahoma, Verdana, sans-serif; font-size:20px"><![endif]--><=
+a href=3D"https://wavebox.io/blog/groups-vs-apps-vs-tabs/" style=3D"text-de=
+coration:none;display:inline-block;color:#ffffff;background-color:#00aeef;b=
+order-radius:25px;width:auto;border-top:0px solid #00AEEF;font-weight:400;b=
+order-right:0px solid #00AEEF;border-bottom:0px solid #00AEEF;border-left:0=
+px solid #00AEEF;padding-top:5px;padding-bottom:5px;font-family:Lato, Tahom=
+a, Verdana, Segoe, sans-serif;font-size:20px;text-align:center;mso-border-a=
+lt:none;word-break:keep-all;" target=3D"_self"><span style=3D"padding-left:=
+25px;padding-right:25px;font-size:20px;display:inline-block;letter-spacing:=
+normal;"><span dir=3D"ltr" style=3D"word-break:break-word;">Get Organized<s=
+trong><span data-mce-style=3D"" dir=3D"ltr" style=3D"line-height: 40px;">=
+=C2=A0</span></strong></span></span></a>=0A<!--[if mso]></center></v:textbo=
+x></v:roundrect><![endif]-->=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A=
+<td class=3D"column column-2" style=3D"mso-table-lspace: 0pt; mso-table-rsp=
+ace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-=
+top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-b=
+ottom: 0px; border-left: 0px;" width=3D"50%">=0A<table border=3D"0" cellpad=
+ding=3D"10" cellspacing=3D"0" class=3D"button_block block-1" role=3D"presen=
+tation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"10=
+0%">=0A<tr>=0A<td class=3D"pad">=0A<div align=3D"left" class=3D"alignment">=
+=0A<!--[if mso]><v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmln=
+s:w=3D"urn:schemas-microsoft-com:office:word" href=3D"https://wavebox.io/bu=
+ynow/0e7390a7d7dd44c0bdefd445dd57e389/9cced10d5c36cfb94aeea47151ecf97251f58=
+7eb60961614e98cda945cd3a9fb" style=3D"height:47px;width:150px;v-text-anchor=
+:middle;" arcsize=3D"54%" strokeweight=3D"1.5pt" strokecolor=3D"#00AEEF" fi=
+llcolor=3D"#ffffff"><w:anchorlock/><v:textbox inset=3D"0px,0px,0px,0px"><ce=
+nter style=3D"color:#00aeef; font-family:Tahoma, Verdana, sans-serif; font-=
+size:20px"><![endif]--><a href=3D"https://wavebox.io/buynow/0e7390a7d7dd44c=
+0bdefd445dd57e389/9cced10d5c36cfb94aeea47151ecf97251f587eb60961614e98cda945=
+cd3a9fb" style=3D"text-decoration:none;display:inline-block;color:#00aeef;b=
+ackground-color:#ffffff;border-radius:25px;width:auto;border-top:2px solid =
+#00AEEF;font-weight:400;border-right:2px solid #00AEEF;border-bottom:2px so=
+lid #00AEEF;border-left:2px solid #00AEEF;padding-top:2px;padding-bottom:2p=
+x;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:20px;text-=
+align:center;mso-border-alt:none;word-break:keep-all;" target=3D"_self"><sp=
+an style=3D"padding-left:25px;padding-right:25px;font-size:20px;display:inl=
+ine-block;letter-spacing:normal;"><span dir=3D"ltr" style=3D"word-break: br=
+eak-word; line-height: 40px;">=E2=AD=90=EF=B8=8F Buy Pro</span></span></a>=
+=0A<!--[if mso]></center></v:textbox></v:roundrect><![endif]-->=0A</div>=0A=
+</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</=
+tr>=0A</tbody>=0A</table>=0A<table align=3D"center" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" class=3D"row row-13" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tbody=
+>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" class=3D"row-content stack" role=3D"presentation" style=3D"=
+mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; co=
+lor: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D=
+"column column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; fo=
+nt-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; ve=
+rtical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; =
+border-left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" class=3D"text_block block-1" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" =
+width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:15px;pad=
+ding-left:10px;padding-right:10px;padding-top:20px;">=0A<div style=3D"font-=
+family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-famil=
+y: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999=
+999999999px; color: #555555; line-height: 1.2;">=0A<p style=3D"margin: 0; t=
+ext-align: center; mso-line-height-alt: 14.399999999999999px;"><span style=
+=3D"font-size:11px;"><strong><span style=3D"color:#999999;">Follow us for d=
+aily Pro tips and upcoming feature news</span></strong></span></p>=0A</div>=
+=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=
+=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"center" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-14" role=3D"present=
+ation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100=
+%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0" class=3D"row-content stack" role=3D"presentatio=
+n" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color:=
+ #ffffff; color: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A=
+<td class=3D"column column-1" style=3D"mso-table-lspace: 0pt; mso-table-rsp=
+ace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-=
+top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-b=
+ottom: 0px; border-left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" class=3D"social_block block-1" role=3D"presen=
+tation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"10=
+0%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:50px;padding-left:1=
+0px;padding-right:10px;padding-top:10px;text-align:center;">=0A<div align=
+=3D"center" class=3D"alignment">=0A<table border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" class=3D"social-table" role=3D"presentation" style=3D"mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width=3D"2=
+52px">=0A<tr>=0A<td style=3D"padding:0 5px 0 5px;"><a href=3D"https://www.f=
+acebook.com/waveboxio" target=3D"_self"><img alt=3D"Facebook" height=3D"32"=
+ src=3D"https://wavebox.io/website/emailimages/facebook2x.png" style=3D"dis=
+play: block; height: auto; border: 0;" title=3D"Facebook" width=3D"32"/></a=
+></td>=0A<td style=3D"padding:0 5px 0 5px;"><a href=3D"https://twitter.com/=
+waveboxio" target=3D"_self"><img alt=3D"Twitter" height=3D"32" src=3D"https=
+://wavebox.io/website/emailimages/twitter2x.png" style=3D"display: block; h=
+eight: auto; border: 0;" title=3D"Twitter" width=3D"32"/></a></td>=0A<td st=
+yle=3D"padding:0 5px 0 5px;"><a href=3D"https://www.instagram.com/waveboxio=
+" target=3D"_self"><img alt=3D"Instagram" height=3D"32" src=3D"https://wave=
+box.io/website/emailimages/instagram2x.png" style=3D"display: block; height=
+: auto; border: 0;" title=3D"Instagram" width=3D"32"/></a></td>=0A<td style=
+=3D"padding:0 5px 0 5px;"><a href=3D"https://www.youtube.com/@waveboxio" ta=
+rget=3D"_self"><img alt=3D"YouTube" height=3D"32" src=3D"https://wavebox.io=
+/website/emailimages/youtube2x.png" style=3D"display: block; height: auto; =
+border: 0;" title=3D"YouTube" width=3D"32"/></a></td>=0A<td style=3D"paddin=
+g:0 5px 0 5px;"><a href=3D"https://open.spotify.com/show/0K0XKxNxTizaULIVkA=
+ZPqQ" target=3D"_self"><img alt=3D"Spotify" height=3D"32" src=3D"https://wa=
+vebox.io/website/emailimages/spotify2x.png" style=3D"display: block; height=
+: auto; border: 0;" title=3D"Spotify" width=3D"32"/></a></td>=0A<td style=
+=3D"padding:0 5px 0 5px;"><a href=3D"https://www.linkedin.com/company/27609=
+47" target=3D"_blank"><img alt=3D"LinkedIn" height=3D"32" src=3D"https://wa=
+vebox.io/website/emailimages/linkedin2x.png" style=3D"display: block; heigh=
+t: auto; border: 0;" title=3D"LinkedIn" width=3D"32"/></a></td>=0A</tr>=0A<=
+/table>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</=
+table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"center" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-15" role=3D"p=
+resentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=
+=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" class=3D"row-content stack" role=3D"pres=
+entation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #00=
+0000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column =
+column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weigh=
+t: 400; text-align: left; padding-bottom: 5px; padding-top: 15px; vertical-=
+align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-=
+left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" class=3D"text_block block-1 desktop_hide" role=3D"presentation" =
+style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; displ=
+ay: none; max-height: 0; overflow: hidden; word-break: break-word;" width=
+=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px;padding-=
+left:5px;padding-right:5px;padding-top:10px;">=0A<div style=3D"font-family:=
+ sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato=
+, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.3999999999999=
+99px; color: #000000; line-height: 1.2;">=0A<p style=3D"margin: 0; font-siz=
+e: 12px; text-align: center; mso-line-height-alt: 14.399999999999999px;"><s=
+pan style=3D"font-size:10px;"><a href=3D"https://kb.wavebox.io/" rel=3D"noo=
+pener" style=3D"text-decoration: none; color: #0068a5;" target=3D"_blank" t=
+itle=3D"Knowledge Base">Knowledge Base=C2=A0</a> | =C2=A0<a href=3D"https:/=
+/wavebox.io/support" rel=3D"noopener" style=3D"text-decoration: none; color=
+: #0068a5;" target=3D"_blank">Help Center</a>=C2=A0 |=C2=A0 <a href=3D"http=
+s://wavebox.io/unsubscribe/0e7390a7d7dd44c0bdefd445dd57e389/1d0cac89b5ad4c6=
+efe6253e9da495646f65c2af5b3b192fa9da5a223e308f664" rel=3D"noopener" style=
+=3D"text-decoration: none; color: #0068a5;" target=3D"_blank" title=3D"Unsu=
+bscribe">Unsubscribe</a></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</t=
+able>=0A<table border=3D"0" cellpadding=3D"10" cellspacing=3D"0" class=3D"t=
+ext_block mobile_hide block-2" role=3D"presentation" style=3D"mso-table-lsp=
+ace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"100%">=
+=0A<tr>=0A<td class=3D"pad">=0A<div style=3D"font-family: sans-serif">=0A<d=
+iv class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana,=
+ Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #0000=
+00; line-height: 1.2;">=0A<p style=3D"margin: 0; font-size: 12px; text-alig=
+n: center; mso-line-height-alt: 14.399999999999999px;"><a href=3D"https://k=
+b.wavebox.io/" rel=3D"noopener" style=3D"text-decoration: none; color: #006=
+8a5;" target=3D"_blank" title=3D"Knowledge Base">Knowledge Base=C2=A0</a> |=
+ =C2=A0<a href=3D"https://wavebox.io/support" rel=3D"noopener" style=3D"tex=
+t-decoration: none; color: #0068a5;" target=3D"_blank">Help Center</a>=C2=
+=A0 |=C2=A0 <a href=3D"https://wavebox.io/unsubscribe/0e7390a7d7dd44c0bdefd=
+445dd57e389/1d0cac89b5ad4c6efe6253e9da495646f65c2af5b3b192fa9da5a223e308f66=
+4" rel=3D"noopener" style=3D"text-decoration: none; color: #0068a5;" target=
+=3D"_blank" title=3D"Unsubscribe">Unsubscribe</a></p>=0A</div>=0A</div>=0A<=
+/td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"10" cellspacin=
+g=3D"0" class=3D"text_block desktop_hide block-3" role=3D"presentation" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; display:=
+ none; max-height: 0; overflow: hidden; word-break: break-word;" width=3D"1=
+00%">=0A<tr>=0A<td class=3D"pad">=0A<div style=3D"font-family: sans-serif">=
+=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Ver=
+dana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: =
+#555555; line-height: 1.2;">=0A<p style=3D"margin: 0; text-align: center; m=
+so-line-height-alt: 14.399999999999999px;"><span style=3D"color:#999999;">W=
+avebox, Bookry Ltd, Intec, Parc Menai, Bangor, UK. </span><span style=3D"co=
+lor:#999999;">You are receiving this email as a Wavebox user. Please use th=
+e link above to unsubscribe.</span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=
+=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"text_block block-4 mobile_hide" role=3D"presentation" style=3D"mso-tabl=
+e-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"100=
+%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:60px;padding-left:40=
+px;padding-right:40px;padding-top:10px;">=0A<div style=3D"font-family: sans=
+-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tah=
+oma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px;=
+ color: #555555; line-height: 1.2;">=0A<p style=3D"margin: 0; text-align: c=
+enter; mso-line-height-alt: 14.399999999999999px;"><span style=3D"color:#99=
+9999;">Wavebox, Bookry Ltd, Intec, Parc Menai, Bangor, UK. </span><span sty=
+le=3D"color:#999999;">You are receiving this email as a Wavebox user. Pleas=
+e use the link above to unsubscribe.</span></p>=0A</div>=0A</div>=0A</td>=
+=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=
+=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table><!-- End -->=0A=
+</body>=0A</html>=0A
+--3F1446709CF522A945A43D36--

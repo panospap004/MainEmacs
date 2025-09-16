@@ -1,0 +1,949 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:6358:a11:b0:ed:5f7b:8921 with SMTP id 17csp1438216rwa;
+        Fri, 20 Jan 2023 11:33:34 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXtC6VK6HJO4MJlkJ6/fkS6TYvHXpcPPaJYDkrVIRjS9Kf3jFuQXF7W625J5quBzl/GoN3fd
+X-Received: by 2002:ac8:604d:0:b0:39c:da20:f7ac with SMTP id k13-20020ac8604d000000b0039cda20f7acmr21762055qtm.9.1674243214147;
+        Fri, 20 Jan 2023 11:33:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1674243214; cv=none;
+        d=google.com; s=arc-20160816;
+        b=Kc7f1X5wG0kULPooFW9SiB1IVPbcKmlWG57TBY0V2mlMZy2SWIg10bpP4mNJLdZvbm
+         ugixIpLKJHoQQmG/U2hEogt4QiYMw7dC1nyKL0b+lWgy8QVP3PFk607BrFtgeoO3jqHq
+         l/SfE5Kqqm65gN1bToxn+4WpEW4LBg4ZHJq7RdSFq9B5Obaxyzc5TyogcvZhSJdHdr1l
+         9H+oRuFzPRFDg6Ju0nVDieM0xsdzUCORmbQ1u+J6yC9mQCWKYLZ2u5O3warE8yPv6T7Y
+         wg46Pqr4kEluauOTjWHGWmzATsKAGYUSGC5+bfsb3IL+iWM0GbfYgrcxtpRyuc3ZauIb
+         alrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:content-transfer-encoding:mime-version
+         :subject:to:from:dkim-signature:dkim-signature;
+        bh=dld7xl2lm2dba80KiuS9GAgD30y1QPGQMBP8rHP6AV4=;
+        b=hlje5heVPLOOJAjd8iiJKJaDXxMjVElEHJ1+npU+yaMfs/RucKuGqz4X4bqPuL+RTB
+         OMQGZD2HpHbKr8FN7f7Sy8HIz+oN90fhHVkxHRT4T6dfWwyRiVi1IQpd27r/rLsH7gCv
+         4apFaaAmnWRPI55aXRsCNRhOUpzS0vcII1ZKkt7mmIMYkT029AGnOxGyLYMZ1bl0YMs1
+         G68GCX7XOTRWpRoLV9lDom0t0x/E7SNo21VxeHEYMhxza4Nu48tRsa3s90/YvstIgR2f
+         AKYgGqP9p9LOTXLc0fOdUOkOVfOBi40fSUPG+q/cTMjiBagI322u6BYf6uh+JJr4mByn
+         Wgww==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@redditmail.com header.s=fmgv7iqmaqo3inwiwb5porvnnhayytow header.b="J4t7/qRI";
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=FRU8PUrB;
+       spf=pass (google.com: domain of 01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000@amazonses.com designates 54.240.72.115 as permitted sender) smtp.mailfrom=01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000@amazonses.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=redditmail.com
+Return-Path: <01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000@amazonses.com>
+Received: from a72-115.smtp-out.amazonses.com (a72-115.smtp-out.amazonses.com. [54.240.72.115])
+        by mx.google.com with ESMTPS id l14-20020ac84a8e000000b003b633c6c59bsi8530847qtq.375.2023.01.20.11.33.33
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Jan 2023 11:33:34 -0800 (PST)
+Received-SPF: pass (google.com: domain of 01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000@amazonses.com designates 54.240.72.115 as permitted sender) client-ip=54.240.72.115;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@redditmail.com header.s=fmgv7iqmaqo3inwiwb5porvnnhayytow header.b="J4t7/qRI";
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=FRU8PUrB;
+       spf=pass (google.com: domain of 01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000@amazonses.com designates 54.240.72.115 as permitted sender) smtp.mailfrom=01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000@amazonses.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=redditmail.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=fmgv7iqmaqo3inwiwb5porvnnhayytow; d=redditmail.com; t=1674243213;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date;
+	bh=6zLRt5V56c+jPxDhCEifL1BgFFMvsnD2WzVhbQateGs=;
+	b=J4t7/qRIOnofc07N0/0ISzwAcTsKG62tQWhvCPVipkSQo9++pLpWm9LxeOvGB4kp
+	+cvpKWosLPf8OOn5puzUc30bpFthuxH426uujP4LHYZWz9A+YS42fjr75UG/2GxsSW3
+	Bf73y07/m/4wVyJkQ3xcktpqv4hVkXoBh39Xysik=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1674243213;
+	h=From:To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID:Date:Feedback-ID;
+	bh=6zLRt5V56c+jPxDhCEifL1BgFFMvsnD2WzVhbQateGs=;
+	b=FRU8PUrB5PFx32Bewx0mTXyO6Up7aePirYeptfeT9hqr1Gubc57OXP4Gyp06y9RU
+	hB75t32SRRfPP1h/Wu7Hd4uSFyQgDSbqtzWtTpYMx4lfVLS7/8e0wbMCiAKd/+wnY82
+	4TUREzQ1MH41JBAgGtMV0+QF1n8dP+NCOXgpASjk=
+From: Reddit <noreply@redditmail.com>
+To: lets.mine004@gmail.com
+Subject: =?UTF-8?Q?"FPGA_and_=C2=B5C_Project_workflow:"?=
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Message-ID: <01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000@email.amazonses.com>
+Date: Fri, 20 Jan 2023 19:33:33 +0000
+Feedback-ID: 1.us-east-1.UqlFplRllIQtiw+Kq2b87y7uRSu9p66fMici2AQNsMU=:AmazonSES
+X-SES-Outgoing: 2023.01.20-54.240.72.115
+X-TUID: 9WSH6Y+tte+f
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" lang=3D"en"=
+ xml:lang=3D"en" style=3D"width:100%;">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"/>
+<!--[if !mso><!-- -->
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"/>
+<!--<![endif-->
+<meta content=3D"width=3Ddevice-width; initial-scale=3D1.0; maximum-scale=
+=3D1.0; user-scalable=3Dno;" name=3D"viewport">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width"><META NAME=3D"ROBO=
+TS" CONTENT=3D"NOINDEX, NOFOLLOW">
+<meta name=3D"x-apple-disable-message-reformatting">
+<title>Reddit</title>
+<style type=3D"text/css">
+.ExternalClass{width:100%;}.ExternalClass,.ExternalClass p,.ExternalClass s=
+pan,.ExternalClass font,.ExternalClass td,.ExternalClass div{line-height:10=
+0%;}table td{border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace=
+:0pt;}h1,h2,h3,h4,h5,h6{font-size:inherit;padding:0;margin:0;color:black;li=
+ne-height:100%;}.applelinks a{text-decoration:none;color:inherit!important;=
+}a{color:black;text-decoration:none;}a,a:link,a:visited{color:inherit;text-=
+decoration:none;}
+span.MsoHyperlink{mso-style-priority:99;color:inherit;}span.MsoHyperlinkFol=
+lowed{mso-style-priority:99;color:inherit;}img{border:0px!important;}body{f=
+ont-family:Segoe UI,Arial,sans-serif;font-size:14px;-webkit-text-size-adjus=
+t:none;-ms-text-size-adjust:none;-webkit-font-smoothing:antialiased;margin:=
+0;padding:0;width:100%!important;}.button:hover{background-color:red!import=
+ant;}.opacity:hover{opacity:0.8!important;}.headline{color:#0079D3!importan=
+t;}.linkclr1{color:#999999!important;
+text-decoration:none!important}.ftr{text-align:center;font-size:13px;line-h=
+eight:1.4em;color:#808080;font-family:Helvetica,Arial,sans-serif;}.copytd{v=
+ertical-align:middle!important;padding-top:15px;text-align:right!important;=
+font-size:14px!important;font-family:Helvetica,Arial,sans-serif!important;f=
+ont-weight:normal!important;}.copylink{display:table-cell!important;max-wid=
+th:max-content!important;color:#999999!important;text-align:left!important;=
+line-height:100%!important;}.copyimg{float:left
+!important;border:0!important;padding-right:5px!important;}
+@media all{.ow100{width:100%!important;} }
+@media only screen and (max-width:480px){.w100m,.column50,.column33,.column=
+25,.column75,.column66{width:100%!important;}.w90m{width:90%!important;}.ex=
+pandm{width:100%!important;display:block!important;}.resizem{width:100%!imp=
+ortant;height:auto!important;}.hidem{display:none!important;}.h1m{font-size=
+:20px!important;}.h2m{font-size:18px!important;}.h22m{font-size:15px!import=
+ant;}.h3m{font-size:14px!important;}.tcenterm{text-align:center!important;}=
+.tleftm{text-align:left!important;}.col25m{width:
+25%!important;}.col75m{width:75%!important;}.mobile-position{background-pos=
+ition:0% 100%!important;}.hero-size{background-size:auto 100%!important;}.l=
+ogo{width:100px!important;height:auto!important;}.padt0m{padding-top:0px!im=
+portant;}.padl5m{padding-left:5px!important;}.padt5m{padding-top:5px!import=
+ant;}.padt10m{padding-top:10px!important;}.padt20m{padding-top:20px!importa=
+nt;}.padt30m{padding-top:30px!important;}.padb5m{padding-bottom:5px!importa=
+nt;}.padb10m{padding-bottom:10px!important;}
+.padb20m{padding-bottom:20px!important;}.padb30m{padding-bottom:30px!import=
+ant;}.author{display:block!important;} }
+@media only screen and (max-width:711px){.ow100{width:100%!important;}.w100=
+{width:100%!important;}.w90{width:90%!important;}.hide{display:none!importa=
+nt;}.resize{width:100%!important;height:auto!important;}.resize img{width:1=
+00%!important;height:auto!important;}.expand{width:100%!important;display:b=
+lock!important;}.height0{height:0!important;}.column50{width:50%;}.column50=
+a{width:50%;}.column33{width:33.33%;}.column25{width:25%;}.column75{width:7=
+5%;}.column66{width:66%;}.tcenter{text-align:
+center!important;}.w70{width:70%!important;}.bannerpop{background-size:cove=
+r!important;}.overlay{background:-moz-linear-gradient(-45deg,rgba(0,0,0,0) =
+0%,rgba(0,0,0,0.5) 100%);background:-webkit-linear-gradient(-45deg,rgba(0,0=
+,0,0) 0%,rgba(0,0,0,0.5) 100%);background:linear-gradient(135deg,rgba(0,0,0=
+,0) 0%,rgba(0,0,0,0.5) 100%);filter:progid:DXImageTransform.Microsoft.gradi=
+ent( startColorstr=3D'#00000000',endColorstr=3D'#80000000',GradientType=3D1=
+ );}.padlr0m{padding-left:0px!important;padding-right:
+0px!important;}.padt0{padding-top:0px!important;}.padt5{padding-top:5px!imp=
+ortant;}.padt10{padding-top:10px!important;}.padt20{padding-top:20px!import=
+ant;}.padt30{padding-top:30px!important;}.padb5{padding-bottom:5px!importan=
+t;}.padb10{padding-bottom:10px!important;}.padb20{padding-bottom:20px!impor=
+tant;}.padb30{padding-bottom:30px!important;}.hide-subreddit{width:100%!imp=
+ortant;text-align:left!important;margin-top:-10px!important;} }.image-conta=
+iner{height:0;overflow:hidden;padding-top:56.25%;
+position:relative;}.image{position:absolute;top:0;left:0;width:100%;height:=
+100%;}
+</style>
+<!--[if mso>
+<style type=3D"text/css">
+body{margin:0 !important;padding:0 !important;font-family:Segoe UI,Arial,sa=
+ns-serif;}table,td,div,p{font-family:Segoe UI,Arial,sans-serif;line-height:=
+normal;}
+</style><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:=
+PixelsPerInch></o:OfficeDocumentSettings></xml><![endif-->
+</head>
+<body class=3D"tli" style=3D"-webkit-text-size-adjust:none;-ms-text-size-ad=
+just:none;margin:0;padding:0;width:100%;background-color:white;">  <span cl=
+ass=3D"preview-text" style=3D"display:none!important;visibility:hidden;opac=
+ity:0;color:transparent;height:0;width:0;">r/FPGA: FPGA and =C2=B5C Project=
+ workflow: Hello every one,
+
+I have Question.
+
+If you have been asked to work on a project where both =C2=B5Cs and FPGAs a=
+re used together.
+
+The aim is to read and collect data from various sensors with I2C and SPI .=
+.. </span>
+<table width=3D"100%" border=3D"0" align=3D"center" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" style=3D"width:100%;"><tr><td align=3D"c=
+enter">
+<table class=3D"w100" width=3D"711" border=3D"0" align=3D"center" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation">  <tr>
+<td class=3D"padt10m" align=3D"center" style=3D"padding-top:20px;"><a href=
+=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%3F$deep_lin=
+k=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26ref=3Dem=
+ail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=
+=3Dheader/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/kU=
+0UaZBT1voyoMPaCL5IWVi0wn0rm4XEWoi8BgVjGg4=3D284"><img src=3D"https://www.re=
+dditstatic.com/emaildigest/logo@2x.png" width=3D"126" alt=3D"" style=3D"dis=
+play:block;border:0;color:black;font-size:25px;font-weight:bold;font-family=
+:sans-serif;"/></a>
+</td>  </tr>  <tr><td align=3D"center">
+<table align=3D"center" width=3D"100%" border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0">
+
+<tr><td align=3D"center" style=3D"padding-top:10px;">
+<table width=3D"90%" border=3D"0" align=3D"center" cellpadding=3D"0" cellsp=
+acing=3D"0"><tr><td valign=3D"top">
+<table class=3D"w100" width=3D"515" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td>
+<table class=3D"w100m" width=3D"90%" border=3D"0" align=3D"left" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tr><td align=3D"left" style=3D"padding-top:20px;=
+">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" alig=
+n=3D"left"><tr>  <td width=3D"24" align=3D"left"><a href=3D"https://click.r=
+edditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FFPGA%2F%3F$deep_link=3Dt=
+rue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=
+=3Dt3_10h4igu%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_sour=
+ce=3Demail%26utm_content=3Dpost_subreddit/1/01000185d0ac0832-bfbd84ec-788f-=
+41fa-ac7e-9c2ff82c6a2a-000000/SNo6BK4jpqm5LALsSz_B3VrtRnobqGMxA5eZ2AAt3fc=
+=3D284"><img src=3D"https://www.redditstatic.com/emaildigest/reddit_communi=
+ty.png" width=3D"24" alt=3D"" style=3D"display:block;border:0;"/></a>
+</td>
+<td style=3D"padding-left:10px;text-align:left;"> <a href=3D"https://click.=
+redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FFPGA%2F%3F$deep_link=3D=
+true%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullnam=
+e=3Dt3_10h4igu%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_sou=
+rce=3Demail%26utm_content=3Dpost_subreddit/2/01000185d0ac0832-bfbd84ec-788f=
+-41fa-ac7e-9c2ff82c6a2a-000000/Eb31MNcYvpDuT1YhTNbmUAVGe9cPhjskRqnRdyZ_juc=
+=3D284" style=3D"color:#888888;text-decoration:none;"> <span style=3D"font-=
+size:15px;color:#888888;font-family:Helvetica,Arial,sans-serif;font-weight:=
+bold;width:1px;white-space:nowrap;">r/FPGA</span></a> <span class=3D"hidem"=
+>&#183;</span> <span class=3D"author" style=3D"display:inline-block;"> <a h=
+ref=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FFP=
+GA%2Fcomments%2F10h4igu%2Ffpga_and_%C2%B5c_project_workflow%2F%3F$deep_link=
+=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_full=
+name=3Dt3_10h4igu%26post_index=3D1%26ref=3Demail_digest%26ref_campaign=3Dem=
+ail_digest%26ref_source=3Demail%26utm_content=3Dpost_author/1/01000185d0ac0=
+832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/byK-aHP3V0lFSC9u2HBnqH08TsA=
+J9oPal321M6m3HKM=3D284" class=3D"linkclr1">Posted by
+u/smart_duji</a>&nbsp;<a href=3D"https://click.redditmail.com/CL0/https:%2F=
+%2Fwww.reddit.com%2Fr%2FFPGA%2Fcomments%2F10h4igu%2Ffpga_and_%C2%B5c_projec=
+t_workflow%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a87=
+4-a3bb73f562a4%26post_fullname=3Dt3_10h4igu%26post_index=3D1%26ref=3Demail_=
+digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dp=
+ost_timestamp/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-00000=
+0/2sPEXqLpPvTXDZ97Pj4sqhmezMQed3dwqDaElZEzmoo=3D284" class=3D"linkclr1">57m=
+ ago</a></span>
+</td>  </tr></table>
+</td></tr><tr>  <td style=3D"padding-top:10px;text-align:left;font-size:16p=
+x;line-height:1.2em;color:black;font-family:Helvetica,Arial,sans-serif;font=
+-weight:bold;"><a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.=
+reddit.com%2Fr%2FFPGA%2Fcomments%2F10h4igu%2Ffpga_and_%C2%B5c_project_workf=
+low%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb7=
+3f562a4%26post_fullname=3Dt3_10h4igu%26post_index=3D1%26ref=3Demail_digest%=
+26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_tit=
+le/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/friYh9YMc=
+UpywljAb459kvrHpc2YBcvjKPpeozuy7tA=3D284" style=3D"color:black;text-decorat=
+ion:none;"><span class=3D"headline">FPGA and =C2=B5C Project workflow:</spa=
+n></a>
+</td>  </tr><tr>  <td class=3D"hidem" style=3D"padding-top:10px;text-align:=
+left;font-size:14px;line-height:1.4em;color:#888888;font-family:Helvetica,A=
+rial,sans-serif;font-weight:normal;"><a href=3D"https://click.redditmail.co=
+m/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FFPGA%2Fcomments%2F10h4igu%2Ffpga_and=
+_%C2%B5c_project_workflow%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887=
+d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10h4igu%26post_index=3D1=
+%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26=
+utm_content=3Dpost_body/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c=
+6a2a-000000/ILrvvNKLx35I3f5cSrPuuWtNH_IwoJRLgztMXHnfwVg=3D284" class=3D"lin=
+kclr1">Hello every one,
+
+I have Question.
+
+If you have been asked to work on a project where both =C2=B5Cs and FPGAs a=
+re used together.
+
+The aim is to read and collect data from various sensors with I2C and SPI .=
+.. <span style=3D"color:#0079DA;">Read More</span></a>
+</td>  </tr>  <tr><td>
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"left"><tr>=
+<td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.redditm=
+ail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FFPGA%2Fcomments%2F10h4igu%2Ffp=
+ga_and_%C2%B5c_project_workflow%2F%3F$deep_link=3Dtrue%26correlation_id=3D0=
+5af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10h4igu%26post_ind=
+ex=3D1%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Dem=
+ail%26utm_content=3Dpost_karma/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9=
+c2ff82c6a2a-000000/W8cn32ALjZbR7Jk_vQZjQtME3xvFc267QTPAgSPZphA=3D284" class=
+=3D"copylink">  <span style=3D"text-align:left;"> <img src=3D"https://www.r=
+edditstatic.com/emaildigest/upvote.png" width=3D"15px" alt=3D"" class=3D"co=
+pyimg"/>2&nbsp;Votes </span>  </a>
+</td><td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.re=
+dditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FFPGA%2Fcomments%2F10h4igu=
+%2Ffpga_and_%C2%B5c_project_workflow%2F%3F$deep_link=3Dtrue%26correlation_i=
+d=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10h4igu%26pos=
+t_index=3D1%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=
+=3Demail%26utm_content=3Dpost_comments/1/01000185d0ac0832-bfbd84ec-788f-41f=
+a-ac7e-9c2ff82c6a2a-000000/vEwNcQlT_kOzy6lVkeIGdm3vbUUbewKjo2UevT06ifA=3D28=
+4" class=3D"copylink">  <span style=3D"text-align:left;"> <img src=3D"https=
+://www.redditstatic.com/emaildigest/reddit_comment.png" width=3D"13px" alt=
+=3D"" class=3D"copyimg"/>2&nbsp;Comments </span>  </a>
+</td></tr></table>
+</td></tr>  </table>
+</td></tr></table>
+<!--[if mso]>
+</td><td valign=3D"top">
+<![endif]-->
+<table class=3D"w100" width=3D"120" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td class=3D"copytd" style=3D"width:100%;max-w=
+idth:120px;padding-top:20px;"> <a href=3D"https://click.redditmail.com/CL0/=
+https:%2F%2Fwww.reddit.com%2Fmail%2Fnotification_off%2F8sgiw5ru%2F2sf3o%2Ff=
+598e143e827b0b810d3ca28d162b3406965875a1a9ed63d2569152d18960cd5%3F$web_only=
+=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_full=
+name=3Dt3_10h4igu%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_=
+source=3Demail%26utm_content=3Dpost_hide_subreddit/1/01000185d0ac0832-bfbd8=
+4ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/4d9eujobg-Q6u_X_N3rKfhu_BzbLiFtgtpaq=
+akfOGpo=3D284" class=3D"copylink">  <span style=3D"text-align:left;"> <img =
+src=3D"https://www.redditstatic.com/emaildigest/hide.png" width=3D"14px" al=
+t=3D"" class=3D"copyimg"/>Hide r/FPGA </span>  </a>
+</td></tr></table>
+</td></tr></table>
+</td></tr>
+<tr><td align=3D"center" style=3D"padding-top:30px;">
+<table class=3D"w90m" width=3D"50%" border=3D"0" align=3D"center" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"border-to=
+p:1px solid #E4E4E4;">
+</td></tr></table>
+</td></tr>
+
+<tr><td align=3D"center" style=3D"padding-top:10px;">
+<table width=3D"90%" border=3D"0" align=3D"center" cellpadding=3D"0" cellsp=
+acing=3D"0"><tr><td valign=3D"top">
+<table class=3D"w100" width=3D"515" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td>
+<table class=3D"w100m" width=3D"90%" border=3D"0" align=3D"left" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tr><td align=3D"left" style=3D"padding-top:20px;=
+">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" alig=
+n=3D"left"><tr>  <td width=3D"24" align=3D"left"><a href=3D"https://click.r=
+edditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Fshylily%2F%3F$deep_link=
+=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_full=
+name=3Dt3_10gw16e%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_=
+source=3Demail%26utm_content=3Dpost_subreddit/1/01000185d0ac0832-bfbd84ec-7=
+88f-41fa-ac7e-9c2ff82c6a2a-000000/6rrlQl7g0AC35m15tReipw3X1KQ_7ULjsWgl0rUOm=
+8I=3D284"><img src=3D"https://styles.redditmedia.com/t5_504xje/styles/commu=
+nityIcon_m7p7j4lkj4c81.png" width=3D"24" alt=3D"" style=3D"display:block;bo=
+rder:0;"/></a>
+</td>
+<td style=3D"padding-left:10px;text-align:left;"> <a href=3D"https://click.=
+redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Fshylily%2F%3F$deep_link=
+=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_full=
+name=3Dt3_10gw16e%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_=
+source=3Demail%26utm_content=3Dpost_subreddit/2/01000185d0ac0832-bfbd84ec-7=
+88f-41fa-ac7e-9c2ff82c6a2a-000000/_Av7IB4igiNSOTK2i1T4-LbAASo9U-qdCCCBzBoct=
+IQ=3D284" style=3D"color:#888888;text-decoration:none;"> <span style=3D"fon=
+t-size:15px;color:#888888;font-family:Helvetica,Arial,sans-serif;font-weigh=
+t:bold;width:1px;white-space:nowrap;">r/shylily</span></a> <span class=3D"h=
+idem">&#183;</span> <span class=3D"author" style=3D"display:inline-block;">=
+ <a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr=
+%2Fshylily%2Fcomments%2F10gw16e%2Fi_mean%2F%3F$deep_link=3Dtrue%26correlati=
+on_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gw16e%2=
+6post_index=3D2%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_so=
+urce=3Demail%26utm_content=3Dpost_author/1/01000185d0ac0832-bfbd84ec-788f-4=
+1fa-ac7e-9c2ff82c6a2a-000000/CuA0FQCQtqCm-MT8-KP0rphO84JJ4tP8PgJE05qZkxk=3D=
+284" class=3D"linkclr1">Posted by
+u/Medramon</a>&nbsp;<a href=3D"https://click.redditmail.com/CL0/https:%2F%2=
+Fwww.reddit.com%2Fr%2Fshylily%2Fcomments%2F10gw16e%2Fi_mean%2F%3F$deep_link=
+=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_full=
+name=3Dt3_10gw16e%26post_index=3D2%26ref=3Demail_digest%26ref_campaign=3Dem=
+ail_digest%26ref_source=3Demail%26utm_content=3Dpost_timestamp/1/01000185d0=
+ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/vTk3cBalqn4FQaMm0l9xCZVx=
+JYE5Uu8oGewtBMALrxU=3D284" class=3D"linkclr1">6h ago</a></span>
+</td>  </tr></table>
+</td></tr><tr>  <td style=3D"padding-top:10px;text-align:left;font-size:16p=
+x;line-height:1.2em;color:black;font-family:Helvetica,Arial,sans-serif;font=
+-weight:bold;"><a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.=
+reddit.com%2Fr%2Fshylily%2Fcomments%2F10gw16e%2Fi_mean%2F%3F$deep_link=3Dtr=
+ue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=
+=3Dt3_10gw16e%26post_index=3D2%26ref=3Demail_digest%26ref_campaign=3Demail_=
+digest%26ref_source=3Demail%26utm_content=3Dpost_title/1/01000185d0ac0832-b=
+fbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/_bQ2NkKXDJWjM3ebdF5mUg9XHva0G3XB=
+AhhwcNhvjh4=3D284" style=3D"color:black;text-decoration:none;"><span class=
+=3D"headline">I mean....</span></a>
+</td>  </tr><tr>  <td class=3D"hidem" style=3D"padding-top:10px;text-align:=
+left;font-size:14px;line-height:1.4em;color:#888888;font-family:Helvetica,A=
+rial,sans-serif;font-weight:normal;"><a href=3D"https://click.redditmail.co=
+m/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Fshylily%2Fcomments%2F10gw16e%2Fi_mea=
+n%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f=
+562a4%26post_fullname=3Dt3_10gw16e%26post_index=3D2%26ref=3Demail_digest%26=
+ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_body/=
+1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/u-G85zYS9IfH=
+q8Gm1EUCqYYlBTC2j4FOSa-lAkydfAo=3D284" class=3D"linkclr1"><span style=3D"co=
+lor:#0079DA;">Read More</span></a>
+</td>  </tr>  <tr><td>
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"left"><tr>=
+<td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.redditm=
+ail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Fshylily%2Fcomments%2F10gw16e%2=
+Fi_mean%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a=
+3bb73f562a4%26post_fullname=3Dt3_10gw16e%26post_index=3D2%26ref=3Demail_dig=
+est%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost=
+_karma/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/BPk8F=
+ftQVovDTZFxLXPJACEmHYh816cegzKWTx7YKyg=3D284" class=3D"copylink">  <span st=
+yle=3D"text-align:left;"> <img src=3D"https://www.redditstatic.com/emaildig=
+est/upvote.png" width=3D"15px" alt=3D"" class=3D"copyimg"/>267&nbsp;Votes <=
+/span>  </a>
+</td><td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.re=
+dditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Fshylily%2Fcomments%2F10gw=
+16e%2Fi_mean%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a=
+874-a3bb73f562a4%26post_fullname=3Dt3_10gw16e%26post_index=3D2%26ref=3Demai=
+l_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=
+=3Dpost_comments/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-00=
+0000/LQ7k8x6l0vZFW_jbfVgtqCxrrqesRiPhWRoNKIMFpSg=3D284" class=3D"copylink">=
+  <span style=3D"text-align:left;"> <img src=3D"https://www.redditstatic.co=
+m/emaildigest/reddit_comment.png" width=3D"13px" alt=3D"" class=3D"copyimg"=
+/>16&nbsp;Comments </span>  </a>
+</td></tr></table>
+</td></tr>  </table>
+</td></tr></table>
+<!--[if mso]>
+</td><td valign=3D"top">
+<![endif]-->
+<table class=3D"w100" width=3D"120" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td class=3D"padt20" style=3D"padding-top:35px=
+;">
+<table class=3D"w100m" width=3D"100%" border=3D"0" align=3D"left" cellpaddi=
+ng=3D"0" cellspacing=3D"0"><tr>  <td background=3D"https://preview.redd.it/=
+ucbh9d3kj8da1.jpg?width=3D1080&amp;crop=3Dsmart&amp;auto=3Dwebp&amp;s=3D7d6=
+31c92bc9302bd275cd94df93d6db7ad318758" align=3D"center" style=3D"background=
+-size:cover;background-position:left center;background-repeat:no-repeat;bor=
+der:1px solid #eeeeee;">
+<!--[if gte mso 9]><v:image xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=
+=3D"true" stroke=3D"false" style=3D"border:0;display:inline-block;width:120=
+px;height:100px;" src=3D"https://www.redditstatic.com/emaildigest/reddit_po=
+st_image1_mobile.jpg"/><v:rect xmlns:v=3D"urn:schemas-microsoft-com:vml" fi=
+ll=3D"true" stroke=3D"false" style=3D"border:0;display:inline-block;positio=
+n:absolute;width:120px;height:100px;"><v:fill opacity=3D"0%" color=3D"#ffff=
+ff"/><v:textbox inset=3D"0,0,0,0">
+<![endif]--> <a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.re=
+ddit.com%2Fr%2Fshylily%2Fcomments%2F10gw16e%2Fi_mean%2F%3F$deep_link=3Dtrue=
+%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3D=
+t3_10gw16e%26post_index=3D2%26ref=3Demail_digest%26ref_campaign=3Demail_dig=
+est%26ref_source=3Demail%26utm_content=3Dpost_image/1/01000185d0ac0832-bfbd=
+84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/zcn3koKQC5-pe208v6qWmN41W0c76mTRg4u=
+mqT7SHSg=3D284" style=3D"display:block;border:0;"><div class=3D"image-conta=
+iner">
+<table width=3D"100%" border=3D"0" align=3D"center" cellpadding=3D"0" cells=
+pacing=3D"0"><tr><td class=3D"image" height=3D"100" align=3D"center">&nbsp;
+</td></tr></table></div></a>
+<!--[if gte mso 9]></v:textbox></v:fill></v:rect></v:image> -->
+<!--<![endif]-->
+</td></tr><tr><td class=3D"copytd" style=3D"width:100%;max-width:120px;"> <=
+a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fmai=
+l%2Fnotification_off%2F8sgiw5ru%2F504xje%2Fa38160ac54d42b0686a6fcf6189d3d9f=
+acb012affbe80cd488186f03718b2fdc%3F$web_only=3Dtrue%26correlation_id=3D05af=
+887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gw16e%26ref=3Demail=
+_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3D=
+post_hide_subreddit/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a=
+-000000/cqtaDnajkht2grad94TaDUaQOeTcvPaeW8KYYrnO-iA=3D284" class=3D"copylin=
+k">  <span style=3D"text-align:left;"> <img src=3D"https://www.redditstatic=
+.com/emaildigest/hide.png" width=3D"14px" alt=3D"" class=3D"copyimg"/>Hide =
+r/shylily </span>  </a>
+</td></tr></table>
+</td></tr></table>
+</td></tr></table>
+</td></tr>
+<tr><td align=3D"center" style=3D"padding-top:30px;">
+<table class=3D"w90m" width=3D"50%" border=3D"0" align=3D"center" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"border-to=
+p:1px solid #E4E4E4;">
+</td></tr></table>
+</td></tr>
+
+<tr><td align=3D"center" style=3D"padding-top:10px;">
+<table width=3D"90%" border=3D"0" align=3D"center" cellpadding=3D"0" cellsp=
+acing=3D"0"><tr><td valign=3D"top">
+<table class=3D"w100" width=3D"515" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td>
+<table class=3D"w100m" width=3D"90%" border=3D"0" align=3D"left" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tr><td align=3D"left" style=3D"padding-top:20px;=
+">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" alig=
+n=3D"left"><tr>  <td width=3D"24" align=3D"left"><a href=3D"https://click.r=
+edditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Foddlysatisfying%2F%3F$de=
+ep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26po=
+st_fullname=3Dt3_10gqw51%26ref=3Demail_digest%26ref_campaign=3Demail_digest=
+%26ref_source=3Demail%26utm_content=3Dpost_subreddit/1/01000185d0ac0832-bfb=
+d84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/4vLmE_kdzXxRCCZy7vu64BuoJB3zsSm4vy=
+ob-U-_uXE=3D284"><img src=3D"https://styles.redditmedia.com/t5_2x93b/styles=
+/communityIcon_eefpey65pli21.png" width=3D"24" alt=3D"" style=3D"display:bl=
+ock;border:0;"/></a>
+</td>
+<td style=3D"padding-left:10px;text-align:left;"> <a href=3D"https://click.=
+redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Foddlysatisfying%2F%3F$d=
+eep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26p=
+ost_fullname=3Dt3_10gqw51%26ref=3Demail_digest%26ref_campaign=3Demail_diges=
+t%26ref_source=3Demail%26utm_content=3Dpost_subreddit/2/01000185d0ac0832-bf=
+bd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/_ro915s6DX2XF2ui_kYSBLUDMV0Mrwuk0=
+DVZPR5hVfE=3D284" style=3D"color:#888888;text-decoration:none;"> <span styl=
+e=3D"font-size:15px;color:#888888;font-family:Helvetica,Arial,sans-serif;fo=
+nt-weight:bold;width:1px;white-space:nowrap;">r/oddlysatisfying</span></a> =
+<span class=3D"hidem">&#183;</span> <span class=3D"author" style=3D"display=
+:inline-block;"> <a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fww=
+w.reddit.com%2Fr%2Foddlysatisfying%2Fcomments%2F10gqw51%2Fthe_archer_artill=
+ery_system_in_action%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd=
+2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gqw51%26post_index=3D3%26re=
+f=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_c=
+ontent=3Dpost_author/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2=
+a-000000/Bpazv7-mLX_hpzdYMYFvdSQN5p1cBUZR8oBnBYvlV7U=3D284" class=3D"linkcl=
+r1">Posted by
+u/OppositeFingat</a>&nbsp;<a href=3D"https://click.redditmail.com/CL0/https=
+:%2F%2Fwww.reddit.com%2Fr%2Foddlysatisfying%2Fcomments%2F10gqw51%2Fthe_arch=
+er_artillery_system_in_action%2F%3F$deep_link=3Dtrue%26correlation_id=3D05a=
+f887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gqw51%26post_index=
+=3D3%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demai=
+l%26utm_content=3Dpost_timestamp/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e=
+-9c2ff82c6a2a-000000/fWilPf2EPaiASw8IFYRruyX1NlGsAjtQkBGEvZGlVa8=3D284" cla=
+ss=3D"linkclr1">11h ago</a></span>
+</td>  </tr></table>
+</td></tr><tr>  <td style=3D"padding-top:10px;text-align:left;font-size:16p=
+x;line-height:1.2em;color:black;font-family:Helvetica,Arial,sans-serif;font=
+-weight:bold;"><a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.=
+reddit.com%2Fr%2Foddlysatisfying%2Fcomments%2F10gqw51%2Fthe_archer_artiller=
+y_system_in_action%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-=
+45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gqw51%26post_index=3D3%26ref=
+=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_co=
+ntent=3Dpost_title/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-=
+000000/ToueRejA4GRGeCzTPrPCQm2XylpYKuOnY2jUUJqdz9Q=3D284" style=3D"color:bl=
+ack;text-decoration:none;"><span class=3D"headline">The Archer Artillery Sy=
+stem in action</span></a>
+</td>  </tr><tr>  <td class=3D"hidem" style=3D"padding-top:10px;text-align:=
+left;font-size:14px;line-height:1.4em;color:#888888;font-family:Helvetica,A=
+rial,sans-serif;font-weight:normal;"><a href=3D"https://click.redditmail.co=
+m/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Foddlysatisfying%2Fcomments%2F10gqw51=
+%2Fthe_archer_artillery_system_in_action%2F%3F$deep_link=3Dtrue%26correlati=
+on_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gqw51%2=
+6post_index=3D3%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_so=
+urce=3Demail%26utm_content=3Dpost_body/1/01000185d0ac0832-bfbd84ec-788f-41f=
+a-ac7e-9c2ff82c6a2a-000000/AlIkt9ZkEeCOOKRrWBF4t0aB0h8W1EAGLbh6XGa51tc=3D28=
+4" class=3D"linkclr1"><span style=3D"color:#0079DA;">Read More</span></a>
+</td>  </tr>  <tr><td>
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"left"><tr>=
+<td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.redditm=
+ail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Foddlysatisfying%2Fcomments%2F1=
+0gqw51%2Fthe_archer_artillery_system_in_action%2F%3F$deep_link=3Dtrue%26cor=
+relation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10g=
+qw51%26post_index=3D3%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26=
+ref_source=3Demail%26utm_content=3Dpost_karma/1/01000185d0ac0832-bfbd84ec-7=
+88f-41fa-ac7e-9c2ff82c6a2a-000000/Ogya5Bs84qJCX9Zi5sA52NqExx40qWSz0ofvJWSil=
+5g=3D284" class=3D"copylink">  <span style=3D"text-align:left;"> <img src=
+=3D"https://www.redditstatic.com/emaildigest/upvote.png" width=3D"15px" alt=
+=3D"" class=3D"copyimg"/>7235&nbsp;Votes </span>  </a>
+</td><td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.re=
+dditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Foddlysatisfying%2Fcomment=
+s%2F10gqw51%2Fthe_archer_artillery_system_in_action%2F%3F$deep_link=3Dtrue%=
+26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt=
+3_10gqw51%26post_index=3D3%26ref=3Demail_digest%26ref_campaign=3Demail_dige=
+st%26ref_source=3Demail%26utm_content=3Dpost_comments/1/01000185d0ac0832-bf=
+bd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/FDqcauDx5wTDgNrxyRJ_t2uPtvQuJtw5P=
+plHlsR7cyk=3D284" class=3D"copylink">  <span style=3D"text-align:left;"> <i=
+mg src=3D"https://www.redditstatic.com/emaildigest/reddit_comment.png" widt=
+h=3D"13px" alt=3D"" class=3D"copyimg"/>569&nbsp;Comments </span>  </a>
+</td></tr></table>
+</td></tr>  </table>
+</td></tr></table>
+<!--[if mso]>
+</td><td valign=3D"top">
+<![endif]-->
+<table class=3D"w100" width=3D"120" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td class=3D"padt20" style=3D"padding-top:35px=
+;">
+<table class=3D"w100m" width=3D"100%" border=3D"0" align=3D"left" cellpaddi=
+ng=3D"0" cellspacing=3D"0"><tr>  <td background=3D"https://external-preview=
+.redd.it/kGExRr5lS2EY-eN6GCIqNZ1fDqNVAt7wOp25hkH5DUU.png?width=3D1080&amp;c=
+rop=3Dsmart&amp;auto=3Dwebp&amp;s=3D3a1b34ae563c55ca09252e61df4cc3a14673d6d=
+2" align=3D"center" style=3D"background-size:cover;background-position:left=
+ center;background-repeat:no-repeat;border:1px solid #eeeeee;">
+<!--[if gte mso 9]><v:image xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=
+=3D"true" stroke=3D"false" style=3D"border:0;display:inline-block;width:120=
+px;height:100px;" src=3D"https://www.redditstatic.com/emaildigest/reddit_po=
+st_image1_mobile.jpg"/><v:rect xmlns:v=3D"urn:schemas-microsoft-com:vml" fi=
+ll=3D"true" stroke=3D"false" style=3D"border:0;display:inline-block;positio=
+n:absolute;width:120px;height:100px;"><v:fill opacity=3D"0%" color=3D"#ffff=
+ff"/><v:textbox inset=3D"0,0,0,0">
+<![endif]--> <a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.re=
+ddit.com%2Fr%2Foddlysatisfying%2Fcomments%2F10gqw51%2Fthe_archer_artillery_=
+system_in_action%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45=
+e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gqw51%26post_index=3D3%26ref=3D=
+email_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_conte=
+nt=3Dpost_image/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000=
+000/g_UAM8aQ_tUc2gsNNLHwJFu6bbYCfrjf3dnja4-dHJs=3D284" style=3D"display:blo=
+ck;border:0;"><div class=3D"image-container">
+<table width=3D"100%" border=3D"0" align=3D"center" cellpadding=3D"0" cells=
+pacing=3D"0"><tr><td class=3D"image" height=3D"100" align=3D"center">&nbsp;
+</td></tr></table></div></a>
+<!--[if gte mso 9]></v:textbox></v:fill></v:rect></v:image> -->
+<!--<![endif]-->
+</td></tr><tr><td class=3D"copytd" style=3D"width:100%;max-width:120px;"> <=
+a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fmai=
+l%2Fnotification_off%2F8sgiw5ru%2F2x93b%2Fef29f1f4af1719fa1e32f6ec301db2e59=
+4cdace51b4a0f0d2dbcb5fc1207c846%3F$web_only=3Dtrue%26correlation_id=3D05af8=
+87d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gqw51%26ref=3Demail_=
+digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dp=
+ost_hide_subreddit/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-=
+000000/Z45RB0WDoCMTnBnSB5ubW26ChKugtKNN5lHEEMdKfxQ=3D284" class=3D"copylink=
+">  <span style=3D"text-align:left;"> <img src=3D"https://www.redditstatic.=
+com/emaildigest/hide.png" width=3D"14px" alt=3D"" class=3D"copyimg"/>Hide r=
+/oddlysatisfying </span>  </a>
+</td></tr></table>
+</td></tr></table>
+</td></tr></table>
+</td></tr>
+<tr><td align=3D"center" style=3D"padding-top:30px;">
+<table class=3D"w90m" width=3D"50%" border=3D"0" align=3D"center" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"border-to=
+p:1px solid #E4E4E4;">
+</td></tr></table>
+</td></tr>
+
+<tr><td align=3D"center" style=3D"padding-top:10px;">
+<table width=3D"90%" border=3D"0" align=3D"center" cellpadding=3D"0" cellsp=
+acing=3D"0"><tr><td valign=3D"top">
+<table class=3D"w100" width=3D"515" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td>
+<table class=3D"w100m" width=3D"90%" border=3D"0" align=3D"left" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tr><td align=3D"left" style=3D"padding-top:20px;=
+">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" alig=
+n=3D"left"><tr>  <td width=3D"24" align=3D"left"><a href=3D"https://click.r=
+edditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FSweatyPalms%2F%3F$deep_l=
+ink=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_f=
+ullname=3Dt3_10gwnfl%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26r=
+ef_source=3Demail%26utm_content=3Dpost_subreddit/1/01000185d0ac0832-bfbd84e=
+c-788f-41fa-ac7e-9c2ff82c6a2a-000000/yu5fOZgPlvaRY9D_-qDg22JA1qnVlQg5M6U7_U=
+VeVV0=3D284"><img src=3D"https://styles.redditmedia.com/t5_2v567/styles/com=
+munityIcon_v1is3hga8nf51.png" width=3D"24" alt=3D"" style=3D"display:block;=
+border:0;"/></a>
+</td>
+<td style=3D"padding-left:10px;text-align:left;"> <a href=3D"https://click.=
+redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FSweatyPalms%2F%3F$deep_=
+link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_=
+fullname=3Dt3_10gwnfl%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26=
+ref_source=3Demail%26utm_content=3Dpost_subreddit/2/01000185d0ac0832-bfbd84=
+ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/Jk8l6pFeaCxEVq3SECF9jiTq_XBFhJe37jI2u=
+8ADIvg=3D284" style=3D"color:#888888;text-decoration:none;"> <span style=3D=
+"font-size:15px;color:#888888;font-family:Helvetica,Arial,sans-serif;font-w=
+eight:bold;width:1px;white-space:nowrap;">r/SweatyPalms</span></a> <span cl=
+ass=3D"hidem">&#183;</span> <span class=3D"author" style=3D"display:inline-=
+block;"> <a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit=
+.com%2Fr%2FSweatyPalms%2Fcomments%2F10gwnfl%2Fflying_over_a_mountain%2F%3F$=
+deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26=
+post_fullname=3Dt3_10gwnfl%26post_index=3D4%26ref=3Demail_digest%26ref_camp=
+aign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_author/1/0100=
+0185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/t9eGyay15bcG_H-5pF=
+ao8jMJ0ZI01xqgxzSVD4yA-3Q=3D284" class=3D"linkclr1">Posted by
+u/Fossanera1</a>&nbsp;<a href=3D"https://click.redditmail.com/CL0/https:%2F=
+%2Fwww.reddit.com%2Fr%2FSweatyPalms%2Fcomments%2F10gwnfl%2Fflying_over_a_mo=
+untain%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3=
+bb73f562a4%26post_fullname=3Dt3_10gwnfl%26post_index=3D4%26ref=3Demail_dige=
+st%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_=
+timestamp/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/f1=
+BksOUTuJPKcVvNtoWXXanv-Syifs41uwuZHqjwhfA=3D284" class=3D"linkclr1">6h ago<=
+/a></span>
+</td>  </tr></table>
+</td></tr><tr>  <td style=3D"padding-top:10px;text-align:left;font-size:16p=
+x;line-height:1.2em;color:black;font-family:Helvetica,Arial,sans-serif;font=
+-weight:bold;"><a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.=
+reddit.com%2Fr%2FSweatyPalms%2Fcomments%2F10gwnfl%2Fflying_over_a_mountain%=
+2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f56=
+2a4%26post_fullname=3Dt3_10gwnfl%26post_index=3D4%26ref=3Demail_digest%26re=
+f_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_title/1=
+/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/hfgfKZRvYPw28=
+TaYwS67Ymgdyc4NaJcKqV6VFZPnnMM=3D284" style=3D"color:black;text-decoration:=
+none;"><span class=3D"headline">Flying over a mountain</span></a>
+</td>  </tr><tr>  <td class=3D"hidem" style=3D"padding-top:10px;text-align:=
+left;font-size:14px;line-height:1.4em;color:#888888;font-family:Helvetica,A=
+rial,sans-serif;font-weight:normal;"><a href=3D"https://click.redditmail.co=
+m/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FSweatyPalms%2Fcomments%2F10gwnfl%2Ff=
+lying_over_a_mountain%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-af=
+d2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gwnfl%26post_index=3D4%26r=
+ef=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_=
+content=3Dpost_body/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a=
+-000000/hrnw6qobz0GjTyDyR8wTm_AXMRdTLxtGwWMZvz8Dn38=3D284" class=3D"linkclr=
+1"><span style=3D"color:#0079DA;">Read More</span></a>
+</td>  </tr>  <tr><td>
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"left"><tr>=
+<td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.redditm=
+ail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FSweatyPalms%2Fcomments%2F10gwn=
+fl%2Fflying_over_a_mountain%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af8=
+87d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gwnfl%26post_index=
+=3D4%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demai=
+l%26utm_content=3Dpost_karma/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2=
+ff82c6a2a-000000/S1r92lgAWz0MObtw_TNIM9wlZJ4pKFJonEC-BczbRQA=3D284" class=
+=3D"copylink">  <span style=3D"text-align:left;"> <img src=3D"https://www.r=
+edditstatic.com/emaildigest/upvote.png" width=3D"15px" alt=3D"" class=3D"co=
+pyimg"/>1559&nbsp;Votes </span>  </a>
+</td><td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.re=
+dditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2FSweatyPalms%2Fcomments%2F=
+10gwnfl%2Fflying_over_a_mountain%2F%3F$deep_link=3Dtrue%26correlation_id=3D=
+05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gwnfl%26post_in=
+dex=3D4%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3De=
+mail%26utm_content=3Dpost_comments/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac=
+7e-9c2ff82c6a2a-000000/IME3adgIN2uyPZfrGhYfpLuf31SiEIxzLCPkrJOml9M=3D284" c=
+lass=3D"copylink">  <span style=3D"text-align:left;"> <img src=3D"https://w=
+ww.redditstatic.com/emaildigest/reddit_comment.png" width=3D"13px" alt=3D""=
+ class=3D"copyimg"/>137&nbsp;Comments </span>  </a>
+</td></tr></table>
+</td></tr>  </table>
+</td></tr></table>
+<!--[if mso]>
+</td><td valign=3D"top">
+<![endif]-->
+<table class=3D"w100" width=3D"120" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td class=3D"copytd" style=3D"width:100%;max-w=
+idth:120px;padding-top:20px;"> <a href=3D"https://click.redditmail.com/CL0/=
+https:%2F%2Fwww.reddit.com%2Fmail%2Fnotification_off%2F8sgiw5ru%2F2v567%2F8=
+541f7b65fe44268f1e497f510223a95897a544cd6432a37870d798c12db24c1%3F$web_only=
+=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_full=
+name=3Dt3_10gwnfl%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_=
+source=3Demail%26utm_content=3Dpost_hide_subreddit/1/01000185d0ac0832-bfbd8=
+4ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/o0NLTt1_l-lTZ1GucJSOWuX5qwMjD5gy0lo6=
+iJ7oqUg=3D284" class=3D"copylink">  <span style=3D"text-align:left;"> <img =
+src=3D"https://www.redditstatic.com/emaildigest/hide.png" width=3D"14px" al=
+t=3D"" class=3D"copyimg"/>Hide r/SweatyPalms </span>  </a>
+</td></tr></table>
+</td></tr></table>
+</td></tr>
+<tr><td align=3D"center" style=3D"padding-top:30px;">
+<table class=3D"w90m" width=3D"50%" border=3D"0" align=3D"center" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"border-to=
+p:1px solid #E4E4E4;">
+</td></tr></table>
+</td></tr>
+
+<tr><td align=3D"center" style=3D"padding-top:10px;">
+<table width=3D"90%" border=3D"0" align=3D"center" cellpadding=3D"0" cellsp=
+acing=3D"0"><tr><td valign=3D"top">
+<table class=3D"w100" width=3D"515" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td>
+<table class=3D"w100m" width=3D"90%" border=3D"0" align=3D"left" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tr><td align=3D"left" style=3D"padding-top:20px;=
+">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" alig=
+n=3D"left"><tr>  <td width=3D"24" align=3D"left"><a href=3D"https://click.r=
+edditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Ffunnyvideos%2F%3F$deep_l=
+ink=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_f=
+ullname=3Dt3_10gw83q%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26r=
+ef_source=3Demail%26utm_content=3Dpost_subreddit/1/01000185d0ac0832-bfbd84e=
+c-788f-41fa-ac7e-9c2ff82c6a2a-000000/JPcVBz_I4Tac7NjoT7tCCUzw2QFyON94GGRFeP=
+P4MG0=3D284"><img src=3D"https://styles.redditmedia.com/t5_2qoos/styles/com=
+munityIcon_dhipgdtgru941.png" width=3D"24" alt=3D"" style=3D"display:block;=
+border:0;"/></a>
+</td>
+<td style=3D"padding-left:10px;text-align:left;"> <a href=3D"https://click.=
+redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Ffunnyvideos%2F%3F$deep_=
+link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_=
+fullname=3Dt3_10gw83q%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26=
+ref_source=3Demail%26utm_content=3Dpost_subreddit/2/01000185d0ac0832-bfbd84=
+ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/sq_LWf3F07SKuTR4XlNeD-jkHObSbDERURgYb=
+IL-PLw=3D284" style=3D"color:#888888;text-decoration:none;"> <span style=3D=
+"font-size:15px;color:#888888;font-family:Helvetica,Arial,sans-serif;font-w=
+eight:bold;width:1px;white-space:nowrap;">r/funnyvideos</span></a> <span cl=
+ass=3D"hidem">&#183;</span> <span class=3D"author" style=3D"display:inline-=
+block;"> <a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit=
+.com%2Fr%2Ffunnyvideos%2Fcomments%2F10gw83q%2Fshe_didnt_notice_her_hands%2F=
+%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a=
+4%26post_fullname=3Dt3_10gw83q%26post_index=3D5%26ref=3Demail_digest%26ref_=
+campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_author/1/=
+01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/MjqoMNpTGVu6g6=
+oJvw2c7kYWLw3K3PG5QxBl58o_CMs=3D284" class=3D"linkclr1">Posted by
+u/ThoumasTurbando</a>&nbsp;<a href=3D"https://click.redditmail.com/CL0/http=
+s:%2F%2Fwww.reddit.com%2Fr%2Ffunnyvideos%2Fcomments%2F10gw83q%2Fshe_didnt_n=
+otice_her_hands%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e=
+3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gw83q%26post_index=3D5%26ref=3De=
+mail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_conten=
+t=3Dpost_timestamp/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-=
+000000/28P4iE8XBjpsQGIuU4bbrQyNivu8KCmfbnjbjqWICPQ=3D284" class=3D"linkclr1=
+">6h ago</a></span>
+</td>  </tr></table>
+</td></tr><tr>  <td style=3D"padding-top:10px;text-align:left;font-size:16p=
+x;line-height:1.2em;color:black;font-family:Helvetica,Arial,sans-serif;font=
+-weight:bold;"><a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.=
+reddit.com%2Fr%2Ffunnyvideos%2Fcomments%2F10gw83q%2Fshe_didnt_notice_her_ha=
+nds%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb7=
+3f562a4%26post_fullname=3Dt3_10gw83q%26post_index=3D5%26ref=3Demail_digest%=
+26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_tit=
+le/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/P-rpmwDUK=
+_U0vtSx1xq0oziuBJ5YTJKhraFNL6JGJdw=3D284" style=3D"color:black;text-decorat=
+ion:none;"><span class=3D"headline">she didn&#39;t notice her hands</span><=
+/a>
+</td>  </tr><tr>  <td class=3D"hidem" style=3D"padding-top:10px;text-align:=
+left;font-size:14px;line-height:1.4em;color:#888888;font-family:Helvetica,A=
+rial,sans-serif;font-weight:normal;"><a href=3D"https://click.redditmail.co=
+m/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Ffunnyvideos%2Fcomments%2F10gw83q%2Fs=
+he_didnt_notice_her_hands%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887=
+d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gw83q%26post_index=3D5=
+%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26=
+utm_content=3Dpost_body/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c=
+6a2a-000000/wUVyFwUhoc5CZ4erfRLrIhjQpG7fMcBTIkv2QgvRbZM=3D284" class=3D"lin=
+kclr1"><span style=3D"color:#0079DA;">Read More</span></a>
+</td>  </tr>  <tr><td>
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"left"><tr>=
+<td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.redditm=
+ail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Ffunnyvideos%2Fcomments%2F10gw8=
+3q%2Fshe_didnt_notice_her_hands%2F%3F$deep_link=3Dtrue%26correlation_id=3D0=
+5af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gw83q%26post_ind=
+ex=3D5%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Dem=
+ail%26utm_content=3Dpost_karma/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9=
+c2ff82c6a2a-000000/_nTho4BgpKzzp3Tr58lUt0uUjHuf6NBU4inm07BFbGY=3D284" class=
+=3D"copylink">  <span style=3D"text-align:left;"> <img src=3D"https://www.r=
+edditstatic.com/emaildigest/upvote.png" width=3D"15px" alt=3D"" class=3D"co=
+pyimg"/>324&nbsp;Votes </span>  </a>
+</td><td class=3D"copytd" style=3D"width:50%;"> <a href=3D"https://click.re=
+dditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fr%2Ffunnyvideos%2Fcomments%2F=
+10gw83q%2Fshe_didnt_notice_her_hands%2F%3F$deep_link=3Dtrue%26correlation_i=
+d=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gw83q%26pos=
+t_index=3D5%26ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=
+=3Demail%26utm_content=3Dpost_comments/1/01000185d0ac0832-bfbd84ec-788f-41f=
+a-ac7e-9c2ff82c6a2a-000000/jZDuh_X6UV_nSfJgCRH_KdQiSW_5frcuC-Y8JZF7HRU=3D28=
+4" class=3D"copylink">  <span style=3D"text-align:left;"> <img src=3D"https=
+://www.redditstatic.com/emaildigest/reddit_comment.png" width=3D"13px" alt=
+=3D"" class=3D"copyimg"/>14&nbsp;Comments </span>  </a>
+</td></tr></table>
+</td></tr>  </table>
+</td></tr></table>
+<!--[if mso]>
+</td><td valign=3D"top">
+<![endif]-->
+<table class=3D"w100" width=3D"120" border=3D"0" align=3D"left" cellpadding=
+=3D"0" cellspacing=3D"0"><tr><td class=3D"padt20" style=3D"padding-top:35px=
+;">
+<table class=3D"w100m" width=3D"100%" border=3D"0" align=3D"left" cellpaddi=
+ng=3D"0" cellspacing=3D"0"><tr>  <td background=3D"https://external-preview=
+.redd.it/gDqyevZDYrbEVKMTJncaTfyF7HGeV_gTf8NZvnzvmVc.png?width=3D640&amp;cr=
+op=3Dsmart&amp;auto=3Dwebp&amp;s=3D29022a1f6ee2f9604e92c2adf7c76fb3a85232f8=
+" align=3D"center" style=3D"background-size:cover;background-position:left =
+center;background-repeat:no-repeat;border:1px solid #eeeeee;">
+<!--[if gte mso 9]><v:image xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=
+=3D"true" stroke=3D"false" style=3D"border:0;display:inline-block;width:120=
+px;height:100px;" src=3D"https://www.redditstatic.com/emaildigest/reddit_po=
+st_image1_mobile.jpg"/><v:rect xmlns:v=3D"urn:schemas-microsoft-com:vml" fi=
+ll=3D"true" stroke=3D"false" style=3D"border:0;display:inline-block;positio=
+n:absolute;width:120px;height:100px;"><v:fill opacity=3D"0%" color=3D"#ffff=
+ff"/><v:textbox inset=3D"0,0,0,0">
+<![endif]--> <a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.re=
+ddit.com%2Fr%2Ffunnyvideos%2Fcomments%2F10gw83q%2Fshe_didnt_notice_her_hand=
+s%2F%3F$deep_link=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f=
+562a4%26post_fullname=3Dt3_10gw83q%26post_index=3D5%26ref=3Demail_digest%26=
+ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dpost_image=
+/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/IWk5yfyBg2A=
+BMy63_A7nYpUmRXH0xWNMHCG5_H2shqU=3D284" style=3D"display:block;border:0;"><=
+div class=3D"image-container">
+<table width=3D"100%" border=3D"0" align=3D"center" cellpadding=3D"0" cells=
+pacing=3D"0"><tr><td class=3D"image" height=3D"100" align=3D"center">&nbsp;
+</td></tr></table></div></a>
+<!--[if gte mso 9]></v:textbox></v:fill></v:rect></v:image> -->
+<!--<![endif]-->
+</td></tr><tr><td class=3D"copytd" style=3D"width:100%;max-width:120px;"> <=
+a href=3D"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fmai=
+l%2Fnotification_off%2F8sgiw5ru%2F2qoos%2Fd4df084745fa20f9558a2bafccc0f1ed4=
+fe462aa941c11ad550bc424a2f2d782%3F$web_only=3Dtrue%26correlation_id=3D05af8=
+87d-afd2-45e3-a874-a3bb73f562a4%26post_fullname=3Dt3_10gw83q%26ref=3Demail_=
+digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dp=
+ost_hide_subreddit/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-=
+000000/Zohuwp7sUW1xJB9yneZ5M11nJ-z1SITIxKKB2gDz3hk=3D284" class=3D"copylink=
+">  <span style=3D"text-align:left;"> <img src=3D"https://www.redditstatic.=
+com/emaildigest/hide.png" width=3D"14px" alt=3D"" class=3D"copyimg"/>Hide r=
+/funnyvideos </span>  </a>
+</td></tr></table>
+</td></tr></table>
+</td></tr></table>
+</td></tr>
+<tr><td align=3D"center" style=3D"padding-top:30px;">
+<table class=3D"w90m" width=3D"50%" border=3D"0" align=3D"center" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"border-to=
+p:1px solid #E4E4E4;">
+</td></tr></table>
+</td></tr>
+
+<tr><td align=3D"center" style=3D"padding-top:20px;">
+<table border=3D"0" align=3D"center" cellpadding=3D"0" cellspacing=3D"0"><t=
+r><td style=3D"background-color:#0079D3;-webkit-border-radius:3px;-moz-bord=
+er-radius:3px;border-radius:3px;overflow:hidden;">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0"><tr>=
+  <td class=3D"opensans" align=3D"center" height=3D"35" style=3D"padding-le=
+ft:35px;padding-right:35px;font-size:13px;color:white;font-family:Arial,san=
+s-serif;text-align:center;font-weight:normal;"><a href=3D"https://click.red=
+ditmail.com/CL0/https:%2F%2Fwww.reddit.com%3F$deep_link=3Dtrue%26correlatio=
+n_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26ref=3Demail_digest%26ref_camp=
+aign=3Demail_digest%26ref_source=3Demail%26utm_content=3Dview_more/1/010001=
+85d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/3rMvdW4ywV_3kER88QVY=
+S9A6dQcWV4pq8NOWXEpB8b8=3D284" style=3D"color:white;text-decoration:none;">=
+<span class=3D"opacity" style=3D"display:block;width:100%;padding-top:10px;=
+padding-bottom:10px;color:white;">VIEW MORE POSTS</span></a>
+</td>  </tr></table>
+</td></tr></table>
+</td></tr>
+</table>
+</td></tr>  <tr><td align=3D"center" style=3D"padding-top:20px;">
+<table align=3D"center" width=3D"90%" border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0"><tr><td style=3D"background-color:#E8F2F9;padding-top:30px;">
+<table align=3D"center" width=3D"100%" border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0"><tr><td align=3D"center">
+<table width=3D"85%" align=3D"center" border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0"><tr>  <td align=3D"center"><a href=3D"https://click.redditmail.=
+com/CL0/https:%2F%2Fwww.reddit.com%3F$deep_link=3Dtrue%26correlation_id=3D0=
+5af887d-afd2-45e3-a874-a3bb73f562a4%26ref=3Demail_digest%26ref_campaign=3De=
+mail_digest%26ref_source=3Demail%26utm_content=3Dfooter/1/01000185d0ac0832-=
+bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/JTf9KDwwv8wmzQuo_NRgxh5HN-6bYP_=
+jdu1je9qh6BM=3D284"><img src=3D"https://www.redditstatic.com/emaildigest/lo=
+go@2x.png" width=3D"100" alt=3D"" style=3D"display:block;border:0;"/></a>
+</td>  </tr><tr><td align=3D"center" style=3D"padding-top:20px;">
+<table align=3D"center" border=3D"0" cellspacing=3D"0" cellpadding=3D"0"><t=
+r>  <td align=3D"center" style=3D"padding-right:5px;"><a href=3D"https://cl=
+ick.redditmail.com/CL0/https:%2F%2Freddit.app.link%2F%3Faction=3Dclick%26pu=
+blisher_id=3D293679%26site_id=3D122129%26site_id_ios=3D121809%26utm_content=
+=3Dinstall_app/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-0000=
+00/oGM1gqFEeGwFOeQ3ZwDNmE8Vc5H9ACE3XOrjO1ipXp4=3D284"><img src=3D"https://w=
+ww.redditstatic.com/emaildigest/button_applestore.png" width=3D"131" alt=3D=
+"Download on the App Store" style=3D"display:block;border:0;color:black;fon=
+t-size:15px;font-weight:bold;font-family:sans-serif;max-width:100%;"
+class=3D"opacity"/></a>
+</td>
+<td align=3D"center" style=3D"padding-left:5px;"><a href=3D"https://click.r=
+edditmail.com/CL0/https:%2F%2Freddit.app.link%2F%3Faction=3Dclick%26publish=
+er_id=3D293679%26site_id=3D122129%26site_id_ios=3D121809%26utm_content=3Din=
+stall_app/2/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/4A=
+Z0-yxqL3nsTva6_O3TWoO5aA9cygwbDtEQqf6-V80=3D284"><img src=3D"https://www.re=
+dditstatic.com/emaildigest/button_googleplay.png" width=3D"131" alt=3D"Get =
+it on Google Play" style=3D"display:block;border:0;color:black;font-size:15=
+px;font-weight:bold;font-family:sans-serif;max-width:100%;" class=3D"opacit=
+y"/></a>
+</td>  </tr></table>
+</td></tr><tr>  <td class=3D"ftr" style=3D"padding-top:30px;font-weight:bol=
+d;">548 MARKET ST. #1<span></span>6<span></span>09<span></span>3,<span clas=
+s=3D"expandm">SAN FRANCISCO, CA&nbsp;94<span></span>10<span></span>4&ndash;=
+54<span></span>01</span>
+</td>  </tr><tr>  <td class=3D"ftr" style=3D"padding-top:20px;font-weight:n=
+ormal;"> This email was intended for u/user46755. <a href=3D"https://click.=
+redditmail.com/CL0/https:%2F%2Fwww.reddit.com%2Fmail%2Funsubscribe%2F8sgiw5=
+ru%2F2%2Fbf1049a107a233b6c9ce6dc5ad8f1c46ddde2d66f1982c81fc925b32f6944ba1%3=
+F$web_only=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%2=
+6ref=3Demail_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26ut=
+m_content=3Dunsubscribe/1/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c=
+6a2a-000000/e4nSaT4YVhD_cgBal--e9_vGnQil6Ba-vZHmBHWQuaA=3D284" target=3D"_b=
+lank" class=3D"link c-blue" style=3D"text-decoration:none;color:#006cbf;"><=
+span class=3D"link c-blue" style=3D"text-decoration:none;color:#006cbf;">Un=
+subscribe</span></a> from daily digest messages, or visit your settings to =
+manage what emails Reddit sends you.
+</td>  </tr></table>
+</td></tr><tr>  <td align=3D"center" style=3D"padding-top:20px;"><a href=3D=
+"https://click.redditmail.com/CL0/https:%2F%2Fwww.reddit.com%3F$deep_link=
+=3Dtrue%26correlation_id=3D05af887d-afd2-45e3-a874-a3bb73f562a4%26ref=3Dema=
+il_digest%26ref_campaign=3Demail_digest%26ref_source=3Demail%26utm_content=
+=3Dfooter/2/01000185d0ac0832-bfbd84ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/7e=
+5h2jih9wSUxc-Pz_WWYYQo-kO18xxdr1gB50gPZH8=3D284"><img src=3D"https://www.re=
+dditstatic.com/emaildigest/bottom_img.png" width=3D"640" alt=3D"" style=3D"=
+display:block;border:0;background-color:none;color:white;font-size:20px;fon=
+t-weight:bold;font-family:sans-serif;max-width:100%;" class=3D"resizem"/></=
+a>
+</td>  </tr></table>
+</td></tr></table>
+</td></tr>  </table>
+</td></tr></table>
+<img alt=3D"" src=3D"http://click.redditmail.com/CI0/01000185d0ac0832-bfbd8=
+4ec-788f-41fa-ac7e-9c2ff82c6a2a-000000/BmwfeC1hPHIiHlHnmIi1v_tKMNGiQDcMtWhQ=
+RhrDKI0=3D284" style=3D"display: none; width: 1px; height: 1px;">
+</body>
+</html>

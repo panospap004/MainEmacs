@@ -1,0 +1,876 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:6359:296:b0:f1:c1b2:69b3 with SMTP id ek22csp1195133rwb;
+        Fri, 3 Feb 2023 09:53:49 -0800 (PST)
+X-Google-Smtp-Source: AK7set9nEg6rf8ltgfCYhuP+2hd1SOj1uF/XGo23YotsLrL0DzqLN4V7Y+F8CbV5JBaGCmeLRBif
+X-Received: by 2002:a05:6a20:4411:b0:bf:e16:f3f with SMTP id ce17-20020a056a20441100b000bf0e160f3fmr13947565pzb.33.1675446829673;
+        Fri, 03 Feb 2023 09:53:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1675446829; cv=none;
+        d=google.com; s=arc-20160816;
+        b=JPgP6ScLr66SCE2ICUsAz7xhuGI9Wy0SL0UO1vbotMGF75D+dQUyeEA+shdiCEx5tm
+         q0Wk59mc9MOdQwlMYew4ityN96c9cy8Vd3NOAGXiO+w5McdOQPbOBOMYeBD8QqhlCmpD
+         CqxqqVEglBGyy3azL/rsbmiUC2dUvqqKkwkMAqMPDB0utSq1obcxq5yOUGVeAth25Dcx
+         +Iti96xKpiG5x+3LY6lQNleLtmPeAMgQ5Obv6eqL2/tkv7nYDCY3FeOUghC/wb4kPuve
+         dEcJmD7oBxj3zFLJrug9ZQZ/2LteSqovBmUCijlAPSoAOk4KXtwhZe2+VgIiyXPCLlTp
+         HaIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=list-id:list-unsubscribe:content-transfer-encoding:mime-version
+         :subject:message-id:to:reply-to:from:date:dkim-signature;
+        bh=NjLZ/zwJSs8JoC/FgXjBSK7rTsClAWkTjxdf80htecc=;
+        b=iJxLpU1qkCe5DCiRtrlSnpxEvfp5LVeU1qBfIxKiKRBOHwXE8nvh0N4F3bTRbcMoV8
+         M2XzGd4Yy4+4Y1DDNY1FyspSye4CZzi9sVghRcKPA9geEajxaasJy+/TO/8KQtamZUtV
+         opGil+XkxOqWWbi1tVH+VV9akq7ULC7e+B+tQhIVVakVY5bU8H5XerQ+a439jXlo3MqU
+         KypBE2HuBcGwl9jlmiq/gKGahexui+ktwxcjjd3nchQajQrNBthB/RAU/pueaZdxn0w0
+         9kQ8ABXUV/e1Xa4XyawERQ6EhKOat79ZeopvMDLo7sYiBZ+zKRUnwCW7/1Ve0Z8bFTO8
+         F28w==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.exercism.io header.s=scph1018 header.b=YQVRlvPe;
+       spf=pass (google.com: domain of msprvs1=19398sgfjqg1t=bounces-175166@mail.exercism.io designates 147.253.210.130 as permitted sender) smtp.mailfrom="msprvs1=19398sGfJqg1t=bounces-175166@mail.exercism.io"
+Return-Path: <msprvs1=19398sGfJqg1t=bounces-175166@mail.exercism.io>
+Received: from mta-210-130.sparkpostmail.com (mta-210-130.sparkpostmail.com. [147.253.210.130])
+        by mx.google.com with ESMTPS id r18-20020a638f52000000b0047923e93e6esi3202897pgn.555.2023.02.03.09.53.49
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Feb 2023 09:53:49 -0800 (PST)
+Received-SPF: pass (google.com: domain of msprvs1=19398sgfjqg1t=bounces-175166@mail.exercism.io designates 147.253.210.130 as permitted sender) client-ip=147.253.210.130;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.exercism.io header.s=scph1018 header.b=YQVRlvPe;
+       spf=pass (google.com: domain of msprvs1=19398sgfjqg1t=bounces-175166@mail.exercism.io designates 147.253.210.130 as permitted sender) smtp.mailfrom="msprvs1=19398sGfJqg1t=bounces-175166@mail.exercism.io"
+X-MSFBL: zijieGBDUCVjIk76ykehNq01Yg7bUaEkQRoKMDUe8jw=|eyJjdXN0b21lcl9pZCI
+	6IjE3NTE2NiIsInIiOiJsZXRzLm1pbmUwMDRAZ21haWwuY29tIiwibWVzc2FnZV9
+	pZCI6IjYzZDMyYzRhZGQ2MzI4ODlhODExIiwidGVuYW50X2lkIjoic3BjIiwic3V
+	iYWNjb3VudF9pZCI6IjAifQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.exercism.io;
+	s=scph1018; t=1675446829; i=@mail.exercism.io;
+	bh=NjLZ/zwJSs8JoC/FgXjBSK7rTsClAWkTjxdf80htecc=;
+	h=Date:From:To:Message-ID:Subject:Content-Type:List-Unsubscribe:
+	 From:To:Cc:Subject;
+	b=YQVRlvPeE38nRXUMhoAATJTvHzxN0SuZoZIDUGEJe8vnNeSu1IqFza/amXqe/NczW
+	 +9VfJBKSWVhQ5F5SGdIDmVRu6JiGWNJE3F3KS1zoghxDkVTaJGRrNYV7+t0HeUEvwt
+	 yYTnZCHeuwgrEQ+YSOai81lhm/hNGpdMNHFoL/O8=
+Authentication-Results:  gb.mta1vsmtp.cc.prd.sparkpost smtp.user=<hidden>; auth=pass (LOGIN)
+Received: from [18.169.104.25] ([18.169.104.25:60942] helo=smtp.sparkpostmail.com)
+	by gb.mta1vsmtp.cc.prd.sparkpost (envelope-from <hello@mail.exercism.io>)
+	(ecelerity 4.4.0.18001 r(msys-ecelerity:tags/4.4.0.47)) with ESMTPSA (cipher=AES-256-GCM) 
+	id 8A/11-19053-C2A4DD36; Fri, 03 Feb 2023 17:53:49 +0000
+Date: Fri, 03 Feb 2023 17:53:47 +0000
+From: Jeremy Walker <hello@mail.exercism.io>
+Reply-To: jonathan@exercism.org
+To: lolakias <lets.mine004@gmail.com>
+Message-ID: <63dd4a2b158e1_1136c17034246db@ip-10-1-2-152.eu-west-2.compute.internal.mail>
+Subject: It's Functional February!
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_63dd4a2b151d3_1136c17034245e9";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+List-Unsubscribe: <mailto:unsubscribe@unsub.spmta.com?subject=unsubscribe:NUXACAWTtaFx9XNZmRswGBj_AWO4l6euWt-4J0KQh18~|eyAicmNwdF90byI6ICJsZXRzLm1pbmUwMDRAZ21haWwuY29tIiwgInRlbmFudF9pZCI6ICJzcGMiLCAiY3VzdG9tZXJfaWQiOiAiMTc1MTY2IiwgInN1YmFjY291bnRfaWQiOiAiMCIsICJtZXNzYWdlX2lkIjogIjYzZDMyYzRhZGQ2MzI4ODlhODExIiB9>
+List-Id: <spc.175166.0.sparkpostmail.com>
+X-TUID: BRjw+ooqcOuW
+
+
+----==_mimepart_63dd4a2b151d3_1136c17034245e9
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hi lolakias,
+
+Here at Exercism, it's Functional February - a month dedicated to functional programming languages.
+
+We've put together a really fun month for you, with interviews with language creators (including Jose Valim and Louis Pilfold), tons of live streaming, lots of fun exercise for you to complete, and a whole load of community action going on.
+
+You can find all the details on the #12in23 Challenge page (sign up if you've not already - it's entirely free!): https://exercism.org/challenges/12in23
+
+Or watch our Intro to Functional February video, which introduces the month and gives a nice overview of some key functional programming concepts - topics like immutability, pattern matching, recursion, first-class pure functions and more: https://www.youtube.com/watch?v=uIFGx1SDnWI
+
+We'll be exploring topics like immutability, pattern matching, recursion, first-class pure functions and more. If you've never tried functional languages before, they're a really eye-opening fun approach to coding. And if you're a functional pro, there's loads to challenge and inspire you here too!
+
+Have a great day!
+
+Jeremy Walker
+Exercism Co-founder
+
+---
+
+You're receiving this because you've previously signed up to Exercism (the free, not-for-profit programming education platform) and are subscribed to our site update emails, where we send occasional updates when we add improvements to the platform.
+
+You can unsubscribe from this email (https://exercism.org/unsubscribe?key=receive_product_updates&token=e661e25083234343bf60587e899242e3) or change your notification settings (https://exercism.org/unsubscribe?token=e661e25083234343bf60587e899242e3) to opt out of some or all emails.
+
+----==_mimepart_63dd4a2b151d3_1136c17034245e9
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+=0D
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://w=
+ww.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">=0D
+<!--[if IE]><html xmlns=3D"http://www.w3.org/1999/xhtml" class=3D"ie"><![=
+endif]-->=0D
+<!--[if !IE]><!--><html style=3D"margin: 0;padding: 0;" xmlns=3D"http://w=
+ww.w3.org/1999/xhtml"><!--<![endif]-->=0D
+  <head>=0D
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8"/>=0D
+    <title></title>=0D
+    <!--[if !mso]><!--><meta http-equiv=3D"X-UA-Compatible" content=3D"IE=
+=3Dedge"/><!--<![endif]-->=0D
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width"/>=0D
+=0D
+<style type=3D"text/css">=0D
+@media only screen and (min-width: 620px){.wrapper{min-width:600px !impor=
+tant}.wrapper h1{}.wrapper h1{font-size:22px !important;line-height:31px =
+!important}.wrapper h2{}.wrapper h3{}.column{}.wrapper .size-8{font-size:=
+8px !important;line-height:16px !important}.wrapper .size-9{font-size:9px=
+ !important;line-height:16px !important}.wrapper .size-10{font-size:10px =
+!important;line-height:18px !important}.wrapper .size-11{font-size:11px !=
+important;line-height:19px !important}.wrapper .size-12{font-size:12px !i=
+mportant;line-height:19px !important}.wrapper .size-13{font-size:13px !im=
+portant;line-height:21px !important}.wrapper .size-14{font-size:16px !imp=
+ortant;line-height:21px !important}.wrapper .size-15{font-size:16px !impo=
+rtant;line-height:23px !important}.wrapper .size-16{font-size:16px !impor=
+tant;line-height:24px !important}.wrapper .size-17{font-size:17px !import=
+ant;line-height:26px=0D
+!important}.wrapper .size-18{font-size:18px !important;line-height:26px !=
+important}.wrapper .size-20{font-size:20px !important;line-height:28px !i=
+mportant}.wrapper .size-22{font-size:22px !important;line-height:31px !im=
+portant}.wrapper .size-24{font-size:24px !important;line-height:32px !imp=
+ortant}.wrapper .size-26{font-size:26px !important;line-height:34px !impo=
+rtant}.wrapper .size-28{font-size:28px !important;line-height:36px !impor=
+tant}.wrapper .size-30{font-size:30px !important;line-height:38px !import=
+ant}.wrapper .size-32{font-size:32px !important;line-height:40px !importa=
+nt}.wrapper .size-34{font-size:34px !important;line-height:43px !importan=
+t}.wrapper .size-36{font-size:36px !important;line-height:43px !important=
+}.wrapper .size-40{font-size:40px !important;line-height:47px !important}=
+.wrapper .size-44{font-size:44px !important;line-height:50px !important}.=
+wrapper=0D
+.size-48{font-size:48px !important;line-height:54px !important}.wrapper .=
+size-56{font-size:56px !important;line-height:60px !important}.wrapper .s=
+ize-64{font-size:64px !important;line-height:63px !important}}=0D
+</style>=0D
+=0D
+    <meta name=3D"x-apple-disable-message-reformatting"/>=0D
+    <style type=3D"text/css">=0D
+.main, .mso {=0D
+  margin: 0;=0D
+  padding: 0;=0D
+}=0D
+table {=0D
+  border-collapse: collapse;=0D
+  table-layout: fixed;=0D
+}=0D
+* {=0D
+  line-height: inherit;=0D
+}=0D
+[x-apple-data-detectors] {=0D
+  color: inherit !important;=0D
+  text-decoration: none !important;=0D
+}=0D
+.wrapper .footer__share-button a:hover,=0D
+.wrapper .footer__share-button a:focus {=0D
+  color: #ffffff !important;=0D
+}=0D
+.wrapper .footer__share-button a.icon-white:hover,=0D
+.wrapper .footer__share-button a.icon-white:focus {=0D
+  color: #ffffff !important;=0D
+}=0D
+.wrapper .footer__share-button a.icon-black:hover,=0D
+.wrapper .footer__share-button a.icon-black:focus {=0D
+  color: #000000 !important;=0D
+}=0D
+.btn a:hover,=0D
+.btn a:focus,=0D
+.footer__share-button a:hover,=0D
+.footer__share-button a:focus,=0D
+.email-footer__links a:hover,=0D
+.email-footer__links a:focus {=0D
+  opacity: 0.8;=0D
+}=0D
+.preheader,=0D
+.header,=0D
+.layout,=0D
+.column {=0D
+  transition: width 0.25s ease-in-out, max-width 0.25s ease-in-out;=0D
+}=0D
+.preheader td {=0D
+  padding-bottom: 8px;=0D
+}=0D
+.layout,=0D
+div.header {=0D
+  max-width: 400px !important;=0D
+  -fallback-width: 95% !important;=0D
+  width: calc(100% - 20px) !important;=0D
+}=0D
+div.preheader {=0D
+  max-width: 360px !important;=0D
+  -fallback-width: 90% !important;=0D
+  width: calc(100% - 60px) !important;=0D
+}=0D
+.snippet,=0D
+.webversion {=0D
+  Float: none !important;=0D
+}=0D
+.stack .column {=0D
+  max-width: 400px !important;=0D
+  width: 100% !important;=0D
+}=0D
+.fixed-width.has-border {=0D
+  max-width: 402px !important;=0D
+}=0D
+.fixed-width.has-border .layout__inner {=0D
+  box-sizing: border-box;=0D
+}=0D
+.snippet,=0D
+.webversion {=0D
+  width: 50% !important;=0D
+}=0D
+.ie .btn {=0D
+  width: 100%;=0D
+}=0D
+.ie .stack .column,=0D
+.ie .stack .gutter {=0D
+  display: table-cell;=0D
+  float: none !important;=0D
+}=0D
+.ie div.preheader,=0D
+.ie .email-footer {=0D
+  max-width: 560px !important;=0D
+  width: 560px !important;=0D
+}=0D
+.ie .snippet,=0D
+.ie .webversion {=0D
+  width: 280px !important;=0D
+}=0D
+.ie div.header,=0D
+.ie .layout {=0D
+  max-width: 600px !important;=0D
+  width: 600px !important;=0D
+}=0D
+.ie .two-col .column {=0D
+  max-width: 300px !important;=0D
+  width: 300px !important;=0D
+}=0D
+.ie .three-col .column,=0D
+.ie .narrow {=0D
+  max-width: 200px !important;=0D
+  width: 200px !important;=0D
+}=0D
+.ie .wide {=0D
+  width: 400px !important;=0D
+}=0D
+.ie .stack.fixed-width.has-border,=0D
+.ie .stack.has-gutter.has-border {=0D
+  max-width: 602px !important;=0D
+  width: 602px !important;=0D
+}=0D
+.ie .stack.two-col.has-gutter .column {=0D
+  max-width: 290px !important;=0D
+  width: 290px !important;=0D
+}=0D
+.ie .stack.three-col.has-gutter .column,=0D
+.ie .stack.has-gutter .narrow {=0D
+  max-width: 188px !important;=0D
+  width: 188px !important;=0D
+}=0D
+.ie .stack.has-gutter .wide {=0D
+  max-width: 394px !important;=0D
+  width: 394px !important;=0D
+}=0D
+.ie .stack.two-col.has-gutter.has-border .column {=0D
+  max-width: 292px !important;=0D
+  width: 292px !important;=0D
+}=0D
+.ie .stack.three-col.has-gutter.has-border .column,=0D
+.ie .stack.has-gutter.has-border .narrow {=0D
+  max-width: 190px !important;=0D
+  width: 190px !important;=0D
+}=0D
+.ie .stack.has-gutter.has-border .wide {=0D
+  max-width: 396px !important;=0D
+  width: 396px !important;=0D
+}=0D
+.ie .fixed-width .layout__inner {=0D
+  border-left: 0 none white !important;=0D
+  border-right: 0 none white !important;=0D
+}=0D
+.ie .layout__edges {=0D
+  display: none;=0D
+}=0D
+.mso .layout__edges {=0D
+  font-size: 0;=0D
+}=0D
+.layout-fixed-width,=0D
+.mso .layout-full-width {=0D
+  background-color: #ffffff;=0D
+}=0D
+@media only screen and (min-width: 620px) {=0D
+  .column,=0D
+  .gutter {=0D
+    display: table-cell;=0D
+    Float: none !important;=0D
+    vertical-align: top;=0D
+  }=0D
+  div.preheader,=0D
+  .email-footer {=0D
+    max-width: 560px !important;=0D
+    width: 560px !important;=0D
+  }=0D
+  .snippet,=0D
+  .webversion {=0D
+    width: 280px !important;=0D
+  }=0D
+  div.header,=0D
+  .layout,=0D
+  .one-col .column {=0D
+    max-width: 600px !important;=0D
+    width: 600px !important;=0D
+  }=0D
+  .fixed-width.has-border,=0D
+  .fixed-width.x_has-border,=0D
+  .has-gutter.has-border,=0D
+  .has-gutter.x_has-border {=0D
+    max-width: 602px !important;=0D
+    width: 602px !important;=0D
+  }=0D
+  .two-col .column {=0D
+    max-width: 300px !important;=0D
+    width: 300px !important;=0D
+  }=0D
+  .three-col .column,=0D
+  .column.narrow,=0D
+  .column.x_narrow {=0D
+    max-width: 200px !important;=0D
+    width: 200px !important;=0D
+  }=0D
+  .column.wide,=0D
+  .column.x_wide {=0D
+    width: 400px !important;=0D
+  }=0D
+  .two-col.has-gutter .column,=0D
+  .two-col.x_has-gutter .column {=0D
+    max-width: 290px !important;=0D
+    width: 290px !important;=0D
+  }=0D
+  .three-col.has-gutter .column,=0D
+  .three-col.x_has-gutter .column,=0D
+  .has-gutter .narrow {=0D
+    max-width: 188px !important;=0D
+    width: 188px !important;=0D
+  }=0D
+  .has-gutter .wide {=0D
+    max-width: 394px !important;=0D
+    width: 394px !important;=0D
+  }=0D
+  .two-col.has-gutter.has-border .column,=0D
+  .two-col.x_has-gutter.x_has-border .column {=0D
+    max-width: 292px !important;=0D
+    width: 292px !important;=0D
+  }=0D
+  .three-col.has-gutter.has-border .column,=0D
+  .three-col.x_has-gutter.x_has-border .column,=0D
+  .has-gutter.has-border .narrow,=0D
+  .has-gutter.x_has-border .narrow {=0D
+    max-width: 190px !important;=0D
+    width: 190px !important;=0D
+  }=0D
+  .has-gutter.has-border .wide,=0D
+  .has-gutter.x_has-border .wide {=0D
+    max-width: 396px !important;=0D
+    width: 396px !important;=0D
+  }=0D
+}=0D
+@supports (display: flex) {=0D
+  @media only screen and (min-width: 620px) {=0D
+    .fixed-width.has-border .layout__inner {=0D
+      display: flex !important;=0D
+    }=0D
+  }=0D
+}=0D
+/***=0D
+* Mobile Styles=0D
+*=0D
+* 1. Overriding inline styles=0D
+*/=0D
+@media(max-width: 619px) {=0D
+  .email-flexible-footer .left-aligned-footer .column,=0D
+  .email-flexible-footer .center-aligned-footer,=0D
+  .email-flexible-footer .right-aligned-footer .column {=0D
+    max-width: 100% !important; /* [1] */=0D
+    text-align: center !important; /* [1] */=0D
+    width: 100% !important; /* [1] */=0D
+  }=0D
+  .flexible-footer-logo {=0D
+    margin-left: 0px !important; /* [1] */=0D
+    margin-right: 0px !important; /* [1] */=0D
+  }=0D
+  .email-flexible-footer .left-aligned-footer .flexible-footer__share-but=
+ton__container,=0D
+  .email-flexible-footer .center-aligned-footer .flexible-footer__share-b=
+utton__container,=0D
+  .email-flexible-footer .right-aligned-footer .flexible-footer__share-bu=
+tton__container {=0D
+    display: inline-block;=0D
+    margin-left: 5px !important; /* [1] */=0D
+    margin-right: 5px !important; /* [1] */=0D
+  }=0D
+  .email-flexible-footer__additionalinfo--center {=0D
+    text-align: center !important; /* [1] */=0D
+  }=0D
+=0D
+  .email-flexible-footer .left-aligned-footer table,=0D
+  .email-flexible-footer .center-aligned-footer table,=0D
+  .email-flexible-footer .right-aligned-footer table {=0D
+    display: table !important; /* [1] */=0D
+    width: 100% !important; /* [1] */=0D
+  }=0D
+  .email-flexible-footer .footer__share-button,=0D
+  .email-flexible-footer .email-footer__additional-info {=0D
+    margin-left: 20px;=0D
+    margin-right: 20px;=0D
+  }=0D
+}=0D
+=0D
+@media (max-width: 321px) {=0D
+  .fixed-width.has-border .layout__inner {=0D
+    border-width: 1px 0 !important;=0D
+  }=0D
+  .layout,=0D
+  .stack .column {=0D
+    min-width: 320px !important;=0D
+    width: 320px !important;=0D
+  }=0D
+  .border {=0D
+    display: none;=0D
+  }=0D
+  .has-gutter .border {=0D
+    display: table-cell;=0D
+  }=0D
+}=0D
+.mso div {=0D
+  border: 0 none white !important;=0D
+}=0D
+.mso .w560 .divider {=0D
+  margin-left: 260px !important;=0D
+  margin-right: 260px !important;=0D
+}=0D
+.mso .w360 .divider {=0D
+  margin-left: 160px !important;=0D
+  margin-right: 160px !important;=0D
+}=0D
+.mso .w260 .divider {=0D
+  margin-left: 110px !important;=0D
+  margin-right: 110px !important;=0D
+}=0D
+.mso .w160 .divider {=0D
+  margin-left: 60px !important;=0D
+  margin-right: 60px !important;=0D
+}=0D
+.mso .w354 .divider {=0D
+  margin-left: 157px !important;=0D
+  margin-right: 157px !important;=0D
+}=0D
+.mso .w250 .divider {=0D
+  margin-left: 105px !important;=0D
+  margin-right: 105px !important;=0D
+}=0D
+.mso .w148 .divider {=0D
+  margin-left: 54px !important;=0D
+  margin-right: 54px !important;=0D
+}=0D
+.mso .size-8,=0D
+.ie .size-8 {=0D
+  font-size: 8px !important;=0D
+  line-height: 16px !important;=0D
+}=0D
+.mso .size-9,=0D
+.ie .size-9 {=0D
+  font-size: 9px !important;=0D
+  line-height: 16px !important;=0D
+}=0D
+.mso .size-10,=0D
+.ie .size-10 {=0D
+  font-size: 10px !important;=0D
+  line-height: 18px !important;=0D
+}=0D
+.mso .size-11,=0D
+.ie .size-11 {=0D
+  font-size: 11px !important;=0D
+  line-height: 19px !important;=0D
+}=0D
+.mso .size-12,=0D
+.ie .size-12 {=0D
+  font-size: 12px !important;=0D
+  line-height: 19px !important;=0D
+}=0D
+.mso .size-13,=0D
+.ie .size-13 {=0D
+  font-size: 13px !important;=0D
+  line-height: 21px !important;=0D
+}=0D
+.mso .size-14,=0D
+.ie .size-14 {=0D
+  font-size: 16px !important;=0D
+  line-height: 21px !important;=0D
+}=0D
+.mso .size-15,=0D
+.ie .size-15 {=0D
+  font-size: 16px !important;=0D
+  line-height: 23px !important;=0D
+}=0D
+.mso .size-16,=0D
+.ie .size-16 {=0D
+  font-size: 16px !important;=0D
+  line-height: 24px !important;=0D
+}=0D
+.mso .size-17,=0D
+.ie .size-17 {=0D
+  font-size: 17px !important;=0D
+  line-height: 26px !important;=0D
+}=0D
+.mso .size-18,=0D
+.ie .size-18 {=0D
+  font-size: 18px !important;=0D
+  line-height: 26px !important;=0D
+}=0D
+.mso .size-20,=0D
+.ie .size-20 {=0D
+  font-size: 20px !important;=0D
+  line-height: 28px !important;=0D
+}=0D
+.mso .size-22,=0D
+.ie .size-22 {=0D
+  font-size: 22px !important;=0D
+  line-height: 31px !important;=0D
+}=0D
+.mso .size-24,=0D
+.ie .size-24 {=0D
+  font-size: 24px !important;=0D
+  line-height: 32px !important;=0D
+}=0D
+.mso .size-26,=0D
+.ie .size-26 {=0D
+  font-size: 26px !important;=0D
+  line-height: 34px !important;=0D
+}=0D
+.mso .size-28,=0D
+.ie .size-28 {=0D
+  font-size: 28px !important;=0D
+  line-height: 36px !important;=0D
+}=0D
+.mso .size-30,=0D
+.ie .size-30 {=0D
+  font-size: 30px !important;=0D
+  line-height: 38px !important;=0D
+}=0D
+.mso .size-32,=0D
+.ie .size-32 {=0D
+  font-size: 32px !important;=0D
+  line-height: 40px !important;=0D
+}=0D
+.mso .size-34,=0D
+.ie .size-34 {=0D
+  font-size: 34px !important;=0D
+  line-height: 43px !important;=0D
+}=0D
+.mso .size-36,=0D
+.ie .size-36 {=0D
+  font-size: 36px !important;=0D
+  line-height: 43px !important;=0D
+}=0D
+.mso .size-40,=0D
+.ie .size-40 {=0D
+  font-size: 40px !important;=0D
+  line-height: 47px !important;=0D
+}=0D
+.mso .size-44,=0D
+.ie .size-44 {=0D
+  font-size: 44px !important;=0D
+  line-height: 50px !important;=0D
+}=0D
+.mso .size-48,=0D
+.ie .size-48 {=0D
+  font-size: 48px !important;=0D
+  line-height: 54px !important;=0D
+}=0D
+.mso .size-56,=0D
+.ie .size-56 {=0D
+  font-size: 56px !important;=0D
+  line-height: 60px !important;=0D
+}=0D
+.mso .size-64,=0D
+.ie .size-64 {=0D
+  font-size: 64px !important;=0D
+  line-height: 63px !important;=0D
+}=0D
+</style>=0D
+=0D
+<!--[if !mso]><!-->=0D
+  <style type=3D"text/css">=0D
+    @import url(https://fonts.googleapis.com/css?family=3DPoppins:400,500=
+,600,700,400italic,700italic);=0D
+  </style>=0D
+  <link href=3D"https://fonts.googleapis.com/css?family=3DPoppins:400,500=
+,600,700,400italic,700italic" rel=3D"stylesheet" type=3D"text/css"/>=0D
+<!--<![endif]-->=0D
+=0D
+<style type=3D"text/css">=0D
+  .main,.mso{background-color:#fff}.logo a:hover,.logo a:focus{color:#0d1=
+012 !important}.footer-logo a:hover,.footer-logo a:focus{color:#372d1b !i=
+mportant}.mso .layout-has-border{border-top:1px solid #bdbdcb;border-bott=
+om:1px solid #bdbdcb}.mso .layout-has-bottom-border{border-bottom:1px sol=
+id #bdbdcb}.mso .border,.ie .border{background-color:#bdbdcb}.mso h1,.ie =
+h1{}.mso h1,.ie h1{font-size:22px !important;line-height:31px !important}=
+.mso h2,.ie h2{}.mso h3,.ie h3{}.mso .layout__inner,.ie .layout__inner{}.=
+mso .footer__share-button p{}.mso .footer__share-button p{font-family:Ubu=
+ntu,sans-serif}=0D
+</style>=0D
+=0D
+<meta name=3D"robots" content=3D"noindex,nofollow"/>=0D
+<meta name=3D"og:title" content=3D"Take the #12in23 Challenge"/>=0D
+</head>=0D
+=0D
+<!--[if mso]>=0D
+  <body class=3D"mso">=0D
+<![endif]-->=0D
+<!--[if !mso]><!-->=0D
+  <body class=3D"main full-padding" style=3D"margin: 0;padding: 0;-webkit=
+-text-size-adjust: 100%;">=0D
+<!--<![endif]-->=0D
+    <table class=3D"wrapper" style=3D"border-collapse: collapse;table-lay=
+out: fixed;min-width: 320px;width: 100%;background-color: #fff;" cellpadd=
+ing=3D"0" cellspacing=3D"0" role=3D"presentation"><tbody><tr><td>=0D
+      <div role=3D"banner">=0D
+        <div class=3D"header" style=3D"margin: 0 auto;max-width: 600px;mi=
+n-width: 320px; width: 320px;width: calc(28000% - 167400px);" id=3D"emb-e=
+mail-header-container">=0D
+        <!--[if (mso)|(IE)]><table align=3D"center" class=3D"header" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"wi=
+dth: 600px"><![endif]-->=0D
+          <div class=3D"logo emb-logo-margin-box" style=3D"font-size: 26p=
+x;line-height: 32px;margin-top: 20px;margin-bottom: 20px;color: #38434d;f=
+ont-family: Avenir,sans-serif;margin-left: 20px;margin-right: 20px;" alig=
+n=3D"center">=0D
+            <div class=3D"logo-center" align=3D"center" id=3D"emb-email-h=
+eader"><a style=3D"text-decoration: none;transition: opacity 0.1s ease-in=
+;color: #38434d;" href=3D"https://exercism.org"><img style=3D"display: bl=
+ock;height: auto;width: 100%;border: 0;max-width: 76px;" src=3D"https://e=
+xercism-static.s3.eu-west-1.amazonaws.com/static/email-logo.png" alt=3D""=
+ width=3D"76"/></a></div>=0D
+          </div>=0D
+        <!--[if (mso)|(IE)]></td></tr></table><![endif]-->=0D
+        </div>=0D
+      </div>=0D
+      <div>=0D
+        <div class=3D"layout one-col fixed-width stack" style=3D"margin: =
+0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000%=
+ - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-break: =
+break-word;">=0D
+          <div class=3D"layout__inner" style=3D"border-collapse: collapse=
+;display: table;width: 100%;background-color: #ffffff;">=0D
+          <!--[if (mso)|(IE)]><table align=3D"center" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation"><tr class=3D"layout-fixed-width" s=
+tyle=3D"background-color: #ffffff;"><td style=3D"width: 600px" class=3D"w=
+560"><![endif]-->=0D
+            <div class=3D"column" style=3D"text-align: left;color: #130B4=
+3;font-size: 16px;line-height: 25px;font-family: Poppins,Arial,'Helvetica=
+ Neue',Helvetica,sans-serif;">=0D
+=0D
+              <div style=3D"margin-left: 20px;margin-right: 20px;">=0D
+                <div style=3D"mso-line-height-rule: exactly;mso-text-rais=
+e: 11px;vertical-align: middle;">=0D
+                  <p style=3D"margin-top: 16px;margin-bottom: 0;">Hi lola=
+kias,</p>=0D
+                  <p style=3D"margin-top: 20px;margin-bottom: 0;">=0D
+                    Here at Exercism, it's Functional February - a month =
+dedicated to functional programming languages. =0D
+                  </p>=0D
+=0D
+                  <p style=3D"margin-top: 20px;margin-bottom: 0;">=0D
+                    We've put together a really fun month for you, with i=
+nterviews with language creators (including Jose Valim and Louis Pilfold)=
+, tons of live streaming, lots of fun exercise for you to complete, and a=
+ whole load of community action going on. As always, it's all free!=0D
+                  </p>=0D
+=0D
+                  <p style=3D"margin-top: 20px;margin-bottom: 0;">=0D
+                    You can find all the details on the =0D
+                    <a style=3D"text-decoration: underline;transition: op=
+acity 0.1s ease-in; font-weight:600; color:#2E57E8" href=3D"https://exerc=
+ism.org/challenges/12in23"><span style=3D"color:#2e57e8">#12in23 Challeng=
+e page</span></a>=0D
+                    (sign up if you've not already - it's entirely free!)=
+=0D
+                    Or watch our=0D
+                    <a style=3D"text-decoration: underline;transition: op=
+acity 0.1s ease-in; font-weight:600; color:#2E57E8" href=3D"https://www.y=
+outube.com/watch?v=3DuIFGx1SDnWI"><span style=3D"color:#2e57e8">Intro to =
+Functional February video</span></a>,=0D
+                    which introduces the month and gives a nice overview =
+of some key functional programming concepts - topics like immutability, p=
+attern matching, recursion, first-class pure functions and more.=0D
+                  </p>=0D
+=0D
+                  <p style=3D"margin-top: 15px;margin-bottom: 0;">=0D
+                    <a href=3D"https://www.youtube.com/watch?v=3DuIFGx1SD=
+nWI" style=3D"display:block; box-shadow: 0px 2px 4px #0F0923">=0D
+                      <img src=3D"https://exercism-v3-icons.s3.eu-west-2.=
+amazonaws.com/images/thumbnails/yt-welcome-to-functional-february-with-pl=
+ay-icon.jpg" style=3D"width:100%; display:block"/>=0D
+                    </a>=0D
+                  </p>=0D
+=0D
+                  <p style=3D"margin-top: 25px;margin-bottom: 0;">=0D
+                    If you've never tried functional languages before, th=
+ey're a really eye-opening fun approach to coding. And if you're a functi=
+onal pro, there's loads to challenge and inspire you here too!=0D
+                  </p>=0D
+=0D
+                  <p style=3D"margin-top: 20px;margin-bottom: 0;">=0D
+                    Have a great day!=0D
+                  </p>=0D
+=0D
+                  <p style=3D"margin-top: 20px;margin-bottom: 20px;">=0D
+                    Jeremy Walker<br/>=0D
+                    Exercism Co-founder</p>=0D
+                  </p>=0D
+                </div>=0D
+              </div>=0D
+=0D
+              <div style=3D"margin-left: 20px;margin-right: 20px;">=0D
+                <div class=3D"btn btn--shadow btn--large" style=3D"margin=
+-bottom: 20px;">=0D
+                  <![if !mso]><a style=3D"border-radius: 4px;display: inl=
+ine-block;font-size: 16px;font-weight: bold;line-height: 24px;padding: 12=
+px 24px 13px 24px;text-align: center;text-decoration: none !important;tra=
+nsition: opacity 0.1s ease-in;color: #ffffff !important;box-shadow: inset=
+ 0 -2px 0 0 rgba(0, 0, 0, 0.2);background-color: #2e57e8;font-family: Pop=
+pins, Trebuchet MS, Avenir, Segoe UI, sans-serif;" href=3D"https://exerci=
+sm.org/challenges/12in23">=0D
+                    GO TO FUNCTIONAL FEBRUARY=0D
+                    <span style=3D"font-size:20px;margin-left:5px">=E2=9E=
+=A1</span>=0D
+                  </a><![endif]>=0D
+              </div>=0D
+            </div>=0D
+          <!--[if (mso)|(IE)]></td></tr></table><![endif]-->=0D
+          </div>=0D
+        </div>=0D
+=0D
+        <div style=3D"mso-line-height-rule: exactly;line-height: 20px;fon=
+t-size: 20px;">&nbsp;</div>=0D
+=0D
+        <div class=3D"layout one-col has-gutter stack" style=3D"margin-bo=
+ttom: 20px;max-width: 600px;min-width: 320px; width: 320px;width: calc(28=
+000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-bre=
+ak: break-word;">=0D
+          <div class=3D"layout__inner" style=3D"border-collapse: collapse=
+;display: table;width: 100%;">=0D
+          <!--[if (mso)|(IE)]><table align=3D"center" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation"><tr><td style=3D"width: 290px" val=
+ign=3D"top" class=3D"w250"><![endif]-->=0D
+=0D
+                <div class=3D"layout one-col has-gutter stack" style=3D"m=
+argin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc=
+(28000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-=
+break: break-word;">=0D
+                  <div class=3D"layout__inner" style=3D"border-collapse: =
+collapse;display: table;width: 100%;">=0D
+                  <!--[if (mso)|(IE)]><table align=3D"center" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"width: 29=
+0px" valign=3D"top" class=3D"w250"><![endif]-->=0D
+=0D
+                    <div class=3D"column" style=3D"text-align: left;color=
+: #130B43;font-size: 16px;line-height: 25px;font-family: Poppins,Arial,'H=
+elvetica Neue',Helvetica,sans-serif;">=0D
+                      <table class=3D"column__background" style=3D"border=
+-collapse: collapse;table-layout: fixed;background-color: #ffffff;" cellp=
+adding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentation">=0D
+                        <tbody><tr>=0D
+                          <td style=3D"text-align: left;text-align: left;=
+color: #130B43;font-size: 16px;line-height: 25px;font-family: Poppins,Ari=
+al,'Helvetica Neue',Helvetica,sans-serif">=0D
+=0D
+                            <div style=3D"margin-left: 20px;margin-right:=
+ 20px;margin-top: 24px;">=0D
+                              <div style=3D"mso-line-height-rule: exactly=
+;mso-text-raise: 11px;vertical-align: middle;">=0D
+                                <h2 style=3D"margin-top: 0;margin-bottom:=
+ 16px;font-style: normal;font-weight: normal;text-align: left;color: #130=
+B43;font-size: 16px;line-height: 25px;font-family: Poppins,Arial,'Helveti=
+ca Neue',Helvetica,sans-serif;font-weight:600">Why am I receiving this?</=
+h2>=0D
+                              </div>=0D
+                            </div>=0D
+=0D
+                            <div style=3D"margin-left: 20px;margin-right:=
+ 20px;margin-bottom: 24px;">=0D
+                              <div style=3D"mso-line-height-rule: exactly=
+;mso-text-raise: 11px;vertical-align: middle;">=0D
+                                <p style=3D"margin-top: 0;margin-bottom: =
+20px;">You're receiving this because you've previously signed up to <a st=
+yle=3D"color: #2E57E8; font-weight:500" href=3D"https://exercism.org/">Ex=
+ercism</a> (the <strong style=3D"font-weight:500">free, not-for-profit pr=
+ogramming education platform</strong>) and are subscribed to our site upd=
+ate emails, where we send occasional updates when we add improvements to =
+the platform.</p>=0D
+                                <p style=3D"margin-top: 0;margin-bottom: =
+20px;">=0D
+                                  You can=0D
+                                  <a style=3D"color: #2E57E8; font-weight=
+:500" href=3D"https://exercism.org/unsubscribe?key=3Dreceive_product_upda=
+tes&amp;token=3De661e25083234343bf60587e899242e3">unsubscribe from this e=
+mail</a>=0D
+                                  or=0D
+                                  <a style=3D"color: #2E57E8; font-weight=
+:500" href=3D"https://exercism.org/unsubscribe?token=3De661e25083234343bf=
+60587e899242e3">change your notification settings</a>=0D
+                                  to opt out of some or all emails.=0D
+                                </p>=0D
+                              </div>=0D
+                            </div>=0D
+                          </td>=0D
+                        </tr></tbody>=0D
+                      </table>=0D
+                    </div>=0D
+                  <!--[if (mso)|(IE)]></td></tr></table><![endif]-->=0D
+                  </div>=0D
+                </div>=0D
+=0D
+                <div style=3D"mso-line-height-rule: exactly;line-height: =
+20px;font-size: 20px;">&nbsp;</div>=0D
+=0D
+              </div>=0D
+              <!--[if (mso)|(IE)]></table></td><![endif]-->=0D
+              <!--[if (mso)|(IE)]></td></tr></table><![endif]-->=0D
+            </div>=0D
+        </div>=0D
+      </div>=0D
+    </td></tr></tbody></table>=0D
+=0D
+    <style type=3D"text/css">=0D
+    @media (max-width:619px){.email-flexible-footer .left-aligned-footer =
+.column,.email-flexible-footer .center-aligned-footer,.email-flexible-foo=
+ter .right-aligned-footer .column{max-width:100% !important;text-align:ce=
+nter !important;width:100% !important}.flexible-footer-logo{margin-left:0=
+px !important;margin-right:0px !important}.email-flexible-footer .left-al=
+igned-footer .flexible-footer__share-button__container,.email-flexible-fo=
+oter .center-aligned-footer .flexible-footer__share-button__container,.em=
+ail-flexible-footer .right-aligned-footer .flexible-footer__share-button_=
+_container{display:inline-block;margin-left:5px !important;margin-right:5=
+px !important}.email-flexible-footer__additionalinfo--center{text-align:c=
+enter !important}.email-flexible-footer .left-aligned-footer table,.email=
+-flexible-footer .center-aligned-footer table,.email-flexible-footer .rig=
+ht-aligned-footer=0D
+    table{display:table !important;width:100% !important}.email-flexible-=
+footer .footer__share-button,.email-flexible-footer .email-footer__additi=
+onal-info{margin-left:20px;margin-right:20px}}=0D
+    </style>=0D
+  </body>=0D
+</html>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+
+----==_mimepart_63dd4a2b151d3_1136c17034245e9--

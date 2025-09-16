@@ -1,0 +1,867 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:6358:7054:b0:dd:3243:1980 with SMTP id 20csp3516686rwp;
+        Tue, 22 Nov 2022 23:32:12 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf4XTc6JW8JdS5Ypzn4UdpzaaxDXb25Y3iBUzvh5ynglxKmiTEM+CKQ4XVN9gFemF3AgKSvF
+X-Received: by 2002:a1c:7504:0:b0:3cf:8ebf:69b with SMTP id o4-20020a1c7504000000b003cf8ebf069bmr9632846wmc.86.1669188732101;
+        Tue, 22 Nov 2022 23:32:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1669188732; cv=none;
+        d=google.com; s=arc-20160816;
+        b=YftEQTJPT6mg+o025/R8fUm6Uv5TRMrzlnINMWOvnaVjTCayYj2KNNV3AhqQSOhWC6
+         Jxi4GboPWisUD9zLIejZEYXIkIR21UdYGM/oJTp1sZGDRBhp9UfTMbt0VpCxGdGo/mVj
+         g1IYhigAGP9KWVhndEiyzW6H75sikFN604FHOtgj1bfPivtKurKZadb33YqDEcWzC6D/
+         wgAhQt44Ol9T9T2cgKIjGF4HljOnhJmYdR52dHLPV2/CtmaNns51OqnAHDnm9KAUy2et
+         7Jrp6qgF1gZ/HmXaWUBMRq4LYscFOnkGxK5Fn8ZJkhutzAjCrZChXWaWbuwhPKpmTCOp
+         We6w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:mime-version:date:list-unsubscribe:message-id:subject
+         :reply-to:to:from:list-id:dkim-signature:dkim-signature;
+        bh=BMri4zLjOG3MjorOZFEtwKwNF+7oMP6Cay1InVs8cfo=;
+        b=frUkqITa8M0BCmlGIFKIZzNdquAFJRZf3KUIABlq26rBYE1kWFRluHkSliabYGW55P
+         GRQ5QhhTohuIyUG24qTj2JMem5Yn8nJelL0tHQyxebb+jplu5/GCZ142v3iB7S1+CjOd
+         qT7xsmQ6NZoH1FdAzPmTOldGycI9dhIMJ/0AmcD5FglI6u8es3k5sIVcYQKcswfRruTv
+         F65Ol3kic5ff7uCyWDkSzn20RIgQGCNJTt8NWO1hD9q1q6uoFjbVxK8f363Zo2JNPX/5
+         gwUnImcNrLAJfqWAc2fE1M2Iy5Gdj9LiGqlQEWRyB3eZnRF4F2YWUZVE4Ar1Bk196q//
+         ptHg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@heyjapan.net header.s=a53tvuzue7ab2kta72vzi5aanoqf2pct header.b=N2QpeVwz;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=n3TX0UhF;
+       spf=pass (google.com: domain of 01020184a366c27b-cd45413e-8918-481d-ab74-ab200a8e0d53-000000@eu-west-1.amazonses.com designates 54.240.4.13 as permitted sender) smtp.mailfrom=01020184a366c27b-cd45413e-8918-481d-ab74-ab200a8e0d53-000000@eu-west-1.amazonses.com
+Return-Path: <01020184a366c27b-cd45413e-8918-481d-ab74-ab200a8e0d53-000000@eu-west-1.amazonses.com>
+Received: from a4-13.smtp-out.eu-west-1.amazonses.com (a4-13.smtp-out.eu-west-1.amazonses.com. [54.240.4.13])
+        by mx.google.com with ESMTPS id 13-20020a5d47ad000000b0022ad71e286esi12519182wrb.1010.2022.11.22.23.32.11
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Nov 2022 23:32:12 -0800 (PST)
+Received-SPF: pass (google.com: domain of 01020184a366c27b-cd45413e-8918-481d-ab74-ab200a8e0d53-000000@eu-west-1.amazonses.com designates 54.240.4.13 as permitted sender) client-ip=54.240.4.13;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@heyjapan.net header.s=a53tvuzue7ab2kta72vzi5aanoqf2pct header.b=N2QpeVwz;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=n3TX0UhF;
+       spf=pass (google.com: domain of 01020184a366c27b-cd45413e-8918-481d-ab74-ab200a8e0d53-000000@eu-west-1.amazonses.com designates 54.240.4.13 as permitted sender) smtp.mailfrom=01020184a366c27b-cd45413e-8918-481d-ab74-ab200a8e0d53-000000@eu-west-1.amazonses.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=a53tvuzue7ab2kta72vzi5aanoqf2pct; d=heyjapan.net; t=1669188731;
+	h=Content-Type:List-ID:From:To:Reply-To:Subject:Message-ID:List-Unsubscribe:Date:MIME-Version;
+	bh=sIuL8ti6VplShH4LM2XEz782n1AOKilsPoBehv21IxQ=;
+	b=N2QpeVwzSb6Xn50/kUHXdFacvus5a2KTrteK0dFgSZYS7DsZOK9nU8+vfSALmoz7
+	9NWpH+fex/6UfQ8p9lS1FRwHXxW9sKnO6lhSfHfb4OacDwGMSepoZT+uu1gbNE3ATEv
+	6Zk7zm6nrrTXSwnrAg3xpBeDK4Cein7d2h6PdZLk=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1669188731;
+	h=Content-Type:List-ID:From:To:Reply-To:Subject:Message-ID:List-Unsubscribe:Date:MIME-Version:Feedback-ID;
+	bh=sIuL8ti6VplShH4LM2XEz782n1AOKilsPoBehv21IxQ=;
+	b=n3TX0UhFMg0vlkhUynV0fw1gqRG26CmMhP3HC58ZSYTsPdBuTOqIF45at6ofLtlZ
+	n+741XScAjL502Up2Dzkjfyey9hjwdv1C5gmW4PUCgFqzCee8a44VqsMn4GBFd8i8Ax
+	ZVV8JtZAoFYaLN0Vt6+yN0rY0dll04OG6k8MVPRM=
+Content-Type: multipart/alternative;
+ boundary="--_NmP-6dc791bb50127ae4-Part_1"
+List-ID: ks en1 <UmccfdagOJ.https://mail-public.eupgroup.net/>
+X-FBL: XzfctLhPVi.UmccfdagOJ.WpLUumsQGi
+X-Msys-Api: =?UTF-8?Q?=7B=22campaign=5Fid=22=3A=22XzfctLhPVi?=
+ =?UTF-8?Q?=2EUmccfdagOJ=2EWpLUumsQGi=22=7D?=
+X-SMTPAPI: =?UTF-8?Q?=7B=22unique=5Fargs=22=3A=7B=22campaign?=
+ =?UTF-8?Q?=5Fid=22=3A=22XzfctLhPVi=2EUmccfdagOJ=2E?=
+ =?UTF-8?Q?WpLUumsQGi=22=7D=7D?=
+X-Mailgun-Variables: =?UTF-8?Q?=7B=22campaign=5Fid=22=3A=22XzfctLhPVi?=
+ =?UTF-8?Q?=2EUmccfdagOJ=2EWpLUumsQGi=22=7D?=
+From: HeyJapan <support@heyjapan.net>
+To: miner101 mine  <lets.mine004@gmail.com>
+Reply-To: heyjapan@eupgroup.net
+Subject: =?UTF-8?Q?=F0=9F=8E=80_3_minutes_survey_will_help_?=
+ =?UTF-8?Q?you_have_the_best_experience!_?= =?UTF-8?Q?=F0=9F=8E=80?=
+Message-ID: <01020184a366c27b-cd45413e-8918-481d-ab74-ab200a8e0d53-000000@eu-west-1.amazonses.com>
+List-Unsubscribe:
+ <https://mail-public.eupgroup.net/subscription/UmccfdagOJ/unsubscribe/WpLUumsQGi>
+Date: Wed, 23 Nov 2022 07:32:11 +0000
+MIME-Version: 1.0
+Feedback-ID: 1.eu-west-1.k+4nz58FNKl4YqbpgrNzLZyFOTa702oJdvymUaPitQc=:AmazonSES
+X-SES-Outgoing: 2022.11.23-54.240.4.13
+X-TUID: pCq/53SrkRNW
+
+----_NmP-6dc791bb50127ae4-Part_1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+ image_lang [https://images.benchmarkemail.com/client1489280/image13168293.=
+png] Dear miner101 mine,=F0=9F=92=8C Thankyou for using HeyJapan.
+Besides, HeyJapan looks forward to receiving your honest comments so that =
+we can improve the best app! So take your 3 minutes to
+complete the survey so you can have the best experiences!=F0=9F=A5=B0 As a =
+thank you, HeyJapan will send you: 7 days trial of HeyJapan
+Premium and 1 month Premium TODAI Japanese - Japanese newspaper reading =
+appDon't forget to fill out the survey! Tell HeyJapan to
+understand you.Don't forget it! [https://mail-public.eupgroup.=
+net/links/XzfctLhPVi/UmccfdagOJ/WpLUumsQGi/JLUqSEVvBe]=F0=9F=8E=80=
+=F0=9F=92=96 Thank you
+for taking the time to fill out this small survey to=
+ help HeyJapan get to know you better! Please complete the following 3 =
+steps
+to receive free gifts!Step 1: Download the app from the link =
+aboveStep 2: Create an account with the Gmail you registered as a
+surveyStep 3: Contact now for free upgrade at:
+[https://mail-public.=
+eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUumsQGi/imFKZnHLlY]HeyJapan =
+team Facebook
+[https://template.eupgroup.net/icons/facebook_btn.png]
+[https://mail-public.eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUumsQGi/rD=
+fmngNvJf]Instagram
+[https://template.eupgroup.net/icons/instagram_btn.png]
+[https://mail-public.eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUumsQGi/nG=
+EAkipVfx] If you want to stop receiving promotional
+emails, please click
+Unsubscribe [https://mail-public.eupgroup.net/subscription/UmccfdagOJ/unsub=
+scribe/WpLUumsQGi?c=3DXzfctLhPVi]
+[https://eupgroup.net/images/logo.png] =
+[https://mail-public.eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUumsQGi/Iq=
+gfZpCzMo] mt [https://mail-public.eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/=
+WpLUumsQGi]
+----_NmP-6dc791bb50127ae4-Part_1
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!doctype html><html><head><meta charset=3D"utf-8"><title></title></head><b=
+ody><title></title><link rel=3D"shortcut icon" href=3D"favicon.ico"><meta =
+name=3D"googlebot" content=3D"noindex"><meta name=3D"ROBOTS" =
+content=3D"NOINDEX, NOFOLLOW"><meta content=3D"width=3Ddevice-width, =
+initial-scale=3D1.0" name=3D"viewport"><!--[if gte mso 9]>   =20
+<xml>   =20
+   =20
+   =20
+96   =20
+   =20
+</xml>   =20
+<![endif]--><table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" =
+border=3D"0" name=3D"bmeMainBody" bgcolor=3D"#e6e6e8" class=3D"c2681" =
+style=3D"box-sizing: border-box; min-height: 1000px; background-color: =
+#e6e6e8;"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing:=
+ border-box;"><td width=3D"100%" valign=3D"top" align=3D"center" =
+style=3D"box-sizing: border-box;"><table cellspacing=3D"0" =
+cellpadding=3D"0" border=3D"0" name=3D"bmeMainColumnParentTable" =
+style=3D"box-sizing: border-box;"><tbody style=3D"box-sizing: =
+border-box;"><tr style=3D"box-sizing: border-box;"><td =
+name=3D"bmeMainColumnParent" class=3D"c2737" style=3D"box-sizing: =
+border-box; border-collapse: separate;"><table name=3D"bmeMainColumn" =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" align=3D"center" =
+class=3D"bmeHolder bmeMainColumn c2745" style=3D"box-sizing: border-box; =
+max-width: 600px; overflow: visible;"><tbody style=3D"box-sizing: =
+border-box;"><tr id=3D"section_1" data-columns=3D"1" =
+data-section-type=3D"bmePreHeader" class=3D"flexible-section" =
+style=3D"box-sizing: border-box;"><td width=3D"100%" name=3D"bmePreHeader" =
+valign=3D"top" align=3D"center" bgcolor=3D"rgb(230, 230, 232)" =
+class=3D"blk_container bmeHolder c2771" style=3D"box-sizing: border-box; =
+background-color: rgb(230, 230, 232); color: rgb(102, 102, =
+102);"></td></tr> <tr style=3D"box-sizing: border-box;"><td width=3D"100%" =
+valign=3D"top" align=3D"center" name=3D"bmeMainContentParent" =
+class=3D"bmeHolder c2805" style=3D"box-sizing: border-box; border-color: =
+rgb(128, 128, 128); border-radius: 5px; border-collapse: separate; =
+border-spacing: 0px;"><table name=3D"bmeMainContent" width=3D"100%" =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" align=3D"center" =
+class=3D"c2813" style=3D"box-sizing: border-box; border-radius: 5px; =
+border-collapse: separate; border-spacing: 0px; overflow: hidden;"> <tbody =
+style=3D"box-sizing: border-box;"><tr id=3D"section_2" data-columns=3D"1" =
+class=3D"flexible-section" style=3D"box-sizing: border-box;"><td =
+width=3D"100%" name=3D"bmeHeader" valign=3D"top" align=3D"center" =
+bgcolor=3D"rgb(245, 237, 237)" class=3D"blk_container bmeHolder c2846" =
+style=3D"box-sizing: border-box; background-color: rgb(245, 237, =
+237);"><div id=3D"dv_1" class=3D"blk_wrapper" style=3D"box-sizing: =
+border-box;"><table name=3D"blk_image" width=3D"600" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" class=3D"blk" style=3D"box-sizing: =
+border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td style=3D"box-sizing: =
+border-box;"><table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" =
+border=3D"0" style=3D"box-sizing: border-box;"><tbody style=3D"box-sizing: =
+border-box;"><tr style=3D"box-sizing: border-box;"><td align=3D"center" =
+class=3D"bmeImage c2920" style=3D"box-sizing: border-box; padding: 20px; =
+border-collapse: collapse; background-color: rgb(255, 255, 255);" =
+bgcolor=3D"rgb(255, 255, 255)"><img src=3D"https://images.benchmarkemail.=
+com/client1489280/image13168293.png" width=3D"560" alt=3D"image_lang" =
+data-radius=3D"0" border=3D"0" class=3D"mobile-img-large c2929" =
+style=3D"box-sizing: border-box; max-width: 2792px; display: block; =
+border-radius: 0px;"></td></tr></tbody></table></td></tr></tbody></table></=
+div></td></tr> <tr id=3D"section_3" data-columns=3D"1" =
+class=3D"flexible-section" style=3D"box-sizing: border-box;"><td =
+width=3D"100%" name=3D"bmeBody" valign=3D"top" align=3D"center" =
+bgcolor=3D"rgb(255, 255, 255)" class=3D"blk_container bmeHolder bmeBody =
+c2983" style=3D"box-sizing: border-box; background-color: rgb(255, 255, =
+255); color: rgb(54, 56, 56);"><div id=3D"dv_3" class=3D"blk_wrapper" =
+style=3D"box-sizing: border-box;"><table name=3D"blk_text" width=3D"600" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"blk" =
+style=3D"box-sizing: border-box;"><tbody style=3D"box-sizing: =
+border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"box-sizing:=
+ border-box;"><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" =
+width=3D"100%" class=3D"bmeContainerRow" style=3D"box-sizing: =
+border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><th valign=3D"top" align=3D"center" =
+class=3D"tdPart c3056" style=3D"box-sizing: border-box; background-color: =
+rgb(255, 255, 255);" bgcolor=3D"rgb(255, 255, 255)"><table name=3D"tblText"=
+ align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+width=3D"600" class=3D"tblText c3064" style=3D"box-sizing: border-box; =
+float: left; background-color: rgb(255, 255, 255);" bgcolor=3D"rgb(255, 255=
+, 255)"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: =
+border-box;"><td name=3D"tblCell" align=3D"left" valign=3D"top" =
+class=3D"tblCell c3089" style=3D"box-sizing: border-box; padding: 10px =
+20px; font-size: 14px; font-weight: 400; font-family: Arial, Helvetica, =
+sans-serif; color: rgb(56, 56, 56); text-align: left; word-break: =
+break-word;"><div class=3D"c3098" style=3D"box-sizing: border-box; =
+line-height: 150%; text-align: center;"><span class=3D"c3106" =
+style=3D"box-sizing: border-box; font-size: 18px; color: #071005;"><em =
+style=3D"box-sizing: border-box;"><span data-sheets-value=3D"{&quot;1&quot;=
+:2,&quot;2&quot;:&quot;miner101 mine =C6=A1i,&quot;}" =
+data-sheets-userformat=3D"{&quot;2&quot;:769,&quot;3&quot;:{&quot;1&quot;:0=
+},&quot;11&quot;:4,&quot;12&quot;:0}" class=3D"c3122" style=3D"box-sizing: =
+border-box; line-height: 150%;">Dear miner101 mine,=C2=A0</span></em></span=
+></div></td></tr></tbody></table></th></tr></tbody></table></td></tr></tbod=
+y></table></div><div id=3D"dv_9" class=3D"blk_wrapper" style=3D"box-sizing:=
+ border-box;"><table name=3D"blk_text" width=3D"600" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" class=3D"blk" style=3D"box-sizing: =
+border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td style=3D"box-sizing: =
+border-box;"><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" =
+width=3D"100%" class=3D"bmeContainerRow" style=3D"box-sizing: =
+border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><th valign=3D"top" align=3D"center" =
+class=3D"tdPart c3247" style=3D"box-sizing: border-box; background-color: =
+rgb(255, 255, 255);" bgcolor=3D"rgb(255, 255, 255)"><table name=3D"tblText"=
+ align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+width=3D"600" class=3D"tblText c3255" style=3D"box-sizing: border-box; =
+float: left; background-color: rgb(255, 255, 255);" bgcolor=3D"rgb(255, 255=
+, 255)"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: =
+border-box;"><td name=3D"tblCell" align=3D"left" valign=3D"top" =
+class=3D"tblCell c3279" style=3D"box-sizing: border-box; padding: 10px =
+20px; font-size: 14px; font-weight: 400; font-family: Arial, Helvetica, =
+sans-serif; color: rgb(56, 56, 56); text-align: left; word-break: =
+break-word;"><div class=3D"c3287" style=3D"box-sizing: border-box; =
+line-height: 150%; text-align: center;"><span class=3D"c3295" =
+style=3D"box-sizing: border-box; color: #071005;"><span =
+data-sheets-value=3D"{&quot;1&quot;:2,&quot;2&quot;:&quot;C=C6=A1 =
+h=E1=BB=99i t=C4=83ng t=E1=BB=91c c=C3=A1n m=E1=BB=91c N3 =C4=91ang =
+ch=E1=BB=9D b=E1=BA=A1n kh=C3=A1m ph=C3=A1. =C4=90=E1=BB=ABng b=E1=BB=8F =
+l=E1=BB=A1!&quot;}" data-sheets-userformat=3D"{&quot;2&quot;:4995,=
+&quot;3&quot;:{&quot;1&quot;:0},&quot;4&quot;:{&quot;1&quot;:2,=
+&quot;2&quot;:16777215},&quot;10&quot;:2,&quot;11&quot;:4,&quot;12&quot;:0,=
+&quot;15&quot;:&quot;Arial&quot;}" class=3D"c3303" style=3D"box-sizing: =
+border-box; font-size: 18px;"><span data-sheets-value=3D"{&quot;1&quot;:2,=
+&quot;2&quot;:&quot;C=C6=A1 h=E1=BB=99i t=C4=83ng t=E1=BB=91c c=C3=A1n =
+m=E1=BB=91c N3 =C4=91ang ch=E1=BB=9D b=E1=BA=A1n kh=C3=A1m ph=C3=A1. =
+=C4=90=E1=BB=ABng b=E1=BB=8F l=E1=BB=A1!&quot;}" data-sheets-userformat=3D"=
+{&quot;2&quot;:4995,&quot;3&quot;:{&quot;1&quot;:0},=
+&quot;4&quot;:{&quot;1&quot;:2,&quot;2&quot;:16777215},&quot;10&quot;:2,=
+&quot;11&quot;:4,&quot;12&quot;:0,&quot;15&quot;:&quot;Arial&quot;}" =
+style=3D"box-sizing: border-box;"><span class=3D"c3319" =
+style=3D"box-sizing: border-box; line-height: 150%;">=C2=A0=F0=9F=92=8C =
+Thankyou for using HeyJapan. Besides, HeyJapan looks forward to receiving =
+your honest comments so that we can improve the best app! So take your 3 =
+minutes to complete the survey so you can have the best experiences!=
+=C2=A0</span></span></span></span></div><div class=3D"c3350" =
+style=3D"box-sizing: border-box; line-height: 150%; text-align: =
+center;"><div class=3D"c3358" style=3D"box-sizing: border-box; line-height:=
+ 150%; text-align: center;"><span class=3D"c3366" style=3D"box-sizing: =
+border-box; color: #071005;"><span class=3D"c3374" style=3D"box-sizing: =
+border-box; font-size: 18px;">=F0=9F=A5=B0 As a thank you, HeyJapan will =
+send you: 7 days trial of HeyJapan Premium and 1 month Premium TODAI =
+Japanese - Japanese newspaper reading app
+
+</span></span></div><div =
+class=3D"c3397" style=3D"box-sizing: border-box; line-height: 150%; =
+text-align: center;"><span class=3D"c3405" style=3D"box-sizing: border-box;=
+ font-size: 18px; line-height: 150%;">Don't forget to fill out the survey! =
+Tell HeyJapan to understand you.</span></div></div></td></tr></tbody></tabl=
+e></th></tr></tbody></table></td></tr></tbody></table></div><div =
+id=3D"dv_4" class=3D"blk_wrapper" style=3D"box-sizing: border-box;"><table =
+name=3D"blk_button" width=3D"600" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" class=3D"blk" style=3D"box-sizing: border-box;"><tbody =
+style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td=
+ width=3D"20" style=3D"box-sizing: border-box;"></td><td align=3D"center" =
+style=3D"box-sizing: border-box;"><table width=3D"100%" cellspacing=3D"0" =
+cellpadding=3D"0" border=3D"0" class=3D"tblContainer" style=3D"box-sizing: =
+border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td height=3D"10" style=3D"box-sizing: =
+border-box;"></td></tr><tr style=3D"box-sizing: border-box;"><td =
+align=3D"center" style=3D"box-sizing: border-box;"><table cellspacing=3D"0"=
+ cellpadding=3D"0" border=3D"0" align=3D"center" class=3D"bmeButton c3576" =
+style=3D"box-sizing: border-box; border-collapse: separate;"><tbody =
+style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td=
+ class=3D"bmeButtonText c3601" style=3D"box-sizing: border-box; =
+border-radius: 16px; border-width: 0px; border-style: none; border-color: =
+transparent; background-color: rgb(208, 2, 27); text-align: center; =
+padding: 20px 40px; font-weight: bold; font-size: 18px; word-break: =
+break-word;" bgcolor=3D"rgb(208, 2, 27)" align=3D"center"><span =
+class=3D"c3610" style=3D"box-sizing: border-box; font-family: Arial, =
+Verdana; font-size: 18px; color: rgb(255, 255, 255);"><a target=3D"_blank" =
+href=3D"https://mail-public.eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUum=
+sQGi/JLUqSEVvBe" data-link-type=3D"web" draggable=3D"false" class=3D"c3618"=
+ style=3D"box-sizing: border-box; color: rgb(255, 255, 255); =
+text-decoration: none;">Don't forget it!<span class=3D"emoji-outer =
+emoji-sizer" style=3D"box-sizing: border-box;"><span =
+data-codepoints=3D"270d-fe0f" class=3D"emoji-inner c3647" =
+style=3D"box-sizing: border-box; background: url(chrome-extension://gaoflci=
+ahikhligngeccdecgfjngejlh/emoji-data/sheet_apple_32.png); =
+background-position: 97.94359576968273% 89.9529964747356%; background-size:=
+ 5418.75% 5418.75%;"></span></span></a></span></td></tr></tbody></table></t=
+d></tr><tr style=3D"box-sizing: border-box;"><td height=3D"10" =
+style=3D"box-sizing: border-box;"></td></tr></tbody></table></td><td =
+width=3D"20" style=3D"box-sizing: border-box;"></td></tr></tbody></table></=
+div><div id=3D"dv_15" class=3D"blk_wrapper" style=3D"box-sizing: =
+border-box;"><table name=3D"blk_text" width=3D"600" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" class=3D"blk" style=3D"box-sizing: =
+border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td style=3D"box-sizing: =
+border-box;"><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" =
+width=3D"100%" class=3D"bmeContainerRow" style=3D"box-sizing: =
+border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><th valign=3D"top" align=3D"center" =
+class=3D"tdPart c3794" style=3D"box-sizing: border-box; background-color: =
+rgb(255, 255, 255);" bgcolor=3D"rgb(255, 255, 255)"><table name=3D"tblText"=
+ align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+width=3D"600" class=3D"tblText c3802" style=3D"box-sizing: border-box; =
+float: left; background-color: rgb(255, 255, 255);" bgcolor=3D"rgb(255, 255=
+, 255)"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: =
+border-box;"><td name=3D"tblCell" align=3D"left" valign=3D"top" =
+class=3D"tblCell c3826" style=3D"box-sizing: border-box; padding: 10px =
+20px; font-size: 14px; font-weight: 400; font-family: Arial, Helvetica, =
+sans-serif; color: rgb(56, 56, 56); text-align: left; word-break: =
+break-word;"><div class=3D"c3834" style=3D"box-sizing: border-box; =
+text-align: center;"><div class=3D"c3842" style=3D"box-sizing: border-box; =
+line-height: 150%; text-align: center;"><span class=3D"c3850" =
+style=3D"box-sizing: border-box; font-size: 18px; line-height: =
+150%;">=F0=9F=8E=80=F0=9F=92=96 Thank you for taking the time to fill out =
+this small survey to help HeyJapan get to know you better! Please complete =
+the following 3 steps to receive free gifts!</span></div><div =
+class=3D"c3866" style=3D"box-sizing: border-box; line-height: 150%; =
+text-align: center;"><span class=3D"c3874" style=3D"box-sizing: border-box;=
+ font-size: 18px; line-height: 150%;">Step 1: Download the app from the =
+link above
+</span></div><div class=3D"c3890" style=3D"box-sizing: =
+border-box; line-height: 150%; text-align: center;"><span class=3D"c3898" =
+style=3D"box-sizing: border-box; font-size: 18px; line-height: 150%;">Step =
+2: Create an account with the Gmail you registered as a survey
+</span></div><div class=3D"c3914" style=3D"box-sizing: border-box; =
+line-height: 150%; text-align: center;"><a href=3D"https://mail-public.=
+eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUumsQGi/imFKZnHLlY" =
+target=3D"_blank" class=3D"c3922" style=3D"box-sizing: border-box; =
+text-decoration: none;"><span class=3D"c3932" style=3D"box-sizing: =
+border-box; font-size: 18px; line-height: 150%;">Step 3: Contact now for =
+free upgrade at: </span></a></div></div><div class=3D"c3980" =
+style=3D"box-sizing: border-box; text-align: center;"><span class=3D"c3988"=
+ style=3D"box-sizing: border-box; color: #000000; font-size: 18px;"><em =
+style=3D"box-sizing: border-box;">HeyJapan team</em></span></div></td></tr>=
+</tbody></table></th></tr></tbody></table></td></tr></tbody></table></div><=
+/td></tr> <tr id=3D"section_4" data-columns=3D"1" class=3D"flexible-section=
+" style=3D"box-sizing: border-box;"><td width=3D"100%" =
+name=3D"bmePreFooter" valign=3D"top" align=3D"center" bgcolor=3D"rgb(255, =
+255, 255)" class=3D"blk_container bmeHolder c4081" style=3D"box-sizing: =
+border-box; background-color: rgb(255, 255, 255);"><div id=3D"dv_5" =
+class=3D"blk_wrapper" style=3D"box-sizing: border-box;"><table =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" name=3D"blk_divider" =
+width=3D"600" class=3D"blk" style=3D"box-sizing: border-box;"><tbody =
+style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td=
+ class=3D"tblCellMain c4121" style=3D"box-sizing: border-box; padding-top: =
+10px; padding-bottom: 10px; padding-left: 20px; padding-right: =
+20px;"><table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" =
+border=3D"0" class=3D"tblLine c4130" style=3D"box-sizing: border-box; =
+border-top: 1px solid rgb(225, 225, 225); min-width: 1px;"><tbody =
+style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td=
+ style=3D"box-sizing: border-box;"><span style=3D"box-sizing: =
+border-box;"></span></td></tr></tbody></table></td></tr></tbody></table></d=
+iv><div id=3D"dv_6" class=3D"blk_wrapper" style=3D"box-sizing: =
+border-box;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" =
+name=3D"blk_social_follow" width=3D"600" class=3D"blk" style=3D"box-sizing:=
+ border-box;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td class=3D"tblCellMain c4224" =
+style=3D"box-sizing: border-box; padding-top: 10px; padding-bottom: 10px; =
+padding-left: 20px; padding-right: 20px;"><table cellspacing=3D"0" =
+cellpadding=3D"0" border=3D"0" align=3D"left" class=3D"tblContainer =
+mblSocialContain" style=3D"box-sizing: border-box;"><tbody =
+style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td=
+ class=3D"tdItemContainer" style=3D"box-sizing: border-box;"><table =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" class=3D"mblSocialContain =
+c4265" style=3D"box-sizing: border-box; table-layout: auto;"><tbody =
+style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td=
+ valign=3D"top" name=3D"bmeSocialTD" class=3D"bmeSocialTD" =
+style=3D"box-sizing: border-box;"><!--[if gte mso 6]></td><td =
+align=3D"left" valign=3D"top"><![endif]--><table cellspacing=3D"0" =
+cellpadding=3D"0" border=3D"0" type=3D"facebook" align=3D"left" =
+class=3D"bmeFollowItem c4307" style=3D"box-sizing: border-box; float: left;=
+ display: block;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td align=3D"left" gutter=3D"5" =
+width=3D"24" class=3D"bmeFollowItemIcon c4332" style=3D"box-sizing: =
+border-box; padding-right: 5px; height: 20px;" height=3D"20"><a =
+href=3D"https://mail-public.eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUum=
+sQGi/rDfmngNvJf" target=3D"_blank" class=3D"c4341" style=3D"box-sizing: =
+border-box; display: inline-block; background-color: rgb(53, 91, 161); =
+border-radius: 0px; border-style: none; border-width: 0px; border-color: =
+rgb(0, 0, 238);"><img src=3D"https://template.eupgroup.=
+net/icons/facebook_btn.png" alt=3D"Facebook" border=3D"0" width=3D"24" =
+height=3D"24" class=3D"c4351" style=3D"box-sizing: border-box; display: =
+block; max-width: 114px;"></a></td></tr></tbody></table><!--[if gte mso =
+6]></td><td align=3D"left" valign=3D"top"><![endif]--><table =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" type=3D"instagram" =
+align=3D"left" class=3D"bmeFollowItem c4390" style=3D"box-sizing: =
+border-box; float: left; display: block;"><tbody style=3D"box-sizing: =
+border-box;"><tr style=3D"box-sizing: border-box;"><td align=3D"left" =
+gutter=3D"5" width=3D"24" class=3D"bmeFollowItemIcon c4414" =
+style=3D"box-sizing: border-box; height: 20px;" height=3D"20"><a =
+href=3D"https://mail-public.eupgroup.net/links/XzfctLhPVi/UmccfdagOJ/WpLUum=
+sQGi/nGEAkipVfx" target=3D"_blank" class=3D"c4422" style=3D"box-sizing: =
+border-box; display: inline-block; background-color: rgb(228, 64, 95); =
+border-radius: 0px; border-style: none; border-width: 0px; border-color: =
+rgb(0, 0, 238);"><img src=3D"https://template.eupgroup.=
+net/icons/instagram_btn.png" alt=3D"Instagram" border=3D"0" width=3D"24" =
+height=3D"24" class=3D"c4432" style=3D"box-sizing: border-box; display: =
+block; max-width: 114px;"></a></td></tr></tbody></table></td></tr></tbody><=
+/table></td></tr></tbody></table></td></tr></tbody></table></div></td></tr>=
+ </tbody></table> </td></tr><tr id=3D"section_5" data-columns=3D"1" =
+data-section-type=3D"bmeFooter" class=3D"flexible-section" =
+style=3D"box-sizing: border-box;"><td width=3D"100%" name=3D"bmeFooter" =
+valign=3D"top" align=3D"center" bgcolor=3D"rgb(230, 230, 232)" =
+class=3D"blk_container bmeHolder c4558" style=3D"box-sizing: border-box; =
+background-color: rgb(230, 230, 232); color: rgb(102, 102, 102);"> <div =
+id=3D"dv_17" class=3D"blk_wrapper" style=3D"box-sizing: border-box;"> =
+<table width=3D"600" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" =
+name=3D"blk_footer" class=3D"blk" style=3D"box-sizing: border-box;"> <tbody=
+ style=3D"box-sizing: border-box;"> <tr style=3D"box-sizing: =
+border-box;"><td name=3D"tblCell" valign=3D"top" align=3D"left" =
+class=3D"tblCell c4643" style=3D"box-sizing: border-box; padding: 20px; =
+word-break: break-word;"> <table cellpadding=3D"0" cellspacing=3D"0" =
+border=3D"0" width=3D"100%" style=3D"box-sizing: border-box;"> <tbody =
+style=3D"box-sizing: border-box;"> <tr style=3D"box-sizing: =
+border-box;"><td name=3D"bmeBadgeText" align=3D"left" class=3D"c4711" =
+style=3D"box-sizing: border-box; text-align: left; word-break: =
+break-word;"><span id=3D"spnFooterText" class=3D"c4719" =
+style=3D"box-sizing: border-box; font-family: Arial, Helvetica, sans-serif;=
+ font-weight: normal; font-size: 11px; line-height: 140%;">If you want to =
+stop receiving promotional emails, please click</span><br =
+style=3D"box-sizing: border-box;"><span class=3D"c4737" =
+style=3D"box-sizing: border-box; font-family: Arial, Helvetica, sans-serif;=
+ font-weight: normal; font-size: 11px; line-height: 140%;"><a =
+target=3D"_new" href=3D"https://mail-public.eupgroup.=
+net/subscription/UmccfdagOJ/unsubscribe/WpLUumsQGi?c=3DXzfctLhPVi" =
+class=3D"bmefootertext c4745" style=3D"box-sizing: border-box; color: =
+inherit; text-decoration: underline;">Unsubscribe</a><br =
+style=3D"box-sizing: border-box;"></span> </td></tr> <tr =
+style=3D"box-sizing: border-box;"><td name=3D"bmeBadgeImage" align=3D"left"=
+ class=3D"c4837" style=3D"box-sizing: border-box; text-align: left; =
+padding-top: 20px;"> <a href=3D"https://mail-public.eupgroup.=
+net/links/XzfctLhPVi/UmccfdagOJ/WpLUumsQGi/IqgfZpCzMo" target=3D"_new" =
+style=3D"box-sizing: border-box;"> <img src=3D"https://eupgroup.=
+net/images/logo.png" width=3D"100px" border=3D"0" style=3D"box-sizing: =
+border-box;"> </a> </td></tr> </tbody> </table> </td></tr> </tbody> =
+</table> </div> </td></tr> </tbody></table></td></tr></tbody></table></td><=
+/tr></tbody></table><!-- Test Path --><!-- /Test Path --><style>
+@media only screen and (min-width: 640px) {
+  img.bmeRSSImage {
+    max-width: 600px !important;
+    height: auto !important;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .bmeHolder {
+    width: 100% !important;
+  }
+
+  .bmeHolder1,
+table.blk,
+table.tblText,
+table.bmeMainColumn {
+    width: 100% !important;
+  }
+
+  .bmeImageCard table.bmeCaptionTable td.tblCell {
+    padding-top: 0px !=
+important;
+    padding-right: 20px !important;
+    padding-bottom: 20px !=
+important;
+    padding-left: 20px !important;
+  }
+
+  .bmeImageCard table.=
+bmeCaptionTable.bmeCaptionTableMobileTop td.tblCell {
+    padding-top: 20px !important;
+    padding-right: 20px !important;
+    padding-bottom: 0px !important;
+    padding-left: 20px !important;
+  }
+
+  table.bmeCaptionTable td.tblCell {
+    padding-top: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  table.tblGtr {
+    padding-bottom: 20px !important;
+  }
+
+  .bmeBody,
+td.blk_container {
+    display: table !important;
+    max-width: 600px !important;
+    width: 100% !important;
+  }
+
+  .container-table,
+table.container-table {
+    width: 95% !important;
+  }
+
+  .mobile-footer,
+.mobile-footer a {
+    font-size: 13px !important;
+    line-height: 18px !=
+important;
+  }
+
+  table.share-tbl {
+    padding-bottom: 15px;
+    width: 100% !important;
+  }
+
+  table.share-tbl td {
+    display: block !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  td.bmeShareTD,
+td.bmeSocialTD {
+    width: 100% !important;
+  }
+
+  td.tdBoxedTextBorder {
+    width: auto !important;
+  }
+
+  th.tdBoxedTextBorder {
+    width: auto !important;
+  }
+
+  .bmeHolder1,
+table.blk,
+table[name=3D"tblText"],
+table[name=3D"bmeMainColumn"] {
+    width: 100% !important;
+  }
+
+  .bmeImageCard table.bmeCaptionTable =
+td[name=3D"tblCell"] {
+    padding-top: 0px !important;
+    padding-right: 20px !important;
+    padding-bottom: 20px !important;
+    padding-left: 20px !important;
+  }
+
+  .bmeImageCard table.=
+bmeCaptionTable.bmeCaptionTableMobileTop td[name=3D"tblCell"] {
+    padding-top: 20px !important;
+    padding-right: 20px !important;
+    padding-bottom: 0px !important;
+    padding-left: 20px !important;
+  }
+
+  table.bmeCaptionTable td[name=3D"tblCell"] {
+    padding-top: 10px !=
+important;
+    padding-right: 10px !important;
+    padding-bottom: 10px !=
+important;
+    padding-left: 10px !important;
+  }
+
+  table[name=3D"tblGtr"]=
+ {
+    padding-bottom: 20px !important;
+  }
+
+  .blk_parent,
+td.blk_container,
+[name=3D"bmeLeftColumn"],
+[name=3D"bmeRightColumn"],
+[name=3D"bmeColumn1"],
+[name=3D"bmeColumn2"],
+[name=3D"bmeColumn3"],
+[name=3D"bmeBody"] {
+    display: table !important;
+    max-width: 600px !important;
+    width: 100% !important;
+  }
+
+  .container-table,
+table[class=3D"container-table"] {
+    width: 95% !important;
+  }
+
+  table[class=3D"share-tbl"] {
+    padding-bottom: 15px;
+    width: 100% !important;
+  }
+
+  table[class=3D"share-tbl"] td {
+    display: block !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  td[name=3D"bmeShareTD"],
+td[name=3D"bmeSocialTD"] {
+    width: 100% !important;
+  }
+
+  td[name=3D"tdBoxedTextBorder"] {
+    width: auto !important;
+  }
+
+  th[name=3D"tdBoxedTextBorder"] {
+    width: auto !important;
+  }
+
+  .bmeImageCard table.bmeImageTable {
+    clear: both;
+    border-collapse: separate;
+    height: auto !=
+important;
+    width: 100% !important;
+    padding-top: 20px !important;
+    padding-right: 20px !important;
+    padding-bottom: 20px !important;
+    padding-left: 20px !important;
+    float: left !important;
+  }
+
+  .bmeMblInline table.bmeImageTable {
+    clear: both;
+    height: auto !important;
+    width: 100% !important;
+    padding-top: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  .bmeMblInline table.bmeCaptionTable {
+    clear: both;
+    width: 100% !important;
+  }
+
+  table.bmeImageTable {
+    clear: both;
+    height: auto !important;
+    width: 100% !important;
+    padding-top: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  table.bmeCaptionTable {
+    clear: both;
+    width: 100% !important;
+  }
+
+  table.bmeImageContainer {
+    clear: both;
+    width: 100% !important;
+    float: left !important;
+  }
+
+  table.bmeImageTable td {
+    height: auto;
+    padding-top: 0px !important;
+    padding-right: 0px !=
+important;
+    padding-bottom: 0px !important;
+    padding-left: 0px !=
+important;
+  }
+
+  img.mobile-img-large {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  img.bmeRSSImage {
+    max-width: 320px;
+    height: auto !important;
+  }
+
+  .trMargin img {
+    height: 10px;
+  }
+
+  div.bmefooter,
+div.bmeheader {
+    display: block !important;
+  }
+
+  .tdPart {
+    clear: both;
+    width: 100% !important;
+    float: left !important;
+  }
+
+  table.blk_parent1,
+table.tblPart {
+    width: 100% !important;
+  }
+
+  .tblLine {
+    min-width: 100% !=
+important;
+  }
+
+  .bmeMblCenter img {
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+  }
+
+  .bmeMblCenter,
+.bmeMblCenter div,
+.bmeMblCenter span {
+    text-align: -webkit-center !important;
+  }
+
+  .bmeImageGutterRow,
+.bmeNoBr br,
+.bmeMblStackCenter .bmeShareItem .tdMblHide {
+    display: none !important;
+  }
+
+  .bmeMblInline,
+.bmeMblInline table.bmeImageTable,
+.bmeMblInline table.bmeCaptionTable {
+    clear: none !important;
+    width: 50% !important;
+  }
+
+  .bmeMblInlineHide,
+.bmeShareItem .trMargin {
+    display: none !=
+important;
+  }
+
+  .bmeMblShareCenter.tblContainer.mblSocialContain {
+    width: 100% !important;
+  }
+
+  .bmeMblFollowCenter.tblContainer.=
+mblSocialContain,
+.bmeMblInline table.bmeImageTable img {
+    width: 100% !important;
+  }
+
+  .bmeMblStack > .bmeShareItem {
+    width: 100% !important;
+    clear: both !important;
+  }
+
+  .tdPart.bmeMblStackCenter,
+.bmeMblStackCenter .bmeFollowItemIcon {
+    padding-top: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 0px !important;
+    text-align: center !important;
+  }
+
+  .bmeMblStackCenter > .=
+bmeShareItem {
+    width: 100% !important;
+  }
+
+  td.bmeMblCenter {
+    border-top-width: 0px !important;
+    border-right-width: 0px !=
+important;
+    border-bottom-width: 0px !important;
+    border-left-width: 0px !important;
+    border-top-style: none !=
+important;
+    border-right-style: none !important;
+    border-bottom-style: none !important;
+    border-left-style: none !=
+important;
+    border-top-color: transparent !important;
+    border-right-color: transparent !important;
+    border-bottom-color: =
+transparent !important;
+    border-left-color: transparent !important;
+    border-image-source: initial !important;
+    border-image-slice: =
+initial !important;
+    border-image-width: initial !important;
+    border-image-outset: initial !important;
+    border-image-repeat: =
+initial !important;
+  }
+
+  .bmeLinkTable.tdPart td {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    border-top-width: 0px !important;
+    border-right-width: 0px !=
+important;
+    border-bottom-width: 0px !important;
+    border-left-width: 0px !important;
+    border-top-style: none !=
+important;
+    border-right-style: none !important;
+    border-bottom-style: none !important;
+    border-left-style: none !=
+important;
+    border-top-color: transparent !important;
+    border-right-color: transparent !important;
+    border-bottom-color: =
+transparent !important;
+    border-left-color: transparent !important;
+    border-image-source: initial !important;
+    border-image-slice: =
+initial !important;
+    border-image-width: initial !important;
+    border-image-outset: initial !important;
+    border-image-repeat: =
+initial !important;
+    padding-bottom: 15px !important;
+    height: auto !important;
+  }
+
+  .bmeMblStack td {
+    text-align: left !important;
+  }
+
+  .bmeMblStack .bmeFollowItem {
+    clear: both !important;
+    padding-top: 10px !important;
+  }
+
+  .bmeMblStackCenter .bmeFollowItemText {
+    padding-left: 5px !important;
+  }
+
+  .bmeMblStackCenter .bmeFollowItem {
+    align-self: center;
+    padding-top: 10px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    clear: both !important;
+    float: none !important;
+  }
+
+  .tdPart > table {
+    width: 100% !important;
+  }
+
+  .tdPart > table.bmeLinkContainer {
+    width: auto !important;
+  }
+
+  .tdPart.mblStackCenter > table.=
+bmeLinkContainer {
+    width: 100% !important;
+  }
+}
+</style><img src=3D"https://mail-public.eupgroup.net/links/XzfctLhPVi/Umccf=
+dagOJ/WpLUumsQGi" width=3D"1" height=3D"1" alt=3D"mt"></body></html>
+----_NmP-6dc791bb50127ae4-Part_1--

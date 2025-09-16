@@ -1,0 +1,675 @@
+Delivered-To: lets.mine004@gmail.com
+Received: by 2002:a05:7300:4286:b0:114:39db:78e4 with SMTP id p6csp1853065dye;
+        Tue, 7 May 2024 06:38:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcGhNNYGh3CIEJ9eiW5HXTu4skjCrdkF/1Fy8ZOtpYDaFwMmQF/wzAeaD4+jehzoiPMDgn
+X-Received: by 2002:a05:6102:312f:b0:47e:fe45:eb33 with SMTP id f15-20020a056102312f00b0047efe45eb33mr11828648vsh.15.1715089120300;
+        Tue, 07 May 2024 06:38:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1715089120; cv=none;
+        d=google.com; s=arc-20160816;
+        b=gkG91OfPdRHaVEQtTCJJa/5Mazwi0/uguohVeZxXbOHIQOy8nHIFjP9X4ToKtA+fd3
+         G+6i6W3s/vrP7ETdfxAEHAIHRbracULaL/LrMKAa4cpaIuemQ9gTz0165SnpEhQxfF5q
+         0zDIJMR6y63lGytREJxKgigahSRA70Ei01KBOxY055AF38ei1NLwPhRrn7eHgzCcycpv
+         gW8xva+e7lSsadsnmwpAq4A30wEDWL9WoEgytC2LIqU60z7qz/tZSAQFc7OfA/ayUqkY
+         rokMMPYqn0EB7AhVm+qcVTlKBSpV0MxrZjKDKGsDnzD9gvFG/gNqFoF/KLRHw5QiGJoo
+         rBDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:date:message-id:from:mime-version:subject:to
+         :dkim-signature:dkim-signature;
+        bh=clG/KDW1iAVxbk+QTGLTHH3h5xfFjlMMCHa7dfTYN5g=;
+        fh=iZtWGcn9pNoQ4VStUxSOe7qMOFLYWLh6K9lsyBW/c+Q=;
+        b=rnlc9tZ+b33O+phMj2/Iai9BeImtXTeSMRUIUP9CrOdieLv1k0T4o6IGucXvMBUqio
+         cL3M4T3bEEarFiKGcSjgUTGU2pNuQOnooHkUZ/cayCxoqL+3lBnp/oUBvQtoNwxe4B7r
+         IG/mD9h0FtnTo96OXSBP4Hj+GEGTUIg0Cq4ufXL52E9aEvXMj91sLNx91JlauNGs9ADa
+         lgi7zxNHQ7hh33eKF/bj1Xy5DGU3jhpzjHVzx5sBRfF1Ot5kpji756zwv9b9wyRQXCHB
+         zBRLTWxbVBVPvgoAMjmZH3Lh2v7IcD/t5EgoR9kcxevdgqiLxw7HxbLuOS73NpwCzuuX
+         /Ykw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@wavebox.io header.s=rb4v2zhqfhee2546lyry2x6qdh5mum2f header.b="n7/BTsfu";
+       dkim=pass header.i=@amazonses.com header.s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug header.b=ZLniiiQI;
+       spf=pass (google.com: domain of 0100018f53471886-e8b5872d-a114-4cf9-be91-59135958ee80-000000@mail.wavebox.io designates 54.240.9.40 as permitted sender) smtp.mailfrom=0100018f53471886-e8b5872d-a114-4cf9-be91-59135958ee80-000000@mail.wavebox.io;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=wavebox.io
+Return-Path: <0100018f53471886-e8b5872d-a114-4cf9-be91-59135958ee80-000000@mail.wavebox.io>
+Received: from a9-40.smtp-out.amazonses.com (a9-40.smtp-out.amazonses.com. [54.240.9.40])
+        by mx.google.com with ESMTPS id v8-20020a67af08000000b0047bba80dc76si1846342vsl.291.2024.05.07.06.38.39
+        for <lets.mine004@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 May 2024 06:38:40 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 0100018f53471886-e8b5872d-a114-4cf9-be91-59135958ee80-000000@mail.wavebox.io designates 54.240.9.40 as permitted sender) client-ip=54.240.9.40;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@wavebox.io header.s=rb4v2zhqfhee2546lyry2x6qdh5mum2f header.b="n7/BTsfu";
+       dkim=pass header.i=@amazonses.com header.s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug header.b=ZLniiiQI;
+       spf=pass (google.com: domain of 0100018f53471886-e8b5872d-a114-4cf9-be91-59135958ee80-000000@mail.wavebox.io designates 54.240.9.40 as permitted sender) smtp.mailfrom=0100018f53471886-e8b5872d-a114-4cf9-be91-59135958ee80-000000@mail.wavebox.io;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=wavebox.io
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=rb4v2zhqfhee2546lyry2x6qdh5mum2f; d=wavebox.io; t=1715089119;
+	h=To:Subject:Mime-Version:From:Content-Type:Message-ID:Date;
+	bh=XRj6VZww2cIZfr3uelmOep6YxCNH4y9n3lDMxWMV2pw=;
+	b=n7/BTsfuTC3qZV4IRC6+R+A6uXd2GSCcrgvRKpqwtJgsXjxNJNhCigb65IuOZTh1
+	vCUfPphZG/8ycoNPi3LSunQkrMlEVgrRkaaGdZkmHtICxtDCZfr2z5xNr1BNrJRJQHO
+	wDtl8+ssyFUuRJkRNHEewga2earspGe4lkz0B60w=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ug7nbtf4gccmlpwj322ax3p6ow6yfsug; d=amazonses.com; t=1715089119;
+	h=To:Subject:Mime-Version:From:Content-Type:Message-ID:Date:Feedback-ID;
+	bh=XRj6VZww2cIZfr3uelmOep6YxCNH4y9n3lDMxWMV2pw=;
+	b=ZLniiiQIhnB869ONBEyQV7/T5JKEX2jRi+lByhE3FNzkhQuS0sjW4tWmz4fkMkoE
+	ZRR/IabfGgwgtmkyZzD9nWpehjdNfEGpKT5VlAYsB0Ekeiybbd3fHIDwx9wt7O4xQMy
+	OaAshwec/FkkpHb/K7XalpaZ+H3QJcmORbYDjbtA=
+To: lets.mine004@gmail.com
+Subject: =?utf-8?B?8J+klyBHZXQgUmVhZHkgdG8gR28gUHJvIQ==?=
+Mime-Version: 1.0
+From: "Susan (Wavebox)" <support@wavebox.io>
+Content-Type: multipart/alternative; boundary="5106FB8209286E75FEB2A3AE"
+Message-ID: <0100018f53471886-e8b5872d-a114-4cf9-be91-59135958ee80-000000@email.amazonses.com>
+Date: Tue, 7 May 2024 13:38:39 +0000
+Feedback-ID: 1.us-east-1.t/syr3pG58QrW2y1cxjT6lGluGcpvdRT+YrFMAso5Bc=:AmazonSES
+X-SES-Outgoing: 2024.05.07-54.240.9.40
+X-TUID: eYpRGsMbToMv
+
+--5106FB8209286E75FEB2A3AE
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>=0A=0A<html lang=3D"en" xmlns:o=3D"urn:schemas-microsoft-com=
+:office:office" xmlns:v=3D"urn:schemas-microsoft-com:vml">=0A<head>=0A<titl=
+e></title>=0A<meta content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Con=
+tent-Type"/>=0A<meta content=3D"width=3Ddevice-width, initial-scale=3D1.0" =
+name=3D"viewport"/>=0A<!--[if mso]><xml><o:OfficeDocumentSettings><o:Pixels=
+PerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><=
+![endif]-->=0A<!--[if !mso]><!-->=0A<link href=3D"https://fonts.googleapis.=
+com/css?family=3DLato" rel=3D"stylesheet" type=3D"text/css"/>=0A<!--<![endi=
+f]-->=0A<style>=0A		* {=0A			box-sizing: border-box;=0A		}=0A=0A		body {=0A=
+			margin: 0;=0A			padding: 0;=0A		}=0A=0A		a[x-apple-data-detectors] {=0A	=
+		color: inherit !important;=0A			text-decoration: inherit !important;=0A		=
+}=0A=0A		#MessageViewBody a {=0A			color: inherit;=0A			text-decoration: no=
+ne;=0A		}=0A=0A		p {=0A			line-height: inherit=0A		}=0A=0A		.desktop_hide,=
+=0A		.desktop_hide table {=0A			mso-hide: all;=0A			display: none;=0A			max=
+-height: 0px;=0A			overflow: hidden;=0A		}=0A=0A		.image_block img+div {=0A=
+			display: none;=0A		}=0A=0A		@media (max-width:620px) {=0A			.row-1 .colu=
+mn-1 .block-1.image_block img {=0A				display: inline-block !important;=0A	=
+		}=0A=0A			.row-content {=0A				width: 100% !important;=0A			}=0A=0A			.mo=
+bile_hide {=0A				display: none;=0A			}=0A=0A			.stack .column {=0A				widt=
+h: 100%;=0A				display: block;=0A			}=0A=0A			.mobile_hide {=0A				min-heig=
+ht: 0;=0A				max-height: 0;=0A				max-width: 0;=0A				overflow: hidden;=0A	=
+			font-size: 0px;=0A			}=0A=0A			.desktop_hide,=0A			.desktop_hide table {=
+=0A				display: table !important;=0A				max-height: none !important;=0A			}=
+=0A=0A			.row-3 .column-1 .block-1.text_block td.pad,=0A			.row-3 .column-1=
+ .block-2.text_block td.pad {=0A				padding: 20px 15px 10px 25px !important=
+;=0A			}=0A=0A			.row-2 .column-1 .block-1.image_block td.pad {=0A				paddi=
+ng: 30px 0 0 25px !important;=0A			}=0A=0A			.row-1 .column-1 .block-1.imag=
+e_block .alignment {=0A				text-align: center !important;=0A			}=0A=0A			.r=
+ow-3 .column-1 .block-3.text_block td.pad {=0A				padding: 25px 40px 10px 2=
+5px !important;=0A			}=0A=0A			.row-5 .column-1 .block-1.text_block td.pad =
+{=0A				padding: 10px 40px 0 25px !important;=0A			}=0A=0A			.row-5 .column=
+-1 .block-3.text_block td.pad {=0A				padding: 5px 40px 10px 25px !importan=
+t;=0A			}=0A=0A			.row-3 .column-1 .block-4.text_block td.pad {=0A				paddi=
+ng: 15px 40px 10px 25px !important;=0A			}=0A=0A			.row-4 .column-1 .block-=
+1.heading_block td.pad {=0A				padding: 10px 10px 10px 25px !important;=0A	=
+		}=0A=0A			.row-5 .column-1 .block-2.text_block td.pad {=0A				padding: 5p=
+x 15px 10px 25px !important;=0A			}=0A=0A			.row-4 .column-1 .block-2.list_=
+block td.pad {=0A				padding: 10px 0 10px 25px !important;=0A			}=0A=0A			.=
+row-4 .column-1 .block-2.list_block ul {=0A				line-height: auto !important=
+;=0A			}=0A		}=0A	</style>=0A</head>=0A<body style=3D"background-color: #ed=
+ecec; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adju=
+st: none;">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"nl-container" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso=
+-table-rspace: 0pt; background-color: #edecec;" width=3D"100%">=0A<tbody>=
+=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" class=3D"row row-1" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<t=
+d>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"row-content stack" role=3D"presentation" style=3D"mso-table-lsp=
+ace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 600px;" width=3D"60=
+0">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-table-lsp=
+ace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; paddin=
+g-bottom: 15px; padding-top: 15px; vertical-align: top; border-top: 0px; bo=
+rder-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"100%">=0A<=
+table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"image_block=
+ block-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bo=
+ttom:5px;padding-top:30px;width:100%;padding-right:0px;padding-left:0px;">=
+=0A<div align=3D"center" class=3D"alignment" style=3D"line-height:10px"><a =
+href=3D"https://wavebox.io" style=3D"outline:none" tabindex=3D"-1" target=
+=3D"_self"><img alt=3D"Visit the Wavebox website" src=3D"https://wavebox.io=
+/website/emailimages/wavebox_logo_150.png" style=3D"display: block; height:=
+ auto; border: 0; width: 120px; max-width: 100%;" title=3D"Visit the Wavebo=
+x website" width=3D"120"/></a></div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A<=
+/tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table a=
+lign=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"r=
+ow row-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"cent=
+er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content" =
+role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; color: #000000; background-color: #ffffff; border-radius: 15px 15px 0 0; =
+width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column=
+-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400=
+; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: =
+top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0=
+px;" width=3D"50%">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"image_block block-1" role=3D"presentation" style=3D"mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"p=
+ad" style=3D"padding-left:40px;padding-top:30px;width:100%;padding-right:0p=
+x;">=0A<div align=3D"left" class=3D"alignment" style=3D"line-height:10px"><=
+a href=3D"https://www.linkedin.com/in/soodavies/" style=3D"outline:none" ta=
+bindex=3D"-1" target=3D"_self"><img alt=3D"Susan, Co-Founder" src=3D"https:=
+//wavebox.io/website/emailimages/soo-susan-me-avatar.png" style=3D"display:=
+ block; height: auto; border: 0; width: 90px; max-width: 100%;" title=3D"Su=
+san, Co-Founder" width=3D"90"/></a></div>=0A</td>=0A</tr>=0A</table>=0A</td=
+>=0A<td class=3D"column column-2" style=3D"mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padd=
+ing-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; bord=
+er-bottom: 0px; border-left: 0px;" width=3D"25%">=0A<table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" class=3D"image_block block-1" role=3D"pres=
+entation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"=
+100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-top:60px;width:100%;padd=
+ing-right:0px;padding-left:0px;">=0A<div align=3D"center" class=3D"alignmen=
+t" style=3D"line-height:10px"><a href=3D"https://www.capterra.co.uk/softwar=
+e/203921/wavebox" style=3D"outline:none" tabindex=3D"-1" target=3D"_self"><=
+img alt=3D"Check out our reviews on Capterra" src=3D"https://wavebox.io/web=
+site/emailimages/capterra-5-stars.png" style=3D"display: block; height: aut=
+o; border: 0; width: 105px; max-width: 100%;" title=3D"Check out our review=
+s on Capterra" width=3D"105"/></a></div>=0A</td>=0A</tr>=0A</table>=0A</td>=
+=0A<td class=3D"column column-3" style=3D"mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; paddi=
+ng-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; borde=
+r-bottom: 0px; border-left: 0px;" width=3D"25%">=0A<table border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"image_block block-1" role=3D"prese=
+ntation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"1=
+00%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-right:10px;padding-top:60=
+px;width:100%;padding-left:0px;">=0A<div align=3D"center" class=3D"alignmen=
+t" style=3D"line-height:10px"><a href=3D"https://uk.trustpilot.com/review/w=
+avebox.io" style=3D"outline:none" tabindex=3D"-1" target=3D"_self"><img alt=
+=3D"Check out our reviews on Trustpilot" src=3D"https://wavebox.io/website/=
+emailimages/trustpilot-5-stars.png" style=3D"display: block; height: auto; =
+border: 0; width: 105px; max-width: 100%;" title=3D"Check out our reviews o=
+n Trustpilot" width=3D"105"/></a></div>=0A</td>=0A</tr>=0A</table>=0A</td>=
+=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<tab=
+le align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"row row-3" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-ta=
+ble-rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D=
+"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-cont=
+ent stack" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt; color: #000000; background-color: #ffffff; width: 600px;" widt=
+h=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left;=
+ padding-bottom: 15px; padding-top: 20px; vertical-align: top; border-top: =
+0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"100=
+%">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text=
+_block block-1 desktop_hide" role=3D"presentation" style=3D"mso-table-lspac=
+e: 0pt; mso-table-rspace: 0pt; mso-hide: all; display: none; max-height: 0;=
+ overflow: hidden; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td cl=
+ass=3D"pad" style=3D"padding-bottom:10px;padding-left:40px;padding-right:15=
+px;padding-top:20px;">=0A<div style=3D"font-family: sans-serif">=0A<div cla=
+ss=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe=
+, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; li=
+ne-height: 1.2;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: lef=
+t; mso-line-height-alt: 16.8px;"><span style=3D"font-size:18px;"><span styl=
+e=3D"">=F0=9F=A5=B3 Get Ready to Go Pro!</span></span></p>=0A</div>=0A</div=
+>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"text_block block-2 mobile_hide" role=3D"presentation" =
+style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-wo=
+rd;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10p=
+x;padding-left:40px;padding-right:15px;padding-top:20px;">=0A<div style=3D"=
+font-family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-=
+family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.3=
+99999999999999px; color: #555; line-height: 1.2;">=0A<p style=3D"margin: 0;=
+ font-size: 14px; text-align: left; mso-line-height-alt: 16.8px;"><span sty=
+le=3D"font-size:26px;">=F0=9F=91=8D Get Ready to Go Pro!</span></p>=0A</div=
+>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" class=3D"text_block block-3" role=3D"presentation" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;=
+" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px;p=
+adding-left:40px;padding-right:40px;padding-top:25px;">=0A<div style=3D"fon=
+t-family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-fam=
+ily: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 18px; c=
+olor: #555555; line-height: 1.5;">=0A<p style=3D"margin: 0; text-align: lef=
+t; font-size: 13px; mso-line-height-alt: 19.5px;"><span style=3D"font-size:=
+13px;"><strong><span style=3D"">Hey Waveboxer,</span></strong></span></p>=
+=0A<p style=3D"margin: 0; font-size: 13px; mso-line-height-alt: 18px;">=C2=
+=A0</p>=0A<p style=3D"margin: 0; font-size: 13px; mso-line-height-alt: 19.5=
+px;">This is a quick message to remind you that your Pro trial is ending in=
+ the next few days, so it's almost time to choose a subscription plan that =
+works for you.</p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block block-4"=
+ role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0p=
+t; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" styl=
+e=3D"padding-bottom:10px;padding-left:40px;padding-right:40px;padding-top:1=
+5px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" style=3D=
+"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; ms=
+o-line-height-alt: 18px; color: #9c9c9c; line-height: 1.5;">=0A<p style=3D"=
+margin: 0; mso-line-height-alt: 19.5px;"><span style=3D"color:#333333;font-=
+size:13px;"><span style=3D""><span style=3D"color:#333333;"><span style=3D"=
+"><span style=3D"color:#393939;"><span style=3D"color:#393939;">The </span>=
+<span style=3D"color:#393939;"><span style=3D"">fantastic</span></span><spa=
+n style=3D"color:#393939;"> news is that we have <a href=3D"http://wavebox.=
+io/pricing" rel=3D"noopener" style=3D"text-decoration: underline; color: #0=
+aa7ef;" target=3D"_blank" title=3D"See our pricing plans"><strong>pricing p=
+lans</strong></a> to suit all budgets. =C2=A0You can start with a monthly s=
+ubscription or save by paying annually - it's up to you! Our no-quibble 30-=
+day money-back guarantee protects all new subscriptions.<br/></span></span>=
+</span></span></span></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</tabl=
+e>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</tab=
+le>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"row row-4" role=3D"presentation" style=3D"mso-table-lspace: 0p=
+t; mso-table-rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table=
+ align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D=
+"row-content stack" role=3D"presentation" style=3D"mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt; background-color: #ffffff; border-radius: 0; color: #=
+000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"colum=
+n column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-wei=
+ght: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical=
+-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border=
+-left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"heading_block block-1" role=3D"presentation" style=3D"=
+mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td=
+ class=3D"pad" style=3D"padding-bottom:10px;padding-left:40px;padding-right=
+:10px;padding-top:10px;text-align:center;width:100%;">=0A<h1 style=3D"margi=
+n: 0; color: #555555; direction: ltr; font-family: Lato, Tahoma, Verdana, S=
+egoe, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: normal=
+; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0;"><s=
+pan class=3D"tinyMce-placeholder">Wavebox Pro & Team plans include:</span><=
+/h1>=0A</td>=0A</tr>=0A</table>=0A<!--[if mso]><style>#list-r3c0m1 ul{margi=
+n: 0 !important; padding: 0 !important;} #list-r3c0m1 ul li{mso-special-for=
+mat: bullet;}#list-r3c0m1 .levelOne li {margin-top: 0 !important;} #list-r3=
+c0m1 .levelOne {margin-left: -20px !important;}#list-r3c0m1 .levelTwo li {m=
+argin-top: 0 !important;} #list-r3c0m1 .levelTwo {margin-left: 10px !import=
+ant;}#list-r3c0m1 .levelThree li {margin-top: 0 !important;} #list-r3c0m1 .=
+levelThree {margin-left: 40px !important;}#list-r3c0m1 .levelFour li {margi=
+n-top: 0 !important;} #list-r3c0m1 .levelFour {margin-left: 70px !important=
+;}#list-r3c0m1 .levelFive li {margin-top: 0 !important;} #list-r3c0m1 .leve=
+lFive {margin-left: 100px !important;}#list-r3c0m1 .levelSix li {margin-top=
+: 0 !important;} #list-r3c0m1 .levelSix {margin-left: 130px !important;}#li=
+st-r3c0m1 .levelSeven li {margin-top: 0 !important;} #list-r3c0m1 .levelSev=
+en {margin-left: 160px !important;}</style><![endif]-->=0A<table border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" class=3D"list_block block-2" id=3D"l=
+ist-r3c0m1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=
+=3D"pad" style=3D"padding-bottom:10px;padding-left:40px;padding-top:10px;">=
+=0A<div class=3D"levelOne" style=3D"margin-left: 0;">=0A<ul class=3D"leftLi=
+st" style=3D"margin-top: 0; margin-bottom: 0; padding: 0; padding-left: 20p=
+x; color: #555555; direction: ltr; font-family: Lato,Tahoma,Verdana,Segoe,s=
+ans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0; line-heigh=
+t: 150%; text-align: left; list-style-type: disc;">=0A<li style=3D"margin-b=
+ottom: 0; text-align: left;"><strong>Unlimited apps and extensions</strong>=
+</li>=0A<li style=3D"margin-bottom: 0; text-align: left;"><strong>Unlimited=
+ profiles, containers, and workspaces</strong></li>=0A<li style=3D"margin-b=
+ottom: 0; text-align: left;"><strong>Real-time cloud sync & backup</strong>=
+</li>=0A<li style=3D"margin-bottom: 0; text-align: left;"><strong>70% disco=
+unt for education & non-profits</strong></li>=0A<li style=3D"margin-bottom:=
+ 0; text-align: left;"><strong>Discounts on multi seat purchases</strong></=
+li>=0A</ul>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" class=3D"button_block block-3" role=3D"prese=
+ntation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"1=
+00%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px;padding-left:=
+40px;padding-right:10px;padding-top:15px;text-align:left;">=0A<div align=3D=
+"left" class=3D"alignment">=0A<!--[if mso]><v:roundrect xmlns:v=3D"urn:sche=
+mas-microsoft-com:vml" xmlns:w=3D"urn:schemas-microsoft-com:office:word" hr=
+ef=3D"https://wavebox.io/buynow/0e7390a7d7dd44c0bdefd445dd57e389/9cced10d5c=
+36cfb94aeea47151ecf97251f587eb60961614e98cda945cd3a9fb" style=3D"height:53p=
+x;width:228px;v-text-anchor:middle;" arcsize=3D"48%" stroke=3D"false" fillc=
+olor=3D"#0aa7ef"><w:anchorlock/><v:textbox inset=3D"0px,0px,0px,0px"><cente=
+r style=3D"color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-siz=
+e:20px"><![endif]--><a href=3D"https://wavebox.io/buynow/0e7390a7d7dd44c0bd=
+efd445dd57e389/9cced10d5c36cfb94aeea47151ecf97251f587eb60961614e98cda945cd3=
+a9fb" style=3D"text-decoration:none;display:inline-block;color:#ffffff;back=
+ground-color:#0aa7ef;border-radius:25px;width:auto;border-top:0px solid #00=
+AEEF;font-weight:400;border-right:0px solid #00AEEF;border-bottom:0px solid=
+ #00AEEF;border-left:0px solid #00AEEF;padding-top:7px;padding-bottom:7px;f=
+ont-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:20px;text-ali=
+gn:center;mso-border-alt:none;word-break:keep-all;" target=3D"_self"><span =
+style=3D"padding-left:25px;padding-right:25px;font-size:20px;display:inline=
+-block;letter-spacing:normal;"><span dir=3D"ltr" style=3D"word-break: break=
+-word; line-height: 40px;">=E2=AD=90=EF=B8=8F Buy Wavebox Pro</span></span>=
+</a>=0A<!--[if mso]></center></v:textbox></v:roundrect><![endif]-->=0A</div=
+>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td>=
+=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"center" border=3D"0" cellp=
+adding=3D"0" cellspacing=3D"0" class=3D"row row-5" role=3D"presentation" st=
+yle=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tb=
+ody>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" class=3D"row-content stack" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; backgroun=
+d-color: #ffffff; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td clas=
+s=3D"column column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; font-weight: 400; text-align: left; padding-bottom: 30px; padding-top: 10=
+px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom:=
+ 0px; border-left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"text_block block-1" role=3D"presentation"=
+ style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-w=
+ord;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-left:40px=
+;padding-right:40px;padding-top:10px;">=0A<div style=3D"font-family: sans-s=
+erif">=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahom=
+a, Verdana, Segoe, sans-serif; mso-line-height-alt: 18px; color: #555555; l=
+ine-height: 1.5;">=0A<p style=3D"margin: 0; font-size: 13px; mso-line-heigh=
+t-alt: 21px;"><span style=3D"font-size:13px;"><span style=3D""><span style=
+=3D""><span style=3D""><strong>=F0=9F=A4=94 Not made up your mind yet? No p=
+roblem.</strong> </span></span></span><span style=3D""><span style=3D"">Jus=
+t<strong> </strong>hit reply, and I'll add extra time to your trial. And if=
+ you have any questions, then include them too! I'd be delighted to help yo=
+u in any way I can.</span></span></span><span style=3D"font-size:14px;"><sp=
+an style=3D""><br/></span></span></p>=0A<p style=3D"margin: 0; text-align: =
+left; font-size: 13px; mso-line-height-alt: 18px;">=C2=A0</p>=0A<p style=3D=
+"margin: 0; text-align: left; font-size: 13px; mso-line-height-alt: 19.5px;=
+"><span style=3D"font-size:13px;"><span style=3D"">Thanks again for taking =
+the time to try Wavebox and we look forward to welcoming you onboard.</span=
+></span></p>=0A<p style=3D"margin: 0; text-align: left; font-size: 13px; ms=
+o-line-height-alt: 18px;">=C2=A0</p>=0A<p style=3D"margin: 0; text-align: l=
+eft; font-size: 13px; mso-line-height-alt: 19.5px;"><span style=3D"font-siz=
+e:13px;"><span style=3D"">Best wishes,</span></span></p>=0A<p style=3D"marg=
+in: 0; text-align: left; font-size: 13px; mso-line-height-alt: 18px;">=C2=
+=A0</p>=0A<p style=3D"margin: 0; text-align: left; font-size: 13px; mso-lin=
+e-height-alt: 19.5px;"><span style=3D"font-size:13px;"><strong><span style=
+=3D""><span style=3D"">Susan<br/></span><span style=3D"">Co-Founder.</span>=
+</span></strong></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block=
+ block-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"=
+pad" style=3D"padding-bottom:10px;padding-left:40px;padding-right:15px;padd=
+ing-top:5px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" =
+style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-s=
+erif; mso-line-height-alt: 14.399999999999999px; color: #1bd8fa; line-heigh=
+t: 1.2;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: left; mso-l=
+ine-height-alt: 16.8px;"><span style=3D"font-size:10px;"><strong><span styl=
+e=3D""><span style=3D"color:#00aeef;">WAVEBOX</span><span style=3D"color:#f=
+fffff;"> </span><span style=3D"color:#999999;">YOUR WORK BROWSER</span></sp=
+an></strong></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<tab=
+le border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block blo=
+ck-3" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspac=
+e: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad"=
+ style=3D"padding-bottom:10px;padding-left:40px;padding-right:40px;padding-=
+top:5px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" styl=
+e=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif=
+; mso-line-height-alt: 14.399999999999999px; color: #b6b4b4; line-height: 1=
+.2;">=0A<p style=3D"margin: 0; text-align: left; font-size: 14px; mso-line-=
+height-alt: 16.8px;"><em><span style=3D"color:#606060;font-size:12px;"><spa=
+n style=3D"">P.S. If you choose not to pay for a subscription, you'll autom=
+atically fall to our Basic plan, which supports 2 Gmail accounts, one app a=
+nd one extension. All your apps and settings are saved so you can unlock Pr=
+o or Teams anytime!</span></span></em></p>=0A<p style=3D"margin: 0; text-al=
+ign: left; font-size: 14px; mso-line-height-alt: 14.399999999999999px;">=C2=
+=A0</p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tb=
+ody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"cen=
+ter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-6 mo=
+bile_hide" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"cen=
+ter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content =
+stack" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; background-color: #f7f7f7; color: #000000; width: 600px;" width=3D=
+"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=3D"mso-table-=
+lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; pad=
+ding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; b=
+order-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"100%">=0A=
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block=
+ block-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"=
+pad" style=3D"padding-bottom:10px;padding-left:10px;padding-right:10px;padd=
+ing-top:20px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D""=
+ style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-=
+serif; mso-line-height-alt: 14.399999999999999px; color: #393d47; line-heig=
+ht: 1.2;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: center; ms=
+o-line-height-alt: 16.8px;"><span style=3D"font-size:13px;"><strong><span s=
+tyle=3D"color:#808080;">DID YOU KNOW?</span></strong></span></p>=0A</div>=
+=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=
+=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"center" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-7 mobile_hide" role=
+=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;" w=
+idth=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content stack" role=3D"=
+presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; backgr=
+ound-color: #f7f7f7; color: #000000; border-radius: 0 0 15px 15px; width: 6=
+00px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" styl=
+e=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-a=
+lign: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; bor=
+der-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" wid=
+th=3D"33.333333333333336%">=0A<table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" class=3D"image_block block-1" role=3D"presentation" style=3D"mso=
+-table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td cl=
+ass=3D"pad" style=3D"width:100%;padding-right:0px;padding-left:0px;">=0A<di=
+v align=3D"center" class=3D"alignment" style=3D"line-height:10px"><a href=
+=3D"https://kb.wavebox.io/" style=3D"outline:none" tabindex=3D"-1" target=
+=3D"_self"><img alt=3D"Get answers to frequently asked questions in our Kno=
+wledge Base." src=3D"https://wavebox.io/website/emailimages/wavebox-unlimit=
+ed-cookies.gif" style=3D"display: block; height: auto; border: 0; width: 60=
+px; max-width: 100%;" title=3D"Get answers to frequently asked questions in=
+ our Knowledge Base." width=3D"60"/></a></div>=0A</td>=0A</tr>=0A</table>=
+=0A<table border=3D"0" cellpadding=3D"20" cellspacing=3D"0" class=3D"text_b=
+lock block-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-tab=
+le-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=
+=3D"pad">=0A<div style=3D"font-family: sans-serif">=0A<div class=3D"" style=
+=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif;=
+ mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.=
+2;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: center; mso-line=
+-height-alt: 16.8px;"><span style=3D"font-size:11px;">You can use your Pro =
+subscription on as many computers as you like!</span></p>=0A</div>=0A</div>=
+=0A</td>=0A</tr>=0A</table>=0A</td>=0A<td class=3D"column column-2" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-al=
+ign: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; bord=
+er-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" widt=
+h=3D"33.333333333333336%">=0A<table border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" class=3D"image_block block-1" role=3D"presentation" style=3D"mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td cla=
+ss=3D"pad" style=3D"width:100%;padding-right:0px;padding-left:0px;">=0A<div=
+ align=3D"center" class=3D"alignment" style=3D"line-height:10px"><a href=3D=
+"https://wavebox.io/support" style=3D"outline:none" tabindex=3D"-1" target=
+=3D"_self"><img alt=3D"Visit the Help Center for more getting started tips"=
+ src=3D"https://wavebox.io/website/emailimages/wavebox-unlimited-extensions=
+.gif" style=3D"display: block; height: auto; border: 0; width: 70px; max-wi=
+dth: 100%;" title=3D"Visit the Help Center for more getting started tips" w=
+idth=3D"70"/></a></div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" ce=
+llpadding=3D"20" cellspacing=3D"0" class=3D"text_block block-2" role=3D"pre=
+sentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-brea=
+k: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad">=0A<div style=3D=
+"font-family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font=
+-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.=
+399999999999999px; color: #555555; line-height: 1.2;">=0A<p style=3D"margin=
+: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;"><sp=
+an style=3D"font-size:11px;">The Teams plan includes unlimited calls & scre=
+en-sharing.</span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=
+=0A<td class=3D"column column-3" style=3D"mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; paddi=
+ng-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; borde=
+r-bottom: 0px; border-left: 0px;" width=3D"33.333333333333336%">=0A<table b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"image_block block-=
+1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: =
+0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"width:100%;paddin=
+g-right:0px;padding-left:0px;">=0A<div align=3D"center" class=3D"alignment"=
+ style=3D"line-height:10px"><a href=3D"https://wavebox.io/support" style=3D=
+"outline:none" tabindex=3D"-1" target=3D"_self"><img alt=3D"Visit the Help =
+Center for more getting started tips" src=3D"https://wavebox.io/website/ema=
+ilimages/wavebox-unlimited-containers.gif" style=3D"display: block; height:=
+ auto; border: 0; width: 70px; max-width: 100%;" title=3D"Visit the Help Ce=
+nter for more getting started tips" width=3D"70"/></a></div>=0A</td>=0A</tr=
+>=0A</table>=0A<table border=3D"0" cellpadding=3D"20" cellspacing=3D"0" cla=
+ss=3D"text_block block-2" role=3D"presentation" style=3D"mso-table-lspace: =
+0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=
+=0A<td class=3D"pad">=0A<div style=3D"font-family: sans-serif">=0A<div clas=
+s=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe,=
+ sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; lin=
+e-height: 1.2;">=0A<p style=3D"margin: 0; font-size: 14px; text-align: cent=
+er; mso-line-height-alt: 16.8px;"><span style=3D"font-size:11px;">We offer =
+outstanding customer service! Check our <a href=3D"https://uk.trustpilot.co=
+m/review/wavebox.io" rel=3D"noopener" style=3D"text-decoration: underline; =
+color: #8a3b8f;" target=3D"_blank" title=3D"Trustpilot reviews">Trustpilot<=
+/a>.</span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr=
+>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row =
+row-8" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt;" width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center"=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content stac=
+k" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; background-color: #fffff; border-radius: 0; color: #000000; width: 600=
+px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D"column column-1" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-al=
+ign: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; bord=
+er-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" widt=
+h=3D"33.333333333333336%">=0A<table border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" class=3D"image_block block-1" role=3D"presentation" style=3D"mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td cla=
+ss=3D"pad" style=3D"padding-top:15px;width:100%;padding-right:0px;padding-l=
+eft:0px;">=0A<div align=3D"center" class=3D"alignment" style=3D"line-height=
+:10px"><a href=3D"https://uk.trustpilot.com/review/wavebox.io" style=3D"out=
+line:none" tabindex=3D"-1" target=3D"_self"><img alt=3D"See our reviews on =
+Trustpilot" src=3D"https://wavebox.io/website/emailimages/wavebox_5star_rev=
+iew.png" style=3D"display: block; height: auto; border: 0; width: 100px; ma=
+x-width: 100%;" title=3D"See our reviews on Trustpilot" width=3D"100"/></a>=
+</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" class=3D"text_block block-2" role=3D"presentation" style=
+=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" =
+width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:5px;padd=
+ing-left:20px;padding-right:20px;padding-top:10px;">=0A<div style=3D"font-f=
+amily: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-family=
+: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.3999999=
+99999999px; color: #555555; line-height: 1.2;">=0A<p style=3D"margin: 0; te=
+xt-align: center; mso-line-height-alt: 14.399999999999999px;"><span style=
+=3D"font-size:14px;"><strong><span style=3D"">Happy since 2018</span></stro=
+ng></span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_block block-3" rol=
+e=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; w=
+ord-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D=
+"padding-bottom:20px;padding-left:20px;padding-right:20px;">=0A<div style=
+=3D"font-family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; f=
+ont-family: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: =
+18px; color: #555555; line-height: 1.5;">=0A<p style=3D"margin: 0; text-ali=
+gn: center; mso-line-height-alt: 18px;"><span style=3D"font-size:12px;color=
+:#808080;">Foobar on Trustpilot.</span></p>=0A</div>=0A</div>=0A</td>=0A</t=
+r>=0A</table>=0A</td>=0A<td class=3D"column column-2" style=3D"mso-table-ls=
+pace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; paddi=
+ng-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; bor=
+der-right: 0px; border-bottom: 0px; border-left: 0px;" width=3D"33.33333333=
+3333336%">=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"image_block block-1" role=3D"presentation" style=3D"mso-table-lspace: 0=
+pt; mso-table-rspace: 0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" styl=
+e=3D"padding-top:15px;width:100%;padding-right:0px;padding-left:0px;">=0A<d=
+iv align=3D"center" class=3D"alignment" style=3D"line-height:10px"><a href=
+=3D"https://uk.trustpilot.com/review/wavebox.io" style=3D"outline:none" tab=
+index=3D"-1" target=3D"_self"><img alt=3D"See our reviews on Trustpilot" sr=
+c=3D"https://wavebox.io/website/emailimages/wavebox_5star_review.png" style=
+=3D"display: block; height: auto; border: 0; width: 110px; max-width: 100%;=
+" title=3D"See our reviews on Trustpilot" width=3D"110"/></a></div>=0A</td>=
+=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"text_block block-2" role=3D"presentation" style=3D"mso-table-ls=
+pace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"100%">=
+=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:5px;padding-left:20px;p=
+adding-right:20px;padding-top:10px;">=0A<div style=3D"font-family: sans-ser=
+if">=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma,=
+ Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; col=
+or: #555555; line-height: 1.2;">=0A<p style=3D"margin: 0; text-align: cente=
+r; mso-line-height-alt: 14.399999999999999px;"><span style=3D"font-size:14p=
+x;"><strong><span style=3D"">Excellent support</span></strong></span></p>=
+=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" class=3D"text_block block-3" role=3D"presentat=
+ion" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: bre=
+ak-word;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-botto=
+m:20px;padding-left:20px;padding-right:20px;">=0A<div style=3D"font-family:=
+ sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato=
+, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 18px; color: #55=
+5555; line-height: 1.5;">=0A<p style=3D"margin: 0; text-align: center; mso-=
+line-height-alt: 18px;"><span style=3D"font-size:12px;color:#808080;">John =
+T on Trustpilot.</span></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A=
+</td>=0A<td class=3D"column column-3" style=3D"mso-table-lspace: 0pt; mso-t=
+able-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; =
+padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; =
+border-bottom: 0px; border-left: 0px;" width=3D"33.333333333333336%">=0A<ta=
+ble border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"image_block b=
+lock-1" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rsp=
+ace: 0pt;" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-top:=
+15px;width:100%;padding-right:0px;padding-left:0px;">=0A<div align=3D"cente=
+r" class=3D"alignment" style=3D"line-height:10px"><a href=3D"https://uk.tru=
+stpilot.com/review/wavebox.io" style=3D"outline:none" tabindex=3D"-1" targe=
+t=3D"_self"><img alt=3D"See our reviews on Trustpilot" src=3D"https://waveb=
+ox.io/website/emailimages/wavebox_5star_review.png" style=3D"display: block=
+; height: auto; border: 0; width: 100px; max-width: 100%;" title=3D"See our=
+ reviews on Trustpilot" width=3D"100"/></a></div>=0A</td>=0A</tr>=0A</table=
+>=0A<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"text_b=
+lock block-2" role=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-tab=
+le-rspace: 0pt; word-break: break-word;" width=3D"100%">=0A<tr>=0A<td class=
+=3D"pad" style=3D"padding-bottom:5px;padding-left:20px;padding-right:20px;p=
+adding-top:10px;">=0A<div style=3D"font-family: sans-serif">=0A<div class=
+=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana, Segoe, =
+sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line=
+-height: 1.2;">=0A<p style=3D"margin: 0; text-align: center; mso-line-heigh=
+t-alt: 14.399999999999999px;"><span style=3D"font-size:14px;"><strong><span=
+ style=3D"">Makes life easier</span></strong></span></p>=0A</div>=0A</div>=
+=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" class=3D"text_block block-3" role=3D"presentation" style=3D"mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D=
+"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:20px;padding-lef=
+t:20px;padding-right:20px;">=0A<div style=3D"font-family: sans-serif">=0A<d=
+iv class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Verdana,=
+ Segoe, sans-serif; mso-line-height-alt: 18px; color: #555555; line-height:=
+ 1.5;">=0A<p style=3D"margin: 0; text-align: center; mso-line-height-alt: 1=
+8px;"><span style=3D"font-size:12px;color:#808080;">Ali on Trustpilot.</spa=
+n></p>=0A</div>=0A</div>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbo=
+dy>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A<table align=3D"cent=
+er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row row-9" ro=
+le=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt;"=
+ width=3D"100%">=0A<tbody>=0A<tr>=0A<td>=0A<table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"row-content stack" role=
+=3D"presentation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; co=
+lor: #000000; width: 600px;" width=3D"600">=0A<tbody>=0A<tr>=0A<td class=3D=
+"column column-1" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; fo=
+nt-weight: 400; text-align: left; padding-bottom: 40px; padding-top: 15px; =
+vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px=
+; border-left: 0px;" width=3D"100%">=0A<table border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"text_block block-1 desktop_hide" role=3D"prese=
+ntation" style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: a=
+ll; display: none; max-height: 0; overflow: hidden; word-break: break-word;=
+" width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px;p=
+adding-left:5px;padding-right:5px;padding-top:10px;">=0A<div style=3D"font-=
+family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-famil=
+y: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999=
+999999999px; color: #000000; line-height: 1.2;">=0A<p style=3D"margin: 0; f=
+ont-size: 12px; text-align: center; mso-line-height-alt: 14.399999999999999=
+px;"><span style=3D"font-size:10px;"><a href=3D"https://kb.wavebox.io/" rel=
+=3D"noopener" style=3D"text-decoration: none; color: #0068a5;" target=3D"_b=
+lank" title=3D"Knowledge Base">Knowledge Base=C2=A0</a> | =C2=A0<a href=3D"=
+https://wavebox.io/support" rel=3D"noopener" style=3D"text-decoration: none=
+; color: #0068a5;" target=3D"_blank">Help Center</a>=C2=A0 |=C2=A0 <a href=
+=3D"https://wavebox.io/unsubscribe/0e7390a7d7dd44c0bdefd445dd57e389/1d0cac8=
+9b5ad4c6efe6253e9da495646f65c2af5b3b192fa9da5a223e308f664" rel=3D"noopener"=
+ style=3D"text-decoration: none; color: #0068a5;" target=3D"_blank" title=
+=3D"Unsubscribe">Unsubscribe</a></span></p>=0A</div>=0A</div>=0A</td>=0A</t=
+r>=0A</table>=0A<table border=3D"0" cellpadding=3D"10" cellspacing=3D"0" cl=
+ass=3D"text_block mobile_hide block-2" role=3D"presentation" style=3D"mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width=3D"=
+100%">=0A<tr>=0A<td class=3D"pad">=0A<div style=3D"font-family: sans-serif"=
+>=0A<div class=3D"" style=3D"font-size: 12px; font-family: Lato, Tahoma, Ve=
+rdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color:=
+ #000000; line-height: 1.2;">=0A<p style=3D"margin: 0; font-size: 12px; tex=
+t-align: center; mso-line-height-alt: 14.399999999999999px;"><a href=3D"htt=
+ps://kb.wavebox.io/" rel=3D"noopener" style=3D"text-decoration: none; color=
+: #0068a5;" target=3D"_blank" title=3D"Knowledge Base">Knowledge Base=C2=A0=
+</a> | =C2=A0<a href=3D"https://wavebox.io/support" rel=3D"noopener" style=
+=3D"text-decoration: none; color: #0068a5;" target=3D"_blank">Help Center</=
+a>=C2=A0 |=C2=A0 <a href=3D"https://wavebox.io/unsubscribe/0e7390a7d7dd44c0=
+bdefd445dd57e389/1d0cac89b5ad4c6efe6253e9da495646f65c2af5b3b192fa9da5a223e3=
+08f664" rel=3D"noopener" style=3D"text-decoration: none; color: #0068a5;" t=
+arget=3D"_blank" title=3D"Unsubscribe">Unsubscribe</a></p>=0A</div>=0A</div=
+>=0A</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"text_block block-3 desktop_hide" role=3D"presentation"=
+ style=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-hide: all; disp=
+lay: none; max-height: 0; overflow: hidden; word-break: break-word;" width=
+=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px;padding-=
+left:10px;padding-right:20px;padding-top:10px;">=0A<div style=3D"font-famil=
+y: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-family: La=
+to, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.39999999999=
+9999px; color: #555555; line-height: 1.2;">=0A<p style=3D"margin: 0; text-a=
+lign: center; mso-line-height-alt: 14.399999999999999px;"><span style=3D"co=
+lor:#999999;">Wavebox, Bookry Ltd, Intec, Parc Menai, Bangor, UK. </span><s=
+pan style=3D"color:#999999;">You are receiving this email as a Wavebox user=
+. Please use the link above to unsubscribe.</span></p>=0A</div>=0A</div>=0A=
+</td>=0A</tr>=0A</table>=0A<table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" class=3D"text_block block-4 mobile_hide" role=3D"presentation" styl=
+e=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"=
+ width=3D"100%">=0A<tr>=0A<td class=3D"pad" style=3D"padding-bottom:10px;pa=
+dding-left:40px;padding-right:40px;padding-top:10px;">=0A<div style=3D"font=
+-family: sans-serif">=0A<div class=3D"" style=3D"font-size: 12px; font-fami=
+ly: Lato, Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.39999=
+9999999999px; color: #555555; line-height: 1.2;">=0A<p style=3D"margin: 0; =
+text-align: center; mso-line-height-alt: 14.399999999999999px;"><span style=
+=3D"color:#999999;">Wavebox, Bookry Ltd, Intec, Parc Menai, Bangor, UK. </s=
+pan><span style=3D"color:#999999;">You are receiving this email as a Wavebo=
+x user. Please use the link above to unsubscribe.</span></p>=0A</div>=0A</d=
+iv>=0A</td>=0A</tr>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table>=0A</td=
+>=0A</tr>=0A</tbody>=0A</table>=0A</td>=0A</tr>=0A</tbody>=0A</table><!-- E=
+nd -->=0A</body>=0A</html>=0A
+--5106FB8209286E75FEB2A3AE--
