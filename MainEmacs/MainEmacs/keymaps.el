@@ -1082,9 +1082,10 @@ the user declines to add another file."
 	"o n" '(org-capture :wk "Notes/TODOS/Calendar captures")
   "o t" '(org-todo :wk "Org todo")
 	"o T" '(counsel-org-tag :wk "Add tags")
-	"o C-s" '(org-set-tags-command :wk "Org set tags")
+	"o S" '(org-set-tags-command :wk "Org set tags")
   "o C-p" '(org-priority :wk "Set priority")
-  "o S" '((lambda () (interactive) (save-buffer) (org-babel-tangle) (refresh-my-agenda-files))
+	"C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
+  "o r C-s" '((lambda () (interactive) (save-buffer) (org-babel-tangle) (refresh-my-agenda-files))
 					:wk "Org save")
   "o s" '(:ignore t :wk "Saround / Highlight text")
 	"o s b" '(my/org-wrap-bold :wk "Bold")
@@ -1552,6 +1553,8 @@ the user declines to add another file."
 	"n <right>"   '(nov-next-document :wk "Novel next-page")
   "n M"  '(nov-display-metadata :wk "Novel metadata")
   "n i"  '(nov-goto-toc :wk "Novel imenu")
+  "n C-s" '((lambda () (interactive) (save-buffer) (org-babel-tangle) (refresh-my-agenda-files))
+					:wk "Org save")
 	"n b" '(org-roam-buffer-toggle :wk "Org Buffer whith refrences to nodes")
 	"n f" '(org-roam-node-find :wk "Org Open node")
 	"n c" '(my/org-roam-create-node-in-directory :wk "Org Create node in dir")
@@ -1629,7 +1632,7 @@ the user declines to add another file."
 	"C-M-<left>" 'buf-move-left   ;; Move to the far left of the window
 	"C-M-<right>" 'buf-move-right ;; Move to the far right of the window
 	"C-s" nil
-	"C-s" (lambda () (interactive) (save-buffer) (org-babel-tangle))
+	"C-s" save-buffer
 	"C-h f" nil
 	"C-h v" nil
 	"C-h k" nil
