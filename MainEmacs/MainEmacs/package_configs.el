@@ -116,35 +116,71 @@
 	(require 'diff-hl)
 	(require 'cl-lib)
 
-	;; Doom Modeline segment for Git diffs:
-	(doom-modeline-def-segment vcs-diff
-		"Show per-file Git diff stats (added, modified, deleted) with colored icons/text."
-		(when (and buffer-file-name
-							 (eq (vc-backend buffer-file-name) 'Git)
-							 diff-hl-mode)
-			(let* ((changes  (diff-hl-changes))
-						 ;; Sum up lengths; empty list → 0
-						 (added    (cl-loop for (_line len type) in changes
-																when (eq type 'insert) sum len))
-						 (deleted  (cl-loop for (_line len type) in changes
-																when (eq type 'delete) sum len))
-						 (modified (cl-loop for (_line len type) in changes
-																when (eq type 'change) sum len)))
-				(concat
-				 ;; Added
-				 (propertize (format "  %d" added)
-										 'face 'my-vcs-added-face)
-				 ""
-				 ;; Modified
-				 (propertize (format "  %d" modified)
-										 'face 'my-vcs-modified-face)
-				 ""
-				 ;; Deleted
-				 (propertize (format "  %d" deleted)
-										 'face 'my-vcs-removed-face)
-				 ""
-				 ))))
-
+	;; ;; Doom Modeline segment for Git diffs:
+	;; (doom-modeline-def-segment vcs-diff
+	;; 	"Show per-file Git diff stats (added, modified, deleted) with colored icons/text."
+	;; 	(when (and buffer-file-name
+	;; 						 (eq (vc-backend buffer-file-name) 'Git)
+	;; 						 diff-hl-mode)
+	;; 		(let* ((changes  (diff-hl-changes))
+	;; 					 ;; Sum up lengths; empty list → 0
+	;; 					 (added    (cl-loop for (_line len type) in changes
+	;; 															when (eq type 'insert) sum len))
+	;; 					 (deleted  (cl-loop for (_line len type) in changes
+	;; 															when (eq type 'delete) sum len))
+	;; 					 (modified (cl-loop for (_line len type) in changes
+	;; 															when (eq type 'change) sum len)))
+	;; 			(concat
+	;; 			 ;; Added
+	;; 			 (propertize (format "  %d" added)
+	;; 									 'face 'my-vcs-added-face)
+	;; 			 ""
+	;; 			 ;; Modified
+	;; 			 (propertize (format "  %d" modified)
+	;; 									 'face 'my-vcs-modified-face)
+	;; 			 ""
+	;; 			 ;; Deleted
+	;; 			 (propertize (format "  %d" deleted)
+	;; 									 'face 'my-vcs-removed-face)
+	;; 			 ""
+	;; 			 ))))
+	
+;; Simple version - just count operations, ignore the count fields
+(doom-modeline-def-segment vcs-diff
+  "Show per-file Git diff stats - simple operation counting"
+  (when (and buffer-file-name
+             (eq (vc-backend buffer-file-name) 'Git)
+             diff-hl-mode)
+    (let* ((changes-data (diff-hl-changes))
+           (working-element (assq :working changes-data))
+           (working-contents (cdr working-element))
+           (added 0) (deleted 0) (modified 0))
+      
+      (when working-contents
+        (dolist (change working-contents)
+          (when (and (listp change) (>= (length change) 4))
+            (let ((type (nth 3 change)))
+              ;; Just count each operation as 1, ignore the count fields
+              (cond
+               ((eq type 'insert) (setq added (1+ added)))
+               ((eq type 'delete) (setq deleted (1+ deleted)))
+               ((eq type 'change) (setq modified (1+ modified))))))))
+      
+      ;; Return the formatted string only if there are changes
+        (concat
+         ;; Added
+         (propertize (format "  %d" added)
+                     'face 'my-vcs-added-face)
+         ""
+         ;; Modified
+         (propertize (format "  %d" modified)
+                     'face 'my-vcs-modified-face)
+         ""
+         ;; Deleted
+         (propertize (format "  %d" deleted)
+                     'face 'my-vcs-removed-face)
+         ""))))
+	
 	;; this gives the remaining time
 	;; (doom-modeline-def-segment emms-state
 	;; 	"Display EMMS state in the modeline, with remaining time before the name."
@@ -261,6 +297,7 @@
 			emms-state
 			mu4e
 			vcs-diff
+			;; vcs-diff-simple-count
 			lsp                            ; LSP server(s) active
 			buffer-position                ; cursor position (line:col)
 			battery                        ; battery %

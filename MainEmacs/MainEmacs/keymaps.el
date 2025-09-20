@@ -1023,7 +1023,7 @@ the user declines to add another file."
 	"l d g" '(lsp-ui-doc-glance :wk "Quick documentationon point")
 	"l m" '(disaster :wk "Make c,cpp line into assembly")
   "l s" '(my/toggle-lsp-eglot :wk "Toggle between eglot and lsp-mode")
-  "l s" '(ivy-yasnippet :wk "Snipet insert")
+  "l S" '(ivy-yasnippet :wk "Snipet insert")
   "l q" '(:ignore t :wk "Close or enable eglot or lsp-mode")
   "l q e" '(eglot-shutdown :wk "Eglot Shutdown")
   "l q E" '(eglot :wk "Eglot Enable")
@@ -1632,6 +1632,7 @@ the user declines to add another file."
 	"C-M-<left>" 'buf-move-left   ;; Move to the far left of the window
 	"C-M-<right>" 'buf-move-right ;; Move to the far right of the window
 	"C-s" nil
+	;; "C-s" (lambda () (interactive) (save-buffer))
 	"C-s" 'save-buffer
 	"C-h f" nil
 	"C-h v" nil
