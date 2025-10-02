@@ -1,0 +1,733 @@
+############################
+# Gmail Accounts
+############################
+IMAPAccount pappanos
+Host imap.gmail.com
+User pappanos004@gmail.com
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login pappanos004@gmail.com/ {print $NF}'"
+PassCmd "cat ~/mail-pass/pappanos"
+AuthMechs LOGIN
+TLSType IMAPS
+TLSVersions +1.2
+# CertificateFile /etc/ssl/cert.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 1        # Add this - limits concurrent operations
+Timeout 120  
+
+IMAPStore pappanos-remote
+Account pappanos
+
+MaildirStore pappanos-local
+Path ~/git/emails/pappanos/
+Inbox ~/git/emails/pappanos/Inbox
+SubFolders Verbatim
+
+Channel pappanos-inbox
+Far :pappanos-remote:"INBOX"
+Near :pappanos-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes # ExpireNew no: By default, unread messages are considered “important” and are not expired even when they are among the oldest. ExpireNew no means “do not expire unread messages.” If you set it to yes, then unread messages (even old ones) can be expired
+ExpireSide Near
+
+Channel pappanos-trash
+Far :pappanos-remote:"[Gmail]/Trash"
+Near :pappanos-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel pappanos-spam
+Far :pappanos-remote:"[Gmail]/Spam"
+Near :pappanos-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel pappanos-all
+Far :pappanos-remote:"[Gmail]/All Mail"
+Near :pappanos-local:"Archive"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel pappanos-drafts
+Far :pappanos-remote:"[Gmail]/Drafts"
+Near :pappanos-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Group pappanos
+Channel pappanos-inbox
+Channel pappanos-trash
+Channel pappanos-spam
+Channel pappanos-all
+Channel pappanos-drafts
+
+
+############################
+# Work Gmail
+############################
+
+IMAPAccount work
+Host imap.gmail.com
+User pappanos.work.004@gmail.com
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login pappanos.work.004@gmail.com/ {print $NF}'"
+PassCmd "cat ~/mail-pass/work"
+AuthMechs LOGIN
+TLSType IMAPS
+TLSVersions +1.2
+# CertificateFile /etc/ssl/cert.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 1        # Add this - limits concurrent operations
+Timeout 120  
+
+IMAPStore work-remote
+Account work
+
+MaildirStore work-local
+Path ~/git/emails/work/
+Inbox ~/git/emails/work/Inbox
+SubFolders Verbatim
+
+# Channels
+Channel work-inbox
+Far :work-remote:"INBOX"
+Near :work-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel work-trash
+Far :work-remote:"[Gmail]/Trash"
+Near :work-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel work-spam
+Far :work-remote:"[Gmail]/Spam"
+Near :work-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel work-all
+Far :work-remote:"[Gmail]/All Mail"
+Near :work-local:"Archive"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel work-drafts
+Far :work-remote:"[Gmail]/Drafts"
+Near :work-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Group work
+Channel work-inbox
+Channel work-trash
+Channel work-spam
+Channel work-all
+Channel work-drafts
+
+############################
+# Gamedev Gmail
+############################
+
+
+IMAPAccount gamedev
+Host imap.gmail.com
+User pappanos.gamedev.004@gmail.com
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login pappanos.work.004@gmail.com/ {print $NF}'"
+PassCmd "cat ~/mail-pass/gamedev"
+AuthMechs LOGIN
+TLSType IMAPS
+TLSVersions +1.2
+# CertificateFile /etc/ssl/cert.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 1        # Add this - limits concurrent operations
+Timeout 120  
+
+IMAPStore gamedev-remote
+Account gamedev
+
+MaildirStore gamedev-local
+Path ~/git/emails/gamedev/
+Inbox ~/git/emails/gamedev/Inbox
+SubFolders Verbatim
+
+# Channels
+Channel gamedev-inbox
+Far :gamedev-remote:"INBOX"
+Near :gamedev-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel gamedev-trash
+Far :gamedev-remote:"[Gmail]/Trash"
+Near :gamedev-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel gamedev-spam
+Far :gamedev-remote:"[Gmail]/Spam"
+Near :gamedev-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel gamedev-all
+Far :gamedev-remote:"[Gmail]/All Mail"
+Near :gamedev-local:"Archive"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel gamedev-drafts
+Far :gamedev-remote:"[Gmail]/Drafts"
+Near :gamedev-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Group gamedev
+Channel gamedev-inbox
+Channel gamedev-trash
+Channel gamedev-spam
+Channel gamedev-all
+Channel gamedev-drafts
+
+
+############################
+# User Gmail
+############################
+
+
+IMAPAccount user
+Host imap.gmail.com
+User user.idc004@gmail.com
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login pappanos.work.004@gmail.com/ {print $NF}'"
+PassCmd "cat ~/mail-pass/user"
+AuthMechs LOGIN
+TLSType IMAPS
+TLSVersions +1.2
+# CertificateFile /etc/ssl/cert.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 1        # Add this - limits concurrent operations
+Timeout 120  
+
+IMAPStore user-remote
+Account user
+
+MaildirStore user-local
+Path ~/git/emails/user/
+Inbox ~/git/emails/user/Inbox
+SubFolders Verbatim
+
+# Channels
+Channel user-inbox
+Far :user-remote:"INBOX"
+Near :user-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel user-trash
+Far :user-remote:"[Gmail]/Trash"
+Near :user-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel user-spam
+Far :user-remote:"[Gmail]/Spam"
+Near :user-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel user-all
+Far :user-remote:"[Gmail]/All Mail"
+Near :user-local:"Archive"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel user-drafts
+Far :user-remote:"[Gmail]/Drafts"
+Near :user-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Group user
+Channel user-inbox
+Channel user-trash
+Channel user-spam
+Channel user-all
+Channel user-drafts
+
+############################
+# Mine Gmail
+############################
+
+
+IMAPAccount mine
+Host imap.gmail.com
+User lets.mine004@gmail.com
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login pappanos.work.004@gmail.com/ {print $NF}'"
+PassCmd "cat ~/mail-pass/mine"
+AuthMechs LOGIN
+TLSType IMAPS
+TLSVersions +1.2
+# CertificateFile /etc/ssl/cert.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 1        # Add this - limits concurrent operations
+Timeout 120  
+
+IMAPStore mine-remote
+Account mine
+
+MaildirStore mine-local
+Path ~/git/emails/mine/
+Inbox ~/git/emails/mine/Inbox
+SubFolders Verbatim
+
+# Channels
+Channel mine-inbox
+Far :mine-remote:"INBOX"
+Near :mine-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel mine-trash
+Far :mine-remote:"[Gmail]/Trash"
+Near :mine-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel mine-spam
+Far :mine-remote:"[Gmail]/Spam"
+Near :mine-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel mine-all
+Far :mine-remote:"[Gmail]/All Mail"
+Near :mine-local:"Archive"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel mine-drafts
+Far :mine-remote:"[Gmail]/Drafts"
+Near :mine-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Group mine
+Channel mine-inbox
+Channel mine-trash
+Channel mine-spam
+Channel mine-all
+Channel mine-drafts
+
+############################
+# Money Gmail
+############################
+
+
+IMAPAccount money
+Host imap.gmail.com
+User euro.money004@gmail.com
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login pappanos.work.004@gmail.com/ {print $NF}'"
+PassCmd "cat ~/mail-pass/money"
+AuthMechs LOGIN
+TLSType IMAPS
+TLSVersions +1.2
+# CertificateFile /etc/ssl/cert.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 1        # Add this - limits concurrent operations
+Timeout 120  
+
+IMAPStore money-remote
+Account money
+
+MaildirStore money-local
+Path ~/git/emails/money/
+Inbox ~/git/emails/money/Inbox
+SubFolders Verbatim
+
+# Channels
+Channel money-inbox
+Far :money-remote:"INBOX"
+Near :money-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel money-trash
+Far :money-remote:"[Gmail]/Trash"
+Near :money-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel money-spam
+Far :money-remote:"[Gmail]/Spam"
+Near :money-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel money-all
+Far :money-remote:"[Gmail]/All Mail"
+Near :money-local:"Archive"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel money-drafts
+Far :money-remote:"[Gmail]/Drafts"
+Near :money-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Group money
+Channel money-inbox
+Channel money-trash
+Channel money-spam
+Channel money-all
+Channel money-drafts
+
+############################
+# Overwhatch Gmail
+############################
+
+IMAPAccount overwhatch
+Host imap.gmail.com
+User overwhatch.004@gmail.com
+# PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login pappanos.work.004@gmail.com/ {print $NF}'"
+PassCmd "cat ~/mail-pass/overwhatch"
+AuthMechs LOGIN
+TLSType IMAPS
+TLSVersions +1.2
+# CertificateFile /etc/ssl/cert.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 1        # Add this - limits concurrent operations
+Timeout 120  
+
+IMAPStore overwhatch-remote
+Account overwhatch
+
+MaildirStore overwhatch-local
+Path ~/git/emails/overwhatch/
+Inbox ~/git/emails/overwhatch/Inbox
+SubFolders Verbatim
+
+# Channels
+Channel overwhatch-inbox
+Far :overwhatch-remote:"INBOX"
+Near :overwhatch-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel overwhatch-trash
+Far :overwhatch-remote:"[Gmail]/Trash"
+Near :overwhatch-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel overwhatch-spam
+Far :overwhatch-remote:"[Gmail]/Spam"
+Near :overwhatch-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel overwhatch-all
+Far :overwhatch-remote:"[Gmail]/All Mail"
+Near :overwhatch-local:"Archive"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Channel overwhatch-drafts
+Far :overwhatch-remote:"[Gmail]/Drafts"
+Near :overwhatch-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+MaxSize 100M
+MaxMessages 3000
+ExpireUnread yes
+ExpireSide Near
+
+Group overwhatch
+Channel overwhatch-inbox
+Channel overwhatch-trash
+Channel overwhatch-spam
+Channel overwhatch-all
+Channel overwhatch-drafts
+
+############################
+# University Account idk how to fix it
+############################
+
+# IMAPAccount school
+# Host mail.uoa.gr
+# User sdi2200224@di.uoa.gr
+# PassCmd "cat ~/mail-pass/school"
+# AuthMechs LOGIN
+# TLSType IMAPS
+# TLSVersions +1.2
+# CertificateFile /etc/ssl/certs/ca-certificates.crt
+# PipelineDepth 1        # limits concurrent operations
+# Timeout 120  
+
+# IMAPStore school-remote
+# Account school
+
+# MaildirStore school-local
+# Path ~/git/emails/school/
+# Inbox ~/git/emails/school/Inbox
+# SubFolders Verbatim
+
+# # Channels
+# Channel school-inbox
+# Far :school-remote:"INBOX"
+# Near :school-local:"INBOX"
+# CopyArrivalDate yes
+# Create Both
+# Expunge Both
+# SyncState *
+# MaxSize 100M
+# MaxMessages 3000
+# ExpireUnread yes
+# ExpireSide Near
+
+# Channel school-trash
+# Far :school-remote:"Trash"
+# Near :school-local:"Trash"
+# CopyArrivalDate yes
+# Create Both
+# Expunge Both
+# SyncState *
+# MaxSize 100M
+# MaxMessages 3000
+# ExpireUnread yes
+# ExpireSide Near
+
+# Channel school-sent
+# Far :school-remote:"Sent"
+# Near :school-local:"Sent"
+# CopyArrivalDate yes
+# Create Both
+# Expunge Both
+# SyncState *
+# MaxSize 100M
+# MaxMessages 3000
+# ExpireUnread yes
+# ExpireSide Near
+
+# Channel school-drafts
+# Far :school-remote:"Drafts"
+# Near :school-local:"Drafts"
+# CopyArrivalDate yes
+# Create Both
+# Expunge Both
+# SyncState *
+# MaxSize 100M
+# MaxMessages 3000
+# ExpireUnread yes
+# ExpireSide Near
+
+# Group school
+# Channel school-inbox
+# Channel school-trash
+# Channel school-sent
+# Channel school-drafts
+
