@@ -1979,9 +1979,9 @@ Otherwise behave like a normal slash."
 
 (setq copilot-indent-offset-warning-disable t)
 
-;; need to do the following 2 for it to work 
-;; git clone --depth 1 https://github.com/tjohnman/codeium-overlay.el.git ~/.emacs.d/codeium-overlay.el
-;; git clone --depth 1 https://github.com/Exafunction/codeium.el ~/.emacs.d/codeium.el
+need to do the following 2 for it to work 
+git clone --depth 1 https://github.com/tjohnman/codeium-overlay.el.git ~/.emacs.d/codeium-overlay.el
+git clone --depth 1 https://github.com/Exafunction/codeium.el ~/.emacs.d/codeium.el
 (use-package codeium
   :vc (:url "https://github.com/Exafunction/codeium.el.git"
             :rev  :newest)
