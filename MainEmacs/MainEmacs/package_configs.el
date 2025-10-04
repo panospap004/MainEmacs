@@ -1979,9 +1979,9 @@ Otherwise behave like a normal slash."
 
 (setq copilot-indent-offset-warning-disable t)
 
-need to do the following 2 for it to work 
-git clone --depth 1 https://github.com/tjohnman/codeium-overlay.el.git ~/.emacs.d/codeium-overlay.el
-git clone --depth 1 https://github.com/Exafunction/codeium.el ~/.emacs.d/codeium.el
+;; need to do the following 2 for it to work 
+;; git clone --depth 1 https://github.com/tjohnman/codeium-overlay.el.git ~/.emacs.d/codeium-overlay.el
+;; git clone --depth 1 https://github.com/Exafunction/codeium.el ~/.emacs.d/codeium.el
 (use-package codeium
   :vc (:url "https://github.com/Exafunction/codeium.el.git"
             :rev  :newest)
@@ -4620,7 +4620,7 @@ If a file/directory with the same name exists, prompt for a new name."
 	(setq org-gcal-client-id "127662390628-1klrqs7f13h8fsp7ithb9v30oiq3vpmn.apps.googleusercontent.com"
 				org-gcal-client-secret "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"
 				org-gcal-fetch-file-alist '(("user.idc004@gmail.com" .  "~/git/Emacs-Todos/emails/user-mails.org")
-																		("pappanos.004@gmail.com" .  "~/git/Emacs-Todos/emails/pappanos-mails.org")
+																		("pappanos004@gmail.com" .  "~/git/Emacs-Todos/emails/pappanos-mails.org")
 																		("lets.mine004@gmail.com" .  "~/git/Emacs-Todos/emails/mine-mails.org")
 																		("euro.money004@gmail.com" .  "~/git/Emacs-Todos/emails/money-mails.org")
 																		("overwhatch.004@gmail.com" .  "~/git/Emacs-Todos/emails/overwatch-mails.org")
