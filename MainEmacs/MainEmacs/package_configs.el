@@ -758,7 +758,7 @@ start eglot if lsp wasn't activated."
 				 
 				 ;; ----------------------------
 				 ;; C3
-				 (c3-mode . lsp-deferred) ;; to install: yay c3-lsp
+				 (c3-ts-mode . lsp-deferred) ;; to install: yay c3-lsp
 				 ;; Debugger: Yes (gdb or lldb)
 
          ;; ----------------------------
@@ -1063,6 +1063,15 @@ start eglot if lsp wasn't activated."
 	(setq treesit-font-lock-level 4)
 	(setq c3-ts-mode-indent-offset 2)
   )
+
+(with-eval-after-load 'lsp-mode
+  ;; Find the c3-lsp executable path
+  ;; (setq lsp-c3-c3-language-server-path "c3-lsp")
+  
+  ;; Or use the full path if needed
+  (setq lsp-c3-c3-language-server-path "/usr/bin/c3lsp")
+)
+
 
 ;; web-mode breaks tree-sitter coloring 
 ;; ;; ---------- WEB-MODE ----------
