@@ -1269,7 +1269,19 @@ start eglot if lsp wasn't activated."
   :config
 	(setq treesit-font-lock-level 4)
 	(setq c3-ts-mode-indent-offset 2)
-  )
+	(with-eval-after-load 'lsp-mode
+		;; Register the language ID
+		(add-to-list 'lsp-language-id-configuration '(c3-ts-mode . "c3"))
+		
+		;; Register the c3lsp client
+		(lsp-register-client
+		 (make-lsp-client
+			:new-connection (lsp-stdio-connection
+											 '("c3lsp" "-c3c-path" "/usr/bin/c3c"))
+			:major-modes '(c3-ts-mode)
+			:priority 0
+			:server-id 'c3lsp)))
+	)
 
 (with-eval-after-load 'lsp-mode
   ;; Find the c3-lsp executable path
