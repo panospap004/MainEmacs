@@ -595,7 +595,7 @@
 (defvar my/lsp-mode-list
   '(bash-mode
     c-mode c++-mode
-		c3-mode
+		c3-ts-mode
     csharp-mode
     cmake-mode
     css-mode scss-mode lsp-tailwindcss-mode  ;; tailwind minor-mode variant listed
@@ -679,6 +679,15 @@ start eglot if lsp wasn't activated."
   ;; Performance tweaks
   (setq eglot-confirm-server-initiated-edits nil)
   )
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(c3-ts-mode . ("/usr/bin/c3lsp"))))
+
+;; (with-eval-after-load 'eglot
+;;   ;; Register C3 language server
+;;   (add-to-list 'eglot-server-programs
+;;                '(c3-ts-mode . ("c3-lsp"))))
 
 ;; ---------------------------
 ;; company integration (works for lsp-mode and eglot)
