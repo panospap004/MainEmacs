@@ -10,8 +10,9 @@
 (use-package doom-themes
   ;; :ensure t
   ;; :config
-	;; (load-theme 'doom-monet t)
+	;; (load-theme 'doom-everforest-medium t)
 
+	;; (load-theme 'doom-monet t)
   ;; Global settings (defaults)
 	;; (load-theme 'doom-nord-aurora t)
 	;; (load-theme 'doom-rouge t)
@@ -3487,8 +3488,8 @@ If a file/directory with the same name exists, prompt for a new name."
   :magic ("%PDF" . pdf-view-mode)
   :config
 	(add-to-list 'revert-without-query ".pdf")
-	;; (setq pdf-view-midnight-colors '("#CAD3F5" . "#24273A")) # for catppuccin
-	(setq pdf-view-midnight-colors '("#cdc1a6" . "#232a2e")) # for everforest
+	(setq pdf-view-midnight-colors '("#CAD3F5" . "#24273A")) ;; for catppuccin
+	;; (setq pdf-view-midnight-colors '("#cdc1a6" . "#232a2e")) ;; for everforest
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
 	;; Enable themed mode automatically when viewing PDFs
