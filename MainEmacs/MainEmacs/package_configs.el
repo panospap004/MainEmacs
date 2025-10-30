@@ -3487,7 +3487,8 @@ If a file/directory with the same name exists, prompt for a new name."
   :magic ("%PDF" . pdf-view-mode)
   :config
 	(add-to-list 'revert-without-query ".pdf")
-	(setq pdf-view-midnight-colors '("#CAD3F5" . "#24273A"))
+	;; (setq pdf-view-midnight-colors '("#CAD3F5" . "#24273A")) # for catppuccin
+	(setq pdf-view-midnight-colors '("#cdc1a6" . "#232a2e")) # for everforest
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
 	;; Enable themed mode automatically when viewing PDFs
