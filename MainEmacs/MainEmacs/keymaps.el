@@ -1692,6 +1692,11 @@ the user declines to add another file."
 	"C-g p" 'lsp-ui-peek-find-definitions
   "C-g R" 'lsp-ui-peek-find-references
   "C-g I" 'lsp-ui-peek-find-implementation
+	"s" '(:ignore t :wk "Jump to")
+	"s w" '(avy-goto-word-1 :wk "Jump to word")
+	"s l" '(avy-goto-line :wk "Jump to line")
+  "s c" '(avy-goto-char :wk "Jump to char")
+  "s C" '(avy-goto-char-2 :wk "Jump to char 2")
 
 ;; s-l g g – lsp-find-definition
 ;; Jumps to the definition of the symbol under the cursor. This means the point where it's implemented or declared, like a function definition or variable declaration.
