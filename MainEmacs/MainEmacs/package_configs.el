@@ -4432,6 +4432,7 @@ If a file/directory with the same name exists, prompt for a new name."
   (add-to-list 'org-structure-template-alist '("ct" . "src tsx"))
   (add-to-list 'org-structure-template-alist '("cc" . "src c"))
   (add-to-list 'org-structure-template-alist '("cp" . "src cpp"))
+  (add-to-list 'org-structure-template-alist '("c3" . "src c3"))
   (add-to-list 'org-structure-template-alist '("cJ" . "src java"))
   (add-to-list 'org-structure-template-alist '("cl" . "src lua"))
   (add-to-list 'org-structure-template-alist '("cm" . "src makefile"))
