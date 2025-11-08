@@ -2299,6 +2299,7 @@ If a file/directory with the same name exists, prompt for a new name."
      ("w" "~/programming/web_dev/"   "Web-dev code")
      ("w" "~/programming/Work/"         "Work Code")
      ("C" "~/programming/C++_Code/"      "C++ Code")
+     ("3" "~/programming/c3_code"         "C3 Code")
      ("P" "~/programming/Personal_Portfolio/" "Personal portfolio")
      ("e" "~/programming/ekpa/"              "Ekpa")
      ("c" "~/.config/"          "Config Directorys")
@@ -2378,8 +2379,8 @@ If a file/directory with the same name exists, prompt for a new name."
 		 ("Video" (extensions "mp4" "mkv" "webm" "avi" "mov" "mpg" "wmv" "flv"))
      ("Pictures" (extensions "jpg" "png" "svg" "gif" "eps" "ai" "jpeg" "bmp" "tiff" "tif" "webp" "heic" "apng"))
 		 ("Documentation" (extensions "org" "md" "txt"))
-     ("Src" (extensions "cpp" "c" "tsx" "ts" "jsx" "js" "html" "htm" "xhtml" "css" "xml" "json" "py" "java" "lua"))
-		 ("Src-2" (extensions "el" "bash" "sh" "rb" "go" "rs" "php" "swift" "odin" "jai" "zig"))
+     ("Src" (extensions "cpp" "c" "c3" "tsx" "ts" "jsx" "js" "html" "htm" "xhtml" "css" "xml" "json" "java" "lua"))
+		 ("Src-2" (extensions "el" "bash" "sh" "rb" "go" "py" "rs" "php" "swift" "odin" "jai" "zig"))
 		 ("Headers" (extensions "h" "hpp"))
 		 ("Completion / Build files" (extensions "CMakeLists.txt" "cmake" "xmake" "Makefile" "makefile"))
 		 ("Completion / Build files-2" (extensions "Meson.build" "SConstruct" "configure.ac" "configure.in"))
@@ -3610,6 +3611,27 @@ If a file/directory with the same name exists, prompt for a new name."
   (setq nov-text-width 95))
 
 ;; check it out some time its still pretty new to be used
+(setq package-vc-allow-build-commands t)
+(use-package reader
+  :vc (:url "https://codeberg.org/divyaranjan/emacs-reader"
+  					:make "all")
+  :bind (:map reader-mode-map
+              ("<left>" . reader-prev-page)
+              ("<right>" . reader-next-page)
+							("<down>" . reader-scroll-down)
+							("<up>" . reader-scroll-up)
+							("0" . reader-reset-size)
+							("-" . reader-shrink-size)
+							("+" . reader-enlarge-size)
+							("h" . reader-fit-to-height)
+							("w" . reader-fit-to-width)
+							("f" . reader-goto-page)
+							("g" . reader-first-page)
+							("G" . reader-last-page)
+              )
+	:config
+	(setq reader-dark-mode 't)
+	)
 
 (use-package cheat-sh 
 	:ensure t 
@@ -4524,6 +4546,8 @@ If a file/directory with the same name exists, prompt for a new name."
 	)
 
 ;; calf and gcal
+(setq calfw-compat-mark-obsolete nil) ;; This suppresses obsolete messages
+(require 'calfw-compat)
 (use-package calfw
 	:ensure t
 	:init (cfw:org-clean-exit)
