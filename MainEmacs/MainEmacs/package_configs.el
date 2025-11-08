@@ -4546,8 +4546,6 @@ If a file/directory with the same name exists, prompt for a new name."
 	)
 
 ;; calf and gcal
-(setq calfw-compat-mark-obsolete nil) ;; This suppresses obsolete messages
-(require 'calfw-compat)
 (use-package calfw
 	:ensure t
 	:init (cfw:org-clean-exit)
@@ -4689,6 +4687,10 @@ If a file/directory with the same name exists, prompt for a new name."
 																		))
 	
 	)
+
+(setq calfw-compat-mark-obsolete nil) ;; This suppresses obsolete messages
+(require 'calfw-compat)
+
 ;; ;; emacs-calendar google client id
 ;; 127662390628-1klrqs7f13h8fsp7ithb9v30oiq3vpmn.apps.googleusercontent.com
 
