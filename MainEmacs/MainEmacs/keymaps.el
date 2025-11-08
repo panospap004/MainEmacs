@@ -1398,7 +1398,9 @@ the user declines to add another file."
 	"D c" '(dap-continue :wk "Continue")
 	"D h" '(dap-hydra :wk "DAP Hydra")
 	"D m" '(disaster :wk "Make c,cpp line into assembly")
-	"D g" '(gdb-x-mode :wk "GDB X mode")
+	"D g" '(gdb :wk "GDB mode")
+	"D G" '(gdb-x-many-windows-mode :wk "GDB-x mode")
+	"D q" '(gdb-x-gud-quit :wk "Quit GDB")
 	)
 
 (start/leader-keys 
