@@ -1621,6 +1621,29 @@ the user declines to add another file."
 	"C-c o" '(devdocs-peruse :wk "Open library documantetion")
   )
 
+(start/leader-keys
+  "a" '(:ignore t :wk "Agents / Ai")
+	"a s" '(agent-shell :wk "Open agent session")
+	"a S" '((lambda ()
+							(interactive)
+							(split-window-horizontally)
+							(evil-window-right 1)
+							(agent-shell))
+						:wk "Split and open Agent session")
+	"a n" '(agent-shell-new-shell :wk "New agent session")
+	"a c" '(agent-shell-cycle-session-mode :wk "Cycle agent mode {plan / build}")
+	"a RET" '(agent-shell-newline :wk "Insert newline in agent shell")
+	"a C-c" '(agent-shell-interrupt :wk "Interrupt current agent process")
+	"a C" '(agent-shell-clear-buffer :wk "Clear agent shell buffer")
+	"a F" '(agent-shell-send-file :wk "Send file to agent")
+	"a f" '(agent-shell-insert-file :wk "Send file to agent")
+	"a h" '(agent-shell-help-menu :wk "Agent help menu")
+	"a r" '(agent-shell-send-region :wk "Send selected region to agent")
+	"a t" '(agent-shell-view-traffic :wk "View agent traffic log")
+	"a H" '(agent-shell-search-history :wk "Search agent shell history")
+	"a i" '(agent-shell-send-screenshot :wk "Send screenshot to agent")
+)
+
 (start/global
 	;; "C-<down>"  'evil-window-down   ;; Move to the window below
 	;; "C-<up>"    'evil-window-up       ;; Move to the window above
