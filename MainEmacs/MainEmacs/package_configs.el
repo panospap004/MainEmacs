@@ -2070,6 +2070,21 @@ Otherwise behave like a normal slash."
   ;; (diff-hl-flydiff-mode t)  
 	)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
+(use-package agent-shell
+  :ensure t
+	:config
+	(setq agent-shell-google-authentication
+				(agent-shell-google-make-authentication :login t))
+	  (setq agent-shell-opencode-authentication
+        (agent-shell-opencode-make-authentication :api-key "sk-FbfephDs3GxaER1qcB4M4XkUFgGG9Xt5duy7ppg6UudH8aMjeEsxiqppVrcnhkM2"))
+
+	)
+
 ;; evil stops some dired maps from working so use emacs mode isntead 
 (evil-set-initial-state 'dired-mode 'emacs)
 (use-package dired
