@@ -674,7 +674,7 @@ if you want the everforest theme download it from https://github.com/Echinoidea/
   (projectile-run-use-comint-mode t)
   ;; (projectile-switch-project-action #'projectile-dired)
 	;; . 1 is the depth to search, nil means infinite depth
-  (projectile-project-search-path '("~/projects/" "~/work/" "~/github" ("~/programming/" . 1)))
+  (projectile-project-search-path '("~/projects/" "~/work/" "~/github" ("~/Programming/" . 1)))
   :config
 	(add-hook 'project-find-functions #'project-projectile)
 	;; The default is to not sort files:
@@ -932,6 +932,17 @@ start eglot if lsp wasn't activated."
         ;; Disable costly features
         lsp-enable-on-type-formatting nil
         lsp-enable-folding nil)
+	;; This stops LSP from trying to watch your entire home directory or system folders
+	(setq lsp-file-watch-ignored-directories 
+				'("[/\\\\]\\.git\\'" 
+					"[/\\\\]node_modules\\'" 
+					"[/\\\\]\\.next\\'"
+					"[/\\\\]dist\\'"
+					"[/\\\\]\\.cache\\'"
+					"[/\\\\]vendor\\'"
+					"[/\\\\]/run/sudo\\'")) ; Fixes that permission denied error in your logs
+	
+	(setq lsp-html-workspace-max-files 500)
 
   ;; Optional: auto-format and imports on save
 
@@ -1277,60 +1288,71 @@ start eglot if lsp wasn't activated."
 ;; SPC I T  → toggle auto-hover mode
 ;; ============================================================
 
+;; enabled initially
+
 ;; (require 'cl-lib)
- 
+
 ;; (defcustom my/image-preview-size 350
 ;;   "Max width/height in pixels." :type 'integer :group 'convenience)
 ;; (defcustom my/image-preview-delay 0.5
 ;;   "Idle seconds before hover fires." :type 'number :group 'convenience)
- 
+;; (defcustom my/image-preview-video-seek "00:00:03"
+;;   "Timestamp to grab from a video for the thumbnail (HH:MM:SS or N%)."
+;;   :type 'string :group 'convenience)
+
 ;; (defvar my/image-preview--frame      nil)
 ;; (defvar my/image-preview--timer      nil)
 ;; (defvar my/image-preview--displayed  nil "Absolute path currently shown.")
 ;; (defvar my/image-preview--source-buf nil "Buffer that opened the preview.")
- 
-;; ;; ;; ── Dedicated preview buffer ──────────────────────────────────
-;; ;; (defun my/image-preview--buf ()
-;; ;;   (or (get-buffer " *img-preview*")
-;; ;;       (let ((b (get-buffer-create " *img-preview*")))
-;; ;;         (with-current-buffer b
-;; ;;           (setq-local mode-line-format   nil
-;; ;;                       header-line-format nil
-;; ;;                       cursor-type        nil
-;; ;;                       truncate-lines     t))
-;; ;;         b)))
+;; (defvar my/image-preview--thumb-cache (make-hash-table :test #'equal)
+;;   "Cache: video abs-path -> temp thumbnail JPEG path.")
 
 ;; ;; ── Dedicated preview buffer ──────────────────────────────────
 ;; (defun my/image-preview--buf ()
-;;   ;; Kill the old buffer every time — this is the critical fix.
-;;   ;; Reusing the same buffer lets Emacs' glyph cache (keyed by image
-;;   ;; TYPE, not path) silently return a stale/blank render for any
-;;   ;; image whose type was already shown (e.g. jpeg after jpeg).
-;;   ;; A fresh buffer has no glyph history, so every image is
-;;   ;; rendered from scratch regardless of type.
 ;;   (when-let ((old (get-buffer " *img-preview*")))
+;;     (when (and my/image-preview--frame
+;;                (frame-live-p my/image-preview--frame))
+;;       (set-window-dedicated-p (frame-root-window my/image-preview--frame) nil)
+;;       (set-window-buffer (frame-root-window my/image-preview--frame)
+;;                          (get-buffer-create " *img-preview-placeholder*")))
 ;;     (kill-buffer old))
 ;;   (let ((b (get-buffer-create " *img-preview*")))
 ;;     (with-current-buffer b
-;;       (setq-local mode-line-format   nil
+;;       (setq-local mode-line-format    nil
 ;;                   header-line-format nil
 ;;                   cursor-type        nil
-;;                   truncate-lines     t))
+;;                   truncate-lines      t
+;;                   ;; [FIX 1] Bypass Emacs safety limits for large images
+;;                   max-image-size      nil))
 ;;     b))
 
-
-;; ;; ── Extract image path from current line ─────────────────────
+;; ;; ── Extract image OR video path from the current line ────────
 ;; (defun my/image-preview--extract ()
-;;   (let ((line (buffer-substring-no-properties
-;;                (line-beginning-position) (line-end-position))))
-;;     (catch 'hit
-;;       (dolist (pat
-;;                '("\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
-;;                  "url([\"']?\\([^\"'()\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']?)"
-;;                  "[\"']\\([^\"'\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"))
-;;         (when (string-match pat line)
-;;           (throw 'hit (match-string 1 line)))))))
- 
+;;   ;; [FIX 2] Prevent background packages from messing up the regex
+;;   (save-match-data
+;;     (let ((line (buffer-substring-no-properties
+;;                  (line-beginning-position) (line-end-position))))
+;;       (catch 'hit
+;;         (dolist (pat
+;;                  '(;; src="..." href="..." data-src="..." — images
+;;                    "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
+;;                    ;; src="..." href="..." data-src="..." — videos
+;;                    "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"
+;;                    ;; url(...) — images
+;;                    "url([\"']?\\([^\"'()\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']?)"
+;;                    ;; bare quoted path — images
+;;                    "[\"']\\([^\"'\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
+;;                    ;; bare quoted path — videos
+;;                    "[\"']\\([^\"'\n ]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"))
+;;           (when (string-match pat line)
+;;             (throw 'hit (match-string 1 line))))))))
+
+;; ;; ── Is this path a video file? ────────────────────────────────
+;; (defun my/image-preview--video-p (path)
+;;   (string-match-p
+;;    "\\.\\(mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)$"
+;;    (downcase path)))
+
 ;; ;; ── Resolve path relative to buffer file ─────────────────────
 ;; (defun my/image-preview--resolve (path)
 ;;   (if (file-name-absolute-p path) path
@@ -1339,7 +1361,31 @@ start eglot if lsp wasn't activated."
 ;;      (or (and (buffer-file-name)
 ;;               (file-name-directory (buffer-file-name)))
 ;;          default-directory))))
- 
+
+;; ;; ── Extract a thumbnail from a video ─────────────────────────
+;; (defun my/image-preview--video-thumbnail (video-abs)
+;;   (or (gethash video-abs my/image-preview--thumb-cache)
+;;       (let* ((thumb (make-temp-file "emacs-vid-thumb-" nil ".jpg"))
+;;              (exit  (call-process "ffmpegthumbnailer" nil nil nil
+;;                                   "-i" video-abs
+;;                                   "-o" thumb
+;;                                   "-s" (number-to-string (* my/image-preview-size 2))
+;;                                   "-t" my/image-preview-video-seek
+;;                                   "-c" "jpeg" "-q" "3" "-f")))
+;;         (if (and (= exit 0)
+;;                  (file-exists-p thumb)
+;;                  (> (file-attribute-size (file-attributes thumb)) 0))
+;;             (progn (puthash video-abs thumb my/image-preview--thumb-cache) thumb)
+;;           (let ((exit2 (call-process "ffmpegthumbnailer" nil nil nil
+;;                                      "-i" video-abs "-o" thumb
+;;                                      "-s" (number-to-string (* my/image-preview-size 2))
+;;                                      "-t" "0%" "-c" "jpeg" "-q" "3" "-f")))
+;;             (when (and (= exit2 0)
+;;                        (file-exists-p thumb)
+;;                        (> (file-attribute-size (file-attributes thumb)) 0))
+;;               (puthash video-abs thumb my/image-preview--thumb-cache)
+;;               thumb))))))
+
 ;; ;; ── Get or create the child frame ────────────────────────────
 ;; (defun my/image-preview--get-frame ()
 ;;   (when (and my/image-preview--frame
@@ -1370,94 +1416,71 @@ start eglot if lsp wasn't activated."
 ;;                     (height . 4)))))
 ;;         (setq my/image-preview--frame f)
 ;;         f)))
- 
-;; ;; ;; ── Show ─────────────────────────────────────────────────────
-;; ;; (defun my/image-preview--show (path source-buf)
-;; ;;   (unless path (cl-return-from my/image-preview--show))
-;; ;;   (let ((abs (my/image-preview--resolve path)))
-;; ;;     (message "Image preview → %s [exists: %s]" abs (file-exists-p abs))
-;; ;;     (unless (file-exists-p abs) (cl-return-from my/image-preview--show))
-;; ;;     ;; Flush the entire image cache — the only reliable way to force
-;; ;;     ;; Emacs to reload a jpg/jpeg (type-keyed caching ignores per-file flush)
-;; ;;     (clear-image-cache t)
-;; ;;     (let* ((img    (create-image abs nil nil
-;; ;;                                  :max-width  my/image-preview-size
-;; ;;                                  :max-height my/image-preview-size))
-;; ;;            (size   (image-size img t))
-;; ;;            (iw     (car size))
-;; ;;            (ih     (cdr size))
-;; ;;            (buf    (my/image-preview--buf))
-;; ;;            (frm    (my/image-preview--get-frame))
-;; ;;            (border (* 2 (frame-parameter frm 'internal-border-width)))
-;; ;;            (char-w (frame-char-width  frm))
-;; ;;            (char-h (frame-char-height frm))
-;; ;;            (cols   (ceiling (/ (float (+ iw border)) char-w)))
-;; ;;            (rows   (ceiling (/ (float (+ ih border)) char-h)))
-;; ;;            (pos    (with-selected-window
-;; ;;                        (get-buffer-window source-buf)
-;; ;;                      (window-absolute-pixel-position)))
-;; ;;            (pos-x  (or (car pos) 0))
-;; ;;            (pos-y  (or (cdr pos) 0))
-;; ;;            (line-h (frame-char-height)))
-;; ;;       (with-current-buffer buf
-;; ;;         (let ((inhibit-read-only t))
-;; ;;           (erase-buffer)
-;; ;;           (insert-image img)))
-;; ;;       (set-frame-parameter frm 'width  cols)
-;; ;;       (set-frame-parameter frm 'height rows)
-;; ;;       (set-frame-parameter frm 'left   pos-x)
-;; ;;       (set-frame-parameter frm 'top    (+ pos-y line-h))
-;; ;;       (set-window-buffer      (frame-root-window frm) buf)
-;; ;;       (set-window-dedicated-p (frame-root-window frm) t)
-;; ;;       (make-frame-visible frm)
-;; ;;       (redraw-frame frm)
-;; ;;       (raise-frame frm)
-;; ;;       (setq my/image-preview--displayed  abs
-;; ;;             my/image-preview--source-buf source-buf))))
 
-;; ;; ── Show ─────────────────────────────────────────────────────
+;; ;; ── Show (Modified for Bottom-Right Positioning) ─────────────
 ;; (defun my/image-preview--show (path source-buf)
 ;;   (unless path (cl-return-from my/image-preview--show))
-;;   (let ((abs (my/image-preview--resolve path)))
-;;     (message "Image preview → %s [exists: %s]" abs (file-exists-p abs))
-;;     (unless (file-exists-p abs) (cl-return-from my/image-preview--show))
-;;     (clear-image-cache t)
-;;     (let* ((img-type (image-type-from-file-name abs))   ;; ← explicit type
-;;            (img    (create-image abs img-type nil        ;; ← pass it here
-;;                                  :max-width  my/image-preview-size
-;;                                  :max-height my/image-preview-size))
-;;            (size   (image-size img t))
-;;            (iw     (car size))
-;;            (ih     (cdr size))
-;;            (buf    (my/image-preview--buf))               ;; ← now always fresh
-;;            (frm    (my/image-preview--get-frame))
-;;            (border (* 2 (frame-parameter frm 'internal-border-width)))
-;;            (char-w (frame-char-width  frm))
-;;            (char-h (frame-char-height frm))
-;;            (cols   (ceiling (/ (float (+ iw border)) char-w)))
-;;            (rows   (ceiling (/ (float (+ ih border)) char-h)))
-;;            (pos    (with-selected-window
-;;                        (get-buffer-window source-buf)
-;;                      (window-absolute-pixel-position)))
-;;            (pos-x  (or (car pos) 0))
-;;            (pos-y  (or (cdr pos) 0))
-;;            (line-h (frame-char-height)))
-;;       (with-current-buffer buf
-;;         (let ((inhibit-read-only t))
-;;           (erase-buffer)
-;;           (insert-image img)))
-;;       (set-frame-parameter frm 'width  cols)
-;;       (set-frame-parameter frm 'height rows)
-;;       (set-frame-parameter frm 'left   pos-x)
-;;       (set-frame-parameter frm 'top    (+ pos-y line-h))
-;;       (set-window-buffer      (frame-root-window frm) buf)
-;;       (set-window-dedicated-p (frame-root-window frm) t)
-;;       (make-frame-visible frm)
-;;       (redraw-frame frm)
-;;       (raise-frame frm)
-;;       (setq my/image-preview--displayed  abs
-;;             my/image-preview--source-buf source-buf))))
- 
+;;   (let ((source-win (get-buffer-window source-buf)))
+;;     (unless (window-live-p source-win)
+;;       (cl-return-from my/image-preview--show))
+;;     (condition-case err
+;;         (let* ((abs      (my/image-preview--resolve path))
+;;                (img-path (if (my/image-preview--video-p abs)
+;;                              (my/image-preview--video-thumbnail abs)
+;;                            abs)))
+;;           (unless (and img-path (file-exists-p img-path))
+;;             (cl-return-from my/image-preview--show))
+          
+;;           ;; [FIX 3] Flush the Emacs image cache so bad JPG data doesn't persist
+;;           (clear-image-cache img-path)
+          
+;;           (let* ((img-type (image-type-from-file-name img-path))
+;;                  ;; [FIX 4] Silence JPG warnings and bypass size limits to prevent crashes
+;;                  (max-image-size nil)
+;;                  (img      (let ((inhibit-message t)
+;;                                  (message-log-max nil))
+;;                              (create-image img-path img-type nil
+;;                                            :max-width  my/image-preview-size
+;;                                            :max-height my/image-preview-size)))
+;;                  ;; [FIX 5] Provide a fallback if Emacs still can't calculate dimensions
+;;                  (size      (or (ignore-errors (image-size img t))
+;;                                 (cons my/image-preview-size my/image-preview-size)))
+;;                  (iw        (car size))
+;;                  (ih        (cdr size))
+;;                  (buf       (my/image-preview--buf))
+;;                  (frm       (my/image-preview--get-frame))
+;;                  (parent    (window-frame source-win))
+;;                  (border    (* 2 (frame-parameter frm 'internal-border-width)))
+;;                  (char-w    (frame-char-width  frm))
+;;                  (char-h    (frame-char-height frm))
+;;                  (cols      (ceiling (/ (float (+ iw border)) char-w)))
+;;                  (rows      (ceiling (/ (float (+ ih border)) char-h)))
+;;                  (frm-pixel-w (* cols char-w))
+;;                  (frm-pixel-h (* rows char-h))
+;;                  (pos-x (- (frame-pixel-width parent) frm-pixel-w 15))
+;;                  (pos-y (- (frame-pixel-height parent) frm-pixel-h 15)))
+
+;;             (with-current-buffer buf
+;;               (let ((inhibit-read-only t))
+;;                 (erase-buffer)
+;;                 (insert-image img)))
+            
+;;             (set-frame-parameter frm 'width  cols)
+;;             (set-frame-parameter frm 'height rows)
+;;             (set-frame-parameter frm 'left   pos-x)
+;;             (set-frame-parameter frm 'top    pos-y)
+;;             (set-window-dedicated-p (frame-root-window frm) nil)
+;;             (set-window-buffer      (frame-root-window frm) buf)
+;;             (set-window-dedicated-p (frame-root-window frm) t)
+;;             (make-frame-visible frm)
+;;             (redraw-frame frm)
+;;             (raise-frame frm)
+;;             (setq my/image-preview--displayed  abs
+;;                   my/image-preview--source-buf source-buf)))
+;;       (error
+;;        (message "my/image-preview: suppressed error: %S" err)
+;;        (my/image-preview-close)))))
+
 ;; ;; ── Hide ─────────────────────────────────────────────────────
 ;; (defun my/image-preview-close ()
 ;;   (interactive)
@@ -1468,49 +1491,52 @@ start eglot if lsp wasn't activated."
 ;;     (make-frame-invisible my/image-preview--frame))
 ;;   (setq my/image-preview--displayed  nil
 ;;         my/image-preview--source-buf nil))
- 
+
 ;; ;; ── Close when switching away from the source buffer ─────────
 ;; (defun my/image-preview--on-buffer-change ()
+;;   ;; [REVERTED TO YOUR ORIGINAL CODE] 
+;;   ;; Safely kills the frame instantly if you switch buffers.
 ;;   (when (and my/image-preview--source-buf
 ;;              (not (eq (current-buffer) my/image-preview--source-buf)))
 ;;     (my/image-preview-close)))
- 
+
 ;; (add-hook 'buffer-list-update-hook #'my/image-preview--on-buffer-change)
- 
+
 ;; ;; ── Hover hook ───────────────────────────────────────────────
 ;; (defun my/image-preview--post-command ()
-;;   (when my/image-preview--timer
-;;     (cancel-timer my/image-preview--timer)
-;;     (setq my/image-preview--timer nil))
+;;   ;; [FIX 6] Keep the smarter timer logic so wiggling mouse doesn't delay load
 ;;   (let* ((path (my/image-preview--extract))
 ;;          (abs  (when path (my/image-preview--resolve path)))
 ;;          (buf  (current-buffer)))
 ;;     (cond
 ;;      ((and abs (not (equal abs my/image-preview--displayed)))
+;;       (when my/image-preview--timer
+;;         (cancel-timer my/image-preview--timer))
 ;;       (setq my/image-preview--timer
 ;;             (run-with-idle-timer my/image-preview-delay nil
 ;;                                  #'my/image-preview--show path buf)))
 ;;      ((not path)
 ;;       (my/image-preview-close)))))
- 
+
 ;; ;; ── Minor mode ───────────────────────────────────────────────
 ;; (define-minor-mode my/image-preview-hover-mode
-;;   "Auto-preview image paths under cursor."
+;;   "Auto-preview image/video paths under cursor."
 ;;   :lighter " [Img]"
 ;;   (if my/image-preview-hover-mode
 ;;       (add-hook  'post-command-hook #'my/image-preview--post-command nil t)
 ;;     (remove-hook 'post-command-hook #'my/image-preview--post-command t)
 ;;     (my/image-preview-close)))
- 
+
 ;; (dolist (h '(css-mode-hook css-ts-mode-hook scss-mode-hook
 ;;              html-mode-hook html-ts-mode-hook mhtml-mode-hook
 ;;              web-mode-hook js-mode-hook js-ts-mode-hook
 ;;              typescript-mode-hook typescript-ts-mode-hook tsx-ts-mode-hook))
 ;;   (add-hook h #'my/image-preview-hover-mode))
 
+;; disabled by default initialy
 
 (require 'cl-lib)
- 
+
 (defcustom my/image-preview-size 350
   "Max width/height in pixels." :type 'integer :group 'convenience)
 (defcustom my/image-preview-delay 0.5
@@ -1518,25 +1544,17 @@ start eglot if lsp wasn't activated."
 (defcustom my/image-preview-video-seek "00:00:03"
   "Timestamp to grab from a video for the thumbnail (HH:MM:SS or N%)."
   :type 'string :group 'convenience)
- 
+
 (defvar my/image-preview--frame      nil)
 (defvar my/image-preview--timer      nil)
 (defvar my/image-preview--displayed  nil "Absolute path currently shown.")
 (defvar my/image-preview--source-buf nil "Buffer that opened the preview.")
 (defvar my/image-preview--thumb-cache (make-hash-table :test #'equal)
   "Cache: video abs-path -> temp thumbnail JPEG path.")
- 
+
 ;; ── Dedicated preview buffer ──────────────────────────────────
-;; We kill-and-recreate the buffer on every preview to bust Emacs'
-;; type-keyed glyph cache (stale/blank renders when showing the same
-;; image type back-to-back, e.g. jpeg after jpeg).
-;; Before killing the old buffer we redirect the child frame's window
-;; to a throwaway placeholder buffer so the frame's window state stays
-;; valid and the window-valid-p crash is avoided on the next redisplay.
 (defun my/image-preview--buf ()
   (when-let ((old (get-buffer " *img-preview*")))
-    ;; Detach child-frame window BEFORE killing, or Emacs corrupts its
-    ;; window state and raises window-valid-p on the next preview.
     (when (and my/image-preview--frame
                (frame-live-p my/image-preview--frame))
       (set-window-dedicated-p (frame-root-window my/image-preview--frame) nil)
@@ -1545,37 +1563,39 @@ start eglot if lsp wasn't activated."
     (kill-buffer old))
   (let ((b (get-buffer-create " *img-preview*")))
     (with-current-buffer b
-      (setq-local mode-line-format   nil
+      (setq-local mode-line-format    nil
                   header-line-format nil
                   cursor-type        nil
-                  truncate-lines     t))
+                  truncate-lines      t
+                  max-image-size      nil))
     b))
- 
+
 ;; ── Extract image OR video path from the current line ────────
 (defun my/image-preview--extract ()
-  (let ((line (buffer-substring-no-properties
-               (line-beginning-position) (line-end-position))))
-    (catch 'hit
-      (dolist (pat
-               '(;; src="..." href="..." data-src="..." — images
-                 "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
-                 ;; src="..." href="..." data-src="..." — videos
-                 "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"
-                 ;; url(...) — images
-                 "url([\"']?\\([^\"'()\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']?)"
-                 ;; bare quoted path — images
-                 "[\"']\\([^\"'\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
-                 ;; bare quoted path — videos
-                 "[\"']\\([^\"'\n ]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"))
-        (when (string-match pat line)
-          (throw 'hit (match-string 1 line)))))))
- 
+  (save-match-data
+    (let ((line (buffer-substring-no-properties
+                 (line-beginning-position) (line-end-position))))
+      (catch 'hit
+        (dolist (pat
+                 '(;; src="..." href="..." data-src="..." — images
+                   "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
+                   ;; src="..." href="..." data-src="..." — videos
+                   "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"
+                   ;; url(...) — images
+                   "url([\"']?\\([^\"'()\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']?)"
+                   ;; bare quoted path — images
+                   "[\"']\\([^\"'\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
+                   ;; bare quoted path — videos
+                   "[\"']\\([^\"'\n ]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"))
+          (when (string-match pat line)
+            (throw 'hit (match-string 1 line))))))))
+
 ;; ── Is this path a video file? ────────────────────────────────
 (defun my/image-preview--video-p (path)
   (string-match-p
    "\\.\\(mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)$"
    (downcase path)))
- 
+
 ;; ── Resolve path relative to buffer file ─────────────────────
 (defun my/image-preview--resolve (path)
   (if (file-name-absolute-p path) path
@@ -1584,9 +1604,8 @@ start eglot if lsp wasn't activated."
      (or (and (buffer-file-name)
               (file-name-directory (buffer-file-name)))
          default-directory))))
- 
+
 ;; ── Extract a thumbnail from a video ─────────────────────────
-;; Calls ffmpegthumbnailer once per video and caches the result.
 (defun my/image-preview--video-thumbnail (video-abs)
   (or (gethash video-abs my/image-preview--thumb-cache)
       (let* ((thumb (make-temp-file "emacs-vid-thumb-" nil ".jpg"))
@@ -1600,7 +1619,6 @@ start eglot if lsp wasn't activated."
                  (file-exists-p thumb)
                  (> (file-attribute-size (file-attributes thumb)) 0))
             (progn (puthash video-abs thumb my/image-preview--thumb-cache) thumb)
-          ;; Fallback: seek to 0% for very short videos
           (let ((exit2 (call-process "ffmpegthumbnailer" nil nil nil
                                      "-i" video-abs "-o" thumb
                                      "-s" (number-to-string (* my/image-preview-size 2))
@@ -1610,7 +1628,7 @@ start eglot if lsp wasn't activated."
                        (> (file-attribute-size (file-attributes thumb)) 0))
               (puthash video-abs thumb my/image-preview--thumb-cache)
               thumb))))))
- 
+
 ;; ── Get or create the child frame ────────────────────────────
 (defun my/image-preview--get-frame ()
   (when (and my/image-preview--frame
@@ -1641,8 +1659,8 @@ start eglot if lsp wasn't activated."
                     (height . 4)))))
         (setq my/image-preview--frame f)
         f)))
- 
-;; ── Show ─────────────────────────────────────────────────────
+
+;; ── Show (Modified for Bottom-Right Positioning) ─────────────
 (defun my/image-preview--show (path source-buf)
   (unless path (cl-return-from my/image-preview--show))
   (let ((source-win (get-buffer-window source-buf)))
@@ -1655,46 +1673,54 @@ start eglot if lsp wasn't activated."
                            abs)))
           (unless (and img-path (file-exists-p img-path))
             (cl-return-from my/image-preview--show))
-          ;; Grab position BEFORE make-frame triggers redisplay
-          (let* ((pos    (with-selected-window source-win
-                           (window-absolute-pixel-position)))
-                 (pos-x  (or (car pos) 0))
-                 (pos-y  (or (cdr pos) 0))
-                 (line-h (frame-char-height (window-frame source-win))))
-            (let* ((img-type (image-type-from-file-name img-path))
-                   (img      (create-image img-path img-type nil
+          
+          (clear-image-cache img-path)
+          
+          (let* ((img-type (image-type-from-file-name img-path))
+                 (max-image-size nil)
+                 (img      (let ((inhibit-message t)
+                                 (message-log-max nil))
+                             (create-image img-path img-type nil
                                            :max-width  my/image-preview-size
-                                           :max-height my/image-preview-size))
-                   (size     (image-size img t))
-                   (iw       (car size))
-                   (ih       (cdr size))
-                   (buf      (my/image-preview--buf))   ; always a fresh buffer
-                   (frm      (my/image-preview--get-frame))
-                   (border   (* 2 (frame-parameter frm 'internal-border-width)))
-                   (char-w   (frame-char-width  frm))
-                   (char-h   (frame-char-height frm))
-                   (cols     (ceiling (/ (float (+ iw border)) char-w)))
-                   (rows     (ceiling (/ (float (+ ih border)) char-h))))
-              (with-current-buffer buf
-                (let ((inhibit-read-only t))
-                  (erase-buffer)
-                  (insert-image img)))
-              (set-frame-parameter frm 'width  cols)
-              (set-frame-parameter frm 'height rows)
-              (set-frame-parameter frm 'left   pos-x)
-              (set-frame-parameter frm 'top    (+ pos-y line-h))
-              (set-window-dedicated-p (frame-root-window frm) nil)
-              (set-window-buffer      (frame-root-window frm) buf)
-              (set-window-dedicated-p (frame-root-window frm) t)
-              (make-frame-visible frm)
-              (redraw-frame frm)
-              (raise-frame frm)
-              (setq my/image-preview--displayed  abs
-                    my/image-preview--source-buf source-buf))))
+                                           :max-height my/image-preview-size)))
+                 (size      (or (ignore-errors (image-size img t))
+                                (cons my/image-preview-size my/image-preview-size)))
+                 (iw        (car size))
+                 (ih        (cdr size))
+                 (buf       (my/image-preview--buf))
+                 (frm       (my/image-preview--get-frame))
+                 (parent    (window-frame source-win))
+                 (border    (* 2 (frame-parameter frm 'internal-border-width)))
+                 (char-w    (frame-char-width  frm))
+                 (char-h    (frame-char-height frm))
+                 (cols      (ceiling (/ (float (+ iw border)) char-w)))
+                 (rows      (ceiling (/ (float (+ ih border)) char-h)))
+                 (frm-pixel-w (* cols char-w))
+                 (frm-pixel-h (* rows char-h))
+                 (pos-x (- (frame-pixel-width parent) frm-pixel-w 15))
+                 (pos-y (- (frame-pixel-height parent) frm-pixel-h 15)))
+
+            (with-current-buffer buf
+              (let ((inhibit-read-only t))
+                (erase-buffer)
+                (insert-image img)))
+            
+            (set-frame-parameter frm 'width  cols)
+            (set-frame-parameter frm 'height rows)
+            (set-frame-parameter frm 'left   pos-x)
+            (set-frame-parameter frm 'top    pos-y)
+            (set-window-dedicated-p (frame-root-window frm) nil)
+            (set-window-buffer      (frame-root-window frm) buf)
+            (set-window-dedicated-p (frame-root-window frm) t)
+            (make-frame-visible frm)
+            (redraw-frame frm)
+            (raise-frame frm)
+            (setq my/image-preview--displayed  abs
+                  my/image-preview--source-buf source-buf)))
       (error
        (message "my/image-preview: suppressed error: %S" err)
        (my/image-preview-close)))))
- 
+
 ;; ── Hide ─────────────────────────────────────────────────────
 (defun my/image-preview-close ()
   (interactive)
@@ -1705,33 +1731,30 @@ start eglot if lsp wasn't activated."
     (make-frame-invisible my/image-preview--frame))
   (setq my/image-preview--displayed  nil
         my/image-preview--source-buf nil))
- 
+
 ;; ── Close when switching away from the source buffer ─────────
 (defun my/image-preview--on-buffer-change ()
   (when (and my/image-preview--source-buf
              (not (eq (current-buffer) my/image-preview--source-buf)))
     (my/image-preview-close)))
- 
+
 (add-hook 'buffer-list-update-hook #'my/image-preview--on-buffer-change)
- 
+
 ;; ── Hover hook ───────────────────────────────────────────────
 (defun my/image-preview--post-command ()
-  (when my/image-preview--timer
-    (cancel-timer my/image-preview--timer)
-    (setq my/image-preview--timer nil))
   (let* ((path (my/image-preview--extract))
          (abs  (when path (my/image-preview--resolve path)))
          (buf  (current-buffer)))
     (cond
-     ;; New path, or returning to one after closing → schedule show
      ((and abs (not (equal abs my/image-preview--displayed)))
+      (when my/image-preview--timer
+        (cancel-timer my/image-preview--timer))
       (setq my/image-preview--timer
             (run-with-idle-timer my/image-preview-delay nil
                                  #'my/image-preview--show path buf)))
-     ;; Not on any recognised path → close immediately
      ((not path)
       (my/image-preview-close)))))
- 
+
 ;; ── Minor mode ───────────────────────────────────────────────
 (define-minor-mode my/image-preview-hover-mode
   "Auto-preview image/video paths under cursor."
@@ -1740,12 +1763,6 @@ start eglot if lsp wasn't activated."
       (add-hook  'post-command-hook #'my/image-preview--post-command nil t)
     (remove-hook 'post-command-hook #'my/image-preview--post-command t)
     (my/image-preview-close)))
- 
-(dolist (h '(css-mode-hook css-ts-mode-hook scss-mode-hook
-             html-mode-hook html-ts-mode-hook mhtml-mode-hook
-             web-mode-hook js-mode-hook js-ts-mode-hook
-             typescript-mode-hook typescript-ts-mode-hook tsx-ts-mode-hook))
-  (add-hook h #'my/image-preview-hover-mode))
 
 #+end_src
 
@@ -2669,23 +2686,53 @@ Otherwise behave like a normal slash."
 
 ** Colorful-mode (done)
 #+begin_src emacs-lisp
+;; (use-package colorful-mode
+;;   :ensure t
+;;   :hook (prog-mode . colorful-mode)
+;;   :custom
+;;   ;; Allow using mouse to change colors
+;;   (colorful-allow-mouse-clicks t)
+;;   ;; Highlight the actual color instead of using a prefix indicator
+;;   (colorful-use-prefix nil)
+;;   ;; Use short hex format when possible (#RGB instead of #RRGGBB when applicable)
+;;   (colorful-short-hex-conversions t)
+;;   ;; Highlight colors everywhere, not just in strings
+;;   (colorful-only-strings nil)
+;;   :config
+;;   ;; Configure color highlighting for different major modes
+;;   (setq colorful-extra-color-keyword-functions
+;;         '(colorful-add-hex-colors
+;;           ((css-mode html-mode web-mode js-mode js2-mode) . 
+;;            (colorful-add-css-variables-colors
+;;             colorful-add-rgb-colors
+;;             colorful-add-hsl-colors
+;;             colorful-add-oklab-oklch-colors
+;;             colorful-add-color-names))
+;;           (emacs-lisp-mode . (colorful-add-color-names 
+;;                               colorful-add-rgb-colors
+;;                               colorful-add-hex-colors))
+;;           (latex-mode . colorful-add-latex-colors)))
+;; 	(set-face-attribute 'colorful-base nil :box nil)
+;; 	)
+
 (use-package colorful-mode
   :ensure t
-  :hook (prog-mode . colorful-mode)
+  ;; html-mode derives from text-mode not prog-mode so we need both hooks
+  :hook ((prog-mode . colorful-mode)
+         (html-mode . colorful-mode)
+         (html-ts-mode . colorful-mode)
+         (css-mode . colorful-mode)
+         (css-ts-mode . colorful-mode)
+         (scss-mode . colorful-mode))
   :custom
-  ;; Allow using mouse to change colors
   (colorful-allow-mouse-clicks t)
-  ;; Highlight the actual color instead of using a prefix indicator
   (colorful-use-prefix nil)
-  ;; Use short hex format when possible (#RGB instead of #RRGGBB when applicable)
   (colorful-short-hex-conversions t)
-  ;; Highlight colors everywhere, not just in strings
   (colorful-only-strings nil)
   :config
-  ;; Configure color highlighting for different major modes
   (setq colorful-extra-color-keyword-functions
         '(colorful-add-hex-colors
-          ((css-mode html-mode web-mode js-mode js2-mode) . 
+          ((css-mode css-ts-mode scss-mode html-mode html-ts-mode web-mode js-mode js2-mode) . 
            (colorful-add-css-variables-colors
             colorful-add-rgb-colors
             colorful-add-hsl-colors
@@ -2695,8 +2742,7 @@ Otherwise behave like a normal slash."
                               colorful-add-rgb-colors
                               colorful-add-hex-colors))
           (latex-mode . colorful-add-latex-colors)))
-	(set-face-attribute 'colorful-base nil :box nil)
-	)
+  (set-face-attribute 'colorful-base nil :box nil))
 
 #+end_src
 
@@ -3267,14 +3313,14 @@ If a file/directory with the same name exists, prompt for a new name."
      ("t" "~/.local/share/Trash/files/"  "TrashCan")
      ("g" "~/git/"          "Git cloned directorys")
      ("n" "~/git/emacs-notes/"              "Notes")
-     ("p" "~/programming/" "Programming Directorys")
-     ("r" "~/programming/Raylib-Game-Dev/" "Raylib")
-     ("w" "~/programming/web_dev/"   "Web-dev code")
-     ("w" "~/programming/Work/"         "Work Code")
-     ("C" "~/programming/C++_Code/"      "C++ Code")
-     ("3" "~/programming/c3_code"         "C3 Code")
-     ("P" "~/programming/Personal_Portfolio/" "Personal portfolio")
-     ("e" "~/programming/ekpa/"              "Ekpa")
+     ("p" "~/Programming/" "Programming Directorys")
+     ("r" "~/Programming/Raylib-Game-Dev/" "Raylib")
+     ("w" "~/Programming/web_dev/"   "Web-dev code")
+     ("w" "~/Programming/Work/"         "Work Code")
+     ("C" "~/Programming/C++_Code/"      "C++ Code")
+     ("3" "~/Programming/c3_code"         "C3 Code")
+     ("P" "~/Programming/Personal_Portfolio/" "Personal portfolio")
+     ("e" "~/Programming/ekpa/"              "Ekpa")
      ("c" "~/.config/"          "Config Directorys")
      ("e" "~/.config/MainEmacs/"     "Emacs config")
      ("h" "~/.config/hypr/"       "Hyprland config")
@@ -4396,34 +4442,167 @@ If a file/directory with the same name exists, prompt for a new name."
   :after (company all-the-icons)
   :hook (company-mode . company-box-mode)
   :custom
-  (company-box-tooltip-minimum-width 40) 
+  (company-box-tooltip-minimum-width 40)
   (company-box-tooltip-maximum-width 120)
   (company-box-icons-alist 'company-box-icons-all-the-icons)
   (company-box-doc-enable t)
   (company-box-doc-position 'at-point)
   :config
-  (setq company-box-scrollbar nil
+  (setq company-tooltip-limit 10
+        company-box-scrollbar nil
         company-box-show-single-candidate t
         company-box-doc-delay 0.1)
 
-	(setq company-box-icons-all-the-icons
+  ;; ── 1. Clean up generic icons ──────────────────────────────────────────────
+  (setq company-box-icons-all-the-icons
         (cl-remove-if (lambda (item) (eq (car item) 'capf))
                       company-box-icons-all-the-icons))
-  ;; Add a generic capf icon (for non-Codeium capf completions)
   (add-to-list 'company-box-icons-all-the-icons
-               ;; `(capf . ,(all-the-icons-material "code" :face 'all-the-icons-purple)))
                `(capf . ,(all-the-icons-material "functions" :face 'all-the-icons-purple)))
-  ;; Add a Codeium icon for Codeium completions
+
+  ;; ── 2. Codeium Icon Logic ──────────────────────────────────────────────────
   (defun my/company-box-icon-for-codeium (candidate)
-    ;; (when (and (eq (get-text-property 0 'company-backend candidate) 'capf)
     (when (and (eq (get-text-property 0 'company-backend candidate) 'company-capf)
                (string-match-p "codeium" (or (get-text-property 0 'company-kind candidate)
                                              (get-text-property 0 'company-label candidate)
                                              (get-text-property 0 'company-docsig candidate)
                                              "")))
       (propertize "󰘦" 'face '(:inherit font-lock-constant-face :height 1.0))))
+  
   (add-to-list 'company-box-icons-functions #'my/company-box-icon-for-codeium)
-	)
+
+  ;; ── 3. Valid CSS Named Colors (The official 148 web-safe colors) ───────────
+  (defvar my/css-named-colors
+    '(("aliceblue" . "#f0f8ff") ("antiquewhite" . "#faebd7") ("aqua" . "#00ffff")
+      ("aquamarine" . "#7fffd4") ("azure" . "#f0ffff") ("beige" . "#f5f5dc")
+      ("bisque" . "#ffe4c4") ("black" . "#000000") ("blanchedalmond" . "#ffebcd")
+      ("blue" . "#0000ff") ("blueviolet" . "#8a2be2") ("brown" . "#a52a2a")
+      ("burlywood" . "#deb887") ("cadetblue" . "#5f9ea0") ("chartreuse" . "#7fff00")
+      ("chocolate" . "#d2691e") ("coral" . "#ff7f50") ("cornflowerblue" . "#6495ed")
+      ("cornsilk" . "#fff8dc") ("crimson" . "#dc143c") ("cyan" . "#00ffff")
+      ("darkblue" . "#00008b") ("darkcyan" . "#008b8b") ("darkgoldenrod" . "#b8860b")
+      ("darkgray" . "#a9a9a9") ("darkgreen" . "#006400") ("darkgrey" . "#a9a9a9")
+      ("darkkhaki" . "#bdb76b") ("darkmagenta" . "#8b008b") ("darkolivegreen" . "#556b2f")
+      ("darkorange" . "#ff8c00") ("darkorchid" . "#9932cc") ("darkred" . "#8b0000")
+      ("darksalmon" . "#e9967a") ("darkseagreen" . "#8fbc8f") ("darkslateblue" . "#483d8b")
+      ("darkslategray" . "#2f4f4f") ("darkslategrey" . "#2f4f4f") ("darkturquoise" . "#00ced1")
+      ("darkviolet" . "#9400d3") ("deeppink" . "#ff1493") ("deepskyblue" . "#00bfff")
+      ("dimgray" . "#696969") ("dimgrey" . "#696969") ("dodgerblue" . "#1e90ff")
+      ("firebrick" . "#b22222") ("floralwhite" . "#fffaf0") ("forestgreen" . "#228b22")
+      ("fuchsia" . "#ff00ff") ("gainsboro" . "#dcdcdc") ("ghostwhite" . "#f8f8ff")
+      ("gold" . "#ffd700") ("goldenrod" . "#daa520") ("gray" . "#808080")
+      ("green" . "#008000") ("greenyellow" . "#adff2f") ("grey" . "#808080")
+      ("honeydew" . "#f0fff0") ("hotpink" . "#ff69b4") ("indianred" . "#cd5c5c")
+      ("indigo" . "#4b0082") ("ivory" . "#fffff0") ("khaki" . "#f0e68c")
+      ("lavender" . "#e6e6fa") ("lavenderblush" . "#fff0f5") ("lawngreen" . "#7cfc00")
+      ("lemonchiffon" . "#fffacd") ("lightblue" . "#add8e6") ("lightcoral" . "#f08080")
+      ("lightcyan" . "#e0ffff") ("lightgoldenrodyellow" . "#fafad2") ("lightgray" . "#d3d3d3")
+      ("lightgreen" . "#90ee90") ("lightgrey" . "#d3d3d3") ("lightpink" . "#ffb6c1")
+      ("lightsalmon" . "#ffa07a") ("lightseagreen" . "#20b2aa") ("lightskyblue" . "#87cefa")
+      ("lightslategray" . "#778899") ("lightslategrey" . "#778899") ("lightsteelblue" . "#b0c4de")
+      ("lightyellow" . "#ffffe0") ("lime" . "#00ff00") ("limegreen" . "#32cd32")
+      ("linen" . "#faf0e6") ("magenta" . "#ff00ff") ("maroon" . "#800000")
+      ("mediumaquamarine" . "#66cdaa") ("mediumblue" . "#0000cd") ("mediumorchid" . "#ba55d3")
+      ("mediumpurple" . "#9370db") ("mediumseagreen" . "#3cb371") ("mediumslateblue" . "#7b68ee")
+      ("mediumspringgreen" . "#00fa9a") ("mediumturquoise" . "#48d1cc") ("mediumvioletred" . "#c71585")
+      ("midnightblue" . "#191970") ("mintcream" . "#f5fffa") ("mistyrose" . "#ffe4e1")
+      ("moccasin" . "#ffe4b5") ("navajowhite" . "#ffdead") ("navy" . "#000080")
+      ("oldlace" . "#fdf5e6") ("olive" . "#808000") ("olivedrab" . "#6b8e23")
+      ("orange" . "#ffa500") ("orangered" . "#ff4500") ("orchid" . "#da70d6")
+      ("palegoldenrod" . "#eee8aa") ("palegreen" . "#98fb98") ("paleturquoise" . "#afeeee")
+      ("palevioletred" . "#db7093") ("papayawhip" . "#ffefd5") ("peachpuff" . "#ffdab9")
+      ("peru" . "#cd853f") ("pink" . "#ffc0cb") ("plum" . "#dda0dd")
+      ("powderblue" . "#b0e0e6") ("purple" . "#800080") ("rebeccapurple" . "#663399")
+      ("red" . "#ff0000") ("rosybrown" . "#bc8f8f") ("royalblue" . "#4169e1") 
+      ("saddlebrown" . "#8b4513") ("salmon" . "#fa8072") ("sandybrown" . "#f4a460") 
+      ("seagreen" . "#2e8b57") ("seashell" . "#fff5ee") ("sienna" . "#a0522d") 
+      ("silver" . "#c0c0c0") ("skyblue" . "#87ceeb") ("slateblue" . "#6a5acd") 
+      ("slategray" . "#708090") ("slategrey" . "#708090") ("snow" . "#fffafa") 
+      ("springgreen" . "#00ff7f") ("steelblue" . "#4682b4") ("tan" . "#d2b48c") 
+      ("teal" . "#008080") ("thistle" . "#d8bfd8") ("tomato" . "#ff6347") 
+      ("turquoise" . "#40e0d0") ("violet" . "#ee82ee") ("wheat" . "#f5deb3") 
+      ("white" . "#ffffff") ("whitesmoke" . "#f5f5f5") ("yellow" . "#ffff00") 
+      ("yellowgreen" . "#9acd32"))
+    "Full CSS named colors alist.")
+
+  ;; ── 4. THE MASSIVE HEX PALETTE GENERATOR ───────────────────────────────────
+  
+  (defun my/get-emacs-hexes ()
+    "Extract only the pure hex codes from Emacs's internal color engine."
+    (let ((hexes nil))
+      (dolist (c (defined-colors))
+        (let ((v (color-values c)))
+          (when v
+            ;; Convert 16-bit RGB to standard 8-bit CSS Hex
+            (push (format "#%02x%02x%02x" 
+                          (ash (nth 0 v) -8) 
+                          (ash (nth 1 v) -8) 
+                          (ash (nth 2 v) -8)) 
+                  hexes))))
+      (delete-dups hexes))) ; Remove duplicates so we don't get 5 identical blacks
+
+  (defvar my/basic-hex-palette
+    '(;; Modern UI Colors (You can still add custom ones here!)
+      "#f8f9fa" "#f1f3f5" "#e9ecef" "#dee2e6" "#ced4da" "#adb5bd" "#868e96" "#495057" "#343a40" "#212529"
+      "#fff0f2" "#ffe4e6" "#fecdd3" "#fda4af" "#fb7185" "#f43f5e" "#e11d48" "#be123c" "#9f1239" "#881337"
+      "#fff7ed" "#ffedd5" "#fed7aa" "#fdba74" "#fb923c" "#f97316" "#ea580c" "#c2410c" "#9a3412" "#7c2d12"
+      "#fffbeb" "#fef3c7" "#fde68a" "#fcd34d" "#fbbf24" "#f59e0b" "#d97706" "#b45309" "#92400e" "#78350f"
+      "#f0fdf4" "#dcfce7" "#bbf7d0" "#86efac" "#4ade80" "#22c55e" "#16a34a" "#15803d" "#166534" "#14532d"
+      "#f0fdfa" "#ccfbf1" "#99f6e4" "#5eead4" "#2dd4bf" "#14b8a6" "#0d9488" "#0f766e" "#115e59" "#134e4a"
+      "#eff6ff" "#dbeafe" "#bfdbfe" "#93c5fd" "#60a5fa" "#3b82f6" "#2563eb" "#1d4ed8" "#1e40af" "#1e3a8a"
+      "#ecfeff" "#cffafe" "#a5f3fc" "#67e8f9" "#22d3ee" "#06b6d4" "#0891b2" "#0e7490" "#155e75" "#164e63"
+      "#f5f3ff" "#ede9fe" "#ddd6fe" "#c4b5fd" "#a78bfa" "#8b5cf6" "#7c3aed" "#6d28d9" "#5b21b6" "#4c1d95"
+      "#faf5ff" "#f3e8ff" "#e9d5ff" "#d8b4fe" "#c084fc" "#a855f7" "#9333ea" "#7e22ce" "#6b21a8" "#581c87")
+    "A hand-picked palette of modern UI hex colors.")
+
+  (defvar my/master-hex-palette
+    (delete-dups (append my/basic-hex-palette (my/get-emacs-hexes)))
+    "The ultimate hex palette: Hand-picked UI colors + 500+ internal Emacs hex codes.")
+
+  ;; ── 5. SMART HEX INJECTION TRANSFORMER ─────────────────────────────────────
+  (defun my/company-inject-palette-transformer (candidates)
+    "Inject our massive hex palette into the list ONLY when typing a hex code."
+    (if (and (stringp company-prefix)
+             (string-prefix-p "#" company-prefix))
+        (let ((existing-strs (mapcar #'substring-no-properties candidates))
+              (injected nil))
+          (dolist (hex my/master-hex-palette)
+            (when (and (string-prefix-p (downcase company-prefix) hex)
+                       (not (member hex existing-strs)))
+              (push (propertize hex 'company-kind 'color) injected)))
+          (append candidates (nreverse injected)))
+      candidates))
+
+  (add-to-list 'company-transformers #'my/company-inject-palette-transformer)
+
+  ;; ── 6. The Dynamic Color Swatch Generator ──────────────────────────────────
+  (defun my/company-box-color-swatch (candidate)
+    "Identify color candidates, dynamically generate an icon, and return its symbol."
+    (ignore-errors
+      (let* ((cand-str (substring-no-properties candidate))
+             (color (cond
+                     ((string-match-p "\\`#[0-9a-fA-F]\\{3,8\\}\\'" cand-str) cand-str)
+                     ((cdr (assoc (downcase cand-str) my/css-named-colors))))))
+        (when color
+          (let ((color-sym (intern (concat "my-color-swatch-" color))))
+            (unless (assq color-sym company-box-icons-all-the-icons)
+              (push (cons color-sym
+                          (all-the-icons-material "stop" 
+                                                  :face `(:foreground ,color) 
+                                                  :height 0.85 
+                                                  :v-adjust -0.15))
+                    company-box-icons-all-the-icons))
+            color-sym)))))
+
+  ;; Ensure the color swatch runs BEFORE default LSP icon assignments
+  (defun my/company-box--ensure-swatch-first ()
+    (unless (eq (car company-box-icons-functions) #'my/company-box-color-swatch)
+      (setq company-box-icons-functions
+            (cons #'my/company-box-color-swatch
+                  (remq #'my/company-box-color-swatch company-box-icons-functions)))))
+
+  (add-hook 'company-box-mode-hook #'my/company-box--ensure-swatch-first))
+
 
 #+end_src
 
