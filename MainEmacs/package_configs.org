@@ -2820,6 +2820,93 @@ Otherwise behave like a normal slash."
         (append flycheck-disabled-checkers '(org-lint)))
   )
 
+(use-package flyover
+  :ensure t
+  :hook ((flycheck-mode . flyover-mode)
+         (flymake-mode . flyover-mode))
+  :custom
+  ;; Checker settings
+  (flyover-checkers '(flycheck flymake))
+  (flyover-levels '(error warning info))
+
+  ;; Appearance
+  (flyover-use-theme-colors t)
+  (flyover-background-lightness 45)
+
+  ;; Text tinting
+  (flyover-text-tint 'lighter)
+  (flyover-text-tint-percent 50)
+
+  ;; Icon tinting (foreground and background)
+  (flyover-icon-tint 'lighter)
+  (flyover-icon-tint-percent 50)
+  (flyover-icon-background-tint 'darker)
+  (flyover-icon-background-tint-percent 50)
+
+  ;; Icons
+  (flyover-info-icon "")
+  (flyover-warning-icon "")
+  (flyover-error-icon "")
+
+  ;; Border styles: none, pill, arrow, slant, slant-inv, flames, pixels
+  (flyover-border-style 'none)
+  (flyover-border-match-icon t)
+
+  ;; Display settings
+  (flyover-hide-checker-name t)
+  (flyover-show-virtual-line t)
+	;; nil		        No indicator
+	;; line-no-arrow	        └──	Straight line
+	;; curved-line-no-arrow	╰──	Curved line
+	;; double-line-no-arrow	╚══	Double line
+	;; bol	                ┗━━	Bold line
+	;; dotted-line-no-arrow	└┈┈	Dotted line
+	;; straight-arrow	        └──►	Straight line with arrow
+	;; double-line-arrow	╚══►	Double line with arrow
+	;; bold-arrow	        ┗━━►	Bold line with arrow
+	;; dotted-arrow	        └┈┈►	Dotted line with arrow
+	;; curved-arrow	        ╰──►	Curved line with arrow (default)
+	;; curved-bold-arrow	╰━━►	Curved bold line with arrow
+	;; curved-double-arrow	╰══►	Curved double line with arrow
+	;; curved-dotted-arrow	╰┈┈►	Curved dotted line with arrow
+
+  (flyover-virtual-line-type 'curved-arrow)
+  (flyover-line-position-offset 1)
+
+  ;; Message wrapping
+  (flyover-wrap-messages t)
+  (flyover-max-line-length 80)
+
+  ;; Performance
+  (flyover-debounce-interval 0.2)
+  (flyover-cursor-debounce-interval 0.3)
+
+  ;; Display mode (controls cursor-based visibility)
+  (flyover-display-mode 'always)
+
+  ;; Completion integration
+  (flyover-hide-during-completion t)
+	
+	;; (custom-set-faces
+	;;  '(flyover-error
+	;; 	 ((t :background "#453246"
+	;; 			 :foreground "#ea8faa"
+	;; 			 :height 0.9
+	;; 			 :weight normal)))
+	 
+	;;  '(flyover-warning
+	;; 	 ((t :background "#331100"
+	;; 			 :foreground "#DCA561"
+	;; 			 :height 0.9
+	;; 			 :weight normal)))
+	 
+	;;  '(flyover-info
+	;; 	 ((t :background "#374243"
+	;; 			 :foreground "#a8e3a9"
+	;; 			 :height 0.9
+	;; 			 :weight normal))))
+)
+
 #+end_src
 
 ** Flyspell-correct (done)
@@ -3786,9 +3873,11 @@ If a file/directory with the same name exists, prompt for a new name."
   :custom
   (beacon-color "#16B4B6") ;; Set the color of the beacon
   (beacon-size 20) ;; Set the size of the beacon
+	(beacon-blink-when-point-moves-vertically 5)
   (beacon-blink-when-window-scrolls t) ;; Blink when the window scrolls
   (beacon-blink-when-point-moves t) ;; Blink when the point moves
   (beacon-blink-when-buffer-changes t) ;; Blink when the buffer changes
+	(beacon-dont-blink-commands nil) ;; dont allow evil mode to overwrite beacon blink
   :config
   (beacon-mode 1) ;; Enable beacon mode
 	)
@@ -4328,7 +4417,7 @@ If a file/directory with the same name exists, prompt for a new name."
 (use-package company-web
   :ensure t
 	:hook ((css-ts-mode html-ts-mode web-mode html-mode css-mode) . (lambda ()
-                                           (add-to-list 'company-backends 'company-web)))
+																																		(add-to-list 'company-backends 'company-web)))
 	)
 
 ;; CSS completions fallback when LSP crashes (e.g. with many block comments).
@@ -4353,6 +4442,16 @@ If a file/directory with the same name exists, prompt for a new name."
       (apply #'company-capf command args)
     (error nil)))
 
+;; (defun my/safe-company-capf (command &rest args)
+;;   (condition-case err
+;;       (apply #'company-capf command args)
+;;     (jsonrpc-error nil)   ; catch JSON-RPC "No current connection" errors
+;;     (error nil)))
+
+
+
+
+
 (dolist (hook '(css-mode-hook
                 css-ts-mode-hook
                 scss-mode-hook))
@@ -4366,6 +4465,41 @@ If a file/directory with the same name exists, prompt for a new name."
                             company-dabbrev-code
                             company-dabbrev
                             company-files)))))
+
+
+(dolist (hook '(c-mode-hook
+                c++-mode-hook
+                c-ts-mode-hook
+                c++-ts-mode-hook
+                objc-mode-hook)) ;; Added objc just in case
+  (add-hook hook
+            (lambda ()
+              ;; 1. Stop LSP from overriding our backends
+              (setq-local lsp-completion-provider :none) 
+              
+              ;; 2. Set our safe backends
+              (setq-local company-backends
+                          '((my/safe-company-capf
+                             :with company-c-headers
+                             :with company-dabbrev-code
+                             :with company-keywords)
+                            company-dabbrev-code
+                            company-keywords
+                            company-dabbrev
+                            company-files)))))
+
+(defun my/setup-safe-lsp-completion ()
+  "Ensure LSP completion is wrapped in our safe handler."
+  (setq-local lsp-completion-provider :none)
+  (setq-local company-backends 
+              '((my/safe-company-capf :with company-yasnippet)
+                company-dabbrev-code 
+                company-files 
+                company-dabbrev)))
+
+
+;; Apply to everything that isn't already specifically handled
+(add-hook 'prog-mode-hook #'my/setup-safe-lsp-completion)
 
 
 
@@ -4422,10 +4556,11 @@ If a file/directory with the same name exists, prompt for a new name."
   :config
   (global-company-mode t)
   
-	;; No preview frontends — Copilot owns the inline overlay
+	No preview frontends — Copilot owns the inline overlay
 	(setq company-frontends '(company-pseudo-tooltip-frontend
 														company-box-frontend
 														company-preview-frontend))
+	
 	(setq company-backends
 				'((company-capf :with company-yasnippet)
 					company-dabbrev-code
@@ -4436,6 +4571,7 @@ If a file/directory with the same name exists, prompt for a new name."
 
 ;; Visual Enhancements (keep existing)
 (use-package all-the-icons :ensure t)
+
 
 (use-package company-box
   :ensure t
@@ -4468,10 +4604,10 @@ If a file/directory with the same name exists, prompt for a new name."
                                              (get-text-property 0 'company-docsig candidate)
                                              "")))
       (propertize "󰘦" 'face '(:inherit font-lock-constant-face :height 1.0))))
-  
+
   (add-to-list 'company-box-icons-functions #'my/company-box-icon-for-codeium)
 
-  ;; ── 3. Valid CSS Named Colors (The official 148 web-safe colors) ───────────
+  ;; ── 3. Valid CSS Named Colors ──────────────────────────────────────────────
   (defvar my/css-named-colors
     '(("aliceblue" . "#f0f8ff") ("antiquewhite" . "#faebd7") ("aqua" . "#00ffff")
       ("aquamarine" . "#7fffd4") ("azure" . "#f0ffff") ("beige" . "#f5f5dc")
@@ -4513,37 +4649,33 @@ If a file/directory with the same name exists, prompt for a new name."
       ("palevioletred" . "#db7093") ("papayawhip" . "#ffefd5") ("peachpuff" . "#ffdab9")
       ("peru" . "#cd853f") ("pink" . "#ffc0cb") ("plum" . "#dda0dd")
       ("powderblue" . "#b0e0e6") ("purple" . "#800080") ("rebeccapurple" . "#663399")
-      ("red" . "#ff0000") ("rosybrown" . "#bc8f8f") ("royalblue" . "#4169e1") 
-      ("saddlebrown" . "#8b4513") ("salmon" . "#fa8072") ("sandybrown" . "#f4a460") 
-      ("seagreen" . "#2e8b57") ("seashell" . "#fff5ee") ("sienna" . "#a0522d") 
-      ("silver" . "#c0c0c0") ("skyblue" . "#87ceeb") ("slateblue" . "#6a5acd") 
-      ("slategray" . "#708090") ("slategrey" . "#708090") ("snow" . "#fffafa") 
-      ("springgreen" . "#00ff7f") ("steelblue" . "#4682b4") ("tan" . "#d2b48c") 
-      ("teal" . "#008080") ("thistle" . "#d8bfd8") ("tomato" . "#ff6347") 
-      ("turquoise" . "#40e0d0") ("violet" . "#ee82ee") ("wheat" . "#f5deb3") 
-      ("white" . "#ffffff") ("whitesmoke" . "#f5f5f5") ("yellow" . "#ffff00") 
+      ("red" . "#ff0000") ("rosybrown" . "#bc8f8f") ("royalblue" . "#4169e1")
+      ("saddlebrown" . "#8b4513") ("salmon" . "#fa8072") ("sandybrown" . "#f4a460")
+      ("seagreen" . "#2e8b57") ("seashell" . "#fff5ee") ("sienna" . "#a0522d")
+      ("silver" . "#c0c0c0") ("skyblue" . "#87ceeb") ("slateblue" . "#6a5acd")
+      ("slategray" . "#708090") ("slategrey" . "#708090") ("snow" . "#fffafa")
+      ("springgreen" . "#00ff7f") ("steelblue" . "#4682b4") ("tan" . "#d2b48c")
+      ("teal" . "#008080") ("thistle" . "#d8bfd8") ("tomato" . "#ff6347")
+      ("turquoise" . "#40e0d0") ("violet" . "#ee82ee") ("wheat" . "#f5deb3")
+      ("white" . "#ffffff") ("whitesmoke" . "#f5f5f5") ("yellow" . "#ffff00")
       ("yellowgreen" . "#9acd32"))
     "Full CSS named colors alist.")
 
-  ;; ── 4. THE MASSIVE HEX PALETTE GENERATOR ───────────────────────────────────
-  
+  ;; ── 4. HEX PALETTE ────────────────────────────────────────────────────────
   (defun my/get-emacs-hexes ()
-    "Extract only the pure hex codes from Emacs's internal color engine."
     (let ((hexes nil))
       (dolist (c (defined-colors))
         (let ((v (color-values c)))
           (when v
-            ;; Convert 16-bit RGB to standard 8-bit CSS Hex
-            (push (format "#%02x%02x%02x" 
-                          (ash (nth 0 v) -8) 
-                          (ash (nth 1 v) -8) 
-                          (ash (nth 2 v) -8)) 
+            (push (format "#%02x%02x%02x"
+                          (ash (nth 0 v) -8)
+                          (ash (nth 1 v) -8)
+                          (ash (nth 2 v) -8))
                   hexes))))
-      (delete-dups hexes))) ; Remove duplicates so we don't get 5 identical blacks
+      (delete-dups hexes)))
 
   (defvar my/basic-hex-palette
-    '(;; Modern UI Colors (You can still add custom ones here!)
-      "#f8f9fa" "#f1f3f5" "#e9ecef" "#dee2e6" "#ced4da" "#adb5bd" "#868e96" "#495057" "#343a40" "#212529"
+    '("#f8f9fa" "#f1f3f5" "#e9ecef" "#dee2e6" "#ced4da" "#adb5bd" "#868e96" "#495057" "#343a40" "#212529"
       "#fff0f2" "#ffe4e6" "#fecdd3" "#fda4af" "#fb7185" "#f43f5e" "#e11d48" "#be123c" "#9f1239" "#881337"
       "#fff7ed" "#ffedd5" "#fed7aa" "#fdba74" "#fb923c" "#f97316" "#ea580c" "#c2410c" "#9a3412" "#7c2d12"
       "#fffbeb" "#fef3c7" "#fde68a" "#fcd34d" "#fbbf24" "#f59e0b" "#d97706" "#b45309" "#92400e" "#78350f"
@@ -4552,32 +4684,67 @@ If a file/directory with the same name exists, prompt for a new name."
       "#eff6ff" "#dbeafe" "#bfdbfe" "#93c5fd" "#60a5fa" "#3b82f6" "#2563eb" "#1d4ed8" "#1e40af" "#1e3a8a"
       "#ecfeff" "#cffafe" "#a5f3fc" "#67e8f9" "#22d3ee" "#06b6d4" "#0891b2" "#0e7490" "#155e75" "#164e63"
       "#f5f3ff" "#ede9fe" "#ddd6fe" "#c4b5fd" "#a78bfa" "#8b5cf6" "#7c3aed" "#6d28d9" "#5b21b6" "#4c1d95"
-      "#faf5ff" "#f3e8ff" "#e9d5ff" "#d8b4fe" "#c084fc" "#a855f7" "#9333ea" "#7e22ce" "#6b21a8" "#581c87")
-    "A hand-picked palette of modern UI hex colors.")
+      "#faf5ff" "#f3e8ff" "#e9d5ff" "#d8b4fe" "#c084fc" "#a855f7" "#9333ea" "#7e22ce" "#6b21a8" "#581c87"))
 
   (defvar my/master-hex-palette
-    (delete-dups (append my/basic-hex-palette (my/get-emacs-hexes)))
-    "The ultimate hex palette: Hand-picked UI colors + 500+ internal Emacs hex codes.")
+    (delete-dups (append my/basic-hex-palette (my/get-emacs-hexes))))
 
-  ;; ── 5. SMART HEX INJECTION TRANSFORMER ─────────────────────────────────────
-  (defun my/company-inject-palette-transformer (candidates)
-    "Inject our massive hex palette into the list ONLY when typing a hex code."
-    (if (and (stringp company-prefix)
-             (string-prefix-p "#" company-prefix))
-        (let ((existing-strs (mapcar #'substring-no-properties candidates))
-              (injected nil))
-          (dolist (hex my/master-hex-palette)
-            (when (and (string-prefix-p (downcase company-prefix) hex)
-                       (not (member hex existing-strs)))
-              (push (propertize hex 'company-kind 'color) injected)))
-          (append candidates (nreverse injected)))
-      candidates))
+  ;; ── 5. DEDICATED HEX BACKEND ──────────────────────────────────────────────
+  ;; Uses post-self-insert-hook to grab control the instant '#' is typed,
+  ;; bypassing clangd/LSP entirely. This is the only reliable approach when
+  ;; clangd treats '#' as a preprocessor directive start.
 
-  (add-to-list 'company-transformers #'my/company-inject-palette-transformer)
+  (defun my/hex-color-prefix-at-point ()
+    "Return #hex prefix at point or nil. Scans backwards past hex digits and #."
+    (let ((end (point))
+          (pos (point)))
+      (while (and (> pos (point-min))
+                  (let ((ch (char-before pos)))
+                    (or (and (>= ch ?0) (<= ch ?9))
+                        (and (>= ch ?a) (<= ch ?f))
+                        (and (>= ch ?A) (<= ch ?F))
+                        (= ch ?#))))
+        (setq pos (1- pos)))
+      (let ((s (buffer-substring-no-properties pos end)))
+				(when (string-match-p "\\`#[0-9a-fA-F]*\\'" s) s))))
 
-  ;; ── 6. The Dynamic Color Swatch Generator ──────────────────────────────────
+
+  (defun company-hex-color (command &optional arg &rest _)
+    "Company backend for hex color codes. Bypasses LSP/clangd."
+    (interactive (list 'interactive))
+    (cl-case command
+      (interactive  (company-begin-backend 'company-hex-color))
+      (prefix       (my/hex-color-prefix-at-point))
+      ;; (candidates
+      ;;  (let ((pfx (downcase arg)))
+      ;;    (cl-remove-if-not (lambda (h) (string-prefix-p pfx h))
+      ;;                      my/master-hex-palette)))
+			(candidates
+			 (let* ((pfx (downcase arg))
+							(matches (cl-remove-if-not (lambda (h) (string-prefix-p pfx h))
+																				 my/master-hex-palette)))
+				 (or matches nil)))
+      (kind         'color)
+      (annotation   " hex")
+      (no-cache     t)
+      (sorted       t)
+      (ignore-case  t)
+      (require-match   'never)))
+
+  ;; Hook that fires after EVERY keystroke. When we detect we're inside a
+  ;; #hex context, we immediately invoke our backend, which prevents clangd
+  ;; from ever getting a turn for this completion session.
+(defun my/maybe-start-hex-completion ()
+    "Start hex color completion immediately when typing inside a #hex literal."
+    (when (and (not (minibufferp))
+               (not company-candidates) ; don't interrupt an active session
+               (my/hex-color-prefix-at-point))
+      (company-begin-backend 'company-hex-color)))
+
+  (add-hook 'post-self-insert-hook #'my/maybe-start-hex-completion)
+
+  ;; ── 6. Color Swatch Icon ──────────────────────────────────────────────────
   (defun my/company-box-color-swatch (candidate)
-    "Identify color candidates, dynamically generate an icon, and return its symbol."
     (ignore-errors
       (let* ((cand-str (substring-no-properties candidate))
              (color (cond
@@ -4587,14 +4754,13 @@ If a file/directory with the same name exists, prompt for a new name."
           (let ((color-sym (intern (concat "my-color-swatch-" color))))
             (unless (assq color-sym company-box-icons-all-the-icons)
               (push (cons color-sym
-                          (all-the-icons-material "stop" 
-                                                  :face `(:foreground ,color) 
-                                                  :height 0.85 
+                          (all-the-icons-material "stop"
+                                                  :face `(:foreground ,color)
+                                                  :height 0.85
                                                   :v-adjust -0.15))
                     company-box-icons-all-the-icons))
             color-sym)))))
 
-  ;; Ensure the color swatch runs BEFORE default LSP icon assignments
   (defun my/company-box--ensure-swatch-first ()
     (unless (eq (car company-box-icons-functions) #'my/company-box-color-swatch)
       (setq company-box-icons-functions
@@ -4602,6 +4768,10 @@ If a file/directory with the same name exists, prompt for a new name."
                   (remq #'my/company-box-color-swatch company-box-icons-functions)))))
 
   (add-hook 'company-box-mode-hook #'my/company-box--ensure-swatch-first))
+
+
+
+
 
 
 #+end_src
