@@ -1288,250 +1288,11 @@ start eglot if lsp wasn't activated."
 ;; SPC I T  → toggle auto-hover mode
 ;; ============================================================
 
-;; enabled initially
+;; enabled initially add this hook at the end
 
-;; (require 'cl-lib)
-
-;; (defcustom my/image-preview-size 350
-;;   "Max width/height in pixels." :type 'integer :group 'convenience)
-;; (defcustom my/image-preview-delay 0.5
-;;   "Idle seconds before hover fires." :type 'number :group 'convenience)
-;; (defcustom my/image-preview-video-seek "00:00:03"
-;;   "Timestamp to grab from a video for the thumbnail (HH:MM:SS or N%)."
-;;   :type 'string :group 'convenience)
-
-;; (defvar my/image-preview--frame      nil)
-;; (defvar my/image-preview--timer      nil)
-;; (defvar my/image-preview--displayed  nil "Absolute path currently shown.")
-;; (defvar my/image-preview--source-buf nil "Buffer that opened the preview.")
-;; (defvar my/image-preview--thumb-cache (make-hash-table :test #'equal)
-;;   "Cache: video abs-path -> temp thumbnail JPEG path.")
-
-;; ;; ── Dedicated preview buffer ──────────────────────────────────
-;; (defun my/image-preview--buf ()
-;;   (when-let ((old (get-buffer " *img-preview*")))
-;;     (when (and my/image-preview--frame
-;;                (frame-live-p my/image-preview--frame))
-;;       (set-window-dedicated-p (frame-root-window my/image-preview--frame) nil)
-;;       (set-window-buffer (frame-root-window my/image-preview--frame)
-;;                          (get-buffer-create " *img-preview-placeholder*")))
-;;     (kill-buffer old))
-;;   (let ((b (get-buffer-create " *img-preview*")))
-;;     (with-current-buffer b
-;;       (setq-local mode-line-format    nil
-;;                   header-line-format nil
-;;                   cursor-type        nil
-;;                   truncate-lines      t
-;;                   ;; [FIX 1] Bypass Emacs safety limits for large images
-;;                   max-image-size      nil))
-;;     b))
-
-;; ;; ── Extract image OR video path from the current line ────────
-;; (defun my/image-preview--extract ()
-;;   ;; [FIX 2] Prevent background packages from messing up the regex
-;;   (save-match-data
-;;     (let ((line (buffer-substring-no-properties
-;;                  (line-beginning-position) (line-end-position))))
-;;       (catch 'hit
-;;         (dolist (pat
-;;                  '(;; src="..." href="..." data-src="..." — images
-;;                    "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
-;;                    ;; src="..." href="..." data-src="..." — videos
-;;                    "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"
-;;                    ;; url(...) — images
-;;                    "url([\"']?\\([^\"'()\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']?)"
-;;                    ;; bare quoted path — images
-;;                    "[\"']\\([^\"'\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
-;;                    ;; bare quoted path — videos
-;;                    "[\"']\\([^\"'\n ]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"))
-;;           (when (string-match pat line)
-;;             (throw 'hit (match-string 1 line))))))))
-
-;; ;; ── Is this path a video file? ────────────────────────────────
-;; (defun my/image-preview--video-p (path)
-;;   (string-match-p
-;;    "\\.\\(mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)$"
-;;    (downcase path)))
-
-;; ;; ── Resolve path relative to buffer file ─────────────────────
-;; (defun my/image-preview--resolve (path)
-;;   (if (file-name-absolute-p path) path
-;;     (expand-file-name
-;;      path
-;;      (or (and (buffer-file-name)
-;;               (file-name-directory (buffer-file-name)))
-;;          default-directory))))
-
-;; ;; ── Extract a thumbnail from a video ─────────────────────────
-;; (defun my/image-preview--video-thumbnail (video-abs)
-;;   (or (gethash video-abs my/image-preview--thumb-cache)
-;;       (let* ((thumb (make-temp-file "emacs-vid-thumb-" nil ".jpg"))
-;;              (exit  (call-process "ffmpegthumbnailer" nil nil nil
-;;                                   "-i" video-abs
-;;                                   "-o" thumb
-;;                                   "-s" (number-to-string (* my/image-preview-size 2))
-;;                                   "-t" my/image-preview-video-seek
-;;                                   "-c" "jpeg" "-q" "3" "-f")))
-;;         (if (and (= exit 0)
-;;                  (file-exists-p thumb)
-;;                  (> (file-attribute-size (file-attributes thumb)) 0))
-;;             (progn (puthash video-abs thumb my/image-preview--thumb-cache) thumb)
-;;           (let ((exit2 (call-process "ffmpegthumbnailer" nil nil nil
-;;                                      "-i" video-abs "-o" thumb
-;;                                      "-s" (number-to-string (* my/image-preview-size 2))
-;;                                      "-t" "0%" "-c" "jpeg" "-q" "3" "-f")))
-;;             (when (and (= exit2 0)
-;;                        (file-exists-p thumb)
-;;                        (> (file-attribute-size (file-attributes thumb)) 0))
-;;               (puthash video-abs thumb my/image-preview--thumb-cache)
-;;               thumb))))))
-
-;; ;; ── Get or create the child frame ────────────────────────────
-;; (defun my/image-preview--get-frame ()
-;;   (when (and my/image-preview--frame
-;;              (not (frame-live-p my/image-preview--frame)))
-;;     (setq my/image-preview--frame nil))
-;;   (or my/image-preview--frame
-;;       (let* ((bg (face-background 'default nil t))
-;;              (fg (face-foreground 'default nil t))
-;;              (f  (make-frame
-;;                   `((parent-frame           . ,(selected-frame))
-;;                     (minibuffer             . nil)
-;;                     (internal-border-width  . 1)
-;;                     (left-fringe            . 0)
-;;                     (right-fringe           . 0)
-;;                     (vertical-scroll-bars   . nil)
-;;                     (horizontal-scroll-bars . nil)
-;;                     (menu-bar-lines         . 0)
-;;                     (tool-bar-lines         . 0)
-;;                     (tab-bar-lines          . 0)
-;;                     (no-accept-focus        . t)
-;;                     (no-special-glyphs      . t)
-;;                     (undecorated            . t)
-;;                     (visibility             . nil)
-;;                     (background-color       . ,bg)
-;;                     (foreground-color       . ,fg)
-;;                     (border-color           . ,fg)
-;;                     (width  . 10)
-;;                     (height . 4)))))
-;;         (setq my/image-preview--frame f)
-;;         f)))
-
-;; ;; ── Show (Modified for Bottom-Right Positioning) ─────────────
-;; (defun my/image-preview--show (path source-buf)
-;;   (unless path (cl-return-from my/image-preview--show))
-;;   (let ((source-win (get-buffer-window source-buf)))
-;;     (unless (window-live-p source-win)
-;;       (cl-return-from my/image-preview--show))
-;;     (condition-case err
-;;         (let* ((abs      (my/image-preview--resolve path))
-;;                (img-path (if (my/image-preview--video-p abs)
-;;                              (my/image-preview--video-thumbnail abs)
-;;                            abs)))
-;;           (unless (and img-path (file-exists-p img-path))
-;;             (cl-return-from my/image-preview--show))
-          
-;;           ;; [FIX 3] Flush the Emacs image cache so bad JPG data doesn't persist
-;;           (clear-image-cache img-path)
-          
-;;           (let* ((img-type (image-type-from-file-name img-path))
-;;                  ;; [FIX 4] Silence JPG warnings and bypass size limits to prevent crashes
-;;                  (max-image-size nil)
-;;                  (img      (let ((inhibit-message t)
-;;                                  (message-log-max nil))
-;;                              (create-image img-path img-type nil
-;;                                            :max-width  my/image-preview-size
-;;                                            :max-height my/image-preview-size)))
-;;                  ;; [FIX 5] Provide a fallback if Emacs still can't calculate dimensions
-;;                  (size      (or (ignore-errors (image-size img t))
-;;                                 (cons my/image-preview-size my/image-preview-size)))
-;;                  (iw        (car size))
-;;                  (ih        (cdr size))
-;;                  (buf       (my/image-preview--buf))
-;;                  (frm       (my/image-preview--get-frame))
-;;                  (parent    (window-frame source-win))
-;;                  (border    (* 2 (frame-parameter frm 'internal-border-width)))
-;;                  (char-w    (frame-char-width  frm))
-;;                  (char-h    (frame-char-height frm))
-;;                  (cols      (ceiling (/ (float (+ iw border)) char-w)))
-;;                  (rows      (ceiling (/ (float (+ ih border)) char-h)))
-;;                  (frm-pixel-w (* cols char-w))
-;;                  (frm-pixel-h (* rows char-h))
-;;                  (pos-x (- (frame-pixel-width parent) frm-pixel-w 15))
-;;                  (pos-y (- (frame-pixel-height parent) frm-pixel-h 15)))
-
-;;             (with-current-buffer buf
-;;               (let ((inhibit-read-only t))
-;;                 (erase-buffer)
-;;                 (insert-image img)))
-            
-;;             (set-frame-parameter frm 'width  cols)
-;;             (set-frame-parameter frm 'height rows)
-;;             (set-frame-parameter frm 'left   pos-x)
-;;             (set-frame-parameter frm 'top    pos-y)
-;;             (set-window-dedicated-p (frame-root-window frm) nil)
-;;             (set-window-buffer      (frame-root-window frm) buf)
-;;             (set-window-dedicated-p (frame-root-window frm) t)
-;;             (make-frame-visible frm)
-;;             (redraw-frame frm)
-;;             (raise-frame frm)
-;;             (setq my/image-preview--displayed  abs
-;;                   my/image-preview--source-buf source-buf)))
-;;       (error
-;;        (message "my/image-preview: suppressed error: %S" err)
-;;        (my/image-preview-close)))))
-
-;; ;; ── Hide ─────────────────────────────────────────────────────
-;; (defun my/image-preview-close ()
-;;   (interactive)
-;;   (when my/image-preview--timer
-;;     (cancel-timer my/image-preview--timer)
-;;     (setq my/image-preview--timer nil))
-;;   (when (and my/image-preview--frame (frame-live-p my/image-preview--frame))
-;;     (make-frame-invisible my/image-preview--frame))
-;;   (setq my/image-preview--displayed  nil
-;;         my/image-preview--source-buf nil))
-
-;; ;; ── Close when switching away from the source buffer ─────────
-;; (defun my/image-preview--on-buffer-change ()
-;;   ;; [REVERTED TO YOUR ORIGINAL CODE] 
-;;   ;; Safely kills the frame instantly if you switch buffers.
-;;   (when (and my/image-preview--source-buf
-;;              (not (eq (current-buffer) my/image-preview--source-buf)))
-;;     (my/image-preview-close)))
-
-;; (add-hook 'buffer-list-update-hook #'my/image-preview--on-buffer-change)
-
-;; ;; ── Hover hook ───────────────────────────────────────────────
-;; (defun my/image-preview--post-command ()
-;;   ;; [FIX 6] Keep the smarter timer logic so wiggling mouse doesn't delay load
-;;   (let* ((path (my/image-preview--extract))
-;;          (abs  (when path (my/image-preview--resolve path)))
-;;          (buf  (current-buffer)))
-;;     (cond
-;;      ((and abs (not (equal abs my/image-preview--displayed)))
-;;       (when my/image-preview--timer
-;;         (cancel-timer my/image-preview--timer))
-;;       (setq my/image-preview--timer
-;;             (run-with-idle-timer my/image-preview-delay nil
-;;                                  #'my/image-preview--show path buf)))
-;;      ((not path)
-;;       (my/image-preview-close)))))
-
-;; ;; ── Minor mode ───────────────────────────────────────────────
-;; (define-minor-mode my/image-preview-hover-mode
-;;   "Auto-preview image/video paths under cursor."
-;;   :lighter " [Img]"
-;;   (if my/image-preview-hover-mode
-;;       (add-hook  'post-command-hook #'my/image-preview--post-command nil t)
-;;     (remove-hook 'post-command-hook #'my/image-preview--post-command t)
-;;     (my/image-preview-close)))
-
-;; (dolist (h '(css-mode-hook css-ts-mode-hook scss-mode-hook
-;;              html-mode-hook html-ts-mode-hook mhtml-mode-hook
-;;              web-mode-hook js-mode-hook js-ts-mode-hook
-;;              typescript-mode-hook typescript-ts-mode-hook tsx-ts-mode-hook))
-;;   (add-hook h #'my/image-preview-hover-mode))
+;; ;; ── Global Activation Hooks (All Code & Text Files) ──────────
+;; (add-hook 'prog-mode-hook #'my/image-preview-hover-mode)
+;; (add-hook 'text-mode-hook #'my/image-preview-hover-mode)
 
 ;; disabled by default initialy
 
@@ -1570,25 +1331,13 @@ start eglot if lsp wasn't activated."
                   max-image-size      nil))
     b))
 
-;; ── Extract image OR video path from the current line ────────
+;; ── Extract image OR video path under cursor universally ─────
 (defun my/image-preview--extract ()
-  (save-match-data
-    (let ((line (buffer-substring-no-properties
-                 (line-beginning-position) (line-end-position))))
-      (catch 'hit
-        (dolist (pat
-                 '(;; src="..." href="..." data-src="..." — images
-                   "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
-                   ;; src="..." href="..." data-src="..." — videos
-                   "\\(?:src\\|href\\|data-src\\)=[\"']\\([^\"'\n]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"
-                   ;; url(...) — images
-                   "url([\"']?\\([^\"'()\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']?)"
-                   ;; bare quoted path — images
-                   "[\"']\\([^\"'\n ]+\\.\\(?:png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\)\\)[\"']"
-                   ;; bare quoted path — videos
-                   "[\"']\\([^\"'\n ]+\\.\\(?:mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)\\)[\"']"))
-          (when (string-match pat line)
-            (throw 'hit (match-string 1 line))))))))
+  (let ((path (thing-at-point 'filename t)))
+    (when (and path
+               (string-match-p "\\.\\(png\\|jpe?g\\|gif\\|svg\\|webp\\|bmp\\|ico\\|mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)$" (downcase path)))
+      ;; Corrected regex: Safely strips surrounding quotes, brackets, or parens
+      (replace-regexp-in-string "^[\"'<[(]+\\|[]\"'>)]+$" "" path))))
 
 ;; ── Is this path a video file? ────────────────────────────────
 (defun my/image-preview--video-p (path)
@@ -1596,14 +1345,23 @@ start eglot if lsp wasn't activated."
    "\\.\\(mp4\\|mkv\\|webm\\|mov\\|avi\\|flv\\|wmv\\|m4v\\|ogv\\)$"
    (downcase path)))
 
-;; ── Resolve path relative to buffer file ─────────────────────
+;; ── Resolve path relative to buffer file (Smarter Web Paths) ─
 (defun my/image-preview--resolve (path)
-  (if (file-name-absolute-p path) path
-    (expand-file-name
-     path
-     (or (and (buffer-file-name)
-              (file-name-directory (buffer-file-name)))
-         default-directory))))
+  (let* ((default-dir (or (and (buffer-file-name)
+                               (file-name-directory (buffer-file-name)))
+                          default-directory))
+         ;; Standard resolution
+         (standard-path (if (file-name-absolute-p path) 
+                            path 
+                          (expand-file-name path default-dir)))
+         ;; Web resolution: strip leading slash and search relative to current file
+         (stripped-path (replace-regexp-in-string "^/" "" path))
+         (web-path (expand-file-name stripped-path default-dir)))
+    
+    ;; If the literal path exists, use it. Otherwise, assume it's a web path.
+    (if (file-exists-p standard-path)
+        standard-path
+      web-path)))
 
 ;; ── Extract a thumbnail from a video ─────────────────────────
 (defun my/image-preview--video-thumbnail (video-abs)
@@ -1660,8 +1418,8 @@ start eglot if lsp wasn't activated."
         (setq my/image-preview--frame f)
         f)))
 
-;; ── Show (Modified for Bottom-Right Positioning) ─────────────
-(defun my/image-preview--show (path source-buf)
+;; ── Show (Modified for cl-defun and bottom-right positioning) 
+(cl-defun my/image-preview--show (path source-buf)
   (unless path (cl-return-from my/image-preview--show))
   (let ((source-win (get-buffer-window source-buf)))
     (unless (window-live-p source-win)
