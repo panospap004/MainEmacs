@@ -4287,6 +4287,28 @@ If a file/directory with the same name exists, prompt for a new name."
 
 ;; (add-hook 'org-src-mode-hook 'org-src-mode-setup)
 
+
+(defun my/company-sort-directories-first (candidates)
+  "Sort directories before files in Company completions."
+  (let ((is-file-completion
+         (or (eq company-backend 'company-files)
+             (and (listp company-backend) (memq 'company-files company-backend))
+             ;; Handle cape-file and LSP file completions
+             (when candidates
+               (let ((kind (company-call-backend 'kind (car candidates))))
+                 (memq kind '(file folder)))))))
+    (if is-file-completion
+        (let (dirs others)
+          (dolist (cand candidates)
+            ;; In Emacs file completions, directories always end with a slash "/"
+            (if (and (stringp cand) (string-suffix-p "/" cand))
+                (push cand dirs)
+              (push cand others)))
+          ;; Append non-directories after directories, keeping existing internal sort
+          (append (nreverse dirs) (nreverse others)))
+      ;; If not a file completion, leave candidates untouched
+      candidates)))
+
 ;; Company Mode Configuration
 (use-package company
   :ensure t
@@ -4297,7 +4319,7 @@ If a file/directory with the same name exists, prompt for a new name."
   (company-show-quick-access t)
   (company-tooltip-limit 10)
   (company-selection-wrap-around t)
-  (company-transformers '(company-sort-by-occurrence))
+	(company-transformers '(company-sort-by-occurrence my/company-sort-directories-first)) ;;
   (company-tooltip-maximum-width   120)   ; max 90 columns 
   (company-tooltip-minimum-width   0)    ; allow shrink 
   (company-tooltip-width-grow-only t)    ; don’t shrink on page flip 
